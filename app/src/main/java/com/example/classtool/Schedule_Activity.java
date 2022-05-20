@@ -61,7 +61,6 @@ public class Schedule_Activity extends AppCompatActivity {
     private ArrayList<Object> alls=new ArrayList<>();
     private RecyclerView recy;
     private MultiTypeAdapter multiTypeAdapter;
-    private GridLayout gridclass;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private QMUISkinValueBuilder builder;
@@ -73,10 +72,7 @@ public class Schedule_Activity extends AppCompatActivity {
 
     private List<Class_cardmodel> classqall=new ArrayList<>();
     private List<TextView> textViews=new ArrayList<>();
-    private  boolean isLoad=false;
-    private boolean isInitGrid=false;
     private  List<ClassLabel> cls=new ArrayList<>();
-    private List<ClassLabel> lsc=new ArrayList<>();
     private CalculatLayViews calculatLayViews;
     private String current_sche="临时课表";
     private String current_sche_time="武鸣校区作息时间";
@@ -142,7 +138,7 @@ public class Schedule_Activity extends AppCompatActivity {
         initRecy();
         titleq.setText(current_sche);
         if(classqall.size()>0){
-            initGrids(0);
+            initGrids();
         }
     }
 
@@ -190,7 +186,6 @@ public class Schedule_Activity extends AppCompatActivity {
         multiTypeAdapter=new MultiTypeAdapter();
         titleq=(TextView) findViewById(R.id.class_schedule_title);
         recy=(RecyclerView) findViewById(R.id.scehdul_recy);
-        gridclass=(GridLayout) findViewById(R.id.gridclass);
         schedul_refresh=(TextView)findViewById(R.id.schedul_refresh);
         schedul_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,6 +283,29 @@ public class Schedule_Activity extends AppCompatActivity {
         multiTypeAdapter.setItems(alls);
     }
 
+    private void SchedulReresh(){
+        int ScheSelected=sp.getInt("ScheSelected",0);
+        List<String> sches=FilesUtil.readSchedulAndTimeTag();
+        if(sches.size()>0){
+            String[] setqs=sches.get(ScheSelected).split(",");
+            current_sche=setqs[0];
+            current_sche_time=setqs[1];
+        }
+        List<QTime> dall=FilesUtil.readClassTime(current_sche_time);
+        int y=dall.size();
+        if(dall.size()==0||dall==null) y=12;
+        editor.putInt("classLen",y);
+        editor.commit();
+
+        List<Class_cardmodel> newqall=FilesUtil.readFileData(current_sche);
+        classqall.clear();
+        cls.clear();
+        classqall.addAll(newqall);
+        controlTexts();
+        gridClasses.removeAllViews();
+        initGrids();
+        //Toast.makeText(Schedule_Activity.this, "课表数据刷新成功！", Toast.LENGTH_SHORT).show();
+    }
 
     private void initClassl(){
         classl_1=(TextView) findViewById(R.id.sche_classl_1);
@@ -358,11 +376,9 @@ public class Schedule_Activity extends AppCompatActivity {
 
     }
 
-    private void initGrids(int type){
+    private void initGrids(){
         int classLen=sp.getInt("classLen",12);
         calculatLayViews=new CalculatLayViews(classLen);
-        switch (type){
-            case 0:
                 gridClasses.setOrientation(GridLayout.VERTICAL);
                 for(Class_cardmodel l:classqall){
                     int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
@@ -400,73 +416,7 @@ public class Schedule_Activity extends AppCompatActivity {
                     params.setMargins(3, 2, 3, 2);
                     gridClasses.addView(textView,params);
                 }
-                break;
-            case 1:
-                gridClasses.removeAllViews();
-                Log.i( "initGrids: ",String.valueOf(classLen));
-                gridClasses.setOrientation(GridLayout.VERTICAL);
-                for(Class_cardmodel l:classqall){
-                    int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
-                    int y=FindSort.returnColorSort(start_classes,l.getClass_startClass());
-                    int numcls=FindSort.returnColorSort(class_nums,l.getClass_totalClass())+1;
-                    String course="<big>"+l.getClass_course()+"</big><br><br><font color='gray'>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"</font>";
-
-                    cls.add(new ClassLabel(numcls,y,x,course,l.getClassColor()));
-                }
-                List<ClassLabel> slapall=calculatLayViews.Excheng_Classes(cls);
-                List<ClassLabel> sapall=calculatLayViews.ReturnHtmlindex(slapall);
-
-                for(int h=0;h<sapall.size();h++) {
-                    ClassLabel l = sapall.get(h);
-                    int x=l.getWeek();
-                    int y=l.getStart_class();
-                    TextView textView = new TextView(this);
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                    params.width = 0;
-                    params.height = 0;
-                    if (l.getClass_nums() > 0) {
-                        params.columnSpec = GridLayout.spec(x, 1f);
-                        params.rowSpec = GridLayout.spec(y, l.getClass_nums(), 1f);
-                        textView.setBackgroundColor(getColor(l.getColorq()));
-                    } else {
-                        params.columnSpec = GridLayout.spec(x, 1f);
-                        params.rowSpec = GridLayout.spec(y, 1f);
-                        textView.setBackgroundColor(getColor(R.color.white));
-                    }
-                    textView.setTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
-                    textView.setTextSize(10f);
-                    textView.setGravity(Gravity.CENTER);
-                    textView.setPadding(4,6,4,4);
-                    textView.setText(Html.fromHtml(l.getSubjectplanotes()));
-                    params.setMargins(3, 2, 3, 2);
-                    gridClasses.addView(textView,params);
-                }
-                break;
         }
-        }
-
-
-
-    private void SchedulReresh(){
-        int ScheSelected=sp.getInt("ScheSelected",0);
-        List<String> sches=FilesUtil.readSchedulAndTimeTag();
-        if(sches.size()>0){
-            String[] setqs=sches.get(ScheSelected).split(",");
-            current_sche=setqs[0];
-            current_sche_time=setqs[1];
-        }
-        List<QTime> dall=FilesUtil.readClassTime(current_sche_time);
-        int y=dall.size();
-        if(dall.size()==0||dall==null) y=12;
-        editor.putInt("classLen",y);
-        editor.commit();
-
-        List<Class_cardmodel> newqall=FilesUtil.readFileData(current_sche);
-        classqall.addAll(newqall);
-        controlTexts();
-        initGrids(1);
-        //Toast.makeText(Schedule_Activity.this, "课表数据刷新成功！", Toast.LENGTH_SHORT).show();
-    }
 
 
     private void showpop(View AttachV){

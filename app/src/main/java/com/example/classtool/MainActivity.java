@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         QMUIStatusBarHelper.translucent(this);
-        initData();
+        sp= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        editor=sp.edit();
         initRecy();
         visitLabel=(TextView) findViewById(R.id.visitSchedul);
         addLabel=(FloatingActionButton) findViewById(R.id.addLabel);
@@ -86,17 +87,10 @@ public class MainActivity extends AppCompatActivity {
         tempSaveLabel=(TextView)findViewById(R.id.tempSaveLabel);
         moreLabel=(TextView)findViewById(R.id.moreLabel);
         Schedule_title=(TextView) findViewById(R.id.class_schedule_title);
-        sp= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        editor=sp.edit();
         initViews();
     }
 
 
-    private  void initData(){
-       for(int g=0;g<6;g++) {
-           ncs.add((g + 1) + "节");
-       }
-    }
 
     private void initViews(){
         Showp p=new Showp(MainActivity.this);
@@ -105,7 +99,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String time_tmp=sp.getString("current_time_temp","武鸣校区作息时间");
-               p.Qhowpop(saveLabel,"保存课表"+"("+time_tmp+")","请输入文件名以保存相关数据");
+                int selec=sp.getInt("scheSeq",0);
+                List<String> tags=new ArrayList<>();
+                tags=FilesUtil.readSchedulAndTimeTag();
+               p.Qhowpop(saveLabel,"保存课表"+"("+time_tmp+")","请输入文件名(所选模板名:"+tags.get(selec).split(",")[0]+")");
             }
         });
 
@@ -193,22 +190,33 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onItemDelete(View v, int position) {
-                //new DeleteTask((Class_cardmodel) alls.get(position)).execute();
                 alls.remove(position);
                 multiTypeAdapter.notifyItemRemoved(position);
                 multiTypeAdapter.notifyDataSetChanged();
-
                 Toast.makeText(MainActivity.this,"已删除第"+(position+1)+"个标签",Toast.LENGTH_SHORT).show();
             }
         });
 
         recy.setAdapter(multiTypeAdapter);
         multiTypeAdapter.register(Class_cardmodel.class,class_cardBinder);
-        List<Class_cardmodel> sall=FilesUtil.readFileData("临时课表数据");
-        for(Class_cardmodel l:sall){
-            alls.add(l);
+        int selec=sp.getInt("scheSeq",0);
+        Log.i("TAG", "initRecy: "+selec);
+        List<String> tags=new ArrayList<>();
+        tags=FilesUtil.readSchedulAndTimeTag();
+        if(tags.size()>0){
+            String[] tasets=new String[tags.size()];
+            for(int i=0;i<tags.size();i++){
+                String[] ets=tags.get(i).split(",");
+                tasets[i]=ets[0];
+            }
+            List<Class_cardmodel> sall=FilesUtil.readFileData(tasets[selec]);
+            for(Class_cardmodel l:sall){
+                alls.add(l);
+            }
+            multiTypeAdapter.setItems(alls);
         }
-        multiTypeAdapter.setItems(alls);
+
+
 
     }
 
@@ -721,7 +729,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                        editor.putInt("scheSeq",position);
                        editor.commit();
-
                         int tag_index=0;
                         int morNums=4;
                         int noonStartCl=5;
@@ -730,7 +737,12 @@ public class MainActivity extends AppCompatActivity {
                        String time_tag=timetags[position];
                        try {
                            List<String> schetimesl = FilesUtil.readTimeTag();
-                           List<QTime> wimes = FilesUtil.readClassTime(time_tag);
+                           List<Class_cardmodel> wime=FilesUtil.readFileData(values[position]);
+                           alls.clear();
+                           for(Class_cardmodel c:wime){
+                               alls.add(c);
+                           }
+                           multiTypeAdapter.notifyDataSetChanged();
                            if(schetimesl.size()>0){
                                for(int o=0;o<schetimesl.size();o++){
                                    if(schetimesl.get(o).split(",")[0].equals(time_tag)){
