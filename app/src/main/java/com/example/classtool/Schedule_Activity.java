@@ -110,6 +110,7 @@ public class Schedule_Activity extends AppCompatActivity {
         if(firstL==0){
             editor.putInt("firstL",1);
             editor.commit();
+            FilesUtil.createAllFileDir();
             initClTime();
         }
 
