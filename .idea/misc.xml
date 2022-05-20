@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Classtool/app/src/main/res/drawable/card.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/drawable/classabel_bg.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/drawable/classable_bhbg.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/drawable/edit_bg.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/drawable/layout_clickable.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/drawable/save_btn_bg.xml" value="0.1715" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_about.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_launcher.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_manage_sche.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_scheduldatas.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_schedule.xml" value="0.39360222531293465" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_schedulest.xml" value="0.20404411764705882" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_setting.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_time_adding.xml" value="0.22" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_timelist.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_timeset_axt.xml" value="0.4466666666666667" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/change_current_item.xml" value="0.39360222531293465" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/class_edit_layout.xml" value="0.5" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/class_info_card_item.xml" value="0.5" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/fragment_check.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/gridsla.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/previsit_schedul.xml" value="0.16666666666666666" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/set_title_popup.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/simple_list_item.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/time_add_item.xml" value="0.39360222531293465" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/time_add_item_popup.xml" value="0.35614973262032085" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/time_add_test.xml" value="0.22" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/timelist_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/universal_item.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1715" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

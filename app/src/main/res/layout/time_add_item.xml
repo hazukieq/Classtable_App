@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/layout_bg"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="第1节"
+        android:gravity="center"
+        android:id="@+id/time_add_id"
+        android:textColor="@color/class_orange"
+        android:textSize="13sp"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/qmui_btn_blue_text"
+        android:hint="上课时间-下课时间"
+        android:id="@+id/time_add_setTime"
+        android:background="@null"
+        android:paddingLeft="8dp"
+        android:textColor="@color/qmui_btn_blue_text"
+        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textSize="13sp"
+            android:text="编辑"
+            android:id="@+id/time_add_edit"
+            android:paddingRight="10dp"
+            android:textColor="@color/qmui_config_color_red"
+            android:gravity="center_vertical|right" />
+    </LinearLayout>
+</RelativeLayout>

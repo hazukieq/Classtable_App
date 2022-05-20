@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimesetAxt">
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="30dp"
+       android:layout_alignParentTop="true"
+       android:id="@+id/bvie"/>
+    <LinearLayout
+        android:layout_below="@id/bvie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textSize="16sp"
+            android:textColor="@color/qmui_config_color_gray_4"
+            android:paddingTop="8dp"
+            android:paddingLeft="10dp"
+            android:text="每天都要开心快乐哟~"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/times_add_recy"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginBottom="18dp"
+            android:paddingBottom="48dp"
+            android:background="@color/light_white"/>
+    </LinearLayout>
+</RelativeLayout>
