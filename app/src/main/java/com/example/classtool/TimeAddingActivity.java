@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.QTimeBinder;
 import com.example.classtool.models.QTime;
@@ -43,7 +44,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeAddingActivity extends AppCompatActivity {
+public class TimeAddingActivity extends BasicActivity {
 
     private QMUISkinValueBuilder builder;
     private QMUIFrameLayout frameLayout;
@@ -369,8 +370,8 @@ public class TimeAddingActivity extends AppCompatActivity {
             if (EditgetStr.isEmpty()) {
                 Toast.makeText(TimeAddingActivity.this, "请输入文字！", Toast.LENGTH_SHORT).show();
             }else {
-                FilesUtil.AppendClassTime(qTimeList, EditgetStr);
-                FilesUtil.AppendTimeTag(EditgetStr+","+"第1节课,"+act_morning_nums.getText().toString()+","+act_noon_startCl.getText().toString()+","+act_add_noon_nums.getText().toString()+","+act_ngith_start.getText().toString()+","+act_ngith_nums.getText().toString());
+                FilesUtil.AppendClassTime(getApplicationContext(),qTimeList, EditgetStr);
+                FilesUtil.AppendTimeTag(getApplicationContext(),EditgetStr+","+"第1节课,"+act_morning_nums.getText().toString()+","+act_noon_startCl.getText().toString()+","+act_add_noon_nums.getText().toString()+","+act_ngith_start.getText().toString()+","+act_ngith_nums.getText().toString());
                 Toast.makeText(TimeAddingActivity.this, "数据保存成功！", Toast.LENGTH_SHORT).show();
                 pop.dismiss();
                 finish();

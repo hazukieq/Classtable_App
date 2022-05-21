@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.classtool.base.BasicActivity;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -18,7 +19,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BasicActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private QMUIGroupListView groupListView;

@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_below="@id/bvie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -23,14 +23,19 @@
             android:paddingTop="8dp"
             android:paddingLeft="10dp"
             android:text="每天都要开心快乐哟~"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:id="@+id/times_add_recy"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_marginBottom="18dp"
-            android:paddingBottom="48dp"
-            android:background="@color/light_white"/>
+            <com.qmuiteam.qmui.widget.QMUIEmptyView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:id="@+id/empty"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/times_add_recy"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginBottom="18dp"
+                android:paddingBottom="48dp"
+                android:background="@color/light_white"/>
     </LinearLayout>
 </RelativeLayout>

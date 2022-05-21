@@ -38,7 +38,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical|left"
         android:textColor="@color/qmui_config_color_gray_2"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="课表"
         android:id="@+id/chooseLabel"
         android:paddingRight="14dp"/>
@@ -48,7 +48,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical|left"
         android:textColor="@color/qmui_config_color_gray_2"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="保存"
         android:id="@+id/saveLabe"
         android:paddingRight="14dp"/>
@@ -57,7 +57,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical|left"
         android:textColor="@color/qmui_config_color_gray_2"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="临时保存"
         android:id="@+id/tempSaveLabel"
         android:paddingRight="14dp"/>
@@ -67,7 +67,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical|right"
         android:textColor="@color/qmui_config_color_gray_2"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="预览"
         android:id="@+id/visitSchedul"
         android:paddingRight="14dp"/>
@@ -76,7 +76,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical|left"
         android:textColor="@color/qmui_config_color_gray_2"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="更多"
         android:id="@+id/moreLabel"
         android:paddingRight="14dp"/>

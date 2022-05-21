@@ -169,7 +169,7 @@
                 android:layout_height="24dp"
                 android:fitsSystemWindows="true"
                 app:qmui_layout_collapseMode="pin"
-                android:background="@color/qmui_config_color_transparent"
+                android:background="@android:color/transparent"
                 app:qmui_bottomDividerHeight="0px"/>
         </com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout>
     </com.qmuiteam.qmui.widget.QMUIAppBarLayout>

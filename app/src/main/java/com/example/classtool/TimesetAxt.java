@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.QTimeBinder;
 import com.example.classtool.models.QTime;
@@ -32,7 +33,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimesetAxt extends AppCompatActivity {
+public class TimesetAxt extends BasicActivity {
     private QMUITopBarLayout topBarLayout;
     private RecyclerView recy;
     private TextView saving;
@@ -78,7 +79,7 @@ public class TimesetAxt extends AppCompatActivity {
                 for(int f=0;f<alls.size();f++){
                     sall.add((QTime) alls.get(f));
                 }
-                FilesUtil.AppendClassTime(sall,a);
+                FilesUtil.AppendClassTime(getApplicationContext(),sall,a);
 
                 Toast.makeText(TimesetAxt.this, "数据更新成功！", Toast.LENGTH_SHORT).show();
                 finish();
@@ -92,7 +93,7 @@ public class TimesetAxt extends AppCompatActivity {
         });
         multiTypeAdapter.register(QTime.class,qTimeBinder);
 
-        List<QTime> timeqall= FilesUtil.readClassTime(a);
+        List<QTime> timeqall= FilesUtil.readClassTime(getApplicationContext(),a);
         for(QTime aq:timeqall){
             alls.add(aq);
         }

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.SchedulCardBinder;
 import com.example.classtool.models.ClassLabel;
@@ -49,7 +50,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Schedule_Activity extends AppCompatActivity {
+public class Schedule_Activity extends BasicActivity {
 
     private TextView classl_1,classl_2,classl_3,classl_4,classl_5,classl_6,classl_7,classl_8,classl_9,classl_10,classl_11,classl_12,classl_13,classl_14,classl_15,classl_16,classl_17,classl_18,schedul_refresh;
     private ArrayList<String> classSas=new ArrayList<>();
@@ -110,7 +111,6 @@ public class Schedule_Activity extends AppCompatActivity {
         if(firstL==0){
             editor.putInt("firstL",1);
             editor.commit();
-            FilesUtil.createAllFileDir();
             initClTime();
         }
 
@@ -122,20 +122,20 @@ public class Schedule_Activity extends AppCompatActivity {
     //开始加载相关数据
     private void LoadScheTags(){
         int ScheSelected=sp.getInt("ScheSelected",0);
-        List<String> sches=FilesUtil.readSchedulAndTimeTag();
+        List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
         if(sches.size()>0){
             String[] setqs=sches.get(ScheSelected).split(",");
             current_sche=setqs[0];
             current_sche_time=setqs[1];
         }
 
-        List<QTime> dall=FilesUtil.readClassTime(current_sche_time);
+        List<QTime> dall=FilesUtil.readClassTime(getApplicationContext(),current_sche_time);
         int y=dall.size();
         if(dall.size()==0||dall==null) y=12;
         editor.putInt("classLen",y);
         editor.commit();
         //int classLen=sp.getInt("classLen",y);
-        classqall.addAll(FilesUtil.readFileData(current_sche));
+        classqall.addAll(FilesUtil.readFileData(getApplicationContext(),current_sche));
         initRecy();
         titleq.setText(current_sche);
         if(classqall.size()>0){
@@ -157,8 +157,8 @@ public class Schedule_Activity extends AppCompatActivity {
             }
 
         }
-        List<String> timetags=FilesUtil.readTimeTag();
-        List<String> schetimtag=FilesUtil.readSchedulAndTimeTag();
+        List<String> timetags=FilesUtil.readTimeTag(getApplicationContext());
+        List<String> schetimtag=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
 
         int f=0,y=0;
         for(String str:timetags){
@@ -167,15 +167,15 @@ public class Schedule_Activity extends AppCompatActivity {
             }
         }
 
-        if(f==0) FilesUtil.AppendTimeTag( "武鸣校区作息时间,第1节课,5节,第6节课,4节,第10节课,3节");
+        if(f==0) FilesUtil.AppendTimeTag(getApplicationContext(), "武鸣校区作息时间,第1节课,5节,第6节课,4节,第10节课,3节");
         for(String tr:schetimtag){
-            if(tr.split(",")[0].equals("临时课表数据")){
+            if(tr.split(",")[0].equals("临时课表")){
                y+=1;
             }
 
         }
-        if(y==0)FilesUtil.AppendScheDulAndTimeTag("临时课表数据,武鸣校区作息时间");
-        FilesUtil.AppendClassTime(dao,"武鸣校区作息时间");
+        if(y==0)FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),"临时课表,武鸣校区作息时间");
+        FilesUtil.AppendClassTime(getApplicationContext(),dao,"武鸣校区作息时间");
 
     }
 
@@ -221,6 +221,7 @@ public class Schedule_Activity extends AppCompatActivity {
                 switch (sirtq){
                     case 0:
                         inq.setClass(Schedule_Activity.this,TimelistAct.class);
+                       // drawerLayout.closeDrawers();
                         startActivity(inq);
                         break;
                     case 1:
@@ -262,7 +263,7 @@ public class Schedule_Activity extends AppCompatActivity {
             public void onClick(TextView v,TextView qrtime, int position, int sirtq, String sche, String time) {
                 switch (sirtq){
                     case 5:
-                        List<String> sches=FilesUtil.readSchedulAndTimeTag();
+                        List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
                         String[]  s=new String[sches.size()];
                         String[] times=new String[sches.size()];
                         if(sches.size()>0){
@@ -286,19 +287,19 @@ public class Schedule_Activity extends AppCompatActivity {
 
     private void SchedulReresh(){
         int ScheSelected=sp.getInt("ScheSelected",0);
-        List<String> sches=FilesUtil.readSchedulAndTimeTag();
+        List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
         if(sches.size()>0){
             String[] setqs=sches.get(ScheSelected).split(",");
             current_sche=setqs[0];
             current_sche_time=setqs[1];
         }
-        List<QTime> dall=FilesUtil.readClassTime(current_sche_time);
+        List<QTime> dall=FilesUtil.readClassTime(getApplicationContext(),current_sche_time);
         int y=dall.size();
         if(dall.size()==0||dall==null) y=12;
         editor.putInt("classLen",y);
         editor.commit();
 
-        List<Class_cardmodel> newqall=FilesUtil.readFileData(current_sche);
+        List<Class_cardmodel> newqall=FilesUtil.readFileData(getApplicationContext(),current_sche);
         classqall.clear();
         cls.clear();
         classqall.addAll(newqall);
@@ -367,7 +368,7 @@ public class Schedule_Activity extends AppCompatActivity {
     private void iniTexs(){
         List<QTime> qimes=new ArrayList<>();
         int classLen=sp.getInt("classLen",12);
-        qimes=FilesUtil.readClassTime(current_sche_time);
+        qimes=FilesUtil.readClassTime(getApplicationContext(),current_sche_time);
 
         if(qimes.size()>0){
             for (int d = 0; d < classLen; d++) {
@@ -505,6 +506,7 @@ public class Schedule_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        drawerLayout.closeDrawers();
         SchedulReresh();
     }
 }

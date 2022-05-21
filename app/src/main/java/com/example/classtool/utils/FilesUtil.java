@@ -1,5 +1,6 @@
 package com.example.classtool.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -21,25 +22,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilesUtil {
-    public static void createAllFileDir(){
-        File firstDir=new File(Environment.getExternalStorageDirectory(), "/课表助手/");
-        File schedulDir=new File(firstDir,"/课表数据/");
-        File timeDir=new File(firstDir,"/作息时间数据");
-        File indexDir=new File(firstDir,"/索引");
 
-        if(!firstDir.exists()) firstDir.mkdir();
-        if(firstDir.exists()&&(!schedulDir.exists())&&(!timeDir.exists())&&(!indexDir.exists())){
-            schedulDir.mkdir();
-            timeDir.mkdir();
-            indexDir.mkdir();
+    public static void InitializeFiles(Context context){
+        try{
+           // File dir=context.getDir("课表助手数据",Context.MODE_PRIVATE);
+
+            //if(!dir.exists()) dir.mkdir();
+
+            File schedir=context.getDir("课表数据",Context.MODE_PRIVATE);
+            File timedir=context.getDir("作息时间数据",Context.MODE_PRIVATE);
+            File indexdir=context.getDir("索引",Context.MODE_PRIVATE);
+            if(!schedir.exists()) schedir.mkdir();
+            if(!timedir.exists()) timedir.mkdir();
+            if(!indexdir.exists()) indexdir.mkdir();
+           // Log.i( "InitializeFiles: ",schedir.getAbsolutePath());
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
 
-    public  static  boolean writFile(@NonNull String classtemplate_name,@NonNull List<Class_cardmodel> alls) {
-        File dir = new File(Environment.getExternalStorageDirectory(), "/课表助手/课表数据");
-        Log.i( "writFilepath: ",dir.getAbsolutePath());
-
+    public  static  boolean writFile(Context context,@NonNull String classtemplate_name,@NonNull List<Class_cardmodel> alls) {
+        File dir = context.getDir("课表数据",Context.MODE_PRIVATE);
         try {
             if (!dir.exists()) dir.mkdir();
             File file = new File(dir, classtemplate_name + ".txt");
@@ -47,7 +51,7 @@ public class FilesUtil {
                 file.createNewFile();
             }
 
-         //   FileOutputStream fos = new FileOutputStream(file);
+            //   FileOutputStream fos = new FileOutputStream(file);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             if (alls.size() == 0){
@@ -64,19 +68,17 @@ public class FilesUtil {
 
             writer.close();
 //            writer.close();
-
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-
+        } catch(IOException e){
+            e.printStackTrace();
+        }
         return true;
     }
 
 
-    public static List<Class_cardmodel> readFileData(@NonNull String fileName){
+    public static List<Class_cardmodel> readFileData(Context context,@NonNull String fileName){
         List<String> allq=new ArrayList<>();
         List<Class_cardmodel> dall=new ArrayList<>();
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/课表数据");
+        File dirPath=context.getDir("课表数据",Context.MODE_PRIVATE);
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,fileName+".txt");
@@ -107,9 +109,9 @@ public class FilesUtil {
     }
 
 
-    public static  List<String> readSchedulAndTimeTag(){
+    public static  List<String> readSchedulAndTimeTag(Context context){
         List<String> allq=new ArrayList<>();
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"课表索引.txt");
@@ -133,8 +135,8 @@ public class FilesUtil {
         return allq;
     }
 
-    public static  boolean AppendScheDulAndTimeTag(String tag){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+    public static  boolean AppendScheDulAndTimeTag(Context context,String tag){
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"课表索引.txt");
@@ -156,8 +158,8 @@ public class FilesUtil {
         return true;
     }
 
-    public static  boolean RemoveScheDulAndTimeTag(List<String> walls,String tag){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+    public static  boolean RemoveScheDulAndTimeTag(Context context,List<String> walls,String tag){
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"课表索引.txt");
@@ -189,9 +191,9 @@ public class FilesUtil {
         return true;
     }
 
-    public static  List<String> readTimeTag(){
+    public static  List<String> readTimeTag(Context context){
         List<String> allq=new ArrayList<>();
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"时间总索引.txt");
@@ -215,8 +217,8 @@ public class FilesUtil {
         return allq;
     }
 
-    public static  boolean AppendTimeTag(String tag){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+    public static  boolean AppendTimeTag(Context context,String tag){
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"时间总索引.txt");
@@ -236,8 +238,8 @@ public class FilesUtil {
         return true;
     }
 
-    public static  boolean AppendTimeTags(List<String> tagas){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+    public static  boolean AppendTimeTags(Context context,List<String> tagas){
+        File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"时间总索引.txt");
@@ -262,9 +264,9 @@ public class FilesUtil {
 
 
 
-    public static  boolean AppendClassTime(List<QTime> allq,String name){
+    public static  boolean AppendClassTime(Context context,List<QTime> allq,String name){
 
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据/");
+        File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据/");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,name+".txt");
@@ -288,9 +290,9 @@ public class FilesUtil {
 
 
 
-    public static  List<QTime> readClassTime(String filename){
+    public static  List<QTime> readClassTime(Context context,String filename){
         List<QTime> allq=new ArrayList<>();
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
+        File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
         try{
             if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,filename+".txt");
@@ -315,8 +317,8 @@ public class FilesUtil {
         return allq;
     }
 
-    public static  boolean deleteSingleFile(String fileName){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
+    public static  boolean deleteSingleFile(Context context,String fileName){
+        File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
         File file=new File(dirPath,fileName+".txt");
         if(file.exists()&&file.isFile()){
             file.delete();
@@ -324,8 +326,8 @@ public class FilesUtil {
         }return false;
     }
 
-    public static  boolean deleteScheFile(String fileName){
-        File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/课表数据");
+    public static  boolean deleteScheFile(Context context,String fileName){
+        File dirPath=context.getDir("课表数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"课表数据");
         File file=new File(dirPath,fileName+".txt");
         if(file.exists()&&file.isFile()){
             file.delete();

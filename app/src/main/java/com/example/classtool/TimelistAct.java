@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.TimelistBinder;
 import com.example.classtool.models.QTime;
@@ -21,7 +22,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimelistAct extends AppCompatActivity {
+public class TimelistAct extends BasicActivity {
     private QMUITopBarLayout topbar;
     private RecyclerView recy;
     private MultiTypeAdapter multiAd;
@@ -76,11 +77,11 @@ public class TimelistAct extends AppCompatActivity {
             @Override
             public void onDelete(View v, int position) {
                 SchedulModel schedulModel = (SchedulModel) alls.get(position);
-                boolean is = FilesUtil.deleteSingleFile(schedulModel.getSche());
+                boolean is = FilesUtil.deleteSingleFile(getApplicationContext(),schedulModel.getSche());
                 if (is == false) {
                     Toast.makeText(TimelistAct.this, "删除失败！", Toast.LENGTH_SHORT).show();
                 } else if(is==true){
-                    List<String> timetags=FilesUtil.readTimeTag();
+                    List<String> timetags=FilesUtil.readTimeTag(getApplicationContext());
                     String qtag=((SchedulModel) alls.get(position)).getSche();
                     for(String sd:timetags){
                         if(sd.split(",")[0].equals(qtag)){
@@ -88,7 +89,7 @@ public class TimelistAct extends AppCompatActivity {
                         }
                     }
 
-                    FilesUtil.AppendTimeTags(timetags);
+                    FilesUtil.AppendTimeTags(getApplicationContext(),timetags);
                     alls.remove(position);
                     multiAd.notifyItemRemoved(position);
                     Toast.makeText(TimelistAct.this, "删除成功！", Toast.LENGTH_SHORT).show();
@@ -98,7 +99,7 @@ public class TimelistAct extends AppCompatActivity {
         multiAd.register(SchedulModel.class,timelistBinder);
 
         List<String> timecards=new ArrayList<>();
-        timecards=FilesUtil.readTimeTag();
+        timecards=FilesUtil.readTimeTag(getApplicationContext());
         //
         if(timecards.size()>0){
             String[] tags=new String[timecards.size()];
@@ -114,8 +115,6 @@ public class TimelistAct extends AppCompatActivity {
         }
 
 
-
-
         multiAd.setItems(alls);
         recy.setAdapter(multiAd);
     }
@@ -125,7 +124,7 @@ public class TimelistAct extends AppCompatActivity {
         super.onResume();
         alls.clear();
         List<String> timecards = new ArrayList<>();
-        timecards = FilesUtil.readTimeTag();
+        timecards = FilesUtil.readTimeTag(getApplicationContext());
         //
         if (timecards.size() > 0) {
             String[] tags = new String[timecards.size()];

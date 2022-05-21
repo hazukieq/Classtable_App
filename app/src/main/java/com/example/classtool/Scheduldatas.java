@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.UniversalBinder;
 import com.example.classtool.models.FindSort;
@@ -22,7 +23,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scheduldatas extends AppCompatActivity {
+public class Scheduldatas extends BasicActivity {
 
     private QMUITopBarLayout topBarLayout;
     private MultiTypeAdapter adapter;
@@ -48,7 +49,7 @@ public class Scheduldatas extends AppCompatActivity {
         topBarLayout.setTitle("作息时间列表");
         List<String> sche_tags=new ArrayList<>();
 
-        sche_tags= FilesUtil.readTimeTag();
+        sche_tags= FilesUtil.readTimeTag(getApplicationContext());
 
         if(sche_tags.size()>0){
             for(int i=0;i<sche_tags.size();i++){
@@ -62,7 +63,7 @@ public class Scheduldatas extends AppCompatActivity {
             @Override
             public void onClick(View v, int position, int sirtq, String sortq, String str) {
                  List<String> timevalues=new ArrayList<>();
-                 timevalues=FilesUtil.readTimeTag();
+                 timevalues=FilesUtil.readTimeTag(getApplicationContext());
                  int morNums=4;
                  int noonStartCl=5;
                  int ngithStartCl=9;

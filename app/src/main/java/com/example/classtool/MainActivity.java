@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.PopupWindows;
 import com.example.classtool.binders.Class_cardBinder;
 import com.example.classtool.models.Class_cardmodel;
@@ -46,7 +47,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BasicActivity {
     private QMUISkinValueBuilder builder;
     private QMUIFrameLayout frameLayout;
     private  View mainlayout;
@@ -101,15 +102,18 @@ public class MainActivity extends AppCompatActivity {
                 String time_tmp=sp.getString("current_time_temp","武鸣校区作息时间");
                 int selec=sp.getInt("scheSeq",0);
                 List<String> tags=new ArrayList<>();
-                tags=FilesUtil.readSchedulAndTimeTag();
-               p.Qhowpop(saveLabel,"保存课表"+"("+time_tmp+")","请输入文件名(所选模板名:"+tags.get(selec).split(",")[0]+")");
+                tags=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
+                String templ="";
+                if(tags.size()==0||tags==null) templ="无";
+                else templ=tags.get(selec).split(",")[0];
+               p.Qhowpop(saveLabel,"保存课表"+"("+time_tmp+")","请输入文件名(所选模板名:"+templ+")");
             }
         });
 
         chooseLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               List<String> scheduls=FilesUtil.readSchedulAndTimeTag();
+               List<String> scheduls=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
                if(scheduls.size()>0){
                    String[] values=new String[scheduls.size()];
                    String[] times=new String[scheduls.size()];
@@ -160,7 +164,24 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0;i<alls.size();i++){
                     jall.add((Class_cardmodel) alls.get(i));
                 }
-                boolean isWrite= FilesUtil.writFile("临时课表数据",jall);
+                List<String> checktags=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
+                if(checktags.size()==0){
+                    FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),"临时课表,武鸣校区作息时间");
+                }else{
+                    int check=0;
+                    int nucheck=0;
+                    for(String sdr:checktags){
+                        if(!sdr.split(",")[0].equals("临时课表")){
+                            check+=1;
+                        }
+                        if(sdr.split(",")[0].equals("临时课表")){
+                            nucheck=1;
+                        }
+                    }
+                    if(check>=1&&nucheck==0)  FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),"临时课表,武鸣校区作息时间");
+                }
+
+                boolean isWrite= FilesUtil.writFile(getApplicationContext(),"临时课表",jall);
                 if(isWrite) Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
                 else Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
             }
@@ -199,24 +220,23 @@ public class MainActivity extends AppCompatActivity {
 
         recy.setAdapter(multiTypeAdapter);
         multiTypeAdapter.register(Class_cardmodel.class,class_cardBinder);
-        int selec=sp.getInt("scheSeq",0);
+
+
+        /*int selec=sp.getInt("scheSeq",0);
         Log.i("TAG", "initRecy: "+selec);
         List<String> tags=new ArrayList<>();
-        tags=FilesUtil.readSchedulAndTimeTag();
-        if(tags.size()>0){
+        tags=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
             String[] tasets=new String[tags.size()];
             for(int i=0;i<tags.size();i++){
                 String[] ets=tags.get(i).split(",");
                 tasets[i]=ets[0];
             }
-            List<Class_cardmodel> sall=FilesUtil.readFileData(tasets[selec]);
-            for(Class_cardmodel l:sall){
+           List<Class_cardmodel> sall=FilesUtil.readFileData(getApplicationContext(),tasets[selec]);
+            if(sall==0||sall==null)
+            for(Class_cardmodel l:sall) {
                 alls.add(l);
-            }
+            }*/
             multiTypeAdapter.setItems(alls);
-        }
-
-
 
     }
 
@@ -584,14 +604,10 @@ public class MainActivity extends AppCompatActivity {
 
             if(check==7|check%2==1){
                 Toast.makeText(MainActivity.this, "和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~", Toast.LENGTH_LONG).show();
-                // popups.dismiss();
-            }//else if(check==2){
-               // Toast.makeText(MainActivity.this, "和其他标签的同一天的具体上课时间内产生矛盾了哟~ 请重新修改时间~", Toast.LENGTH_LONG).show();
-
+            }
             else if(check%2==0){
                 switch (type){
                     case 0:
-                        //new UpdateTask(new_data,(Class_cardmodel) alls.get(position)).execute();
                         alls.remove(position);
                         alls.add(position,new_data);
                         multiTypeAdapter.notifyItemChanged(position,"updating");
@@ -599,7 +615,6 @@ public class MainActivity extends AppCompatActivity {
                         popups.dismiss();
                         break;
                     case 1:
-                        //new AddTask(new_data).execute();
                         alls.add(new_data);
                         multiTypeAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "添加标签成功", Toast.LENGTH_SHORT).show();
@@ -656,7 +671,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     List<Class_cardmodel> lall=new ArrayList<>();
                     alls.clear();
-                    lall=FilesUtil.readFileData("临时课表数据");
+                    lall=FilesUtil.readFileData(getApplicationContext(),"临时课表");
                     if(lall.size()>0) {
                         for (int y = 0; y < lall.size(); y++) {
                             Object obj = (Object) lall.get(y);
@@ -694,8 +709,8 @@ public class MainActivity extends AppCompatActivity {
             if (EditgetStr.isEmpty()) {
                 Toast.makeText(MainActivity.this, "请输入文字！", Toast.LENGTH_SHORT).show();
             }else {
-                boolean isWrite= FilesUtil.writFile(EditgetStr,jall);
-                List<String> l=FilesUtil.readSchedulAndTimeTag();
+                boolean isWrite= FilesUtil.writFile(getApplicationContext(),EditgetStr,jall);
+                List<String> l=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
                 int y=0;
                 for(String s: l){
                     if(s.split(",")[0].equals(EditgetStr)){
@@ -705,7 +720,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(y==0) {
                     String time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
-                    FilesUtil.AppendScheDulAndTimeTag(EditgetStr+","+time_temp);
+                    FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),EditgetStr+","+time_temp);
                 }
                 pop.dismiss();
                 if(isWrite) Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
@@ -736,8 +751,8 @@ public class MainActivity extends AppCompatActivity {
                         int ngithStartCl=9;
                        String time_tag=timetags[position];
                        try {
-                           List<String> schetimesl = FilesUtil.readTimeTag();
-                           List<Class_cardmodel> wime=FilesUtil.readFileData(values[position]);
+                           List<String> schetimesl = FilesUtil.readTimeTag(getApplicationContext());
+                           List<Class_cardmodel> wime=FilesUtil.readFileData(getApplicationContext(),values[position]);
                            alls.clear();
                            for(Class_cardmodel c:wime){
                                alls.add(c);

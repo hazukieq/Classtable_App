@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="@color/qmui_config_color_gray_2"
             android:layout_marginTop="10dp"
             android:text="作息时间设定卡片"/>
@@ -67,7 +67,7 @@
             android:layout_marginTop="36dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/qmui_config_color_gray_2"
-            android:lineHeight="28sp"
+            android:lineHeight="28dp"
             android:text="\t\t提示：请输入上课时间和下课时间，格式为「小时分钟-小时分钟」，例如:0820-0900，表示上课时间为8:20，中间的-相当于”...到...“，下课时间9:00；注意，小时是个位数时，须在其前面补0。"
             android:layout_gravity="center_vertical|left"
             android:textSize="14sp"/>

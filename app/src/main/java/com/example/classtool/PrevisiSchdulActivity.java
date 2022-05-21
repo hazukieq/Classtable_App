@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.models.ClassLabel;
 import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.FindSort;
@@ -27,7 +28,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrevisiSchdulActivity extends AppCompatActivity {
+public class PrevisiSchdulActivity extends BasicActivity {
     private TextView classl_1,classl_2,classl_3,classl_4,classl_5,classl_6,classl_7,classl_8,classl_9,classl_10,classl_11,classl_12,classl_13,classl_14,classl_15,classl_16,classl_17,classl_18,schedul_refresh;
     private ArrayList<String> classSas=new ArrayList<>();
     private TextView title,pre_detail_btn;
@@ -74,7 +75,7 @@ public class PrevisiSchdulActivity extends AppCompatActivity {
         List<Class_cardmodel> cool=(List<Class_cardmodel>) bundle.getSerializable("list");
         classqall.addAll(cool);
         current_time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
-        qimes= FilesUtil.readClassTime(current_time_temp);
+        qimes= FilesUtil.readClassTime(getApplicationContext(),current_time_temp);
         classLen=qimes.size();
 
 

@@ -17,9 +17,9 @@
         android:layout_alignParentTop="true">
     <TextView
         android:layout_width="0dp"
-        android:layout_weight="9"
+        android:layout_weight="8"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18sp"
         android:textColor="@color/qmui_config_color_gray_2"
         android:layout_marginTop="10dp"
         android:paddingLeft="8dp"
@@ -28,7 +28,7 @@
 
         <ImageButton
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:id="@+id/class_close_btn"/>
     </LinearLayout>

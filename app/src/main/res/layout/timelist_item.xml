@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="@color/qmui_config_color_gray_2"
             android:layout_marginTop="10dp"
             android:text="作息时间卡片"

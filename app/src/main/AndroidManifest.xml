@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.classtool">
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    package="com.example.classtool" >
 
     <application
         android:allowBackup="true"
@@ -14,7 +10,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme">
+        android:theme="@style/Theme" >
+        <activity
+            android:name=".base.BasicActivity"
+            android:exported="false" />
         <activity
             android:name=".PrevisiSchdulActivity"
             android:exported="false" />
@@ -36,7 +35,7 @@
         <activity
             android:name=".LauncherActivity"
             android:exported="true"
-            android:theme="@style/Theme">
+            android:theme="@style/Theme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
