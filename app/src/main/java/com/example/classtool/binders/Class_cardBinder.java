@@ -52,6 +52,12 @@ public class Class_cardBinder extends ItemViewBinder<Class_cardmodel,Class_cardB
         }
         cvh.lassColor.setBackground(cvh.itemView.getContext().getDrawable(class_cardmodel.getClassColor()));
 
+        cvh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener!=null) onItemClickListener.onItemClick(cvh.itemView,cvh.getAbsoluteAdapterPosition(),class_cardmodel);
+            }
+        });
         cvh.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

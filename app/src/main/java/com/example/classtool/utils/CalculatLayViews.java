@@ -25,7 +25,7 @@ public class CalculatLayViews {
         xYsList.clear();
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < len; j++) {
-                xYsList.add(new ClassLabel(0, j, i, "", 0));
+                xYsList.add(new ClassLabel(0,j, i, "", 0));
             }
         }
     }
@@ -82,6 +82,12 @@ public class CalculatLayViews {
                 qall.remove(all.get(index+2));
                 qall.remove(all.get(index+3));
                 qall.remove(all.get(index+4));
+            }else if(tag==6){
+                qall.remove(all.get(index+1));
+                qall.remove(all.get(index+2));
+                qall.remove(all.get(index+3));
+                qall.remove(all.get(index+4));
+                qall.remove(all.get(index+5));
             }
         }
         return qall;

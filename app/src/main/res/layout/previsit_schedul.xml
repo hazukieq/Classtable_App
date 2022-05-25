@@ -113,6 +113,7 @@
                 android:gravity="center"
                 android:textColor="@color/qmui_config_color_gray_2"
                 android:text="周日"/>
+
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
@@ -123,9 +124,11 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp">
+                android:paddingBottom="2dp"
+                android:layout_marginTop="2dp">
                 <GridLayout
-                    android:layout_width="44dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/pregridclass"
@@ -317,9 +320,9 @@
                         android:id="@+id/presche_classl_18"/>
                 </GridLayout>
                 <GridLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="@color/white"
                     android:useDefaultMargins="false"
                     android:id="@+id/predetailClasses">

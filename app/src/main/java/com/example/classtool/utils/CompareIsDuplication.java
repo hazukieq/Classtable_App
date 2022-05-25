@@ -10,16 +10,9 @@ import java.util.ArrayList;
 
 public  class CompareIsDuplication {
 
- /*   private static String[] startClasses=new String[]{
-            "第1节课", "第2节课", "第3节课", "第4节课", "第5节课",
-            "第6节课", "第7节课", "第8节课", "第9节课",
-            "第10节课", "第11节课", "第12节课", "第13节课"
-    };
-
     private static String[] Class_nums=new String[]{
-           "0节","1节","2节","3节","4节","5节","6节"
-    };*/
-
+           "0节","1节","2节","3节","4节","5节","6节","7节"
+    };
 
     private ArrayList<Class_cardmodel> findLast(ArrayList<Object> alls, String DayAndTime){
         ArrayList<Class_cardmodel> new_alls=new ArrayList<>();
@@ -44,15 +37,12 @@ public  class CompareIsDuplication {
         ArrayList<Class_cardmodel> Allq=findLast(mAlls,DayAndTime);
 
         int error_check=0;
-        if(classStart==5|classStart==10|classStart==15){
-        }//else if(returnStartClass_index(Class_nums,class_num)==0){
-           // current_real_time=1;
-            //Log.i("num-->", String.valueOf(returnStartClass_index(Class_nums,class_num)));
-        //}
-        else{
+       /* if(classStart==5|classStart==10|classStart==15){
+        }
+        else{*/
             current_real_time=returnTime_real_index(Time_sets.detail_real_num,classStart);
             Log.i("真实现在时间数值-->",String.valueOf(current_real_time));
-        }
+//        }
 
         if(Allq.size()==0){
             checkNums=6;
@@ -62,17 +52,17 @@ public  class CompareIsDuplication {
             int check=0;
             for(Class_cardmodel clss:Allq){
                // int check=0;
-                int mLastTime=returnStartClass_index(Time_sets.start_classes,clss.getClass_startClass())+returnStartClass_index(Time_sets.class_nums,clss.getClass_totalClass());
+                int mLastTime=returnStartClass_index(Time_sets.start_classes,clss.getClass_startClass())+returnStartClass_index(Class_nums,clss.getClass_totalClass());
                 int lastTime=returnTime_real_index(Time_sets.detail_real_num,mLastTime);
                 Log.i("之前时间真实数值-->",String.valueOf(lastTime));
 
-                if(returnStartClass_index(Time_sets.class_nums,clss.getClass_totalClass())==4){
+                if(returnStartClass_index(Class_nums,clss.getClass_totalClass())==4){
                     error_check+=1;
                     break;
                 }
 
                 if(lastTime>current_real_time){
-                    int ycurrentindex=returnStartClass_index(Time_sets.start_classes,data.getClass_startClass())+returnStartClass_index(Time_sets.class_nums,class_num);
+                    int ycurrentindex=returnStartClass_index(Time_sets.start_classes,data.getClass_startClass())+returnStartClass_index(Class_nums,class_num);
                     int ycurrent=returnTime_real_index(Time_sets.detail_real_num,ycurrentindex);
 
                     int yindex=returnStartClass_index(Time_sets.start_classes,clss.getClass_startClass());
@@ -90,8 +80,6 @@ public  class CompareIsDuplication {
                 }else if(current_real_time==lastTime&&data.getClass_startClass().equals(clss.getClass_startClass())){
                     error_check+=1;//+Allq.indexOf(clss);
                 }
-
-
                 checkNums=check;
                 Log.i("循环后标记数值-->",String.valueOf(check));
             }
@@ -123,17 +111,4 @@ public  class CompareIsDuplication {
         }
         return index;
     }
-
-    /*public int returnSameTimeTotal(ArrayList<Object> alls,String dayAndTime) {
-        ArrayList<Class_cardmodel> allp = findLast(alls, dayAndTime);
-        int totals = 0;
-        //int total = returnStartClass_index(Class_nums, numsStr);
-        for (Class_cardmodel qlss : allp) {
-
-            int wotal = 0;
-            wotal += returnStartClass_index(Time_sets.class_nums, qlss.getClass_totalClass());
-            totals = wotal;
-        }
-        return totals;
-    }*/
 }

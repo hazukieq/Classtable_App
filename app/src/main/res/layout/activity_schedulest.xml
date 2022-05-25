@@ -45,6 +45,14 @@
               android:textColor="@color/qmui_btn_blue_text"
               android:gravity="center"
               android:maxLines="1"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="导出"
+              android:id="@+id/output"
+              android:textColor="@color/qmui_config_color_gray_2"
+              android:textSize="16sp"
+              android:layout_marginRight="10dp"/>
       </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,15 +132,18 @@
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:scrollbars="none">
+       android:scrollbars="none"
+       android:id="@+id/scheScro">
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:background="@color/white"
            android:orientation="horizontal"
-           android:paddingBottom="8dp">
+           android:paddingBottom="2dp"
+           android:id="@+id/ClassLay">
            <GridLayout
-               android:layout_width="44dp"
+               android:layout_width="0dp"
+               android:layout_weight="1"
                android:layout_height="wrap_content"
                android:orientation="vertical"
                android:id="@+id/gridclass"
@@ -324,11 +335,10 @@
                    android:id="@+id/sche_classl_18"/>
            </GridLayout>
            <GridLayout
-               android:layout_width="match_parent"
+               android:layout_width="0dp"
+               android:layout_weight="7"
                android:layout_height="match_parent"
-               android:orientation="vertical"
                android:background="@color/white"
-               android:useDefaultMargins="false"
                android:id="@+id/detailClasses">
            </GridLayout>
        </LinearLayout>

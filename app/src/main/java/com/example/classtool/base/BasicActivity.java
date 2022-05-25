@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import com.example.classtool.R;
+
 public class BasicActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +27,5 @@ public class BasicActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(configuration,metrics);
         //configuration.setToDefaults();
     }
-
 
 }

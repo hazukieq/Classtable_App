@@ -290,6 +290,7 @@ public class MainActivity extends BasicActivity {
             Class_nums.setText(class_cardmodel.getClass_totalClass());
 
             TagColors.setText(class_cardmodel.getLassColor());
+            TagColors.setBackgroundColor(getColor(class_cardmodel.getClassColor()));
             notes.setText(class_cardmodel.getOtherNotes());
 
             place.setText(class_cardmodel.getClass_classPlace());
@@ -450,7 +451,7 @@ public class MainActivity extends BasicActivity {
                 String classNums=(!Class_nums.getText().toString().isEmpty())?Class_nums.getText().toString():"3节";
                 String places=place.getText().toString();
                 String colorq=(!TagColors.getText().toString().isEmpty())?TagColors.getText().toString():"红色";
-                String courseq= (!class_course.getText().toString().isEmpty())?class_course.getText().toString():"您还未填写任何哦~";
+                String courseq= (!class_course.getText().toString().isEmpty())?class_course.getText().toString():"";
                 String noteq=notes.getText().toString();
                 int color_sort=FindSort.returnColorSort(Time_sets.colors,colorq);
                 Class_cardmodel new_data=new Class_cardmodel(date,courseq,startDate,classNums,places,colorq, Class_colors_set.Class_colors[color_sort],noteq,"class_1",0);
@@ -503,6 +504,7 @@ public class MainActivity extends BasicActivity {
 
                                 case "colors":
                                     TagColors.setText(values[position]);
+                                    TagColors.setBackgroundColor(getColor(Class_colors_set.Class_colors[position]));
                                     break;
 
                                 case "startq":

@@ -3,7 +3,11 @@ package com.example.classtool.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,17 +24,20 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.ZoomButtonsController;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.classtool.HomeAct;
 import com.example.classtool.R;
 import com.example.classtool.base.ComWebView;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
 
 import java.io.UnsupportedEncodingException;
@@ -69,9 +76,7 @@ public class ActcomWeb extends AppCompatActivity {
         web_frame=(FrameLayout) findViewById(R.id.web_frame);
         web_error=new QMUIEmptyView(this);
         web_error.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-       // web_error.setId(R.id.web_error);
         topBarLayout=(QMUITopBarLayout) findViewById(R.id.web_topbar);
-        //QMUIStatusBarHelper.translucent(this);
         Bundle returns=setArguments();
         if(returns!=null){
             String url=returns.getString(EXTRA_URL);
@@ -363,24 +368,18 @@ public class ActcomWeb extends AppCompatActivity {
     }
 
     protected class configTopbars{
-        private boolean left_isVisible=true;
-        private boolean right_isVisible=false;
-        private String[] right_menu_strings=new String[]{};
+        public boolean left_isVisible=true;
+        public boolean right_isVisible=true;
         public configTopbars(QMUITopBarLayout topBarLayout){
-            setConfigs(left_isVisible,right_isVisible);
-            controlVisible();
             setTopbarTitle();
+            controlVisible();
         }
 
         public void setTopbarTitle(){
 
         }
 
-        public void setConfigs(boolean left_isVisible,boolean right_isVisible){
-            this.left_isVisible=left_isVisible;
-            this.right_isVisible=right_isVisible;
 
-        }
 
         private void controlVisible(){
             if(left_isVisible){
@@ -391,7 +390,6 @@ public class ActcomWeb extends AppCompatActivity {
                             mWebView.goBack();
                         }
                         else finish();
-
                     }
                 });
             }
@@ -400,15 +398,43 @@ public class ActcomWeb extends AppCompatActivity {
                 topBarLayout.addRightImageButton(R.drawable.ic_action_more,R.id.web_topbar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        setRightClicks(view,right_menu_strings);
+                        setRightClicks(view.getContext());
                     }
                 });
             }
         }
 
         //这里重写右边菜单内容
-        public void setRightClicks(View Rightbtn_view,String[] right_menu_strings){
-            this.right_menu_strings=right_menu_strings;
+        public void setRightClicks(Context context){
+            QMUIBottomSheet.BottomGridSheetBuilder builder = new QMUIBottomSheet.BottomGridSheetBuilder(context);
+            builder.addItem(R.drawable.ic_action_webview_icon,getString(R.string.webviewAct_webviewOpen),0, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                    .addItem(R.drawable.ic_action_webview_copy,getString(R.string.webviewAct_copy),1, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                    .addItem(R.drawable.ic_action_webview_refresh,getString(R.string.webviewAct_refresh),2,QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)                        .setAddCancelBtn(true)
+                    .setSkinManager(QMUISkinManager.defaultInstance(context))
+                    .setOnSheetItemClickListener(new QMUIBottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
+                        @Override
+                        public void onClick(QMUIBottomSheet dialog, View itemView) {
+                            dialog.dismiss();
+                            int tag = (int) itemView.getTag();
+                            switch (tag) {
+                                case 0:
+                                    Intent intent=new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse(open_url));
+                                    startActivity(intent);
+                                    // Toast.makeText(getActivity(), "分享到微信", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 1:
+                                    ClipboardManager cmb=(ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                    cmb.setText(open_url);
+                                    Toast.makeText(context, "已复制网页链接", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 2:
+                                    mWebView.reload();
+                                    break;
+
+                            }
+                        }
+                    }).build().show();
         }
 
     }

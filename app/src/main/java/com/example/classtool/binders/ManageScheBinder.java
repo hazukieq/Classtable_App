@@ -34,6 +34,14 @@ public class ManageScheBinder extends ItemViewBinder<SchedulModel,ManageScheBind
 
         mvh.title.setText("课表卡片");
         mvh.name.setText(schedulModel.getSche());
+        mvh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onPItemLClick!=null){
+                    onPItemLClick.onDelete(mvh.itemView,schedulModel.getSche(),mvh.getAbsoluteAdapterPosition());
+                }
+            }
+        });
         mvh.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

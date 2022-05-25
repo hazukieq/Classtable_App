@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+        <ImageView android:id="@+id/createFromViewDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:adjustViewBounds="true"
+            android:contentDescription="截图当前界面显示"
+            android:background="@color/qmui_config_color_gray_3"
+            android:padding="1px"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textColor="@color/qmui_btn_blue_text"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:text="取消"
+            android:id="@+id/output_cancel"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textColor="@color/qmui_btn_blue_text"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:text="确认"
+            android:id="@+id/output_confirm"/>
+    </LinearLayout>
+
+</LinearLayout>

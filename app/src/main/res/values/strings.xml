@@ -21,4 +21,7 @@
 </a>\n
     </string>
     <string name="dialog_know">知道了</string>
+    <string name="webviewAct_webviewOpen">手机浏览器</string>
+    <string name="webviewAct_copy">复制网页链接</string>
+    <string name="webviewAct_refresh">刷新网页</string>
 </resources>

@@ -1,12 +1,23 @@
 package com.example.classtool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.Transition;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.classtool.base.BasicActivity;
+import com.example.classtool.utils.FragcomWebView;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -27,16 +38,21 @@ public class AboutActivity extends BasicActivity {
         setContentView(R.layout.activity_about);
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
-        initViews();
+        try {
+            initViews();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-    private void initViews(){
+    private void initViews() throws PackageManager.NameNotFoundException {
         topBar=(QMUITopBarLayout) findViewById(R.id.about_topbar);
         topBar.setTitle(getString(R.string.about_title));
         version=(TextView) findViewById(R.id.version);
-        version.setText(getResources().getText(R.string.about_app_name));
+        PackageManager pm=getPackageManager();
+        PackageInfo packageInfo=pm.getPackageInfo(getPackageName(),0);
+        version.setText(getResources().getText(R.string.about_app_name)+"(版本号："+packageInfo.versionName+")");
 
-        copyright=(TextView) findViewById(R.id.copyright);
-        copyright.setText(getResources().getString(R.string.about_copyright));
+
         about_list=(QMUIGroupListView) findViewById(R.id.about_list);
         QMUICommonListItemView itemView1=about_list.createItemView(getResources().getString(R.string.about_contact));
 
@@ -56,7 +72,17 @@ public class AboutActivity extends BasicActivity {
                 .addItemView(about_list.createItemView(getResources().getString(R.string.open_address)), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent inq=new Intent();
+                        inq.setClass(AboutActivity.this,WebloadAct.class);
+                        startActivity(inq);
+                    }
+                })
+                .addItemView(about_list.createItemView("使用说明"), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in=new Intent();
+                        in.setClass(AboutActivity.this,HomeAct.class);
+                        startActivity(in);
                     }
                 })
                 .addItemView(itemView1, new View.OnClickListener() {
@@ -92,6 +118,21 @@ public class AboutActivity extends BasicActivity {
                     }
                 })
                 .addTo(about_list);
+
+        //iniFrags();
     }
 
-}
+   /* private void iniFrags(){
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction transition=fm.beginTransaction();
+        transition.replace(R.id.weblos,new Webf("https://www.hazukieq.top/html/about.html"));
+        transition.commit();
+    }
+
+    public static  class  Webf extends FragcomWebView{
+        public  Webf(String url){
+            open_url=url;
+        }
+        }*/
+    }
+

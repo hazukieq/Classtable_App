@@ -1,7 +1,5 @@
 package com.example.classtool;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -181,7 +180,7 @@ public class PrevisiSchdulActivity extends BasicActivity {
         calculatLayViews=new CalculatLayViews(classLen);
         switch (type){
             case 0:
-                GridClass.setOrientation(GridLayout.VERTICAL);
+                GridClass.setOrientation(GridLayout.HORIZONTAL);
                 for(Class_cardmodel l:classqall){
                     int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
                     int y=FindSort.returnColorSort(start_classes,l.getClass_startClass());
@@ -208,7 +207,7 @@ public class PrevisiSchdulActivity extends BasicActivity {
                     } else {
                         params.columnSpec = GridLayout.spec(x, 1f);
                         params.rowSpec = GridLayout.spec(y, 1f);
-                        textView.setBackgroundColor(getColor(R.color.white));
+                        textView.setBackgroundColor(getColor(R.color.class_pink));
                     }
                     textView.setTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
                     textView.setTextSize(10f);
@@ -223,16 +222,18 @@ public class PrevisiSchdulActivity extends BasicActivity {
                 GridClass.removeAllViews();
                 Log.i( "initGrids: ",String.valueOf(classLen));
                 GridClass.setOrientation(GridLayout.VERTICAL);
+                GridClass.setRowCount(classLen);
                 for(Class_cardmodel l:classqall){
                     int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
                     int y=FindSort.returnColorSort(start_classes,l.getClass_startClass());
                     int numcls=FindSort.returnColorSort(class_nums,l.getClass_totalClass())+1;
-                    String course="<big>"+l.getClass_course()+"</big><br><br><font color='gray'>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"</font>";
+                    String course="<big>"+l.getClass_course()+"</big><br><br>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"<br/></font>";
 
                     cls.add(new ClassLabel(numcls,y,x,course,l.getClassColor()));
                 }
                 List<ClassLabel> slapall=calculatLayViews.Excheng_Classes(cls);
                 List<ClassLabel> sapall=calculatLayViews.ReturnHtmlindex(slapall);
+               for(ClassLabel l:sapall) Log.i( "initGrids: ","x:"+l.getWeek()+",y:"+l.getStart_class()+",z:"+l.getClass_nums());
 
                 for(int h=0;h<sapall.size();h++) {
                     ClassLabel l = sapall.get(h);
@@ -242,15 +243,36 @@ public class PrevisiSchdulActivity extends BasicActivity {
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                     params.width = 0;
                     params.height = 0;
+
                     if (l.getClass_nums() > 0) {
                         params.columnSpec = GridLayout.spec(x, 1f);
                         params.rowSpec = GridLayout.spec(y, l.getClass_nums(), 1f);
                         textView.setBackgroundColor(getColor(l.getColorq()));
-                    } else {
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                textView.setBackgroundColor(getColor(R.color.light_white));
+                                new QMUIDialog.MessageDialogBuilder(PrevisiSchdulActivity.this)
+                                        .setTitle("课程卡片")
+                                        .setSkinManager(QMUISkinManager.defaultInstance(PrevisiSchdulActivity.this))
+                                        .setMessage(Html.fromHtml(l.getSubjectplanotes().replace("<br><br>","<br><br>上课地点：").replace("<br/><br/>","<br/>备注：")+"上课时间："+weeks[l.getWeek()]+"第"+(l.getStart_class()+1)+"节<br/>共计节数："+l.getClass_nums()+"节"))
+                                        .addAction("知道了", new QMUIDialogAction.ActionListener() {
+                                            @Override
+                                            public void onClick(QMUIDialog dialog, int index) {
+                                                textView.setBackgroundColor(getColor(l.getColorq()));
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .create( R.style.DialogTheme2).show();
+                            }
+                        });
+                    }
+                    else  {
                         params.columnSpec = GridLayout.spec(x, 1f);
                         params.rowSpec = GridLayout.spec(y, 1f);
                         textView.setBackgroundColor(getColor(R.color.white));
                     }
+
                     textView.setTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
                     textView.setTextSize(10f);
                     textView.setGravity(Gravity.CENTER);
@@ -259,7 +281,17 @@ public class PrevisiSchdulActivity extends BasicActivity {
                     params.setMargins(3, 2, 3, 2);
                     GridClass.addView(textView,params);
                 }
+              //  setVix();
                 break;
         }
+    }
+
+    private void setVix(){
+        for(int i=0;i<classLen;i++){
+            TextView vix_1=GridClass.findViewById(i);
+            vix_1.setVisibility(View.GONE);
+        }
+
+
     }
 }

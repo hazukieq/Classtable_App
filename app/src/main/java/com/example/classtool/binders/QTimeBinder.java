@@ -36,6 +36,14 @@ public class QTimeBinder extends ItemViewBinder<QTime,QTimeBinder.QVH> {
 
             String st2en=qTime.getStart2end();
             qvh.time_add_setTime.setText(st2en);
+            qvh.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClick!=null){
+                        onItemClick.onClick(qvh.Edit, qvh.getAbsoluteAdapterPosition(), qTime.getSorq(),qTime.getSortStr(), qTime.getStart2end());
+                    }
+                }
+            });
             qvh.Edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

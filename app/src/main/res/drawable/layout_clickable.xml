@@ -3,8 +3,4 @@
     <item android:state_pressed="true">
         <color android:color="@color/light_white"/>
     </item>
-    <item>
-        <color android:color="@color/white"/>
-    </item>
-
 </selector>

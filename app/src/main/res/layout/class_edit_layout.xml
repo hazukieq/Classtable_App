@@ -210,13 +210,12 @@
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="40dp"
-                android:background="@null"
-                android:textColor="@color/qmui_btn_blue_text"
-                android:textSize="18sp"
-                android:hint="红色"
-                android:textColorHint="@color/qmui_btn_blue_text"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="8dp"
+                android:background="@color/class_pink"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="粉红色"
+                android:gravity="center"
+                android:layout_marginLeft="8dp"
                 android:id="@+id/class_color"/>
         </LinearLayout>
         <EditText

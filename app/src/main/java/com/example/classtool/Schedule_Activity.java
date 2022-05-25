@@ -1,13 +1,18 @@
 package com.example.classtool;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -18,6 +23,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +42,18 @@ import com.example.classtool.binders.UniversalBinder;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.CalculatLayViews;
 import com.example.classtool.utils.FilesUtil;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallback;
+import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
+import com.permissionx.guolindev.request.ForwardScope;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
 import com.qmuiteam.qmui.skin.QMUISkinHelper;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.skin.QMUISkinValueBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -52,7 +67,7 @@ import java.util.List;
 
 public class Schedule_Activity extends BasicActivity {
 
-    private TextView classl_1,classl_2,classl_3,classl_4,classl_5,classl_6,classl_7,classl_8,classl_9,classl_10,classl_11,classl_12,classl_13,classl_14,classl_15,classl_16,classl_17,classl_18,schedul_refresh;
+    private TextView classl_1,classl_2,classl_3,classl_4,classl_5,classl_6,classl_7,classl_8,classl_9,classl_10,classl_11,classl_12,classl_13,classl_14,classl_15,classl_16,classl_17,classl_18,schedul_refresh,output;
     private ArrayList<String> classSas=new ArrayList<>();
     private GridLayout gridClasses;
     private ImageButton popup_close_btn;
@@ -70,6 +85,9 @@ public class Schedule_Activity extends BasicActivity {
     private QMUIFullScreenPopup popups;
     private EditText title_edit;
     private QMUIRoundButton popup_save_btn;
+    private LinearLayout topweek,classLay,fillia;
+    private ScrollView classScro;
+
 
     private List<Class_cardmodel> classqall=new ArrayList<>();
     private List<TextView> textViews=new ArrayList<>();
@@ -77,6 +95,7 @@ public class Schedule_Activity extends BasicActivity {
     private CalculatLayViews calculatLayViews;
     private String current_sche="临时课表";
     private String current_sche_time="武鸣校区作息时间";
+    private boolean isGranted=false;
     String[] weeks=new String[]{
             "星期一","星期二","星期三","星期四","星期五","星期六","星期日",
     };
@@ -91,7 +110,7 @@ public class Schedule_Activity extends BasicActivity {
     };
 
     private static String[] Clme=new String[]{
-            "8:20<br>9:00","9:05<br>9:45","9:55<br>10:35","10:45<br>11:25","11:30<br>12:10",
+            "08:20<br>09:00","09:05<br>09:45","09:55<br>10:35","10:45<br>11:25","11:30<br>12:10",
             "14:00<br>14:40","14:45<br>15:25","15:35<br>16:15","16:20<br>17:00",
             "19:00<br>19:45","19:55<br>20:40","20:50<br>21:35",
     };
@@ -105,6 +124,10 @@ public class Schedule_Activity extends BasicActivity {
         sp= PreferenceManager.getDefaultSharedPreferences(Schedule_Activity.this);
         editor=sp.edit();
         gridClasses=(GridLayout) findViewById(R.id.detailClasses);
+        topweek=(LinearLayout)findViewById(R.id.topweeks);
+        fillia=(LinearLayout)findViewById(R.id.filia);
+        classLay=(LinearLayout)findViewById(R.id.ClassLay);
+        classScro=(ScrollView)findViewById(R.id.scheScro);
 
         inits();
         int firstL=sp.getInt("firstL",0);
@@ -187,6 +210,7 @@ public class Schedule_Activity extends BasicActivity {
         multiTypeAdapter=new MultiTypeAdapter();
         titleq=(TextView) findViewById(R.id.class_schedule_title);
         recy=(RecyclerView) findViewById(R.id.scehdul_recy);
+        output=(TextView)findViewById(R.id.output);
         schedul_refresh=(TextView)findViewById(R.id.schedul_refresh);
         schedul_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,9 +228,77 @@ public class Schedule_Activity extends BasicActivity {
 
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            output.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    QMUIDialog.CustomDialogBuilder dialogBuilder=new QMUIDialog.CustomDialogBuilder(Schedule_Activity.this);
+                    dialogBuilder.setSkinManager(QMUISkinManager.defaultInstance(Schedule_Activity.this));
+                    dialogBuilder.setLayout(R.layout.output_img_layout);
+                    final QMUIDialog dialog=dialogBuilder.setTitle("导出课表截图").create();
+                    ImageView imageView=(ImageView) dialog.findViewById(R.id.createFromViewDisplay);
+                    TextView cancel=(TextView) dialog.findViewById(R.id.output_cancel);
+                    TextView confirm=(TextView) dialog.findViewById(R.id.output_confirm);
+                    int h=0;
+                    for(int i=0;i<classScro.getChildCount();i++){
+                        h+=classScro.getChildAt(i).getHeight();
+                    }
+
+                     Bitmap sche_bitmap= Bitmap.createBitmap(classScro.getWidth(),h,Bitmap.Config.RGB_565);
+                    final Canvas sche_canvas=new Canvas(sche_bitmap);
+                    classScro.draw(sche_canvas);
+
+                    Bitmap top_bitmap=Bitmap.createBitmap(fillia.getWidth(),fillia.getHeight(),Bitmap.Config.RGB_565);
+                    Canvas top_canvas=new Canvas(top_bitmap);
+                    fillia.draw(top_canvas);
+
+                    Bitmap week_bitmap=Bitmap.createBitmap(topweek.getWidth(),topweek.getHeight(),Bitmap.Config.RGB_565);
+                    final Canvas week_canvas=new Canvas(week_bitmap);
+                    topweek.draw(week_canvas);
+
+                    int w=topweek.getWidth();
+                    int he=week_bitmap.getHeight()+sche_bitmap.getHeight()+top_bitmap.getHeight();
+                    Bitmap bitmap=Bitmap.createBitmap(w,he,Bitmap.Config.RGB_565);
+                    Canvas canvas=new Canvas(bitmap);
+
+                    Paint p=new Paint();
+                    canvas.drawBitmap(top_bitmap,0,0,p);
+                    canvas.drawBitmap(week_bitmap,0,top_bitmap.getHeight(),p);
+                    canvas.drawBitmap(sche_bitmap,0,top_bitmap.getHeight()+week_bitmap.getHeight(),p);
+                    imageView.setImageBitmap(bitmap);
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    confirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                                boolean isSave= FilesUtil.saveImg(Schedule_Activity.this,bitmap,"课表图片");
+                                if(isSave){
+                                    Toast.makeText(Schedule_Activity.this, "课表图片保存成功,请前往相册查看！", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(Schedule_Activity.this, "课表图片保存失败", Toast.LENGTH_SHORT).show();
+                                }
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+
+        }
+    }
+
     private void initRecy(){
-        alls.add(new QTime(6,"","编辑课表标题"));
         alls.add(new SchedulModel(5,current_sche,current_sche_time));
+        alls.add(new QTime(6,"","编辑课表标题"));
         alls.add(new QTime(0,"","课表时间设定"));
         alls.add(new QTime(1,"","周课表制作"));
         alls.add(new QTime(2,"","学期模板制作"));
@@ -231,7 +323,6 @@ public class Schedule_Activity extends BasicActivity {
                     case 4:
                         inq.setClass(Schedule_Activity.this,AboutActivity.class);
                         startActivity(inq);
-                        overridePendingTransition(com.qmuiteam.qmui.R.anim.abc_slide_in_bottom, com.qmuiteam.qmui.R.anim.abc_slide_out_bottom);
                         break;
                     case 6:
                         showpop(recy);
@@ -381,12 +472,13 @@ public class Schedule_Activity extends BasicActivity {
     private void initGrids(){
         int classLen=sp.getInt("classLen",12);
         calculatLayViews=new CalculatLayViews(classLen);
-                gridClasses.setOrientation(GridLayout.VERTICAL);
+                gridClasses.setOrientation(GridLayout.HORIZONTAL);
+                //gridClasses.setColumnCount(7);
                 for(Class_cardmodel l:classqall){
                     int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
                     int y=FindSort.returnColorSort(start_classes,l.getClass_startClass());
                     int numcls=FindSort.returnColorSort(class_nums,l.getClass_totalClass())+1;
-                    String course="<big>"+l.getClass_course()+"</big><br><br><font color='gray'>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"</font>";
+                    String course="<big>"+l.getClass_course()+"</big><br><br>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"<br/></font>";
 
                     cls.add(new ClassLabel(numcls,y,x,course,l.getClassColor()));
                 }
@@ -402,14 +494,34 @@ public class Schedule_Activity extends BasicActivity {
                     params.width = 0;
                     params.height = 0;
                     if (l.getClass_nums() > 0) {
-                        params.columnSpec = GridLayout.spec(x, 1f);
+                        params.columnSpec = GridLayout.spec(x,1, 1f);
                         params.rowSpec = GridLayout.spec(y, l.getClass_nums(), 1f);
                         textView.setBackgroundColor(getColor(l.getColorq()));
+
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                textView.setBackgroundColor(getColor(R.color.light_white));
+                                new QMUIDialog.MessageDialogBuilder(Schedule_Activity.this)
+                                        .setTitle("课程卡片")
+                                        .setSkinManager(QMUISkinManager.defaultInstance(Schedule_Activity.this))
+                                        .setMessage(Html.fromHtml(l.getSubjectplanotes().replace("<br><br>","<br><br>上课地点：").replace("<br/><br/>","<br/>备注：")+"上课时间："+weeks[l.getWeek()]+"第"+(l.getStart_class()+1)+"节<br/>共计节数："+l.getClass_nums()+"节"))
+                                        .addAction("知道了", new QMUIDialogAction.ActionListener() {
+                                            @Override
+                                            public void onClick(QMUIDialog dialog, int index) {
+                                                textView.setBackgroundColor(getColor(l.getColorq()));
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .create( R.style.DialogTheme2).show();
+                            }
+                        });
                     } else {
-                        params.columnSpec = GridLayout.spec(x, 1f);
-                        params.rowSpec = GridLayout.spec(y, 1f);
+                        params.columnSpec = GridLayout.spec(x, 1,1f);
+                        params.rowSpec = GridLayout.spec(y,1, 1f);
                         textView.setBackgroundColor(getColor(R.color.white));
                     }
+
                     textView.setTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
                     textView.setTextSize(10f);
                     textView.setGravity(Gravity.CENTER);
@@ -509,4 +621,6 @@ public class Schedule_Activity extends BasicActivity {
         drawerLayout.closeDrawers();
         SchedulReresh();
     }
+
+
 }

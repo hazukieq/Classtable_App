@@ -1,7 +1,10 @@
 package com.example.classtool.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import com.example.classtool.models.Time_sets;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -345,6 +349,36 @@ public class FilesUtil {
 
          oldFile.renameTo(new File(neopa));
          return  true;
+    }
+
+    public static  boolean saveImg(Context context,Bitmap bitmap,String bitName){
+        String fileName;
+        File file;
+        if(Build.BRAND.equals("xiaomi")){
+            fileName=Environment.getExternalStorageDirectory().getPath()+"/DCIM/Camera/"+bitName;
+        }else if(Build.BRAND.equals("Huawei")){
+            fileName=Environment.getExternalStorageDirectory().getPath()+"/DCIM/Camera"+bitName;
+        }else{
+            fileName=Environment.getExternalStorageDirectory().getPath()+"/DCIM/"+bitName;
+        }
+
+        file=new File(fileName);
+        if(file.exists()){
+            file.delete();
+        }
+        FileOutputStream outputStream;
+        try{
+            outputStream=new FileOutputStream(file);
+            if(bitmap.compress(Bitmap.CompressFormat.JPEG,90,outputStream)){
+                outputStream.flush();
+                outputStream.close();
+                MediaStore.Images.Media.insertImage(context.getContentResolver(),file.getAbsolutePath(),bitName,null);
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

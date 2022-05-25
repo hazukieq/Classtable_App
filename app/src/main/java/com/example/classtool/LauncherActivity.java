@@ -1,13 +1,26 @@
 package com.example.classtool;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.example.classtool.utils.FilesUtil;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallback;
+import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
+import com.permissionx.guolindev.request.ForwardScope;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
+import java.util.List;
+
 
 public class LauncherActivity extends AppCompatActivity {
     private SharedPreferences sp;
@@ -16,8 +29,6 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
-
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         int firstL = 0;
@@ -31,21 +42,53 @@ public class LauncherActivity extends AppCompatActivity {
             editor.commit();
             FilesUtil.InitializeFiles(LauncherActivity.this);
         }
-        doAfterPermissionsGranted();
+
+        permisions();
+    }
+
+    private void permisions(){
+        PermissionX.init(this)
+                .permissions(Manifest.permission.INTERNET,Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.ACCESS_WIFI_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .explainReasonBeforeRequest()
+                .onExplainRequestReason(new ExplainReasonCallback() {
+                    @Override
+                    public void onExplainReason(@NonNull ExplainScope scope, @NonNull List<String> deniedList) {
+                         scope.showRequestReasonDialog(deniedList,"APP需要申请以下权限，以便于提升用户体验。","我知道了","取消");
+                    }
+                })
+                .onForwardToSettings(new ForwardToSettingsCallback() {
+                    @Override
+                    public void onForwardToSettings(@NonNull ForwardScope scope, @NonNull List<String> deniedList) {
+                        scope.showForwardToSettingsDialog(deniedList,"您需要去应用程序设置当中手动开启权限,此权限只用于访问项目地址)","我已明白");
+                    }
+                })
+                .request(new RequestCallback() {
+                    @Override
+                    public void onResult(boolean allGranted, @NonNull List<String> grantedList, @NonNull List<String> deniedList) {
+                        if(allGranted){
+                            doAfterPermissionsGranted();
+                            //Toast.makeText(LauncherActivity.this, "所有申请权限都已通过", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(LauncherActivity.this, "您拒绝了以下权限："+deniedList, Toast.LENGTH_SHORT).show();
+                            doAfterPermissionsGranted();
+                            //permisions();
+                        }
+                    }
+                });
     }
 
     private void doAfterPermissionsGranted() {
 
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+       // Handler handler=new Handler();
+       // handler.postDelayed(new Runnable() {
+         //   @Override
+           // public void run() {
                 Intent in = new Intent();
                 in.setClass(LauncherActivity.this,Schedule_Activity.class);
                 startActivity(in);
                 finish();
-            }
-        },800);
+         //   }
+        //},800);
     }
 
     @Override

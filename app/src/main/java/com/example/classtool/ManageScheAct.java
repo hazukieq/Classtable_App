@@ -11,8 +11,11 @@ import com.example.classtool.base.BasicActivity;
 import com.example.classtool.binders.ManageScheBinder;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.FilesUtil;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,25 +44,42 @@ public class ManageScheAct extends BasicActivity {
         manageScheBinder.setOnPItemLClick(new ManageScheBinder.OnPItemLClick() {
             @Override
             public void onDelete(View v,String name, int position) {
-                if(FilesUtil.deleteScheFile(getApplicationContext(),name)) {
-                    if(alls.size()>0){
-                        alls.remove(position);
-                        multiTypeAdapter.notifyItemRemoved(position);
-                        Toast.makeText(ManageScheAct.this, "删除文件成功！", Toast.LENGTH_SHORT).show();
-                    }
+                new QMUIDialog.MessageDialogBuilder(ManageScheAct.this)
+                        .setTitle("课表卡片")
+                        .setSkinManager(QMUISkinManager.defaultInstance(ManageScheAct.this))
+                        .setMessage("请问您需要删除名为"+name+"的课表文件吗？")
+                        .addAction("取消", new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .addAction("确认", new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                if(FilesUtil.deleteScheFile(getApplicationContext(),name)) {
+                                    if(alls.size()>0){
+                                        alls.remove(position);
+                                        multiTypeAdapter.notifyItemRemoved(position);
+                                        Toast.makeText(ManageScheAct.this, "删除文件成功！", Toast.LENGTH_SHORT).show();
+                                    }
 
 
-                }
-                List<String> alsa=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
-                FilesUtil.RemoveScheDulAndTimeTag(getApplicationContext(),alsa,name);
+                                }
+                                List<String> alsa=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
+                                FilesUtil.RemoveScheDulAndTimeTag(getApplicationContext(),alsa,name);
+                                checkVisible();
+                                dialog.dismiss();
+                            }
+                        })
+                        .create( R.style.DialogTheme2).show();
+
             }
         });
 
         List<String> df= FilesUtil.readSchedulAndTimeTag(getApplicationContext());
-        //alls.add(new SchedulModel(0,df.get(0).split(",")[0],"不删除"));
         if(df.size()>0){
             for(int y=1;y<df.size();y++){
-                //if(y==0&&df.get(0).split(",")[0].equals("临时课表"))
                 alls.add(new SchedulModel(y,df.get(y).split(",")[0],"dl"));
             }
         }

@@ -1,14 +1,11 @@
 package com.example.classtool;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -24,8 +21,6 @@ import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.QTimeBinder;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.Time_sets;
-import com.example.classtool.utils.CheckIllegalStrUtil;
-import com.example.classtool.utils.CompareIsDuplication;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.ShowDialogUtil;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
@@ -40,7 +35,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.popup.QMUIFullScreenPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
