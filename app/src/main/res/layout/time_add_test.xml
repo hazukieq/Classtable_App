@@ -15,7 +15,7 @@
             android:id="@+id/collapsing_topbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|snap"
             app:qmui_collapsedTitleGravity="center"
             app:qmui_contentScrim="@color/white"
             app:qmui_expandedTitleGravity="center_horizontal|bottom"
@@ -41,7 +41,7 @@
                     android:text="课程时间设定"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,11 +166,12 @@
             <com.qmuiteam.qmui.widget.QMUITopBar
                 android:id="@+id/topbar"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="36dp"
                 android:fitsSystemWindows="true"
                 app:qmui_layout_collapseMode="pin"
                 android:background="@android:color/transparent"
-                app:qmui_bottomDividerHeight="0px"/>
+                app:qmui_bottomDividerHeight="0px"
+                />
         </com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout>
     </com.qmuiteam.qmui.widget.QMUIAppBarLayout>
 

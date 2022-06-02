@@ -20,7 +20,7 @@ import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.QTimeBinder;
 import com.example.classtool.models.QTime;
-import com.example.classtool.models.Time_sets;
+import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.ShowDialogUtil;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
@@ -55,6 +55,7 @@ public class TimeAddingActivity extends BasicActivity {
     private ArrayList<Object> alls=new ArrayList<>();
     private QMUICollapsingTopBarLayout collapsingTopBarLayout;
     private QShowDialogUtil showDialogUtil;
+    private List<String> strList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class TimeAddingActivity extends BasicActivity {
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         //sp= PreferenceManager.getDefaultSharedPreferences(TimeAddingActivity.this);
         showDialogUtil=new QShowDialogUtil(TimeAddingActivity.this);
+        List<String> gd=FilesUtil.readTimeTag(TimeAddingActivity.this);
+        strList.addAll(gd);
         initMainViews();
         //editor=sp.edit();
         initsView();
@@ -87,10 +90,11 @@ public class TimeAddingActivity extends BasicActivity {
         recy=(RecyclerView)findViewById(R.id.act_add_recy);
         collapsingTopBarLayout=(QMUICollapsingTopBarLayout)findViewById(R.id.collapsing_topbar_layout);
 
-        collapsingTopBarLayout.setTitle("课表时间设定");
-        collapsingTopBarLayout.setCollapsedTitleGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
-        collapsingTopBarLayout.setCollapsedTitleTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
+        //collapsingTopBarLayout.setTitle("课表时间设定");
+        //collapsingTopBarLayout.setCollapsedTitleGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+        //collapsingTopBarLayout.setCollapsedTitleTextColor(getColor(com.qmuiteam.qmui.R.color.qmui_config_color_gray_2));
         collapsingTopBarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        //collapsingTopBarLayout.set
 
         act_morning_nums.setText("5节");
         act_noon_startCl.setText("第6节课");
@@ -128,49 +132,52 @@ public class TimeAddingActivity extends BasicActivity {
         act_morning_nums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("上午上课总节数",6,Time_sets.class_nums,act_morning_nums,false,returnColorSort(Time_sets.class_nums,act_morning_nums.getText().toString()),"mor_Clnums");
+                showBottom("上午上课总节数",6, Static_sets.class_nums,act_morning_nums,false,returnColorSort(Static_sets.class_nums,act_morning_nums.getText().toString()),"mor_Clnums");
             }
         });
 
         act_noon_startCl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("下午上课开始时间",13,Time_sets.start_classes,act_noon_startCl,true,returnColorSort(Time_sets.start_classes,act_noon_startCl.getText().toString()),"noon_startCl");
+                showBottom("下午上课开始时间",13, Static_sets.start_classes,act_noon_startCl,true,returnColorSort(Static_sets.start_classes,act_noon_startCl.getText().toString()),"noon_startCl");
             }
         });
 
         act_add_noon_nums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("下午上课总节数",6,Time_sets.class_nums,act_add_noon_nums,false,returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString()),"noon_Clnums");
+                showBottom("下午上课总节数",6, Static_sets.class_nums,act_add_noon_nums,false,returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString()),"noon_Clnums");
             }
         });
 
         act_ngith_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("晚上上课开始时间",13,Time_sets.start_classes,act_ngith_start,true,returnColorSort(Time_sets.start_classes,act_ngith_start.getText().toString()),"ngith_startCl");
+                showBottom("晚上上课开始时间",13, Static_sets.start_classes,act_ngith_start,true,returnColorSort(Static_sets.start_classes,act_ngith_start.getText().toString()),"ngith_startCl");
             }
         });
 
         act_ngith_nums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("晚上上课总节数",6,Time_sets.class_nums,act_ngith_nums,false,returnColorSort(Time_sets.class_nums,act_ngith_nums.getText().toString()),"ngith_Clnums");
+                showBottom("晚上上课总节数",6, Static_sets.class_nums,act_ngith_nums,false,returnColorSort(Static_sets.class_nums,act_ngith_nums.getText().toString()),"ngith_Clnums");
             }
         });
 
         act_add_saving.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int morning_nums=returnColorSort(Time_sets.class_nums,act_morning_nums.getText().toString());
-                int noon_startCl=returnColorSort(Time_sets.start_classes,act_noon_startCl.getText().toString());
-                int ngith_startCl=returnColorSort(Time_sets.start_classes,act_ngith_start.getText().toString());
-                int noon_nums=returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString());
-                int classLen=ngith_startCl+returnColorSort(Time_sets.class_nums,act_ngith_nums.getText().toString())+1;
+                int morning_nums=returnColorSort(Static_sets.class_nums,act_morning_nums.getText().toString());
+                int noon_startCl=returnColorSort(Static_sets.start_classes,act_noon_startCl.getText().toString());
+                int ngith_startCl=returnColorSort(Static_sets.start_classes,act_ngith_start.getText().toString());
+                int noon_nums=returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString());
+                int classLen=ngith_startCl+returnColorSort(Static_sets.class_nums,act_ngith_nums.getText().toString())+1;
                 if(alls.size()==classLen){
                     showDialogUtil.Qhowpop(act_add_saving,"保存作息时间","请输入文件名以保存相关数据");
                 }else{
+                    /*new QMUITipDialog.Builder(TimeAddingActivity.this)
+                            .setTipWord("保存失败，请点击生成具体课表时间按钮！")
+                            .create().show();*/
                     Toast.makeText(TimeAddingActivity.this, "保存失败，请点击生成具体课表时间按钮！", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -178,11 +185,11 @@ public class TimeAddingActivity extends BasicActivity {
     }
 
     private void iniDatas(){
-        int morning_nums=returnColorSort(Time_sets.class_nums,act_morning_nums.getText().toString());
-        int start_noon=returnColorSort(Time_sets.start_classes,act_noon_startCl.getText().toString());
-        int noon_nums=returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString());
-        int startCl_ngith=returnColorSort(Time_sets.start_classes,act_ngith_start.getText().toString());
-        int ngith_nums=returnColorSort(Time_sets.class_nums,act_ngith_nums.getText().toString());
+        int morning_nums=returnColorSort(Static_sets.class_nums,act_morning_nums.getText().toString());
+        int start_noon=returnColorSort(Static_sets.start_classes,act_noon_startCl.getText().toString());
+        int noon_nums=returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString());
+        int startCl_ngith=returnColorSort(Static_sets.start_classes,act_ngith_start.getText().toString());
+        int ngith_nums=returnColorSort(Static_sets.class_nums,act_ngith_nums.getText().toString());
 
             for(int i=0;i<=morning_nums+noon_nums+ngith_nums+3;i++){
                 if(i<=morning_nums){
@@ -258,7 +265,7 @@ public class TimeAddingActivity extends BasicActivity {
                 alls.add(position,new QTime(sort,sortStr, timeStr.replaceAll("(\\d{2})(.*)(\\d{2})$","$1:$2:$3")));
                 multiTypeAdapter.notifyItemChanged(position,"updating");
                // boolean check= CheckIllegalStrUtil.isIllegalStr(timeStr);
-                Toast.makeText(TimeAddingActivity.this, "内容更新成功!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TimeAddingActivity.this, "内容更新成功!", Toast.LENGTH_SHORT).show();
                  popups.dismiss();
             }
         });
@@ -280,35 +287,41 @@ public class TimeAddingActivity extends BasicActivity {
                         dialog.dismiss();
                         switch (tagq){
                             case "mor_Clnums":
-                                act_noon_startCl.setText(Time_sets.start_classes[position+1]);
-                                int kall=position+2+returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString());
-                                act_ngith_start.setText(Time_sets.start_classes[kall]);
+                                act_noon_startCl.setText(Static_sets.start_classes[position+1]);
+                                int kall=position+2+returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString());
+                                act_ngith_start.setText(Static_sets.start_classes[kall]);
                                 view.setText(values[position]);
                                 break;
                             case "noon_startCl":
-                                int allq=returnColorSort(Time_sets.class_nums,act_morning_nums.getText().toString());
-                                int noonall=position+returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString());
+                                int allq=returnColorSort(Static_sets.class_nums,act_morning_nums.getText().toString());
+                                int noonall=position+returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString());
                                 if(position>allq) {
                                     view.setText(values[position]);
-                                    act_ngith_start.setText(Time_sets.start_classes[noonall+1]);
+                                    act_ngith_start.setText(Static_sets.start_classes[noonall+1]);
 
                                 }else{
+                                    //new QMUITipDialog.Builder(TimeAddingActivity.this)
+                                      //      .setTipWord("哎呀...和上午时间段发生冲突了哟~")
+                                        //    .create().show();
                                     Toast.makeText(TimeAddingActivity.this, "哎呀...和上午时间段发生冲突了哟~", Toast.LENGTH_SHORT).show();
                                 }
 
                                 break;
 
                             case "noon_Clnums":
-                                int noon_startCl=returnColorSort(Time_sets.start_classes,act_noon_startCl.getText().toString());
-                                act_ngith_start.setText(Time_sets.start_classes[noon_startCl+position+1]);
+                                int noon_startCl=returnColorSort(Static_sets.start_classes,act_noon_startCl.getText().toString());
+                                act_ngith_start.setText(Static_sets.start_classes[noon_startCl+position+1]);
                                 view.setText(values[position]);
                                 break;
 
                             case "ngith_startCl":
-                                int all=returnColorSort(Time_sets.start_classes,act_noon_startCl.getText().toString())+returnColorSort(Time_sets.class_nums,act_add_noon_nums.getText().toString());
+                                int all=returnColorSort(Static_sets.start_classes,act_noon_startCl.getText().toString())+returnColorSort(Static_sets.class_nums,act_add_noon_nums.getText().toString());
                                 if(position>all) {
                                     view.setText(values[position]);
                                 }else{
+                                   /* new QMUITipDialog.Builder(TimeAddingActivity.this)
+                                            .setTipWord("哎呀...和下午时间段发生冲突了哟~")
+                                            .create().show();*/
                                     Toast.makeText(TimeAddingActivity.this, "哎呀...和下午时间段发生冲突了哟~", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
@@ -364,11 +377,27 @@ public class TimeAddingActivity extends BasicActivity {
             if (EditgetStr.isEmpty()) {
                 Toast.makeText(TimeAddingActivity.this, "请输入文字！", Toast.LENGTH_SHORT).show();
             }else {
-                FilesUtil.AppendClassTime(getApplicationContext(),qTimeList, EditgetStr);
-                FilesUtil.AppendTimeTag(getApplicationContext(),EditgetStr+","+"第1节课,"+act_morning_nums.getText().toString()+","+act_noon_startCl.getText().toString()+","+act_add_noon_nums.getText().toString()+","+act_ngith_start.getText().toString()+","+act_ngith_nums.getText().toString());
-                Toast.makeText(TimeAddingActivity.this, "数据保存成功！", Toast.LENGTH_SHORT).show();
-                pop.dismiss();
-                finish();
+                int q=0;
+                for(String sre:strList){
+                    if(sre.split(",")[0].equals(EditgetStr)){
+                        q=1;
+                        /*new QMUITipDialog.Builder(TimeAddingActivity.this)
+                                .setTipWord("文件名重复，请重新命名！")
+                                .create().show();*/
+
+                        Toast.makeText(TimeAddingActivity.this, "文件名重复，请重新命名！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(q==0) {
+                    FilesUtil.AppendClassTime(getApplicationContext(), qTimeList, EditgetStr);
+                    FilesUtil.AppendTimeTag(getApplicationContext(), EditgetStr + "," + "第1节课," + act_morning_nums.getText().toString() + "," + act_noon_startCl.getText().toString() + "," + act_add_noon_nums.getText().toString() + "," + act_ngith_start.getText().toString() + "," + act_ngith_nums.getText().toString());
+                    /*new QMUITipDialog.Builder(TimeAddingActivity.this)
+                            .setTipWord("数据保存成功！")
+                            .create().show()*/;
+                    //Toast.makeText(TimeAddingActivity.this, "数据保存成功！", Toast.LENGTH_SHORT).show();
+                    pop.dismiss();
+                    finish();
+                }
             }
         }
     }

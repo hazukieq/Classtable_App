@@ -10,7 +10,7 @@ android {
         minSdk 23
         targetSdk 32
         versionCode 1
-        versionName "alpha.1.0.5"
+        versionName "alpha.1.0.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation 'com.guolindev.permissionx:permissionx:1.6.4'
     //图片加载库
     implementation 'com.github.bumptech.glide:glide:4.12.0'

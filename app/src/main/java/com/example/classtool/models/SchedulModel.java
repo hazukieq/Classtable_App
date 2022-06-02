@@ -21,4 +21,12 @@ public class SchedulModel {
     public String getTime() {
         return time;
     }
+
+    public void setSche(String sche) {
+        this.sche = sche;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

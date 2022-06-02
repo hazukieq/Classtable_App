@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_bg"
         android:id="@+id/class_schedule_title"
-        android:text="周课表制作"
+        android:text="当前课表模板：临时课表"
         android:textSize="20sp"
         android:textColor="@color/qmui_btn_blue_text"
         android:gravity="center"

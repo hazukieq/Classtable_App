@@ -13,6 +13,8 @@ import com.example.classtool.R;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.models.SchedulModel;
 
+import java.util.List;
+
 public class SchedulCardBinder extends ItemViewBinder<SchedulModel,SchedulCardBinder.SVH> {
     private OnScheClick onScheClick=null;
 
@@ -44,6 +46,18 @@ public class SchedulCardBinder extends ItemViewBinder<SchedulModel,SchedulCardBi
                  }
              }
          });
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull SVH holder, SchedulModel item, @NonNull List<?> payloads) {
+        super.onBindViewHolder(holder, item, payloads);
+        if(!payloads.isEmpty()) {
+            String isLoad = payloads.get(0).toString();
+            if (isLoad.equals("updating")) {
+                holder.time.setText(item.getTime());
+                holder.sche.setText(item.getSche());
+            }
+        }
     }
 
     public class SVH extends RecyclerView.ViewHolder{

@@ -18,6 +18,8 @@
         <entry key="..\:/Classtool/app/src/main/res/drawable/save_btn_bg.xml" value="0.1715" />
         <entry key="..\:/Classtool/app/src/main/res/drawable/web_progress.xml" value="0.1715" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_about.xml" value="0.16666666666666666" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_download.xml" value="0.4075425790754258" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_getsche.xml" value="0.3333333333333333" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_launcher.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_manage_sche.xml" value="0.12817028985507245" />
@@ -25,6 +27,7 @@
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_schedule.xml" value="0.39360222531293465" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_schedulest.xml" value="0.25" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_setting.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/activity_shared_manage.xml" value="0.40119760479041916" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_time_adding.xml" value="0.22" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_timelist.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_timeset_axt.xml" value="0.4466666666666667" />
@@ -32,6 +35,7 @@
         <entry key="..\:/Classtool/app/src/main/res/layout/class_edit_layout.xml" value="0.5" />
         <entry key="..\:/Classtool/app/src/main/res/layout/class_info_card_item.xml" value="0.5" />
         <entry key="..\:/Classtool/app/src/main/res/layout/content_basic.xml" value="0.1" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/downcard_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Classtool/app/src/main/res/layout/fragment_check.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/gridsla.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/layout_act_comweb.xml" value="0.12817028985507245" />

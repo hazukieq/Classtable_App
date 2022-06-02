@@ -20,6 +20,7 @@ import com.example.classtool.base.BasicActivity;
 import com.example.classtool.utils.FragcomWebView;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.util.QMUIToastHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -38,6 +39,7 @@ public class AboutActivity extends BasicActivity {
         setContentView(R.layout.activity_about);
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
+
         try {
             initViews();
         } catch (PackageManager.NameNotFoundException e) {

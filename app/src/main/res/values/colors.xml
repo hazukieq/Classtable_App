@@ -65,4 +65,5 @@
     <color name="class_orange">#b99a61</color>
     <color name="class_light_yellow">#ffffcc</color>
     <color name="class_light_purple">#bb86fc</color>
+    <color name="class_btn_bg">#ddedff</color>
 </resources>

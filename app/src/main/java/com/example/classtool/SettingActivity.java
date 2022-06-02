@@ -43,8 +43,11 @@ public class SettingActivity extends BasicActivity {
 
         groupListView=(QMUIGroupListView)findViewById(R.id.groupListView);
 
-        QMUICommonListItemView start_sche =groupListView.createItemView("课表云同步");
+        QMUICommonListItemView start_sche =groupListView.createItemView("制作云课表");
         start_sche.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_NONE);
+
+        QMUICommonListItemView st_sche =groupListView.createItemView("下载云课表");
+        st_sche.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_NONE);
 
         QMUICommonListItemView  manage_sche=groupListView.createItemView("课表文件管理");
         manage_sche.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -56,17 +59,37 @@ public class SettingActivity extends BasicActivity {
                 .addItemView(start_sche, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new QMUIDialog.MessageDialogBuilder(SettingActivity.this)
+                        Intent intent=new Intent();
+                        intent.setClass(SettingActivity.this,SharedManageActivity.class);
+                        startActivity(intent);
+                        /*new QMUIDialog.MessageDialogBuilder(SettingActivity.this)
                                 .setTitle("课表云同步")
                                 .setSkinManager(QMUISkinManager.defaultInstance(SettingActivity.this))
                                 .setMessage("指的是，一个人上传其制作的课表到服务器，并共享给同班同学的一种同步。\n目前作者还没有开发这一功能...")
-                                .addAction("知道了", new QMUIDialogAction.ActionListener() {
+                                .addAction("取消", new QMUIDialogAction.ActionListener() {
                                     @Override
                                     public void onClick(QMUIDialog dialog, int index) {
                                         dialog.dismiss();
                                     }
                                 })
-                                .create( R.style.DialogTheme2).show();
+                                .addAction("前往", new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        Intent intent=new Intent();
+                                        intent.setClass(SettingActivity.this,DownloadActivity.class);
+                                        startActivity(intent);
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create( R.style.DialogTheme2).show();*/
+                    }
+                })
+                .addItemView(st_sche, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       Intent ifq=new Intent();
+                       ifq.setClass(SettingActivity.this,GetscheActivity.class);
+                       startActivity(ifq);
                     }
                 })
                 .addItemView(manage_sche, new View.OnClickListener() {

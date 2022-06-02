@@ -40,6 +40,7 @@ import com.example.classtool.models.FindSort;
 import com.example.classtool.models.QTime;
 import com.example.classtool.binders.UniversalBinder;
 import com.example.classtool.models.SchedulModel;
+import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.CalculatLayViews;
 import com.example.classtool.utils.FilesUtil;
 import com.permissionx.guolindev.PermissionX;
@@ -59,6 +60,7 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIFullScreenPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -96,24 +98,7 @@ public class Schedule_Activity extends BasicActivity {
     private String current_sche="临时课表";
     private String current_sche_time="武鸣校区作息时间";
     private boolean isGranted=false;
-    String[] weeks=new String[]{
-            "星期一","星期二","星期三","星期四","星期五","星期六","星期日",
-    };
-    private  String[] start_classes=new String[]{
-            "第1节课", "第2节课", "第3节课", "第4节课", "第5节课",
-            "第6节课", "第7节课", "第8节课", "第9节课",
-            "第10节课", "第11节课", "第12节课", "第13节课"
-    };
 
-    private  String[] class_nums=new String[]{
-            "1节","2节","3节","4节","5节",
-    };
-
-    private static String[] Clme=new String[]{
-            "08:20<br>09:00","09:05<br>09:45","09:55<br>10:35","10:45<br>11:25","11:30<br>12:10",
-            "14:00<br>14:40","14:45<br>15:25","15:35<br>16:15","16:20<br>17:00",
-            "19:00<br>19:45","19:55<br>20:40","20:50<br>21:35",
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +131,14 @@ public class Schedule_Activity extends BasicActivity {
     private void LoadScheTags(){
         int ScheSelected=sp.getInt("ScheSelected",0);
         List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
-        if(sches.size()>0){
+        //这里可能有错误
+        if(sches.size()>0&&ScheSelected<sches.size()){
             String[] setqs=sches.get(ScheSelected).split(",");
             current_sche=setqs[0];
             current_sche_time=setqs[1];
+        }else{
+            editor.putInt("ScheSelected",0);
+            editor.commit();
         }
 
         List<QTime> dall=FilesUtil.readClassTime(getApplicationContext(),current_sche_time);
@@ -169,17 +158,19 @@ public class Schedule_Activity extends BasicActivity {
     //提前创建默认作息时间文件
     private void initClTime(){
         List<QTime> dao=new ArrayList<>();
-        for(int i=0;i<12;i++){
+            //if(i==0) dao.add(new QTime(0,"#武鸣校区作息时间,第1节课,5节,第6节课,4节,第10节课,3节",""));
 
-            if(i<5&&i>0){
-                dao.add(new QTime(i,"上午第"+(i+1)+"节",Clme[i].replace("<br>","<br/>")));
-            }else if(i>=5&&i<10){
-                dao.add(new QTime(i,"下午第"+(i+1)+"节",Clme[i].replace("<br>","<br/>")));
-            }else{
-                dao.add(new QTime(i,"晚上第"+(i+1)+"节",Clme[i].replace("<br>","<br/>")));
-            }
+       for(int i=0;i<12;i++){
+           if(i<5){
+               dao.add(new QTime(i,"上午第"+(i+1)+"节", Static_sets.Clme[i].replace("<br>","<br/>")));
+           }else if(i>=5&&i<9){
+               dao.add(new QTime(i,"下午第"+(i+1)+"节",Static_sets.Clme[i].replace("<br>","<br/>")));
+           }else if(i>=9&&i<12){
+               dao.add(new QTime(i,"晚上第"+(i+1)+"节",Static_sets.Clme[i].replace("<br>","<br/>")));
+           }
+       }
 
-        }
+
         List<String> timetags=FilesUtil.readTimeTag(getApplicationContext());
         List<String> schetimtag=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
 
@@ -202,7 +193,7 @@ public class Schedule_Activity extends BasicActivity {
 
     }
 
-
+//初始化相关控件
     private void inits(){
         drawerLayout=(DrawerLayout) findViewById(R.id.schedulest_drawer);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
@@ -228,6 +219,7 @@ public class Schedule_Activity extends BasicActivity {
 
     }
 
+    //导出截图类
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -282,8 +274,14 @@ public class Schedule_Activity extends BasicActivity {
 
                                 boolean isSave= FilesUtil.saveImg(Schedule_Activity.this,bitmap,"课表图片");
                                 if(isSave){
+                                   /* new QMUITipDialog.Builder(Schedule_Activity.this)
+                                            .setTipWord("课表图片保存成功,请前往相册查看！")
+                                            .create().show();*/
                                     Toast.makeText(Schedule_Activity.this, "课表图片保存成功,请前往相册查看！", Toast.LENGTH_SHORT).show();
                                 }else{
+                                    /*new QMUITipDialog.Builder(Schedule_Activity.this)
+                                            .setTipWord("课表图片保存失败!")
+                                            .create().show();*/
                                     Toast.makeText(Schedule_Activity.this, "课表图片保存失败", Toast.LENGTH_SHORT).show();
                                 }
                             dialog.dismiss();
@@ -296,6 +294,8 @@ public class Schedule_Activity extends BasicActivity {
         }
     }
 
+
+    //初始化列表数据
     private void initRecy(){
         alls.add(new SchedulModel(5,current_sche,current_sche_time));
         alls.add(new QTime(6,"","编辑课表标题"));
@@ -376,7 +376,9 @@ public class Schedule_Activity extends BasicActivity {
         multiTypeAdapter.setItems(alls);
     }
 
+    //课表刷新类
     private void SchedulReresh(){
+        
         int ScheSelected=sp.getInt("ScheSelected",0);
         List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
         if(sches.size()>0){
@@ -400,6 +402,7 @@ public class Schedule_Activity extends BasicActivity {
         //Toast.makeText(Schedule_Activity.this, "课表数据刷新成功！", Toast.LENGTH_SHORT).show();
     }
 
+    //textViews初始化
     private void initClassl(){
         classl_1=(TextView) findViewById(R.id.sche_classl_1);
         classl_2=(TextView) findViewById(R.id.sche_classl_2);
@@ -442,10 +445,11 @@ public class Schedule_Activity extends BasicActivity {
     }
 
 
+    //控制课表时间段
     private void controlTexts(){
         int classLen=sp.getInt("classLen",12);
         Log.i( "controlTexts: ","classLen:"+classLen);
-        int rest=textViews.size()-classLen;
+       // int rest=textViews.size()-classLen;
         for(int i=0;i<textViews.size();i++){
             if(i<classLen){
                 textViews.get(i).setVisibility(View.VISIBLE);
@@ -456,6 +460,7 @@ public class Schedule_Activity extends BasicActivity {
         iniTexs();
     }
 
+    //时间段文本控制
     private void iniTexs(){
         List<QTime> qimes=new ArrayList<>();
         int classLen=sp.getInt("classLen",12);
@@ -463,21 +468,22 @@ public class Schedule_Activity extends BasicActivity {
 
         if(qimes.size()>0){
             for (int d = 0; d < classLen; d++) {
-                textViews.get(d).setText(Html.fromHtml("<big>" + (d + 1) + "</big>" + "<br><font color='gray'><small>" + qimes.get(d).getStart2end().replace("-", "<br/>") + "</small></font><br>"));
+                textViews.get(d).setText(Html.fromHtml("<big>" + (d+1)  + "</big>" + "<br><font color='gray'><small>" + qimes.get(d).getStart2end().replace("-", "<br/>") + "</small></font><br>"));
             }
         }
 
     }
 
+    //课表数据加载
     private void initGrids(){
         int classLen=sp.getInt("classLen",12);
         calculatLayViews=new CalculatLayViews(classLen);
                 gridClasses.setOrientation(GridLayout.HORIZONTAL);
                 //gridClasses.setColumnCount(7);
                 for(Class_cardmodel l:classqall){
-                    int x= FindSort.returnColorSort(weeks,l.getClass_date().substring(0,3));
-                    int y=FindSort.returnColorSort(start_classes,l.getClass_startClass());
-                    int numcls=FindSort.returnColorSort(class_nums,l.getClass_totalClass())+1;
+                    int x= FindSort.returnColorSort(Static_sets.weeks,l.getClass_date().substring(0,3));
+                    int y=FindSort.returnColorSort(Static_sets.start_classes,l.getClass_startClass());
+                    int numcls=FindSort.returnColorSort(Static_sets.class_nums,l.getClass_totalClass())+1;
                     String course="<big>"+l.getClass_course()+"</big><br><br>"+l.getClass_classPlace()+"<br/><br/>"+l.getOtherNotes()+"<br/></font>";
 
                     cls.add(new ClassLabel(numcls,y,x,course,l.getClassColor()));
@@ -505,7 +511,7 @@ public class Schedule_Activity extends BasicActivity {
                                 new QMUIDialog.MessageDialogBuilder(Schedule_Activity.this)
                                         .setTitle("课程卡片")
                                         .setSkinManager(QMUISkinManager.defaultInstance(Schedule_Activity.this))
-                                        .setMessage(Html.fromHtml(l.getSubjectplanotes().replace("<br><br>","<br><br>上课地点：").replace("<br/><br/>","<br/>备注：")+"上课时间："+weeks[l.getWeek()]+"第"+(l.getStart_class()+1)+"节<br/>共计节数："+l.getClass_nums()+"节"))
+                                        .setMessage(Html.fromHtml(l.getSubjectplanotes().replace("<br><br>","<br><br>上课地点：").replace("<br/><br/>","<br/>备注：")+"上课时间："+Static_sets.weeks[l.getWeek()]+"第"+(l.getStart_class()+1)+"节<br/>共计节数："+l.getClass_nums()+"节"))
                                         .addAction("知道了", new QMUIDialogAction.ActionListener() {
                                             @Override
                                             public void onClick(QMUIDialog dialog, int index) {
@@ -533,6 +539,7 @@ public class Schedule_Activity extends BasicActivity {
         }
 
 
+        //弹窗类
     private void showpop(View AttachV){
         builder = QMUISkinValueBuilder.acquire();
         frameLayout = new QMUIFrameLayout(Schedule_Activity.this);
@@ -579,11 +586,12 @@ public class Schedule_Activity extends BasicActivity {
                 String edi=title_edit.getText().toString();
                 titleq.setText(edi);
                 //FilesUtil.renameFile("临时课表数据",edi);
-                Toast.makeText(Schedule_Activity.this, "标题修改成功！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Schedule_Activity.this, "标题修改成功！", Toast.LENGTH_SHORT).show();
                 popups.dismiss();
             }
         });
     }
+
 
     private void showBottom(String title,String[] values,String[] timeqs,TextView view,TextView view2,int checkposition){
         QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(Schedule_Activity.this);
@@ -618,6 +626,24 @@ public class Schedule_Activity extends BasicActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
+        String[]  s=new String[sches.size()];
+        String[] times=new String[sches.size()];
+        if(sches.size()>0){
+            for(int i=0;i<sches.size();i++) {
+                String[] d=sches.get(i).split(",");
+                s[i]=d[0];
+                times[i]=d[1];
+            }
+        }
+        int el=sp.getInt("ScheSelected",0);
+
+        SchedulModel scd=(SchedulModel) alls.get(0);
+        scd.setTime(times[el]);
+        scd.setSche(s[el]);
+        titleq.setText(s[el]);
+        multiTypeAdapter.notifyItemChanged(0,"updating");
         drawerLayout.closeDrawers();
         SchedulReresh();
     }

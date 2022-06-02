@@ -29,8 +29,8 @@ public class ComWebView extends WebView {
     protected void init(Context context) {
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(false);
+        webSettings.setBuiltInZoomControls(false);
         webSettings.setDefaultTextEncodingName("GBK");
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +12,7 @@ import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.Class_colors_set;
 import com.example.classtool.models.FindSort;
 import com.example.classtool.models.QTime;
-import com.example.classtool.models.Time_sets;
+import com.example.classtool.models.Static_sets;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -101,7 +100,7 @@ public class FilesUtil {
             }else{
                 for (String str : allq) {
                     String[] trs = str.split(",");
-                    dall.add(new Class_cardmodel(trs[0], trs[1], trs[2], trs[3], trs[4], trs[5], Class_colors_set.Class_colors[FindSort.returnColorSort(Time_sets.colors, trs[5])], trs[7], trs[8], 0));
+                    dall.add(new Class_cardmodel(trs[0], trs[1], trs[2], trs[3], trs[4], trs[5], Class_colors_set.Class_colors[FindSort.returnColorSort(Static_sets.colors, trs[5])], trs[7], trs[8], 0));
                 }
             }
 
@@ -162,37 +161,25 @@ public class FilesUtil {
         return true;
     }
 
-    public static  boolean RemoveScheDulAndTimeTag(Context context,List<String> walls,String tag){
+    public static  void RemoveScheDulAndTimeTag(Context context,List<String> walls){
         File dirPath=context.getDir("索引",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
         try{
-            if(!dirPath.exists()) dirPath.mkdir();
             File newdir=new File(dirPath,"课表索引.txt");
-            if(!newdir.exists()){
-                newdir.createNewFile();
-            }
+            FileWriter out=new FileWriter(newdir);
+            BufferedWriter writer=new BufferedWriter(out);
+            if(!dirPath.exists()) dirPath.mkdir();
+            if(!newdir.exists()) newdir.createNewFile();
 
             for(String str:walls){
-                if(str.split(",")[0].equals(tag)){
-                    walls.remove(str);
-                }
-            }
-
-            FileWriter out=new FileWriter(newdir,false);
-            BufferedWriter writer=new BufferedWriter(out);
-
-            List<String> neowalls=new ArrayList<>();
-            neowalls.addAll(walls);
-            for(String strw:neowalls){
-                writer.write(strw);
+                writer.write(str);
                 writer.newLine();
-                writer.close();
             }
+
+            writer.close();
 
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        return true;
     }
 
     public static  List<String> readTimeTag(Context context){
@@ -250,14 +237,14 @@ public class FilesUtil {
             if(!newdir.exists()){
                 newdir.createNewFile();
             }
-            FileWriter out=new FileWriter(newdir,false);
+            FileWriter out=new FileWriter(newdir);
             BufferedWriter writer=new BufferedWriter(out);
 
             for(String tdf:tagas){
                 writer.write(tdf);
                 writer.newLine();
-                writer.close();
             }
+            writer.close();
 
         }catch (IOException e){
             e.printStackTrace();
@@ -266,7 +253,30 @@ public class FilesUtil {
         return true;
     }
 
+    public static  boolean AppendBackupTimeTags(Context context,List<QTime> tagas){
+        File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/索引");
+        try{
+            if(!dirPath.exists()) dirPath.mkdir();
+            File newdir=new File(dirPath,"云备份索引.txt");
+            if(!newdir.exists()){
+                newdir.createNewFile();
+            }
+            FileWriter out=new FileWriter(newdir);
+            BufferedWriter writer=new BufferedWriter(out);
 
+            for(QTime qTime:tagas){
+                writer.write(qTime.getSorq()+","+qTime.getSortStr()+","+qTime.getStart2end().replace("-","<br/>"));
+                writer.newLine();
+
+            }
+            writer.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 
     public static  boolean AppendClassTime(Context context,List<QTime> allq,String name){
 
@@ -309,7 +319,7 @@ public class FilesUtil {
             String record;
             while ((record=reader.readLine())!=null){
                 String[] strs=record.split(",");
-                allq.add(new QTime(FindSort.returnColorSort(Time_sets.detail_real_numStrs,strs[0]),strs[1],strs[2].replace("<br/>","-")));
+                allq.add(new QTime(FindSort.returnColorSort(Static_sets.detail_real_numStrs,strs[0]),strs[1],strs[2].replace("<br/>","-")));
             }
             reader.close();
 
@@ -320,6 +330,36 @@ public class FilesUtil {
 
         return allq;
     }
+
+    public static  String readBackupClassTimetag(Context context,String filename){
+        List<String> allq=new ArrayList<>();
+        String retag="";
+        File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
+        try{
+            if(!dirPath.exists()) dirPath.mkdir();
+            File newdir=new File(dirPath,filename+".txt");
+            if(!newdir.exists()){
+                newdir.createNewFile();
+            }
+
+            FileReader inputStream=new FileReader(newdir);
+            BufferedReader reader=new BufferedReader(inputStream);
+            String record;
+            while ((record=reader.readLine())!=null){
+                //String[] strs=record.split(",");
+                allq.add(record);//new QTime(FindSort.returnColorSort(Time_sets.detail_real_numStrs,strs[0]),strs[1],strs[2].replace("<br/>","-")));
+            }
+            reader.close();
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+       retag=allq.get(0).replace("-1,","");
+        return retag;
+    }
+
 
     public static  boolean deleteSingleFile(Context context,String fileName){
         File dirPath=context.getDir("作息时间数据",Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
@@ -337,11 +377,10 @@ public class FilesUtil {
             file.delete();
             return true;
         }
-
         return false;
     }
 
-    public static boolean renameFile(String oldName,String newName){
+    /*public static boolean renameFile(String oldName,String newName){
         File dirPath=new File(Environment.getExternalStorageDirectory(),"/课表助手/课表数据");
         File oldFile=new File(dirPath,oldName+".txt");
         String olpa=oldFile.getAbsolutePath();
@@ -349,7 +388,7 @@ public class FilesUtil {
 
          oldFile.renameTo(new File(neopa));
          return  true;
-    }
+    }*/
 
     public static  boolean saveImg(Context context,Bitmap bitmap,String bitName){
         String fileName;

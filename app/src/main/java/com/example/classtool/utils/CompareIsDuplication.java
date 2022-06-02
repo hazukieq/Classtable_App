@@ -3,9 +3,8 @@ package com.example.classtool.utils;
 import android.util.Log;
 
 import com.example.classtool.models.Class_cardmodel;
-import com.example.classtool.models.Time_sets;
+import com.example.classtool.models.Static_sets;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 public  class CompareIsDuplication {
@@ -30,7 +29,7 @@ public  class CompareIsDuplication {
 
     public int returnResult(ArrayList<Object> mAlls, Class_cardmodel data, String class_num,String DayAndTime){
 
-        int classStart=returnStartClass_index(Time_sets.start_classes,data.getClass_startClass());
+        int classStart=returnStartClass_index(Static_sets.start_classes,data.getClass_startClass());
         Log.i("上课时间-->",String.valueOf(classStart));
         int checkNums=0;//卡片不存在重复，但现在卡片日期与之前的重复，checknum=2；其他，checkNum=checkNum+5；
         int current_real_time=0;
@@ -40,7 +39,7 @@ public  class CompareIsDuplication {
        /* if(classStart==5|classStart==10|classStart==15){
         }
         else{*/
-            current_real_time=returnTime_real_index(Time_sets.detail_real_num,classStart);
+            current_real_time=returnTime_real_index(Static_sets.detail_real_num,classStart);
             Log.i("真实现在时间数值-->",String.valueOf(current_real_time));
 //        }
 
@@ -52,8 +51,8 @@ public  class CompareIsDuplication {
             int check=0;
             for(Class_cardmodel clss:Allq){
                // int check=0;
-                int mLastTime=returnStartClass_index(Time_sets.start_classes,clss.getClass_startClass())+returnStartClass_index(Class_nums,clss.getClass_totalClass());
-                int lastTime=returnTime_real_index(Time_sets.detail_real_num,mLastTime);
+                int mLastTime=returnStartClass_index(Static_sets.start_classes,clss.getClass_startClass())+returnStartClass_index(Class_nums,clss.getClass_totalClass());
+                int lastTime=returnTime_real_index(Static_sets.detail_real_num,mLastTime);
                 Log.i("之前时间真实数值-->",String.valueOf(lastTime));
 
                 if(returnStartClass_index(Class_nums,clss.getClass_totalClass())==4){
@@ -62,11 +61,11 @@ public  class CompareIsDuplication {
                 }
 
                 if(lastTime>current_real_time){
-                    int ycurrentindex=returnStartClass_index(Time_sets.start_classes,data.getClass_startClass())+returnStartClass_index(Class_nums,class_num);
-                    int ycurrent=returnTime_real_index(Time_sets.detail_real_num,ycurrentindex);
+                    int ycurrentindex=returnStartClass_index(Static_sets.start_classes,data.getClass_startClass())+returnStartClass_index(Class_nums,class_num);
+                    int ycurrent=returnTime_real_index(Static_sets.detail_real_num,ycurrentindex);
 
-                    int yindex=returnStartClass_index(Time_sets.start_classes,clss.getClass_startClass());
-                    int ylast=returnTime_real_index(Time_sets.detail_real_num,yindex);
+                    int yindex=returnStartClass_index(Static_sets.start_classes,clss.getClass_startClass());
+                    int ylast=returnTime_real_index(Static_sets.detail_real_num,yindex);
 
                     Log.i("", "ycurrent-->"+ycurrent+"  ylast-->"+ylast);
                     if(ylast>=ycurrent){

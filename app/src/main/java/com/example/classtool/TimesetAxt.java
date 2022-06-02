@@ -27,6 +27,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIFullScreenPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -81,7 +82,7 @@ public class TimesetAxt extends BasicActivity {
                 }
                 FilesUtil.AppendClassTime(getApplicationContext(),sall,a);
 
-                Toast.makeText(TimesetAxt.this, "数据更新成功！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TimesetAxt.this, "数据更新成功！", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -161,8 +162,6 @@ public class TimesetAxt extends BasicActivity {
                 alls.remove(position);
                 alls.add(position,new QTime(sort,sortStr, timeStr.replaceAll("(\\d{2})(.*)(\\d{2})$","$1:$2:$3")));
                 multiTypeAdapter.notifyItemChanged(position,"updating");
-                // boolean check= CheckIllegalStrUtil.isIllegalStr(timeStr);
-                Toast.makeText(TimesetAxt.this, "内容更新成功!", Toast.LENGTH_SHORT).show();
                 popups.dismiss();
             }
         });

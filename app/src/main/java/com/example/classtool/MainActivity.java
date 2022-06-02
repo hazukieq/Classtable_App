@@ -1,6 +1,5 @@
 package com.example.classtool;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -25,8 +24,7 @@ import com.example.classtool.binders.Class_cardBinder;
 import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.Class_colors_set;
 import com.example.classtool.models.FindSort;
-import com.example.classtool.models.QTime;
-import com.example.classtool.models.Time_sets;
+import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.CompareIsDuplication;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.ShowDialogUtil;
@@ -39,6 +37,8 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.popup.QMUIFullScreenPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -168,22 +168,26 @@ public class MainActivity extends BasicActivity {
                 if(checktags.size()==0){
                     FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),"临时课表,武鸣校区作息时间");
                 }else{
-                    int check=0;
-                    int nucheck=0;
-                    for(String sdr:checktags){
-                        if(!sdr.split(",")[0].equals("临时课表")){
-                            check+=1;
-                        }
-                        if(sdr.split(",")[0].equals("临时课表")){
-                            nucheck=1;
-                        }
-                    }
-                    if(check>=1&&nucheck==0)  FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),"临时课表,武鸣校区作息时间");
+
+                    checktags.remove(0);
+                    checktags.add(0,"临时课表,"+sp.getString("current_time_temp","武鸣校区作息时间"));
+
+                    FilesUtil.RemoveScheDulAndTimeTag(getApplicationContext(),checktags);
                 }
 
                 boolean isWrite= FilesUtil.writFile(getApplicationContext(),"临时课表",jall);
-                if(isWrite) Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                if(isWrite){
+                   /* new QMUITipDialog.Builder(MainActivity.this)
+                            .setTipWord("课表数据保存成功！")
+                            .create().show();*/
+                    Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    /*new QMUITipDialog.Builder(MainActivity.this)
+                            .setTipWord("当前列表数据好像为空...保存失败")
+                            .create().show();*/
+                    Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -211,10 +215,28 @@ public class MainActivity extends BasicActivity {
             }
             @Override
             public void onItemDelete(View v, int position) {
-                alls.remove(position);
-                multiTypeAdapter.notifyItemRemoved(position);
-                multiTypeAdapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this,"已删除第"+(position+1)+"个标签",Toast.LENGTH_SHORT).show();
+
+                new QMUIDialog.MessageDialogBuilder(MainActivity.this)
+                        .setTitle("课表卡片")
+                        .setMessage("您想要移除该卡片吗？")
+                        .setCancelable(true)
+                        .addAction("取消", new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .addAction("确认", new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                alls.remove(position);
+                                multiTypeAdapter.notifyItemRemoved(position);
+                                multiTypeAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        })
+                        .create(R.style.DialogTheme2).show();
+
             }
         });
 
@@ -298,28 +320,28 @@ public class MainActivity extends BasicActivity {
             class_date.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottom("时间段",3, Time_sets.detail_dates,class_date,false,false,FindSort.returnColorSort(Time_sets.detail_dates,class_date.getText().toString()),"detail");
+                    showBottom("时间段",3, Static_sets.detail_dates,class_date,false,false,FindSort.returnColorSort(Static_sets.detail_dates,class_date.getText().toString()),"detail");
                 }
             });
 
             class_weekdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottom("日期",7,Time_sets.weeks,class_weekdate,false,false,FindSort.returnColorSort(Time_sets.weeks,class_weekdate.getText().toString()),"weeks");
+                    showBottom("日期",7, Static_sets.weeks,class_weekdate,false,false,FindSort.returnColorSort(Static_sets.weeks,class_weekdate.getText().toString()),"weeks");
                 }
             });
 
             class_start_date.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottom("上课时间",12,Time_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Time_sets.start_classes,class_start_date.getText().toString()),"startq");
+                    showBottom("上课时间",12, Static_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString()),"startq");
                 }
             });
 
             TagColors.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottom("标签颜色",Time_sets.colors.length,Time_sets.colors,TagColors,false,false,FindSort.returnColorSort(Time_sets.colors,TagColors.getText().toString()),"colors");
+                    showBottom("标签颜色", Static_sets.colors.length, Static_sets.colors,TagColors,false,false,FindSort.returnColorSort(Static_sets.colors,TagColors.getText().toString()),"colors");
                 }
             });
 
@@ -367,7 +389,7 @@ public class MainActivity extends BasicActivity {
                     String colorq=(!TagColors.getText().toString().isEmpty())?TagColors.getText().toString():"红色";
                     String courseq= (!class_course.getText().toString().isEmpty())?class_course.getText().toString():"未填写";
                     String noteq=notes.getText().toString();
-                    int color_sort=FindSort.returnColorSort(Time_sets.colors,colorq);
+                    int color_sort=FindSort.returnColorSort(Static_sets.colors,colorq);
 
                     Class_cardmodel new_data=new Class_cardmodel(date,courseq,startDate,classNums,places,colorq, Class_colors_set.Class_colors[color_sort],noteq,"class_1",0);
 
@@ -393,14 +415,14 @@ public class MainActivity extends BasicActivity {
         class_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("时间段",Time_sets.detail_dates.length,Time_sets.detail_dates,class_date,false,false,FindSort.returnColorSort(Time_sets.detail_dates,class_date.getText().toString()),"detail");
+                showBottom("时间段", Static_sets.detail_dates.length, Static_sets.detail_dates,class_date,false,false,FindSort.returnColorSort(Static_sets.detail_dates,class_date.getText().toString()),"detail");
             }
         });
 
         class_weekdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("日期",7,Time_sets.weeks,class_weekdate,false,false,FindSort.returnColorSort(Time_sets.weeks,class_weekdate.getText().toString()),"weeks");
+                showBottom("日期",7, Static_sets.weeks,class_weekdate,false,false,FindSort.returnColorSort(Static_sets.weeks,class_weekdate.getText().toString()),"weeks");
             }
         });
 
@@ -408,14 +430,14 @@ public class MainActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 int allLen=sp.getInt("classLen",12);
-                showBottom("上课时间",allLen,Time_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Time_sets.start_classes,class_start_date.getText().toString()),"startq");
+                showBottom("上课时间",allLen, Static_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString()),"startq");
             }
         });
 
         TagColors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("标签颜色",10,Time_sets.colors,TagColors,false,false,FindSort.returnColorSort(Time_sets.colors,TagColors.getText().toString()),"colors");
+                showBottom("标签颜色",10, Static_sets.colors,TagColors,false,false,FindSort.returnColorSort(Static_sets.colors,TagColors.getText().toString()),"colors");
             }
         });
 
@@ -453,7 +475,7 @@ public class MainActivity extends BasicActivity {
                 String colorq=(!TagColors.getText().toString().isEmpty())?TagColors.getText().toString():"红色";
                 String courseq= (!class_course.getText().toString().isEmpty())?class_course.getText().toString():"";
                 String noteq=notes.getText().toString();
-                int color_sort=FindSort.returnColorSort(Time_sets.colors,colorq);
+                int color_sort=FindSort.returnColorSort(Static_sets.colors,colorq);
                 Class_cardmodel new_data=new Class_cardmodel(date,courseq,startDate,classNums,places,colorq, Class_colors_set.Class_colors[color_sort],noteq,"class_1",0);
                 int check=compareIsDuplication.returnResult(alls,new_data,classNums,date);
                    checkClzz(check,0,new_data,1);
@@ -487,10 +509,10 @@ public class MainActivity extends BasicActivity {
                             switch (tagq){
                                 case "detail":
                                     if(position==1){
-                                        class_start_date.setText(Time_sets.start_classes[Noon_startClass_min]);
+                                        class_start_date.setText(Static_sets.start_classes[Noon_startClass_min]);
                                         class_date.setText(values[position]);
                                     }else if(position==2){
-                                        class_start_date.setText(Time_sets.start_classes[Night_startClass_min]);
+                                        class_start_date.setText(Static_sets.start_classes[Night_startClass_min]);
                                         class_date.setText(values[position]);
                                     }else{
                                         class_start_date.setText("第1节课");
@@ -605,6 +627,9 @@ public class MainActivity extends BasicActivity {
         private void checkClzz(int check,int position,Class_cardmodel new_data,int type){
 
             if(check==7|check%2==1){
+               /* new QMUITipDialog.Builder(MainActivity.this)
+                        .setTipWord("和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~")
+                        .create().show();*/
                 Toast.makeText(MainActivity.this, "和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~", Toast.LENGTH_LONG).show();
             }
             else if(check%2==0){
@@ -613,18 +638,21 @@ public class MainActivity extends BasicActivity {
                         alls.remove(position);
                         alls.add(position,new_data);
                         multiTypeAdapter.notifyItemChanged(position,"updating");
-                        Toast.makeText(MainActivity.this, "内容更新成功", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(MainActivity.this, "内容更新成功", Toast.LENGTH_SHORT).show();
                         popups.dismiss();
                         break;
                     case 1:
                         alls.add(new_data);
                         multiTypeAdapter.notifyDataSetChanged();
-                        Toast.makeText(MainActivity.this, "添加标签成功", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(MainActivity.this, "添加标签成功", Toast.LENGTH_SHORT).show();
                         popups.dismiss();
                         break;
                 }
 
             }else if(check==3){
+                /*new QMUITipDialog.Builder(MainActivity.this)
+                        .setTipWord("请勿重复添加，已有标签课时为5啦~")
+                        .create().show();*/
                 Toast.makeText(MainActivity.this, "请勿重复添加，已有标签课时为5啦~", Toast.LENGTH_SHORT).show();
             }
         }
@@ -633,7 +661,7 @@ public class MainActivity extends BasicActivity {
 
         private void changeNums(){
 
-        int isChange=FindSort.returnColorSort(Time_sets.start_classes,class_start_date.getText().toString());
+        int isChange=FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString());
         int Morning_nums_max=sp.getInt("Morning_nums_max",4);//morning_nums_max,实际为早上有morning_nums_max+1节课,实际节数为5，在这里实际为5-1；
         int Noon_startClass_min=sp.getInt("Noon_startClass",5);
         int Night_startClass_min=sp.getInt("Night_startClass",9);
@@ -651,7 +679,7 @@ public class MainActivity extends BasicActivity {
 
         }
         int chenageLen=checkNums(isChange,Morning_nums);
-            showBottom("共计节数",chenageLen,Time_sets.class_nums,Class_nums,false,false, FindSort.returnColorSort(Time_sets.class_nums,Class_nums.getText().toString()),"nums");
+            showBottom("共计节数",chenageLen, Static_sets.class_nums,Class_nums,false,false, FindSort.returnColorSort(Static_sets.class_nums,Class_nums.getText().toString()),"nums");
         }
 
         private int  checkNums(int startNums,int max){
@@ -680,15 +708,19 @@ public class MainActivity extends BasicActivity {
                             alls.add(obj);
                         }
                         multiTypeAdapter.notifyDataSetChanged();
-                        Toast.makeText(MainActivity.this, "数据恢复成功！", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(MainActivity.this, "数据恢复成功！", Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        /*new QMUITipDialog.Builder(MainActivity.this)
+                                .setTipWord("恢复失败，临时课表文件没有相关数据！")
+                                .create().show();*/
                     Toast.makeText(MainActivity.this, "恢复失败，临时课表文件没有相关数据！", Toast.LENGTH_SHORT).show();
                 }
                     break;
                 case 1:
                     Intent iw=new Intent();
                     iw.setClass(MainActivity.this,Scheduldatas.class);
+                    iw.putExtra("sche",Schedule_title.getText().toString().replace("当前课表模板：",""));
                     startActivity(iw);
                     break;
             }
@@ -720,13 +752,24 @@ public class MainActivity extends BasicActivity {
                        y+=1;
                     }
                 }
-                if(y==0) {
-                    String time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
-                    FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),EditgetStr+","+time_temp);
-                }
+
                 pop.dismiss();
-                if(isWrite) Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                if(isWrite){
+                    if(y==0) {
+                        String time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
+                        FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),EditgetStr+","+time_temp);
+                    }
+                    /*new QMUITipDialog.Builder(MainActivity.this)
+                            .setTipWord("课表数据保存成功！")
+                            .create().show();*/
+                    Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                   /* new QMUITipDialog.Builder(MainActivity.this)
+                            .setTipWord("当前列表数据好像为空...保存失败")
+                            .create().show();*/
+                    Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                }
             }
 
         }
@@ -749,7 +792,6 @@ public class MainActivity extends BasicActivity {
                         int tag_index=0;
                         int morNums=4;
                         int noonStartCl=5;
-                        //int noonNums=3;
                         int ngithStartCl=9;
                        String time_tag=timetags[position];
                        try {
@@ -767,9 +809,9 @@ public class MainActivity extends BasicActivity {
                                    }
                                }
                                String[] ptimes=schetimesl.get(tag_index).split(",");
-                               morNums=FindSort.returnColorSort(Time_sets.class_nums,ptimes[2]);
-                               noonStartCl=FindSort.returnColorSort(Time_sets.start_classes,ptimes[3]);
-                               ngithStartCl=FindSort.returnColorSort(Time_sets.start_classes,ptimes[5]);
+                               morNums=FindSort.returnColorSort(Static_sets.class_nums,ptimes[2]);
+                               noonStartCl=FindSort.returnColorSort(Static_sets.start_classes,ptimes[3]);
+                               ngithStartCl=FindSort.returnColorSort(Static_sets.start_classes,ptimes[5]);
 
                                editor.putInt("Morning_nums_max",morNums);
                                editor.putInt("Noon_startClass",noonStartCl);
@@ -779,7 +821,8 @@ public class MainActivity extends BasicActivity {
                        }catch (Exception e){
                            e.printStackTrace();
                        }
-                       Toast.makeText(MainActivity.this, "您已选择"+values[position]+"!", Toast.LENGTH_SHORT).show();
+                       Schedule_title.setText("当前课表模板："+values[position]);
+                       //Toast.makeText(MainActivity.this, "您已选择"+values[position]+"!", Toast.LENGTH_SHORT).show();
                        dialog.dismiss();
                     }
                 });

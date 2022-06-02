@@ -126,7 +126,7 @@ public class ActcomWeb extends AppCompatActivity {
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.requestFocus(View.FOCUS_DOWN);
-        setZoomControlGone(mWebView);
+        //setZoomControlGone(mWebView);
         configWebView(mWebView);
         mWebView.loadUrl(mUrl);
 
@@ -270,7 +270,7 @@ public class ActcomWeb extends AppCompatActivity {
                 e.printStackTrace();
             }
             if(error.getErrorCode()==-1){
-                Log.i("onReceivedError: ","error_code-->"+error.getErrorCode());
+                Log.i("onReceivedError: ","error_code-->"+error.getErrorCode()+","+error.getDescription());
             }else if(error.getDescription().equals("net::ERR_INTERNET_DISCONNECTED")){
                 mWebView.loadUrl("about:blank");
                 showError();
