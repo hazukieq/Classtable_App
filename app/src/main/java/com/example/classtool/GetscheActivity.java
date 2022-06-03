@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -37,11 +39,13 @@ public class GetscheActivity extends AppCompatActivity {
     private RecyclerView recy;
     private ArrayList<Object> alls=new ArrayList<>();
     private MultiTypeAdapter multiTypeAdapter;
-    boolean isLoad=false;
+    private boolean isLoad=false;
     private Handler handler;
-    private Thread thread1,thread2,thread3,thread4;
+    private Thread thread1,thread2,thread3;
     int y=0;
     private boolean isCheck=false;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,8 @@ public class GetscheActivity extends AppCompatActivity {
         setContentView(R.layout.activity_getsche);
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
-
+        sp= PreferenceManager.getDefaultSharedPreferences(GetscheActivity.this);
+        editor=sp.edit();
 
         initViews();
         initializeHandler();
@@ -64,53 +69,55 @@ public class GetscheActivity extends AppCompatActivity {
                 switch (msg.what){
                     case 0:
                         isLoad=true;
-                        info.setVisibility(View.VISIBLE);
-                        info.setText("用户帐号验证通过！");
-                        checkInfo(1300);
-                        /*new QMUITipDialog.Builder(GetscheActivity.this)
-                                .setTipWord("验证通过！")
-                                .create().show();*/
-                        //Toast.makeText(GetscheActivity.this, "验证通过！", Toast.LENGTH_SHORT).show();
+                        //info.setVisibility(View.VISIBLE);
+                        //info.setText("用户帐号验证通过！");
+                        //checkInfo(1300);
                         //在这里进行文件下载操作
+                        down.setClickable(false);
                         alls.clear();
+                        multiTypeAdapter.notifyDataSetChanged();
                         String downloadSchepath=getDir("课表数据",MODE_PRIVATE).getAbsolutePath();
                         String purl="http://43.142.122.229/androiata/getd.html?uid="+eidt.getText().toString();
-
                         alls.add(new DowncardModel(0,"云同步课表"));
+                        multiTypeAdapter.notifyDataSetChanged();
+
                         getF(purl,downloadSchepath);
-                        String downloadTimepath=getDir("作息时间数据",MODE_PRIVATE).getAbsolutePath();
-                        String pur="http://43.142.122.229/androiata/gettim.html?uid="+eidt.getText().toString();
-                        alls.add(new DowncardModel(0,"云同步作息时间表"));
-                        getT(pur,downloadTimepath);
-                        thread1.interrupt();
+                        startSecondTask();
+
                         break;
                     case 1:
                         DowncardModel downcardModel=(DowncardModel) alls.get(0);
-                        downcardModel.setProgress(y);
+                        downcardModel.setProgress((int) msg.obj);
                         multiTypeAdapter.notifyItemChanged(0,"updating");
                         break;
                     case 3:
                         DowncardModel downcrdModel=(DowncardModel) alls.get(0);
                         downcrdModel.setProgress(100);
                         multiTypeAdapter.notifyItemChanged(0,"updating");
-                        //new ToastUtil(GetscheActivity.this).showTip("验证通过！");
                         info.setVisibility(View.VISIBLE);
                         info.setText("云同步课表文件下载完成！");
                         checkInfo(2000);
-                        //Toast.makeText(GetscheActivity.this, "下载完成！", Toast.LENGTH_SHORT).show();
                         List<String> tags=FilesUtil.readSchedulAndTimeTag(GetscheActivity.this);
-                        boolean isApp=true;
+                        List<String> retags=new ArrayList<>();
+                        retags.addAll(tags);
+                        boolean isApp=false;
                         for(String tag:tags){
-                            if(tag.equals("云同步课表,云同步作息时间表")){
-                                isApp=false;
+                            if(tag.equals("云同步课表,云同步作息时间表")|tag.equals("云同步课表,武鸣校区作息时间")) {
+                                isApp=true;
+                                retags.remove(tag);
                             }
                         }
-                        if(isApp) FilesUtil.AppendScheDulAndTimeTag(GetscheActivity.this,"云同步课表,云同步作息时间表");
-                        thread2.interrupt();
+                        if(isApp==false){
+                            FilesUtil.AppendScheDulAndTimeTag(GetscheActivity.this,"云同步课表,云同步作息时间表");
+                        }
+                        else if(isApp==true){
+                            FilesUtil.RemoveScheDulAndTimeTag(GetscheActivity.this,retags);
+                        }
+
                         break;
                     case 4:
                         DowncardModel f=(DowncardModel)alls.get(1);
-                        f.setProgress(y);
+                        f.setProgress((int)msg.obj);
                         multiTypeAdapter.notifyItemChanged(1,"updating");
                         break;
                     case 5:
@@ -120,23 +127,20 @@ public class GetscheActivity extends AppCompatActivity {
                         info.setVisibility(View.VISIBLE);
                         info.setText("云同步作息时间表文件下载完成！");
                         checkInfo(2000);
-                        //Toast.makeText(GetscheActivity.this, "下载完成！", Toast.LENGTH_SHORT).show();
-                        thread3.interrupt();
                         isCheck=true;
+                        editor.putInt("ScheSelected",0);
+                        editor.commit();
                         break;
                     case 6:
                         isLoad=false;
-                       /* new QMUITipDialog.Builder(GetscheActivity.this)
-                                .setTipWord("您输入的用户账号有误，请检查后再试！")
-                                .create().show();*/
                         info.setVisibility(View.VISIBLE);
                         info.setText("您输入的用户账号有误，请检查后再试！");
                         checkInfo(1600);
                         break;
                     case 7:
                         info.setVisibility(View.GONE);
+                        down.setClickable(true);
                         break;
-                        //Toast.makeText(GetscheActivity.this, "您输入的用户账号有误，请检查后再试！", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -194,7 +198,6 @@ public class GetscheActivity extends AppCompatActivity {
 
         multiTypeAdapter.setItems(alls);
 
-        if(y<=100) y++;
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +205,7 @@ public class GetscheActivity extends AppCompatActivity {
                     checkAccess(eidt.getText().toString());
                 }else{
                     info.setVisibility(View.VISIBLE);
-                    info.setText("请输入帐号！");
+                    info.setText("请输入用户帐号！");
                     checkInfo(1300);
                     //Toast.makeText(GetscheActivity.this, "请输入用户账号！", Toast.LENGTH_SHORT).show();
                 }
@@ -223,6 +226,7 @@ public class GetscheActivity extends AppCompatActivity {
         thread1=new Thread(new Runnable() {
             @Override
             public void run() {
+
                 OkHttpClient okHttpClient=new OkHttpClient();
                 String purl="http://43.142.122.229/androiata/getd.html?uid="+url;
                 Request request=new Request.Builder()
@@ -254,46 +258,69 @@ public class GetscheActivity extends AppCompatActivity {
     }
 
 
+    private void startSecondTask()  {
+        String downloadTimepath=getDir("作息时间数据",MODE_PRIVATE).getAbsolutePath();
+        String pur="http://43.142.122.229/androiata/gettim.html?uid="+eidt.getText().toString();
+        alls.add(new DowncardModel(0,"云同步作息时间表"));
+        multiTypeAdapter.notifyDataSetChanged();
+        getT(pur,downloadTimepath);
+    }
 
-    private void getT(String purl,String downloadSchepath){
-        thread3=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg=new Message();
-                Downloadhelper.downloadP(purl, downloadSchepath, "云同步作息时间表.txt", new Downloadhelper.OnDownloadListener() {
-                    @Override
-                    public void onDownloadSuccess(File file) {
-                        msg.what=5;
-                        handler.sendMessage(msg);
-                    }
 
-                    @Override
-                    public void onDownloadloading(int progress) {
+    private void getT(String purl,String downloadSchepath) {
+      thread3=new Thread(new Runnable() {
 
-                        Message msg1=new Message().obtain();
-                        msg1.obj=progress;
-                        msg1.what=4;
-                        handler.sendMessage(msg1);
-                    }
+              @Override
+              public void run () {
+                  try {
+                      thread2.join();
+                  }catch (Exception e){
 
-                    @Override
-                    public void onDownloadFailed(Exception e) {
+                  }
 
-                    }
-                });
-            }
+              Message msg = new Message().obtain();
+              //Message msg1=new Message();
+              Downloadhelper.downloadP(purl, downloadSchepath, "云同步作息时间表.txt", new Downloadhelper.OnDownloadListener() {
+                  @Override
+                  public void onDownloadSuccess(File file) {
+                      msg.what = 5;
+                      handler.sendMessage(msg);
+                  }
+
+                  @Override
+                  public void onDownloadloading(int progress) {
+
+
+                      msg.obj = progress;
+                      msg.what = 4;
+                      handler.sendMessage(msg);
+                  }
+
+                  @Override
+                  public void onDownloadFailed(Exception e) {
+
+                  }
+              });
+
+          }
+
         });
         thread3.start();
+        //thread3.join();
 
     }
 
 
-    private void getF(String purl,String downloadSchepath){
+    private void getF(String purl,String downloadSchepath)  {
         thread2=new Thread(new Runnable() {
             @Override
             public void run() {
-                Message msg=new Message();
+                try{
+                   // thread1.join();
+                }catch (Exception e){
 
+                }
+                Message msg=new Message().obtain();
                 Downloadhelper.downloadP(purl, downloadSchepath, "云同步课表.txt", new Downloadhelper.OnDownloadListener() {
                     @Override
                     public void onDownloadSuccess(File file) {
@@ -303,11 +330,10 @@ public class GetscheActivity extends AppCompatActivity {
 
                     @Override
                     public void onDownloadloading(int progress) {
-
-                        Message msg1=new Message().obtain();
-                        msg1.obj=progress;
-                        msg1.what=1;
-                        handler.sendMessage(msg1);
+                        Log.i( "onDownloadloading: ","-->"+progress);
+                        msg.obj=progress;
+                        msg.what=1;
+                        handler.sendMessage(msg);
                     }
 
                     @Override
@@ -317,8 +343,8 @@ public class GetscheActivity extends AppCompatActivity {
                 });
             }
         });
-        thread2.start();
-
+                thread2.start();
+                //thread2.join();
             }
 
     @Override
@@ -328,7 +354,6 @@ public class GetscheActivity extends AppCompatActivity {
             List<QTime> datags=FilesUtil.readClassTime(GetscheActivity.this,"云同步作息时间表");
             List<QTime> atas=new ArrayList<>();
             String timgas=FilesUtil.readBackupClassTimetag(GetscheActivity.this,"云同步作息时间表");
-            //datags.get(0).getSorq()+datags.get(0).getSortStr()+datags.get(0).getStart2end();
             Log.i( "onDestroy: ","time_tag-->"+timgas);
             for(int i=1;i<datags.size();i++) atas.add(datags.get(i));
             FilesUtil.AppendClassTime(GetscheActivity.this,atas,"云同步作息时间表");
@@ -336,7 +361,6 @@ public class GetscheActivity extends AppCompatActivity {
             List<String> atags=FilesUtil.readTimeTag(GetscheActivity.this);
             List<String> katags=new ArrayList<>();
             katags.addAll(atags);
-            boolean aisApp=true;
             for(String tag:atags){
                 if(tag.split(",")[0].equals("云同步作息时间表")){
                     katags.remove(tag);
@@ -349,4 +373,6 @@ public class GetscheActivity extends AppCompatActivity {
 
         }
     }
+
+
 }

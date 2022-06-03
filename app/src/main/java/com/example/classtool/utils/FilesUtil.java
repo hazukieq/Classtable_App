@@ -346,8 +346,7 @@ public class FilesUtil {
             BufferedReader reader=new BufferedReader(inputStream);
             String record;
             while ((record=reader.readLine())!=null){
-                //String[] strs=record.split(",");
-                allq.add(record);//new QTime(FindSort.returnColorSort(Time_sets.detail_real_numStrs,strs[0]),strs[1],strs[2].replace("<br/>","-")));
+                allq.add(record);
             }
             reader.close();
 

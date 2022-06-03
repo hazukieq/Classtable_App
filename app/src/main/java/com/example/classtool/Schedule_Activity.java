@@ -628,21 +628,23 @@ public class Schedule_Activity extends BasicActivity {
         super.onResume();
 
         List<String> sches=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
-        String[]  s=new String[sches.size()];
-        String[] times=new String[sches.size()];
+
         if(sches.size()>0){
+            String[]  s=new String[sches.size()];
+            String[] times=new String[sches.size()];
             for(int i=0;i<sches.size();i++) {
                 String[] d=sches.get(i).split(",");
                 s[i]=d[0];
                 times[i]=d[1];
             }
-        }
-        int el=sp.getInt("ScheSelected",0);
+            int el=sp.getInt("ScheSelected",0);
 
-        SchedulModel scd=(SchedulModel) alls.get(0);
-        scd.setTime(times[el]);
-        scd.setSche(s[el]);
-        titleq.setText(s[el]);
+            SchedulModel scd=(SchedulModel) alls.get(0);
+            scd.setTime(times[el]);
+            scd.setSche(s[el]);
+            titleq.setText(s[el]);
+        }
+
         multiTypeAdapter.notifyItemChanged(0,"updating");
         drawerLayout.closeDrawers();
         SchedulReresh();

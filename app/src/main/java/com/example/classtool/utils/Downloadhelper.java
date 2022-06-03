@@ -1,6 +1,7 @@
 package com.example.classtool.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -86,6 +87,7 @@ public class Downloadhelper {
                 try{
                     is=response.body().byteStream();
                     long total=response.body().contentLength();
+                    Log.i( "onResponse: ","length-->"+total);
                     fos=new FileOutputStream(file);
 
                     long sum=0;
