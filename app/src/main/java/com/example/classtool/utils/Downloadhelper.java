@@ -1,6 +1,7 @@
 package com.example.classtool.utils;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -119,5 +120,17 @@ public class Downloadhelper {
         void onDownloadSuccess(File file);
         void onDownloadloading(int progress);
         void onDownloadFailed(Exception e);
+    }
+
+    public static String generateFilepath(Context context,String firstFile,String name) throws IOException {
+        File el =context.getDir(firstFile,Context.MODE_PRIVATE);
+        if (!el.exists()) el.mkdir();
+
+        File eles = new File(el, name);
+        if (!eles.exists()) eles.createNewFile();
+
+
+        String apk_pa = eles.getAbsolutePath();
+        return  apk_pa;
     }
 }

@@ -97,6 +97,7 @@ public class DownloadActivity extends AppCompatActivity {
                             new QMUITipDialog.Builder(DownloadActivity.this)
                                     .setTipWord("请检查网络是否异常！")
                                     .create().show();
+
                         }
 
                     }else{

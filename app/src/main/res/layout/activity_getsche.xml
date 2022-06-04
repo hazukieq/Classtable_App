@@ -35,7 +35,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/qmui_config_color_gray_2"
                 android:gravity="center"
-                android:text="下载"
+                android:text="获取"
                 android:id="@+id/getsche_down"
                 android:padding="10dp"/>
         </LinearLayout>
@@ -65,8 +65,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_margin="10dp"
-            android:id="@+id/getsche_recy"/>
+            android:id="@+id/getsche_recy"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </LinearLayout>
 </LinearLayout>
