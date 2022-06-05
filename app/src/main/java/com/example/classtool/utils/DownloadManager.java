@@ -6,17 +6,30 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.classtool.models.DownloadBean;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class DownloadManager {
 
@@ -83,6 +96,7 @@ public class DownloadManager {
             //DataBaseUtil.DeleteDownLoadById(bean.id);
             //FilesUtil.writeDownload_datas(new DownloadBean("",0,"","",0,0),false);
             // 删除文件
+
 
             if (file.exists()) {
                 file.delete();
@@ -168,7 +182,7 @@ public class DownloadManager {
     }
 
     /** 开启下载，需要传入一个DownAppBean对象 */
-    public void download(DownloadBean bean) throws IOException, ClassNotFoundException {
+    public void download(DownloadBean bean)  {
         // 先判断是否有这个app的下载信息
         //DownloadBean bean = FilesUtil.readDownload_datas(loadbean.name);
         /*if (bean == null) {// 如果没有，则根据loadBean创建一个新的下载信息
@@ -253,86 +267,97 @@ public class DownloadManager {
                 compeleteSize = file.length();
             }
 
-
-
             try{
-                URL url = new URL(bean.url);
+               /* URL url = new URL(bean.url);
                 HttpURLConnection connection = (HttpURLConnection) url
                         .openConnection();
                 connection.setConnectTimeout(30 * 1000);
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Range", "bytes=" + compeleteSize
-                        + "-" + bean.appSize);
+                        + "-" + bean.appSize);*/
+                    OutputStream outputStream=new FileOutputStream(file);
+                    Request request=new Request.Builder()
+                            .url(bean.url)
+                            .addHeader("Range", "bytes=" + compeleteSize)
+                                    //+ "-" + bean.appSize)
+                            .build();
+                    OkHttpClient client=new OkHttpClient();
 
-                // 获取的状态码
-                int code = connection.getResponseCode();
-                // 判断是否能够断点下载
-                if (code == 206) {
-                    @SuppressWarnings("resource")
-                    OutputStream outputStream = new FileOutputStream(file, true);
-                    // 将要下载的文件写到保存在保存路径下的文件中
-                    InputStream is = connection.getInputStream();
-                    byte[] buffer = new byte[102400];
-                    int length = -1;
-                    // 进入下载中状态
-                    bean.download_state = STATE_DOWNLOADING;
-                    //DataBaseUtil.UpdateDownLoadById(bean);
+                    try{
+                        Response response=client.newCall(request)
+                                .execute();
 
-                    while ((length = is.read(buffer)) != -1) {
-                        // 暂停就回调，然后直接返回
-                        if (bean.download_state == STATE_PAUSED) {
-                            bean.download_state = STATE_PAUSED;
+                        // 获取的状态码
+                        int code = response.code();
+                        // 判断是否能够断点下载
+                        if (code == 206) {
+                            @SuppressWarnings("resource")
+                            ResponseBody body = response.body();
+                            // 将要下载的文件写到保存在保存路径下的文件中
+                            InputStream is = body.byteStream();
+                            byte[] buffer = new byte[512];
+                            int length = 0;
+                            // 进入下载中状态
+                            bean.download_state = STATE_DOWNLOADING;
                             //DataBaseUtil.UpdateDownLoadById(bean);
-                            //FilesUtil.writeDownload_datas(bean);
-                            outputStream.close();
-                            is.close();
-                            notifyDownloadStateChanged(bean);
-                            return;
-                        } else if (bean.download_state == STATE_DELETE) {// 下载的时候删除直接回调界面，然后直接返回
-                            bean.download_state = STATE_DELETE;
-                            notifyDownloadStateChanged(bean);
-                            outputStream.close();
-                            is.close();
-                            mTaskMap.remove(bean.name);
-                            return;
-                        }
-                        // 把当前下载的bean给全局记录的bean
-                        down_bean = bean;
-                        outputStream.write(buffer, 0, length);
-                        compeleteSize += length;
-                        // 更新数据库中的下载信息
-                        // 用消息将下载信息传给进度条，对进度条进行更新
-                        bean.progress = (int)compeleteSize;
-                        notifyDownloadStateChanged(bean);
-                    }
 
-                    if (bean.appSize == bean.progress) {
-                        bean.download_state = STATE_DOWNLOADED;
-                        //DataBaseUtil.UpdateDownLoadById(bean);
-                       // FilesUtil.writeDownload_datas(bean);
-                        notifyDownloadStateChanged(bean);
-                    } else {
+                            while ((length = is.read(buffer)) != -1) {
+                                // 暂停就回调，然后直接返回
+                                if (bean.download_state == STATE_PAUSED) {
+                                    bean.download_state = STATE_PAUSED;
+                                    //DataBaseUtil.UpdateDownLoadById(bean);
+                                    //FilesUtil.writeDownload_datas(bean);
+                                    outputStream.close();
+                                    is.close();
+                                    notifyDownloadStateChanged(bean);
+                                    return;
+                                } else if (bean.download_state == STATE_DELETE) {// 下载的时候删除直接回调界面，然后直接返回
+                                    bean.download_state = STATE_DELETE;
+                                    notifyDownloadStateChanged(bean);
+                                    outputStream.close();
+                                    is.close();
+                                    mTaskMap.remove(bean.name);
+                                    return;
+                                }
+                                // 把当前下载的bean给全局记录的bean
+                                down_bean = bean;
+                                outputStream.write(buffer, 0, length);
+                                compeleteSize += length;
+                                // 更新数据库中的下载信息
+                                // 用消息将下载信息传给进度条，对进度条进行更新
+                                bean.progress = (int) compeleteSize;
+                                notifyDownloadStateChanged(bean);
+                            }
+
+                            if (bean.appSize == bean.progress) {
+                                bean.download_state = STATE_DOWNLOADED;
+                                //DataBaseUtil.UpdateDownLoadById(bean);
+                                // FilesUtil.writeDownload_datas(bean);
+                                notifyDownloadStateChanged(bean);
+                            } else {
+                                bean.download_state = STATE_ERROR;
+                                //DataBaseUtil.UpdateDownLoadById(bean);
+                                //FilesUtil.writeDownload_datas(bean);
+                                notifyDownloadStateChanged(bean);
+                                bean.progress = 0;// 错误状态需要删除文件
+                                file.delete();
+                            }
+                            outputStream.close();
+                            is.close();
+                        } else {
+                            Log.e("123456", "不支持断点下载");
+                        }
+                    }catch (IOException e){
+                        e.printStackTrace();
                         bean.download_state = STATE_ERROR;
                         //DataBaseUtil.UpdateDownLoadById(bean);
-                        //FilesUtil.writeDownload_datas(bean);
                         notifyDownloadStateChanged(bean);
                         bean.progress = 0;// 错误状态需要删除文件
                         file.delete();
                     }
-                    outputStream.close();
-                    is.close();
-                } else {
-                    Log.e("123456", "不支持断点下载");
-                }
             } catch (IOException e) {
-                bean.download_state = STATE_ERROR;
-                //DataBaseUtil.UpdateDownLoadById(bean);
-                notifyDownloadStateChanged(bean);
-                bean.progress = 0;// 错误状态需要删除文件
-                file.delete();
             }
-
-            mTaskMap.remove(bean.name);
+                 mTaskMap.remove(bean.name);
         }
     }
 }

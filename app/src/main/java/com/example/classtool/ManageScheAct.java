@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.example.classtool.base.BasicActivity;
 import com.example.classtool.binders.ManageScheBinder;
+import com.example.classtool.models.DownloadBean;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.FilesUtil;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
@@ -82,6 +83,11 @@ public class ManageScheAct extends BasicActivity {
                                        deleteSchtags.add(name);
                                         alls.remove(position);
                                         multiTypeAdapter.notifyItemRemoved(position);
+                                        if(name.equals("云同步课表")) {
+                                            List<DownloadBean> das = FilesUtil.readDownload_datas(ManageScheAct.this);
+                                            das.clear();
+                                            FilesUtil.writeDownload_datas(ManageScheAct.this,das,false);
+                                        }
                                        // Toast.makeText(ManageScheAct.this, "删除文件成功！", Toast.LENGTH_SHORT).show();
                                         checkVisible();
                                     } catch (Exception e) {

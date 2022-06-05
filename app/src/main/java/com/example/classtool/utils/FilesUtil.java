@@ -11,20 +11,16 @@ import androidx.annotation.NonNull;
 import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.Class_colors_set;
 import com.example.classtool.models.DownloadBean;
-import com.example.classtool.models.FindSort;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.Static_sets;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +30,10 @@ public class FilesUtil {
         try {
             // File dir=context.getDir("课表助手数据",Context.MODE_PRIVATE);
 
+            File external_dir=new File(Environment.getExternalStorageDirectory(),"课表助手");
+            if(external_dir.exists()) external_dir.delete();
+            external_dir.mkdir();
             //if(!dir.exists()) dir.mkdir();
-
             File schedir = context.getDir("课表数据", Context.MODE_PRIVATE);
             File timedir = context.getDir("作息时间数据", Context.MODE_PRIVATE);
             File indexdir = context.getDir("索引", Context.MODE_PRIVATE);
@@ -332,32 +330,29 @@ public class FilesUtil {
         return allq;
     }
 
-    public static String readBackupClassTimetag(Context context, String filename) {
+    public static List<String> readBackupClassTimetag() {
         List<String> allq = new ArrayList<>();
-        String retag = "";
-        File dirPath = context.getDir("作息时间数据", Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
+        File dirPath = new File(Environment.getExternalStorageDirectory(),"课表助手"); //, Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory(),"/课表助手/作息时间数据");
         try {
             if (!dirPath.exists()) dirPath.mkdir();
-            File newdir = new File(dirPath, filename + ".txt");
+            File newdir = new File(dirPath,  "时间.txt");
             if (!newdir.exists()) {
                 newdir.createNewFile();
             }
 
-            FileReader inputStream = new FileReader(newdir);
-            BufferedReader reader = new BufferedReader(inputStream);
-            String record;
+            FileReader in = new FileReader(newdir);
+            BufferedReader reader = new BufferedReader(in);
+            String record="";
             while ((record = reader.readLine()) != null) {
                 allq.add(record);
+               // sb.append(record);
             }
             reader.close();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        retag = allq.get(0).replace("-1,", "");
-        return retag;
+        return allq;//.get(0).replace("-1,","");
     }
 
 
@@ -421,9 +416,8 @@ public class FilesUtil {
         return false;
     }
 
-    public static void writeDownload_datas(List<DownloadBean> downloadBeans,boolean isAppend) throws IOException {
-        File firstpa = Environment.getExternalStorageDirectory();
-        File data_record = new File(firstpa, "课表助手");
+    public static void writeDownload_datas(Context context,List<DownloadBean> downloadBeans,boolean isAppend) throws IOException {
+        File data_record = new File(context.getDir("课表助手",Context.MODE_PRIVATE), "课表助手");
         if (!data_record.exists()) data_record.mkdirs();
 
         File f = new File(data_record, "课表下载数据记录.txt");
@@ -446,9 +440,8 @@ public class FilesUtil {
         writer.close();
     }
 
-    public static List<DownloadBean> readDownload_datas() throws IOException{
-        File firstpa = Environment.getExternalStorageDirectory();
-        File data_record = new File(firstpa, "课表助手");
+    public static List<DownloadBean> readDownload_datas(Context context) throws IOException{
+        File data_record = new File(context.getDir("课表助手",Context.MODE_PRIVATE), "课表助手");
         if (!data_record.exists()) data_record.mkdirs();
         List<DownloadBean> alls=new ArrayList<>();
         DownloadBean ben = null;

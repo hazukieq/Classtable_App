@@ -13,6 +13,7 @@ import com.drakeet.multitype.MultiTypeAdapter;
 import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.TimelistBinder;
+import com.example.classtool.models.DownloadBean;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.FilesUtil;
@@ -119,6 +120,13 @@ public class TimelistAct extends BasicActivity {
                                             }
                                         }
 
+                                        if(schedulModel.getSche().equals("云同步作息时间表")) {
+                                            List<DownloadBean> das = FilesUtil.readDownload_datas(TimelistAct.this);
+                                            for(DownloadBean d:das){
+                                                if(d.name.equals("云同步作息时间表")) das.remove(d);
+                                            }
+                                            FilesUtil.writeDownload_datas(TimelistAct.this,das,false);
+                                        }
                                         //将课表索引中已经删除的时间表索引进行替换，预防相关BUG发生
                                         List<String> sss=new ArrayList<>();
                                         for(String sch:schedutimetags){

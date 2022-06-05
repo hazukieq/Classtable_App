@@ -1,4 +1,4 @@
-package com.example.classtool.models;
+package com.example.classtool.utils;
 
 public class FindSort {
     public static int returnColorSort(String[] qolors,String value){

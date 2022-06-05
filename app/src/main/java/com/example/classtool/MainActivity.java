@@ -23,7 +23,7 @@ import com.example.classtool.base.PopupWindows;
 import com.example.classtool.binders.Class_cardBinder;
 import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.Class_colors_set;
-import com.example.classtool.models.FindSort;
+import com.example.classtool.utils.FindSort;
 import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.CompareIsDuplication;
 import com.example.classtool.utils.FilesUtil;

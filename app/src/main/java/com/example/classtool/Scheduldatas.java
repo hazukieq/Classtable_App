@@ -13,7 +13,7 @@ import com.drakeet.multitype.MultiTypeAdapter;
 import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.OnItemClick;
 import com.example.classtool.binders.UniversalBinder;
-import com.example.classtool.models.FindSort;
+import com.example.classtool.utils.FindSort;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.FilesUtil;
