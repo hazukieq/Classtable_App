@@ -10,14 +10,15 @@ android {
         minSdk 23
         targetSdk 32
         versionCode 1
-        versionName "alpha.1.0.8"
+        versionName "alpha.1.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

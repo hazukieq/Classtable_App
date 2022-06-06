@@ -54,8 +54,6 @@ public class TimesetAxt extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeset_axt);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         Intent iq=getIntent();
         a=iq.getStringExtra("sche_name");
         initPopupView();

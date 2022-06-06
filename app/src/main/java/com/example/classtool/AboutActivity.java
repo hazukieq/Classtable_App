@@ -37,9 +37,6 @@ public class AboutActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
-
         try {
             initViews();
         } catch (PackageManager.NameNotFoundException e) {

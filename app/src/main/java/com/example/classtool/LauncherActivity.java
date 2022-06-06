@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.utils.FilesUtil;
 import com.permissionx.guolindev.PermissionX;
 import com.permissionx.guolindev.callback.ExplainReasonCallback;
@@ -24,15 +25,13 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import java.util.List;
 
 
-public class LauncherActivity extends AppCompatActivity {
+public class LauncherActivity extends BasicActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         int firstL = 0;
         sp = PreferenceManager.getDefaultSharedPreferences(LauncherActivity.this);
         editor = sp.edit();

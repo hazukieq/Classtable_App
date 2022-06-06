@@ -36,8 +36,6 @@ public class Scheduldatas extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduldatas);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         topBarLayout=(QMUITopBarLayout) findViewById(R.id.sche_data_topbar);
         recyclerView=(RecyclerView) findViewById(R.id.sche_data_recy);
         adapter=new MultiTypeAdapter();
@@ -86,6 +84,10 @@ public class Scheduldatas extends BasicActivity {
                         editor.putInt("Noon_startClass", noonStartCl);
                         editor.putInt("Night_startClass", ngithStartCl);
                         editor.putString("current_time_temp", current_time_temp);
+                        List<QTime> qimes= FilesUtil.readClassTime(getApplicationContext(),current_time_temp);
+                        int classLen=qimes.size();
+                        editor.putInt("classLen",classLen);
+                        editor.commit();
                         editor.commit();
                        /* new QMUITipDialog.Builder(Scheduldatas.this)
                                 .setTipWord("您已选择" + ptimes[0])

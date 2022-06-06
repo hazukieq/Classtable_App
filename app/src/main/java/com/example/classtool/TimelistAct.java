@@ -39,8 +39,6 @@ public class TimelistAct extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelist);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         List<String> qa=FilesUtil.readSchedulAndTimeTag(TimelistAct.this);
         List<String> wa=FilesUtil.readTimeTag(getApplicationContext());
         schedutimetags.addAll(qa);

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.PopupWindows;
 import com.example.classtool.models.QTime;
 import com.example.classtool.utils.Downloadhelper;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DownloadActivity extends AppCompatActivity {
+public class DownloadActivity extends BasicActivity {
     private TextView upload,uids,choose;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -42,8 +43,6 @@ public class DownloadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
         choose=(TextView) findViewById(R.id.download_choose);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         uids=(TextView) findViewById(R.id.download_random_uid);
         upload=(TextView) findViewById(R.id.download_upload);
         sp= PreferenceManager.getDefaultSharedPreferences(DownloadActivity.this);

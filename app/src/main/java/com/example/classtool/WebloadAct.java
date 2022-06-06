@@ -23,13 +23,6 @@ public class WebloadAct extends ActcomWeb {
         }
 
     @Override
-    public void customStatus() {
-        super.customStatus();
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
-    }
-
-    @Override
     public configTopbars getConfigTopbars(QMUITopBarLayout topBarLayout) {
         return new configTopbars(topBarLayout){
             @Override

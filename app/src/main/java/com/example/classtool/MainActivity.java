@@ -76,8 +76,6 @@ public class MainActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
-        QMUIStatusBarHelper.translucent(this);
         sp= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         editor=sp.edit();
         initRecy();
@@ -334,7 +332,8 @@ public class MainActivity extends BasicActivity {
             class_start_date.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottom("上课时间",12, Static_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString()),"startq");
+                    int allLen=sp.getInt("classLen",12);
+                    showBottom("上课时间",allLen, Static_sets.start_classes,class_start_date,true,false,FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString()),"startq");
                 }
             });
 
@@ -348,7 +347,7 @@ public class MainActivity extends BasicActivity {
             Class_nums.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    changeNums();
+                    showBottom("共计节数",changeNums(), Static_sets.class_nums,Class_nums,false,false, FindSort.returnColorSort(Static_sets.class_nums,Class_nums.getText().toString()),"nums");
                    }
             });
         }
@@ -398,7 +397,7 @@ public class MainActivity extends BasicActivity {
                         ew_alls.addAll(alls);
                         ew_alls.remove(position);
                         Log.i("remove itself-->","success!\new_alls size-->"+ew_alls.size()+"removed size-->"+alls.size());
-                        int check=compareIsDuplication.returnResult(ew_alls,new_data,classNums,date);
+                        int check=compareIsDuplication.returnResult(ew_alls,new_data,classNums,date,summerizeClums());
                        checkClzz(check,position,new_data,0);
 
                     }else{
@@ -444,7 +443,7 @@ public class MainActivity extends BasicActivity {
         Class_nums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              changeNums();
+                showBottom("共计节数",changeNums(), Static_sets.class_nums,Class_nums,false,false, FindSort.returnColorSort(Static_sets.class_nums,Class_nums.getText().toString()),"nums");
                 }
         });
 
@@ -477,7 +476,7 @@ public class MainActivity extends BasicActivity {
                 String noteq=notes.getText().toString();
                 int color_sort=FindSort.returnColorSort(Static_sets.colors,colorq);
                 Class_cardmodel new_data=new Class_cardmodel(date,courseq,startDate,classNums,places,colorq, Class_colors_set.Class_colors[color_sort],noteq,"class_1",0);
-                int check=compareIsDuplication.returnResult(alls,new_data,classNums,date);
+                int check=compareIsDuplication.returnResult(alls,new_data,classNums,date,summerizeClums());
                    checkClzz(check,0,new_data,1);
 
             }
@@ -502,10 +501,10 @@ public class MainActivity extends BasicActivity {
                         @Override
                         public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                             dialog.dismiss();
-                            String detail_time=class_date.getText().toString();
+                            //String detail_time=class_date.getText().toString();
                             CompareIsDuplication cpn=new CompareIsDuplication();
-                            String day=class_weekdate.getText().toString();
-                            int total=0;
+                            //String day=class_weekdate.getText().toString();
+                           // int total=0;
                             switch (tagq){
                                 case "detail":
                                     if(position==1){
@@ -659,7 +658,30 @@ public class MainActivity extends BasicActivity {
 
 
 
-        private void changeNums(){
+
+        private  int summerizeClums(){
+            int isChange=FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString());
+            int Morning_nums_max=sp.getInt("Morning_nums_max",4);//morning_nums_max,实际为早上有morning_nums_max+1节课,实际节数为5，在这里实际为5-1；
+            int Noon_startClass_min=sp.getInt("Noon_startClass",5);
+            int Night_startClass_min=sp.getInt("Night_startClass",9);
+            int classLen=sp.getInt("classLen",12);
+
+
+            int Morning_nums=0;
+            if(isChange>(Noon_startClass_min-1)&&isChange<Night_startClass_min){
+               // isChange=isChange-Noon_startClass_min;
+                Morning_nums=Night_startClass_min-Noon_startClass_min;
+            }else if(isChange>=Night_startClass_min){
+                //isChange=isChange-Night_startClass_min;//isChange-Night_startClass_min;
+                Morning_nums=classLen-Night_startClass_min;//Night_startClass_min的最后一节课+1，比如最后一节为12，实际为11，则总课时为11+1
+            }else{
+                Morning_nums=Morning_nums_max+1;//Morning_num_max+1;
+            }
+
+            return  Morning_nums;
+        }
+
+        private int changeNums(){
 
         int isChange=FindSort.returnColorSort(Static_sets.start_classes,class_start_date.getText().toString());
         int Morning_nums_max=sp.getInt("Morning_nums_max",4);//morning_nums_max,实际为早上有morning_nums_max+1节课,实际节数为5，在这里实际为5-1；
@@ -679,7 +701,7 @@ public class MainActivity extends BasicActivity {
 
         }
         int chenageLen=checkNums(isChange,Morning_nums);
-            showBottom("共计节数",chenageLen, Static_sets.class_nums,Class_nums,false,false, FindSort.returnColorSort(Static_sets.class_nums,Class_nums.getText().toString()),"nums");
+           return chenageLen;
         }
 
         private int  checkNums(int startNums,int max){

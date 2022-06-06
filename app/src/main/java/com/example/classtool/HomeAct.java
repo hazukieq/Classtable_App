@@ -21,12 +21,6 @@ public class HomeAct extends ActcomWeb {
         open_url="https://www.hazukieq.top/html/downloan_page.html";
     }
 
-    @Override
-    public void customStatus() {
-        super.customStatus();
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
-    }
 
     @Override
     public configTopbars getConfigTopbars(QMUITopBarLayout topBarLayout) {

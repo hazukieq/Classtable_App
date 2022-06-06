@@ -93,8 +93,6 @@ public class Schedule_Activity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedulest);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         sp= PreferenceManager.getDefaultSharedPreferences(Schedule_Activity.this);
         editor=sp.edit();
         gridClasses=(GridLayout) findViewById(R.id.detailClasses);

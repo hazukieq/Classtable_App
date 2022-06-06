@@ -44,8 +44,6 @@ public class ManageScheAct extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_sche);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         recy=(RecyclerView) findViewById(R.id.times_add_recy);
         emptyView=(QMUIEmptyView)findViewById(R.id.empty);
         sp= PreferenceManager.getDefaultSharedPreferences(ManageScheAct.this);

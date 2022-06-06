@@ -59,8 +59,6 @@ public class PrevisiSchdulActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.previsit_schedul);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         sp= PreferenceManager.getDefaultSharedPreferences(PrevisiSchdulActivity.this);
         editor=sp.edit();
         title=(TextView)findViewById(R.id.pre_schedule_title);
@@ -75,7 +73,6 @@ public class PrevisiSchdulActivity extends BasicActivity {
         current_time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
         qimes= FilesUtil.readClassTime(getApplicationContext(),current_time_temp);
         classLen=qimes.size();
-
 
         refresh();
         txtListeners();

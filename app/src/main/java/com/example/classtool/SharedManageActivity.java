@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.classtool.base.BasicActivity;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -30,7 +31,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SharedManageActivity extends AppCompatActivity {
+public class SharedManageActivity extends BasicActivity {
     private EditText input;
     private TextView confirm,info;
     private QMUITopBarLayout top;
@@ -41,8 +42,6 @@ public class SharedManageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shared_manage);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         input=(EditText) findViewById(R.id.shared_edit);
         confirm=(TextView)findViewById(R.id.shared_confirm);
         top=(QMUITopBarLayout)findViewById(R.id.shared_topba);

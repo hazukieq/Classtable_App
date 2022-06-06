@@ -33,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.classtool.HomeAct;
 import com.example.classtool.R;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.ComWebView;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
@@ -44,7 +45,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 
-public class ActcomWeb extends AppCompatActivity {
+public class ActcomWeb extends BasicActivity {
 
 
     private FrameLayout web_frame;

@@ -61,8 +61,6 @@ public class TimeAddingActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.time_add_test);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         //sp= PreferenceManager.getDefaultSharedPreferences(TimeAddingActivity.this);
         showDialogUtil=new QShowDialogUtil(TimeAddingActivity.this);
         List<String> gd=FilesUtil.readTimeTag(TimeAddingActivity.this);

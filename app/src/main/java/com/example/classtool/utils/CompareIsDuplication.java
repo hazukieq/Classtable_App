@@ -27,7 +27,7 @@ public  class CompareIsDuplication {
     }
 
 
-    public int returnResult(ArrayList<Object> mAlls, Class_cardmodel data, String class_num,String DayAndTime){
+    public int returnResult(ArrayList<Object> mAlls, Class_cardmodel data, String class_num,String DayAndTime,int totalClass){
 
         int classStart=returnStartClass_index(Static_sets.start_classes,data.getClass_startClass());
         Log.i("上课时间-->",String.valueOf(classStart));
@@ -55,7 +55,7 @@ public  class CompareIsDuplication {
                 int lastTime=returnTime_real_index(Static_sets.detail_real_num,mLastTime);
                 Log.i("之前时间真实数值-->",String.valueOf(lastTime));
 
-                if(returnStartClass_index(Class_nums,clss.getClass_totalClass())==4){
+                if(returnStartClass_index(Class_nums,clss.getClass_totalClass())==totalClass){
                     error_check+=1;
                     break;
                 }

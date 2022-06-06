@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.example.classtool.base.BasicActivity;
 import com.example.classtool.binders.GetscheduBinder;
 import com.example.classtool.models.Class_cardmodel;
 import com.example.classtool.models.DowncardModel;
@@ -42,7 +43,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class GetscheActivity extends AppCompatActivity {
+public class GetscheActivity extends BasicActivity {
 
     private EditText eidt;
     private TextView down, info;
@@ -65,8 +66,6 @@ public class GetscheActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getsche);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         sp = PreferenceManager.getDefaultSharedPreferences(GetscheActivity.this);
         editor = sp.edit();
         try {
@@ -134,7 +133,7 @@ public class GetscheActivity extends AppCompatActivity {
                         case 8:
                             isLoad = false;
                             info.setVisibility(View.VISIBLE);
-                            info.setText("服务端出现故障...");
+                            info.setText("哎呀~服务端出现故障了...");
                             checkInfo(1600);
                             break;
                     }
@@ -217,7 +216,7 @@ public class GetscheActivity extends AppCompatActivity {
                         }
                     } else {
                         info.setVisibility(View.VISIBLE);
-                        info.setText("网络是异常,请稍后重试！");
+                        info.setText("网络异常,请稍后重试！");
                         checkInfo(2000);
                     }
 

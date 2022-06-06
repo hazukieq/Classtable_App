@@ -36,8 +36,6 @@ public class SettingActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        QMUIStatusBarHelper.translucent(this);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         QMUITopBarLayout top=(QMUITopBarLayout)findViewById(R.id.setting_main_topbar);
         top.setTitle("设置");
         top.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {

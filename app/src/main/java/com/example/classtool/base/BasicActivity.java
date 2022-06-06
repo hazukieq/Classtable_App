@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 
 import com.example.classtool.R;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 public class BasicActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         initFonts();
     }
 

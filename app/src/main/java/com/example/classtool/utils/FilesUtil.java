@@ -28,8 +28,6 @@ public class FilesUtil {
 
     public static void InitializeFiles(Context context) {
         try {
-            // File dir=context.getDir("课表助手数据",Context.MODE_PRIVATE);
-
             File external_dir=new File(Environment.getExternalStorageDirectory(),"课表助手");
             if(external_dir.exists()) external_dir.delete();
             external_dir.mkdir();
