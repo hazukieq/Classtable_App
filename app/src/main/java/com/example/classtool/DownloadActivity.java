@@ -1,24 +1,19 @@
 package com.example.classtool;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.classtool.base.BasicActivity;
 import com.example.classtool.base.PopupWindows;
 import com.example.classtool.models.QTime;
 import com.example.classtool.utils.Downloadhelper;
 import com.example.classtool.utils.FilesUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.util.QMUIToastHelper;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
 import java.io.File;
@@ -82,7 +77,7 @@ public class DownloadActivity extends BasicActivity {
                 @Override
                 public void onClick(View v) {
                     QMUPopus qpopus=new QMUPopus(DownloadActivity.this,popup);
-                    qpopus.showPopup(choose,fileSets,300,120,0,0);
+                    qpopus.showPopup(choose,fileSets,360,240,0,0);
                 }
             });
 
@@ -93,25 +88,18 @@ public class DownloadActivity extends BasicActivity {
                         if(QMUIDisplayHelper.hasInternet(DownloadActivity.this)){
                             fileUpload();
                         }else{
-                            new QMUITipDialog.Builder(DownloadActivity.this)
-                                    .setTipWord("请检查网络是否异常！")
-                                    .create().show();
+
+                          ToastUtils.show("请检查网络是否异常！");
 
                         }
 
                     }else{
-                        new QMUITipDialog.Builder(DownloadActivity.this)
-                                .setTipWord("请选择您需要同步的课表！")
-                                .create().show();
-                       // Toast.makeText(DownloadActivity.this, "请选择您需要同步的课表！", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请选择您需要同步的课表！");
                     }
                 }
             });
         }else{
-            new QMUITipDialog.Builder(DownloadActivity.this)
-                    .setTipWord("似乎没有发现任何课表的存在！")
-                    .create().show();
-            //Toast.makeText(this, "似乎没有发现任何课表的存在！", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("似乎没有发现任何课表的存在！");
         }
     }
 
@@ -172,16 +160,9 @@ public class DownloadActivity extends BasicActivity {
         }).start();
 
         if(Rcod==200|Rcod==0){
-            new QMUITipDialog.Builder(DownloadActivity.this)
-                    .setTipWord("成功上传文件到远端服务器！")
-                    .create().show();
-
-            //Toast.makeText(this, "成功上传文件到远端服务器！", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("成功上传文件到远端服务器！");
         }else{
-            new QMUITipDialog.Builder(DownloadActivity.this)
-                    .setTipWord("上传失败，网络失败代码为"+Rcod+",请及时与技术人员反馈")
-                    .create().show();
-            //Toast.makeText(this, "上传失败，网络失败代码为"+Rcod+",请及时与技术人员反馈", Toast.LENGTH_LONG).show();
+            ToastUtils.show("上传失败，网络失败代码为"+Rcod+",请及时与技术人员反馈");
         }
     }
 

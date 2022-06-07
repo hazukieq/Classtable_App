@@ -1,26 +1,14 @@
 package com.example.classtool;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.transition.Transition;
-
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.classtool.base.BasicActivity;
-import com.example.classtool.utils.FragcomWebView;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.util.QMUIToastHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -29,7 +17,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 public class AboutActivity extends BasicActivity {
     private QMUITopBarLayout topBar;
-    private TextView version,copyright;
+    private TextView version;
     private QMUIGroupListView about_list;;
 
 
@@ -37,6 +25,8 @@ public class AboutActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+
         try {
             initViews();
         } catch (PackageManager.NameNotFoundException e) {

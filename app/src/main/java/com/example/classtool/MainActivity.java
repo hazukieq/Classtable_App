@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
@@ -29,13 +28,13 @@ import com.example.classtool.utils.CompareIsDuplication;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.ShowDialogUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
 import com.qmuiteam.qmui.skin.QMUISkinHelper;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.skin.QMUISkinValueBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -178,13 +177,10 @@ public class MainActivity extends BasicActivity {
                    /* new QMUITipDialog.Builder(MainActivity.this)
                             .setTipWord("课表数据保存成功！")
                             .create().show();*/
-                    Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("课表数据保存成功！");
                 }
                 else{
-                    /*new QMUITipDialog.Builder(MainActivity.this)
-                            .setTipWord("当前列表数据好像为空...保存失败")
-                            .create().show();*/
-                    Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("当前列表数据好像为空...保存失败");
                 }
             }
         });
@@ -363,7 +359,6 @@ public class MainActivity extends BasicActivity {
                     .onDismiss(new PopupWindow.OnDismissListener() {
                         @Override
                         public void onDismiss() {
-                            //Toast.makeText(MainActivity.this(), "onDismiss", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .show(AttachView);
@@ -532,17 +527,14 @@ public class MainActivity extends BasicActivity {
                                     if(class_date.getText().toString().equals("早上")&&position>=Noon_startClass_min&&position<Night_startClass_min){
                                         //position=0;
                                         class_date.setText("下午");
-                                       // Toast.makeText(MainActivity.this, "早上最多5节课，请重新选择！", Toast.LENGTH_SHORT).show();
                                     }else if(class_date.getText().toString().equals("下午")&&position>=Night_startClass_min){
                                         //position=5;
                                         class_date.setText("晚上");
-                                        //Toast.makeText(MainActivity.this, "下午最多4节课，请重新选择！", Toast.LENGTH_SHORT).show();
                                     }else if(class_date.getText().toString().equals("下午")&&position<=Morning_nums_max){
                                         class_date.setText("早上");
                                     } else if(class_date.getText().toString().equals("晚上")&&position<Night_startClass_min&&position>Morning_nums_max){
                                         //position=9;
                                         class_date.setText("下午");
-                                        //Toast.makeText(MainActivity.this, "晚上最多4节课，请重新选择！", Toast.LENGTH_SHORT).show();
                                     }else if(class_date.getText().toString().equals("晚上")&&position<=Morning_nums_max){
                                         class_date.setText("早上");
                                     }else if(class_date.getText().toString().equals("早上")&&position<Night_startClass_min&&position>=Noon_startClass_min){
@@ -626,10 +618,7 @@ public class MainActivity extends BasicActivity {
         private void checkClzz(int check,int position,Class_cardmodel new_data,int type){
 
             if(check==7|check%2==1){
-               /* new QMUITipDialog.Builder(MainActivity.this)
-                        .setTipWord("和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~")
-                        .create().show();*/
-                Toast.makeText(MainActivity.this, "和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~", Toast.LENGTH_LONG).show();
+                ToastUtils.show("和其他标签的上课时间或下课时间产生矛盾惹~ 请做检查后再试哦~");
             }
             else if(check%2==0){
                 switch (type){
@@ -637,13 +626,11 @@ public class MainActivity extends BasicActivity {
                         alls.remove(position);
                         alls.add(position,new_data);
                         multiTypeAdapter.notifyItemChanged(position,"updating");
-                       // Toast.makeText(MainActivity.this, "内容更新成功", Toast.LENGTH_SHORT).show();
                         popups.dismiss();
                         break;
                     case 1:
                         alls.add(new_data);
                         multiTypeAdapter.notifyDataSetChanged();
-                       // Toast.makeText(MainActivity.this, "添加标签成功", Toast.LENGTH_SHORT).show();
                         popups.dismiss();
                         break;
                 }
@@ -652,7 +639,7 @@ public class MainActivity extends BasicActivity {
                 /*new QMUITipDialog.Builder(MainActivity.this)
                         .setTipWord("请勿重复添加，已有标签课时为5啦~")
                         .create().show();*/
-                Toast.makeText(MainActivity.this, "请勿重复添加，已有标签课时为5啦~", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请勿重复添加，已有标签课时为5啦~");
             }
         }
 
@@ -730,13 +717,9 @@ public class MainActivity extends BasicActivity {
                             alls.add(obj);
                         }
                         multiTypeAdapter.notifyDataSetChanged();
-                       // Toast.makeText(MainActivity.this, "数据恢复成功！", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        /*new QMUITipDialog.Builder(MainActivity.this)
-                                .setTipWord("恢复失败，临时课表文件没有相关数据！")
-                                .create().show();*/
-                    Toast.makeText(MainActivity.this, "恢复失败，临时课表文件没有相关数据！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("恢复失败，临时课表文件没有相关数据！");
                 }
                     break;
                 case 1:
@@ -763,7 +746,7 @@ public class MainActivity extends BasicActivity {
                 jall.add((Class_cardmodel) alls.get(i));
             }
             if (EditgetStr.isEmpty()) {
-                Toast.makeText(MainActivity.this, "请输入文字！", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入文字！");
             }else {
                 boolean isWrite= FilesUtil.writFile(getApplicationContext(),EditgetStr,jall);
                 List<String> l=FilesUtil.readSchedulAndTimeTag(getApplicationContext());
@@ -781,16 +764,10 @@ public class MainActivity extends BasicActivity {
                         String time_temp=sp.getString("current_time_temp","武鸣校区作息时间");
                         FilesUtil.AppendScheDulAndTimeTag(getApplicationContext(),EditgetStr+","+time_temp);
                     }
-                    /*new QMUITipDialog.Builder(MainActivity.this)
-                            .setTipWord("课表数据保存成功！")
-                            .create().show();*/
-                    Toast.makeText(MainActivity.this, "课表数据保存成功！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("课表数据保存成功！");
                 }
                 else {
-                   /* new QMUITipDialog.Builder(MainActivity.this)
-                            .setTipWord("当前列表数据好像为空...保存失败")
-                            .create().show();*/
-                    Toast.makeText(MainActivity.this, "当前列表数据好像为空...保存失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("当前列表数据好像为空...保存失败");
                 }
             }
 
@@ -844,7 +821,6 @@ public class MainActivity extends BasicActivity {
                            e.printStackTrace();
                        }
                        Schedule_title.setText("当前课表模板："+values[position]);
-                       //Toast.makeText(MainActivity.this, "您已选择"+values[position]+"!", Toast.LENGTH_SHORT).show();
                        dialog.dismiss();
                     }
                 });

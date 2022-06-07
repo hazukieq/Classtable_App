@@ -3,13 +3,13 @@ package com.example.classtool.base;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 
-import com.example.classtool.R;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
 
 public class BasicActivity extends AppCompatActivity {
 
@@ -19,7 +19,12 @@ public class BasicActivity extends AppCompatActivity {
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         initFonts();
+        ToastUtils.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+
+
     }
+
+
 
     private void initFonts(){
         Configuration configuration=getResources().getConfiguration();

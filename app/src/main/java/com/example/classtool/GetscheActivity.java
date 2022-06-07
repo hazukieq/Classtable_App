@@ -1,7 +1,6 @@
 package com.example.classtool;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
@@ -14,14 +13,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.example.classtool.base.BasicActivity;
 import com.example.classtool.binders.GetscheduBinder;
-import com.example.classtool.models.Class_cardmodel;
-import com.example.classtool.models.DowncardModel;
 import com.example.classtool.models.DownloadBean;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.Static_sets;
@@ -30,13 +26,10 @@ import com.example.classtool.utils.Downloadhelper;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.FindSort;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -224,7 +217,6 @@ public class GetscheActivity extends BasicActivity {
                     info.setVisibility(View.VISIBLE);
                     info.setText("请输入用户帐号！");
                     checkInfo(1300);
-                    //Toast.makeText(GetscheActivity.this, "请输入用户账号！", Toast.LENGTH_SHORT).show();
                 }
             }
         });

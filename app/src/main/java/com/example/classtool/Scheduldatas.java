@@ -17,6 +17,7 @@ import com.example.classtool.utils.FindSort;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.FilesUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -92,7 +93,7 @@ public class Scheduldatas extends BasicActivity {
                        /* new QMUITipDialog.Builder(Scheduldatas.this)
                                 .setTipWord("您已选择" + ptimes[0])
                                 .create().show();*/
-                        Toast.makeText(Scheduldatas.this, "您已选择" + ptimes[0], Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("您已选择" + ptimes[0]);
                     }
                     finish();
                 }catch (Exception e){

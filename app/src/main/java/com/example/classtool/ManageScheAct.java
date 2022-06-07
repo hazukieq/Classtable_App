@@ -1,16 +1,12 @@
 package com.example.classtool;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.example.classtool.base.BasicActivity;
@@ -18,12 +14,11 @@ import com.example.classtool.binders.ManageScheBinder;
 import com.example.classtool.models.DownloadBean;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.FilesUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +81,6 @@ public class ManageScheAct extends BasicActivity {
                                             das.clear();
                                             FilesUtil.writeDownload_datas(ManageScheAct.this,das,false);
                                         }
-                                       // Toast.makeText(ManageScheAct.this, "删除文件成功！", Toast.LENGTH_SHORT).show();
                                         checkVisible();
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -108,10 +102,7 @@ public class ManageScheAct extends BasicActivity {
 
 
                                 }else{
-                                   /* new QMUITipDialog.Builder(ManageScheAct.this)
-                                            .setTipWord("删除文件失败！")
-                                            .create().show();*/
-                                    Toast.makeText(ManageScheAct.this, "删除文件失败！", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.show("删除文件失败！");
                                 }
                             }
                         })

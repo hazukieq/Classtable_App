@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
@@ -40,6 +39,7 @@ import com.example.classtool.models.SchedulModel;
 import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.CalculatLayViews;
 import com.example.classtool.utils.FilesUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
 import com.qmuiteam.qmui.skin.QMUISkinHelper;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
@@ -55,6 +55,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Schedule_Activity extends BasicActivity {
 
@@ -261,15 +262,11 @@ public class Schedule_Activity extends BasicActivity {
 
                                 boolean isSave= FilesUtil.saveImg(Schedule_Activity.this,bitmap,"课表图片");
                                 if(isSave){
-                                   /* new QMUITipDialog.Builder(Schedule_Activity.this)
-                                            .setTipWord("课表图片保存成功,请前往相册查看！")
-                                            .create().show();*/
-                                    Toast.makeText(Schedule_Activity.this, "课表图片保存成功,请前往相册查看！", Toast.LENGTH_SHORT).show();
+
+                                    ToastUtils.show("课表图片保存成功,请前往相册查看！");
+
                                 }else{
-                                    /*new QMUITipDialog.Builder(Schedule_Activity.this)
-                                            .setTipWord("课表图片保存失败!")
-                                            .create().show();*/
-                                    Toast.makeText(Schedule_Activity.this, "课表图片保存失败", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.show("课表图片保存失败");
                                 }
                             dialog.dismiss();
                         }
@@ -386,7 +383,6 @@ public class Schedule_Activity extends BasicActivity {
         controlTexts();
         gridClasses.removeAllViews();
         initGrids();
-        //Toast.makeText(Schedule_Activity.this, "课表数据刷新成功！", Toast.LENGTH_SHORT).show();
     }
 
     //textViews初始化
@@ -572,8 +568,6 @@ public class Schedule_Activity extends BasicActivity {
             public void onClick(View v) {
                 String edi=title_edit.getText().toString();
                 titleq.setText(edi);
-                //FilesUtil.renameFile("临时课表数据",edi);
-                //Toast.makeText(Schedule_Activity.this, "标题修改成功！", Toast.LENGTH_SHORT).show();
                 popups.dismiss();
             }
         });

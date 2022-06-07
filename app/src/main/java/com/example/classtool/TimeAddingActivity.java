@@ -6,13 +6,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.drakeet.multitype.MultiTypeAdapter;
@@ -23,6 +21,7 @@ import com.example.classtool.models.QTime;
 import com.example.classtool.models.Static_sets;
 import com.example.classtool.utils.FilesUtil;
 import com.example.classtool.utils.ShowDialogUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.layout.QMUIFrameLayout;
 import com.qmuiteam.qmui.skin.QMUISkinHelper;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
@@ -173,10 +172,7 @@ public class TimeAddingActivity extends BasicActivity {
                 if(alls.size()==classLen){
                     showDialogUtil.Qhowpop(act_add_saving,"保存作息时间","请输入文件名以保存相关数据");
                 }else{
-                    /*new QMUITipDialog.Builder(TimeAddingActivity.this)
-                            .setTipWord("保存失败，请点击生成具体课表时间按钮！")
-                            .create().show();*/
-                    Toast.makeText(TimeAddingActivity.this, "保存失败，请点击生成具体课表时间按钮！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("保存失败，请点击生成具体课表时间按钮！");
                 }
             }
         });
@@ -262,8 +258,6 @@ public class TimeAddingActivity extends BasicActivity {
                 alls.remove(position);
                 alls.add(position,new QTime(sort,sortStr, timeStr.replaceAll("(\\d{2})(.*)(\\d{2})$","$1:$2:$3")));
                 multiTypeAdapter.notifyItemChanged(position,"updating");
-               // boolean check= CheckIllegalStrUtil.isIllegalStr(timeStr);
-                //Toast.makeText(TimeAddingActivity.this, "内容更新成功!", Toast.LENGTH_SHORT).show();
                  popups.dismiss();
             }
         });
@@ -301,7 +295,7 @@ public class TimeAddingActivity extends BasicActivity {
                                     //new QMUITipDialog.Builder(TimeAddingActivity.this)
                                       //      .setTipWord("哎呀...和上午时间段发生冲突了哟~")
                                         //    .create().show();
-                                    Toast.makeText(TimeAddingActivity.this, "哎呀...和上午时间段发生冲突了哟~", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.show("哎呀...和上午时间段发生冲突了哟~");
                                 }
 
                                 break;
@@ -317,10 +311,7 @@ public class TimeAddingActivity extends BasicActivity {
                                 if(position>all) {
                                     view.setText(values[position]);
                                 }else{
-                                   /* new QMUITipDialog.Builder(TimeAddingActivity.this)
-                                            .setTipWord("哎呀...和下午时间段发生冲突了哟~")
-                                            .create().show();*/
-                                    Toast.makeText(TimeAddingActivity.this, "哎呀...和下午时间段发生冲突了哟~", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.show("哎呀...和下午时间段发生冲突了哟~");
                                 }
                                 break;
 
@@ -373,7 +364,7 @@ public class TimeAddingActivity extends BasicActivity {
             }
 
             if (EditgetStr.isEmpty()) {
-                Toast.makeText(TimeAddingActivity.this, "请输入文字！", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入文字！");
             }else {
                 int q=0;
                 for(String sre:strList){
@@ -383,16 +374,12 @@ public class TimeAddingActivity extends BasicActivity {
                                 .setTipWord("文件名重复，请重新命名！")
                                 .create().show();*/
 
-                        Toast.makeText(TimeAddingActivity.this, "文件名重复，请重新命名！", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("文件名重复，请重新命名！");
                     }
                 }
                 if(q==0) {
                     FilesUtil.AppendClassTime(getApplicationContext(), qTimeList, EditgetStr);
                     FilesUtil.AppendTimeTag(getApplicationContext(), EditgetStr + "," + "第1节课," + act_morning_nums.getText().toString() + "," + act_noon_startCl.getText().toString() + "," + act_add_noon_nums.getText().toString() + "," + act_ngith_start.getText().toString() + "," + act_ngith_nums.getText().toString());
-                    /*new QMUITipDialog.Builder(TimeAddingActivity.this)
-                            .setTipWord("数据保存成功！")
-                            .create().show()*/;
-                    //Toast.makeText(TimeAddingActivity.this, "数据保存成功！", Toast.LENGTH_SHORT).show();
                     pop.dismiss();
                     finish();
                 }

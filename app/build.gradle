@@ -41,7 +41,8 @@ android {
 
 dependencies {
 
-
+    //implementation 'com.github.GrenderG:Toasty:1.5.2'
+    implementation("com.github.getActivity:ToastUtils:10.3")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation 'com.guolindev.permissionx:permissionx:1.6.4'
     //图片加载库

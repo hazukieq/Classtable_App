@@ -17,6 +17,7 @@ import com.example.classtool.models.DownloadBean;
 import com.example.classtool.models.QTime;
 import com.example.classtool.models.SchedulModel;
 import com.example.classtool.utils.FilesUtil;
+import com.hjq.toast.ToastUtils;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -100,7 +101,7 @@ public class TimelistAct extends BasicActivity {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 if (is == false) {
-                                    Toast.makeText(TimelistAct.this, "删除失败！", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.show("删除失败！");
                                     dialog.dismiss();
                                 } else if(is==true){
 
