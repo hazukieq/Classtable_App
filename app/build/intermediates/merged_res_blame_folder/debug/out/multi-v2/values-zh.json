@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\Classtool\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\18648\\.gradle\\caches\\transforms-3\\43a0b741b04297d8cc395170339850bb\\transformed\\permissionx-1.6.4\\res\\values-zh\\values-zh.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,131,204,276,347",
+                        "endColumns": "75,72,71,70,61",
+                        "endOffsets": "126,199,271,342,404"
+                    }
+                }
+            ]
+        }
+    ]
+}

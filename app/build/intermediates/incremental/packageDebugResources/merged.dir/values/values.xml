@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="color" name="app_content_bg_color"/>
+    <attr format="color" name="app_primary_color"/>
+    <attr format="float" name="app_skin_alpha_test"/>
+    <attr format="color|reference" name="app_skin_btn_test_bg"/>
+    <attr format="color|reference" name="app_skin_btn_test_bg_single"/>
+    <attr format="color|reference" name="app_skin_btn_test_border"/>
+    <attr format="color|reference" name="app_skin_btn_test_border_single"/>
+    <attr format="color|reference" name="app_skin_common_background"/>
+    <attr format="color|reference" name="app_skin_common_background_1"/>
+    <attr format="color|reference" name="app_skin_common_desc_text_color"/>
+    <attr format="color|reference" name="app_skin_common_img_tint_color"/>
+    <attr format="color|reference" name="app_skin_common_title_text_color"/>
+    <attr format="color|reference" name="app_skin_home_text_color"/>
+    <attr format="color|reference" name="app_skin_progress_bar_bg_color"/>
+    <attr format="color|reference" name="app_skin_progress_bar_progress_color"/>
+    <attr format="color|reference" name="app_skin_progress_bar_text_color"/>
+    <attr format="color" name="app_skin_span_normal_bg_color"/>
+    <attr format="color" name="app_skin_span_normal_text_color"/>
+    <attr format="color" name="app_skin_span_pressed_bg_color"/>
+    <attr format="color" name="app_skin_span_pressed_text_color"/>
+    <color name="app_color_blue">#00A8E1</color>
+    <color name="app_color_blue_2">#31BDF3</color>
+    <color name="app_color_blue_2_disabled">#7F31BDF3</color>
+    <color name="app_color_blue_2_pressed">#7F31BDF3</color>
+    <color name="app_color_blue_3">#EBF9FF</color>
+    <color name="app_color_blue_3_disabled">#7FEBF9FF</color>
+    <color name="app_color_blue_3_pressed">#7FEBF9FF</color>
+    <color name="app_color_blue_disabled">#8000A8E1</color>
+    <color name="app_color_blue_pressed">#c000A8E1</color>
+    <color name="app_color_description">@color/qmui_config_color_gray_5</color>
+    <color name="app_color_theme_1">#EF5362</color>
+    <color name="app_color_theme_2">#FE6D4B</color>
+    <color name="app_color_theme_3">#FFCF47</color>
+    <color name="app_color_theme_4">#9FD661</color>
+    <color name="app_color_theme_5">#3FD0AD</color>
+    <color name="app_color_theme_6">#2BBDF3</color>
+    <color name="app_color_theme_7">#5A9AEF</color>
+    <color name="app_color_theme_8">#AC8FEF</color>
+    <color name="app_color_theme_9">#EE85C1</color>
+    <color name="bar_divider">#D4D6D8</color>
+    <color name="black">#FF000000</color>
+    <color name="class_blue">#ff90caf9</color>
+    <color name="class_btn_bg">#ddedff</color>
+    <color name="class_green">#77b568</color>
+    <color name="class_light_blue">#ffb3e5fc</color>
+    <color name="class_light_purple">#ffd1c4e9</color>
+    <color name="class_light_yellow">#ffffecb3</color>
+    <color name="class_orange">#b99a61</color>
+    <color name="class_pink">#ffcccc</color>
+    <color name="class_purple">#ffce93d8</color>
+    <color name="class_red">#ffef9a9a</color>
+    <color name="class_white">#e4eceb</color>
+    <color name="class_yellow">#ffec8b</color>
+    <color name="colorHelper_square_alpha_background">@color/app_color_theme_4</color>
+    <color name="colorHelper_square_from_ratio_background">@color/app_color_blue</color>
+    <color name="colorHelper_square_to_ratio_background">@color/app_color_theme_3</color>
+    <color name="cs_white">#fefefe</color>
+    <color name="headerbar">#9999cc</color>
+    <color name="ic_launcher_background">#2B7BBF</color>
+    <color name="light_white">#ededed</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="radiusImageView_border_color">@color/app_color_theme_2</color>
+    <color name="radiusImageView_selected_border_color">@color/app_color_theme_1</color>
+    <color name="radiusImageView_selected_mask_color">#7FEF5362</color>
+    <color name="tab_panel_bg">#ffffff</color>
+    <color name="tab_panel_divider">@color/bar_divider</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="text_gray">#495050</color>
+    <color name="text_pink">#fff06292</color>
+    <color name="text_red">#cdf44336</color>
+    <color name="text_selected">#79B3E5</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="colorHelper_column_marginBottom">35dp</dimen>
+    <dimen name="colorHelper_square_desc_marginTop">10dp</dimen>
+    <dimen name="colorHelper_square_length">46dp</dimen>
+    <dimen name="colorHelper_square_margin">23dp</dimen>
+    <dimen name="common_content_spacing">@dimen/qmui_content_spacing_horizontal</dimen>
+    <dimen name="deviceHelper_column_marginBottom">30dp</dimen>
+    <dimen name="drawableHelper_column_marginBottom">35dp</dimen>
+    <dimen name="drawableHelper_common_shape_size">50dp</dimen>
+    <dimen name="drawableHelper_item_marginHorizontal">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="home_tab_height">49dp</dimen>
+    <dimen name="list_divider_height">1px</dimen>
+    <dimen name="list_divider_height_negative">-1px</dimen>
+    <dimen name="spanUtils_column_marginBottom">35dp</dimen>
+    <dimen name="spanUtils_common_textSize">16sp</dimen>
+    <string name="about_allcited">本软件引用资源列表</string>
+    <string name="about_app_name">课表助手</string>
+    <string name="about_author">作者：月色伊人</string>
+    <string name="about_cite_list">
+         <big>开源库</big>\n
+        1.QMUI_Android(UI框架);\n项目地址：<a href="https://qmuiteam.com/android">qmuiteam.com/android</a>\n
+        2.Glide(图片加载)\n项目地址：<a href="https://github.com/bumptech/glide">github.com/bumptech/glide
+</a>\n
+ 3.MultiType(recyclerview)\n项目地址：<a href="https://github.com/drakeet/MultiType">github.com/drakeet/MultiType
+</a>\n
+    </string>
+    <string name="about_contact">联系我</string>
+    <string name="about_contact_details">E-mail：hazukie@qq.com\nQQ：2593753494</string>
+    <string name="about_copyright">©2022 created by 月色伊人</string>
+    <string name="about_name">软件名称：课表助手</string>
+    <string name="about_title">关于</string>
+    <string name="app_name">课表助手</string>
+    <string name="dialog_know">知道了</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open_address">项目地址</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="webviewAct_copy">复制网页链接</string>
+    <string name="webviewAct_refresh">刷新网页</string>
+    <string name="webviewAct_webviewOpen">手机浏览器</string>
+    <style name="DialogTheme2" parent="QMUI.Dialog">
+        <item name="qmui_dialog_inset_hor">64dp</item>
+        <item name="qmui_dialog_title_style">@style/DialogTheme2TitleStyle</item>
+        <item name="qmui_dialog_action_container_style">@style/DialogTheme2ActionContainerStyle
+        </item>
+        <item name="qmui_dialog_action_style">@style/DialogTheme2ActionStyle</item>
+        <item name="qmui_dialog_message_content_style">@style/DialogTheme2MessageContentStyle</item>
+        <item name="qmui_dialog_menu_container_style">@style/DialogTheme2MenuContainerStyle</item>
+        <item name="qmui_dialog_menu_item_style">@style/DialogTheme2MenuItemStyle</item>
+    </style>
+    <style name="DialogTheme2ActionContainerStyle">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="qmui_dialog_action_container_justify_content">stretch</item>
+        <item name="qmui_dialog_action_height">56dp</item>
+        <item name="qmui_dialog_action_space">8dp</item>
+        <item name="qmui_topDividerColor">?attr/qmui_skin_support_color_separator</item>
+        <item name="qmui_topDividerHeight">1px</item>
+    </style>
+    <style name="DialogTheme2ActionStyle">
+        <item name="android:textColor">?attr/qmui_config_color_blue</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:background">@null</item>
+        <item name="qmui_dialog_action_button_padding_horizontal">12dp</item>
+        <item name="qmui_dialog_action_icon_space">6dp</item>
+        <item name="qmui_dialog_positive_action_text_color">?attr/qmui_config_color_blue</item>
+        <item name="qmui_dialog_negative_action_text_color">?attr/qmui_config_color_red</item>
+    </style>
+    <style name="DialogTheme2MenuContainerStyle" parent="@style/QMUI.Dialog.MenuContainer">
+        <item name="qmui_dialog_menu_item_height">52dp</item>
+        <item name="qmui_dialog_menu_container_padding_top_when_title_exist">23dp</item>
+        <item name="qmui_dialog_menu_container_padding_bottom_when_action_exist">24dp</item>
+    </style>
+    <style name="DialogTheme2MenuItemStyle" parent="@style/QMUI.Dialog.MenuItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/qmui_config_color_gray_1</item>
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:paddingRight">32dp</item>
+    </style>
+    <style name="DialogTheme2MessageContentStyle" parent="QMUI.Dialog.MessageContent">
+        <item name="android:textColor">?attr/qmui_config_color_gray_4</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingBottom">27dp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="qmui_paddingTopWhenNotTitle">27dp</item>
+    </style>
+    <style name="DialogTheme2TitleStyle" parent="QMUI.Dialog.Title">
+        <item name="android:textColor">?attr/qmui_config_color_gray_1</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">28dp</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+    <style name="QDCommonDescription">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/app_color_description</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="QDCommonTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textColor">?attr/qmui_config_color_gray_1</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="qmui_skin_text_color">?attr/app_skin_common_title_text_color</item>
+    </style>
+    <style name="QDRoundButtonStyle" parent="@style/Button.Compat">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">?attr/qmui_content_spacing_horizontal</item>
+        <item name="android:paddingRight">?attr/qmui_content_spacing_horizontal</item>
+        <item name="qmui_borderColor">?attr/qmui_skin_support_round_btn_border_color</item>
+        <item name="qmui_backgroundColor">@color/s_app_color_blue_3</item>
+        <item name="android:textColor">@color/s_app_color_blue_2</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="QDTextAppearanceListItemSmall">
+        <item name="android:textColor">?attr/qmui_config_color_gray_4</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="QDTopBar" parent="QMUI.TopBar">
+        <item name="qmui_topbar_height">48dp</item>
+        <item name="qmui_topbar_title_color">@color/qmui_config_color_gray_2</item>
+        <item name="qmui_topbar_image_btn_height">48dp</item>
+        <item name="qmui_topbar_title_bold">true</item>
+        <item name="qmui_topbar_text_btn_bold">true</item>
+    </style>
+    <style name="QDtextAppearanceListItem">
+        <item name="android:textColor">?attr/qmui_config_color_black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="ReleaseDialogTheme" parent="DialogTheme2">
+        <item name="qmui_dialog_inset_hor">40dp</item>
+        <item name="qmui_dialog_message_content_style">@style/ReleaseMessageContentStyle</item>
+    </style>
+    <style name="ReleaseMessageContentStyle" parent="DialogTheme2MessageContentStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <style name="Theme" parent="QMUI.Compat.NoActionBar">
+
+        
+        <item name="qmui_skin_support_topbar_bg">?attr/app_primary_color</item>
+        <item name="qmui_skin_support_topbar_separator_color">
+            ?attr/qmui_skin_support_color_separator
+        </item>
+        <item name="qmui_skin_support_topbar_title_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_subtitle_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_text_btn_color_state_list">@color/s_topbar_btn_color
+        </item>
+        <item name="qmui_skin_support_topbar_image_tint_color">@color/qmui_config_color_white</item>
+        <item name="QMUITopBarStyle">@style/QDTopBar</item>
+
+        <item name="qmui_skin_support_tab_bg">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_tab_separator_color">?attr/qmui_skin_support_color_separator
+        </item>
+        <item name="qmui_skin_support_tab_normal_color">?attr/qmui_config_color_gray_6</item>
+        <item name="qmui_skin_support_tab_selected_color">?attr/qmui_config_color_blue</item>
+
+        <item name="qmui_skin_support_activity_background">?attr/app_skin_common_background</item>
+        <item name="qmui_skin_support_round_btn_border_color">@color/s_btn_blue</item>
+        <item name="qmui_skin_support_round_btn_text_color">@color/s_btn_blue</item>
+
+
+        <item name="qmui_config_color_blue">@color/app_color_blue</item>
+        <item name="qmui_content_spacing_horizontal">20dp</item>
+        <item name="qmui_content_padding_horizontal">@dimen/qmui_content_spacing_horizontal</item>
+
+        
+        <item name="app_primary_color">@color/white</item>
+        <item name="app_content_bg_color">@color/qmui_config_color_white</item>
+        <item name="fontFamily">sans-serif</item>
+
+        <item name="app_skin_common_background">@color/qmui_config_color_white</item>
+        <item name="app_skin_common_background_1">@color/qmui_config_color_background</item>
+        <item name="app_skin_common_img_tint_color">?attr/qmui_config_color_blue</item>
+        <item name="app_skin_home_text_color">?attr/qmui_config_color_gray_6</item>
+        <item name="app_skin_common_title_text_color">?attr/qmui_config_color_gray_1</item>
+        <item name="app_skin_common_desc_text_color">@color/app_color_description</item>
+        <item name="app_skin_btn_test_bg">@color/s_app_color_blue_3</item>
+        <item name="app_skin_btn_test_border">@color/s_app_color_blue_to_red</item>
+        <item name="app_skin_btn_test_bg_single">@color/app_color_blue_3</item>
+        <item name="app_skin_btn_test_border_single">@color/app_color_blue</item>
+        <item name="app_skin_progress_bar_bg_color">@color/qmui_config_color_gray_8</item>
+        <item name="app_skin_progress_bar_progress_color">@color/qmui_config_color_blue</item>
+        <item name="app_skin_progress_bar_text_color">@color/qmui_config_color_gray_1</item>
+        <item name="app_skin_span_normal_text_color">@color/app_color_blue</item>
+        <item name="app_skin_span_pressed_text_color">@color/app_color_blue_pressed</item>
+        <item name="app_skin_span_normal_bg_color">@color/qmui_config_color_gray_8</item>
+        <item name="app_skin_span_pressed_bg_color">@color/qmui_config_color_gray_6</item>
+        <item name="app_skin_alpha_test">1</item>
+    </style>
+    <style name="Theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.Launcher">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/launcher</item>
+    </style>
+    <style name="Theme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="button_wrapper_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="qmui_bottomDividerHeight">1px</item>
+        <item name="qmui_bottomDividerColor">?attr/qmui_skin_support_color_separator</item>
+        <item name="qmui_skin_separator_bottom">?attr/qmui_skin_support_color_separator</item>
+    </style>
+</resources>

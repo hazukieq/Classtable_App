@@ -1,0 +1,378 @@
+[
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_download.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_download.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_card.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\card.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_back.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_back.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_btn_bg.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\btn_bg.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_time_add_item_popup.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\time_add_item_popup.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_layout_act_comweb.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\layout_act_comweb.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_shared_manage.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_shared_manage.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_app_color_gray.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_app_color_gray.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_layout_frag_comweb.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\layout_frag_comweb.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_app_color_blue_2.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_app_color_blue_2.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_add.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_add.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_lay_clickable.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\lay_clickable.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_more.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_more.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_timeset_axt.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_timeset_axt.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_class_edit_layout.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\class_edit_layout.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_universal_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\universal_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_ltesidayout.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\ltesidayout.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_webview_copy.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_webview_copy.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_close.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_close.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_webview_icon.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_webview_icon.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_class_info_card_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\class_info_card_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_webview_copy.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_webview_copy.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_app_color_blue_to_red.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_app_color_blue_to_red.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_edit_bg.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\edit_bg.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_webview_refresh.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_webview_refresh.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_add.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_add.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_topbar_btn_color.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_topbar_btn_color.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_back.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_back.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_time_add_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\time_add_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi_ic_action_close.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-anydpi\\ic_action_close.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_layout_clickable.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\layout_clickable.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_getsche.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_getsche.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_output_img_layout.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\output_img_layout.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_close.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_close.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_scheduldatas.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_scheduldatas.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_manage_sche.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_manage_sche.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_btn_blue.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_btn_blue.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_webview_copy.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_webview_copy.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_simple_list_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\simple_list_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_add.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_add.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi_ic_action_back.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-anydpi\\ic_action_back.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_previsit_schedul.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\previsit_schedul.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_downcard_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\downcard_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi_ic_action_add.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-anydpi\\ic_action_add.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_back.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_back.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_main.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_timelist.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_timelist.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_timelist_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\timelist_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_close.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_close.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_add.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_add.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_webview_icon.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_webview_icon.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_time_add_test.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\time_add_test.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_webview_icon.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_webview_icon.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_lay_selector.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\lay_selector.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_classable_bhbg.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\classable_bhbg.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_more.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_more.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_launcher.jpg.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\launcher.jpg"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_more.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_more.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_layout_clickable.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\layout_clickable.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_webview_icon.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_webview_icon.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_close.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_close.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_schedulest.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_schedulest.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_web_progress.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\web_progress.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_app_color_gray_dark.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_app_color_gray_dark.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_webview_refresh.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_webview_refresh.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_webview_copy.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_webview_copy.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_layout_bg.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\layout_bg.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_change_current_item.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\change_current_item.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_btn_gray.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_btn_gray.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_lay_bg_selected.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\lay_bg_selected.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_action_webview_refresh.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-mdpi\\ic_action_webview_refresh.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\xml_network_security_config.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\xml\\network_security_config.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\color_s_app_color_blue_3.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\color\\s_app_color_blue_3.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_action_back.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_back.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_action_more.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_more.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_set_title_popup.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\set_title_popup.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_classabel_bg.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\classabel_bg.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi_ic_action_more.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-anydpi\\ic_action_more.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_setting.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_setting.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_about.xml.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\layout\\activity_about.xml"
+    },
+    {
+        "merged": "D:\\Classtool\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_action_webview_refresh.png.flat",
+        "source": "D:\\Classtool\\app\\src\\main\\res\\drawable-hdpi\\ic_action_webview_refresh.png"
+    }
+]

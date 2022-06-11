@@ -1,0 +1,200 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.classtool"
+4    android:versionCode="1"
+5    android:versionName="R.1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->D:\Classtool\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->D:\Classtool\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\Classtool\app\src\main\AndroidManifest.xml:5:5-67
+11-->D:\Classtool\app\src\main\AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->D:\Classtool\app\src\main\AndroidManifest.xml:6:5-79
+12-->D:\Classtool\app\src\main\AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+13-->D:\Classtool\app\src\main\AndroidManifest.xml:7:5-76
+13-->D:\Classtool\app\src\main\AndroidManifest.xml:7:22-73
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->D:\Classtool\app\src\main\AndroidManifest.xml:8:5-81
+14-->D:\Classtool\app\src\main\AndroidManifest.xml:8:22-78
+15    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+15-->D:\Classtool\app\src\main\AndroidManifest.xml:9:5-82
+15-->D:\Classtool\app\src\main\AndroidManifest.xml:9:22-79
+16
+17    <application
+17-->D:\Classtool\app\src\main\AndroidManifest.xml:11:5-83:19
+18        android:name="com.example.classtool.base.QApplication"
+18-->D:\Classtool\app\src\main\AndroidManifest.xml:12:9-42
+19        android:allowBackup="true"
+19-->D:\Classtool\app\src\main\AndroidManifest.xml:13:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.7.0] C:\Users\18648\.gradle\caches\transforms-3\b9e4376e452ce4f1a2bbb1fc4b534124\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:extractNativeLibs="false"
+23        android:icon="@mipmap/ic_launcher"
+23-->D:\Classtool\app\src\main\AndroidManifest.xml:14:9-43
+24        android:label="@string/app_name"
+24-->D:\Classtool\app\src\main\AndroidManifest.xml:15:9-41
+25        android:networkSecurityConfig="@xml/network_security_config"
+25-->D:\Classtool\app\src\main\AndroidManifest.xml:16:9-69
+26        android:requestLegacyExternalStorage="true"
+26-->D:\Classtool\app\src\main\AndroidManifest.xml:17:9-52
+27        android:roundIcon="@mipmap/ic_launcher_round"
+27-->D:\Classtool\app\src\main\AndroidManifest.xml:18:9-54
+28        android:supportsRtl="true"
+28-->D:\Classtool\app\src\main\AndroidManifest.xml:19:9-35
+29        android:theme="@style/Theme" >
+29-->D:\Classtool\app\src\main\AndroidManifest.xml:20:9-37
+30        <activity
+30-->D:\Classtool\app\src\main\AndroidManifest.xml:21:9-23:40
+31            android:name="com.example.classtool.GetscheActivity"
+31-->D:\Classtool\app\src\main\AndroidManifest.xml:22:13-44
+32            android:exported="false" />
+32-->D:\Classtool\app\src\main\AndroidManifest.xml:23:13-37
+33        <activity
+33-->D:\Classtool\app\src\main\AndroidManifest.xml:24:9-26:40
+34            android:name="com.example.classtool.SharedManageActivity"
+34-->D:\Classtool\app\src\main\AndroidManifest.xml:25:13-49
+35            android:exported="false" />
+35-->D:\Classtool\app\src\main\AndroidManifest.xml:26:13-37
+36        <activity
+36-->D:\Classtool\app\src\main\AndroidManifest.xml:27:9-29:40
+37            android:name="com.example.classtool.DownloadActivity"
+37-->D:\Classtool\app\src\main\AndroidManifest.xml:28:13-45
+38            android:exported="false" />
+38-->D:\Classtool\app\src\main\AndroidManifest.xml:29:13-37
+39        <activity
+39-->D:\Classtool\app\src\main\AndroidManifest.xml:30:9-32:40
+40            android:name="com.example.classtool.HomeAct"
+40-->D:\Classtool\app\src\main\AndroidManifest.xml:31:13-36
+41            android:exported="false" />
+41-->D:\Classtool\app\src\main\AndroidManifest.xml:32:13-37
+42        <activity
+42-->D:\Classtool\app\src\main\AndroidManifest.xml:33:9-35:40
+43            android:name="com.example.classtool.WebloadAct"
+43-->D:\Classtool\app\src\main\AndroidManifest.xml:34:13-39
+44            android:exported="false" />
+44-->D:\Classtool\app\src\main\AndroidManifest.xml:35:13-37
+45        <activity
+45-->D:\Classtool\app\src\main\AndroidManifest.xml:36:9-40:86
+46            android:name="com.example.classtool.base.BasicActivity"
+46-->D:\Classtool\app\src\main\AndroidManifest.xml:37:13-47
+47            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|screenLayout|uiMode"
+47-->D:\Classtool\app\src\main\AndroidManifest.xml:38:13-113
+48            android:exported="false"
+48-->D:\Classtool\app\src\main\AndroidManifest.xml:39:13-37
+49            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" />
+49-->D:\Classtool\app\src\main\AndroidManifest.xml:40:13-83
+50        <activity
+50-->D:\Classtool\app\src\main\AndroidManifest.xml:41:9-43:40
+51            android:name="com.example.classtool.PrevisiSchdulActivity"
+51-->D:\Classtool\app\src\main\AndroidManifest.xml:42:13-50
+52            android:exported="false" />
+52-->D:\Classtool\app\src\main\AndroidManifest.xml:43:13-37
+53        <activity
+53-->D:\Classtool\app\src\main\AndroidManifest.xml:44:9-46:40
+54            android:name="com.example.classtool.ManageScheAct"
+54-->D:\Classtool\app\src\main\AndroidManifest.xml:45:13-42
+55            android:exported="false" />
+55-->D:\Classtool\app\src\main\AndroidManifest.xml:46:13-37
+56        <activity
+56-->D:\Classtool\app\src\main\AndroidManifest.xml:47:9-49:40
+57            android:name="com.example.classtool.SettingActivity"
+57-->D:\Classtool\app\src\main\AndroidManifest.xml:48:13-44
+58            android:exported="false" />
+58-->D:\Classtool\app\src\main\AndroidManifest.xml:49:13-37
+59        <activity
+59-->D:\Classtool\app\src\main\AndroidManifest.xml:50:9-52:40
+60            android:name="com.example.classtool.TimesetAxt"
+60-->D:\Classtool\app\src\main\AndroidManifest.xml:51:13-39
+61            android:exported="false" />
+61-->D:\Classtool\app\src\main\AndroidManifest.xml:52:13-37
+62        <activity
+62-->D:\Classtool\app\src\main\AndroidManifest.xml:53:9-55:40
+63            android:name="com.example.classtool.TimelistAct"
+63-->D:\Classtool\app\src\main\AndroidManifest.xml:54:13-40
+64            android:exported="false" />
+64-->D:\Classtool\app\src\main\AndroidManifest.xml:55:13-37
+65        <activity
+65-->D:\Classtool\app\src\main\AndroidManifest.xml:56:9-58:40
+66            android:name="com.example.classtool.Scheduldatas"
+66-->D:\Classtool\app\src\main\AndroidManifest.xml:57:13-41
+67            android:exported="false" />
+67-->D:\Classtool\app\src\main\AndroidManifest.xml:58:13-37
+68        <activity
+68-->D:\Classtool\app\src\main\AndroidManifest.xml:59:9-68:20
+69            android:name="com.example.classtool.LauncherActivity"
+69-->D:\Classtool\app\src\main\AndroidManifest.xml:60:13-45
+70            android:exported="true"
+70-->D:\Classtool\app\src\main\AndroidManifest.xml:61:13-36
+71            android:theme="@style/Theme.Launcher" >
+71-->D:\Classtool\app\src\main\AndroidManifest.xml:62:13-50
+72            <intent-filter>
+72-->D:\Classtool\app\src\main\AndroidManifest.xml:63:13-67:29
+73                <action android:name="android.intent.action.MAIN" />
+73-->D:\Classtool\app\src\main\AndroidManifest.xml:64:17-69
+73-->D:\Classtool\app\src\main\AndroidManifest.xml:64:25-66
+74
+75                <category android:name="android.intent.category.LAUNCHER" />
+75-->D:\Classtool\app\src\main\AndroidManifest.xml:66:17-77
+75-->D:\Classtool\app\src\main\AndroidManifest.xml:66:27-74
+76            </intent-filter>
+77        </activity>
+78        <activity
+78-->D:\Classtool\app\src\main\AndroidManifest.xml:69:9-71:40
+79            android:name="com.example.classtool.TimeAddingActivity"
+79-->D:\Classtool\app\src\main\AndroidManifest.xml:70:13-47
+80            android:exported="false" />
+80-->D:\Classtool\app\src\main\AndroidManifest.xml:71:13-37
+81        <activity
+81-->D:\Classtool\app\src\main\AndroidManifest.xml:72:9-74:40
+82            android:name="com.example.classtool.Schedule_Activity"
+82-->D:\Classtool\app\src\main\AndroidManifest.xml:73:13-46
+83            android:exported="false" />
+83-->D:\Classtool\app\src\main\AndroidManifest.xml:74:13-37
+84        <activity
+84-->D:\Classtool\app\src\main\AndroidManifest.xml:75:9-77:40
+85            android:name="com.example.classtool.AboutActivity"
+85-->D:\Classtool\app\src\main\AndroidManifest.xml:76:13-42
+86            android:exported="false" />
+86-->D:\Classtool\app\src\main\AndroidManifest.xml:77:13-37
+87        <activity
+87-->D:\Classtool\app\src\main\AndroidManifest.xml:78:9-82:86
+88            android:name="com.example.classtool.MainActivity"
+88-->D:\Classtool\app\src\main\AndroidManifest.xml:79:13-41
+89            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|screenLayout|uiMode"
+89-->D:\Classtool\app\src\main\AndroidManifest.xml:80:13-113
+90            android:exported="true"
+90-->D:\Classtool\app\src\main\AndroidManifest.xml:81:13-36
+91            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" />
+91-->D:\Classtool\app\src\main\AndroidManifest.xml:82:13-83
+92
+93        <provider
+93-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+94            android:name="androidx.startup.InitializationProvider"
+94-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:27:13-67
+95            android:authorities="com.example.classtool.androidx-startup"
+95-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:28:13-68
+96            android:exported="false" >
+96-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:29:13-37
+97            <meta-data
+97-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+98                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+98-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:32:17-75
+99                android:value="androidx.startup" />
+99-->[androidx.emoji2:emoji2:1.0.0] C:\Users\18648\.gradle\caches\transforms-3\2c96a293c0a835e94af1ddc4d74ff22d\transformed\emoji2-1.0.0\AndroidManifest.xml:33:17-49
+100            <meta-data
+100-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\18648\.gradle\caches\transforms-3\bdba8a1b7f77d959878d5a52670cf96f\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+101                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+101-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\18648\.gradle\caches\transforms-3\bdba8a1b7f77d959878d5a52670cf96f\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+102                android:value="androidx.startup" />
+102-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\18648\.gradle\caches\transforms-3\bdba8a1b7f77d959878d5a52670cf96f\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+103        </provider>
+104    </application>
+105
+106</manifest>
