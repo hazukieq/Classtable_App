@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:textSize="20sp"
-                    android:textColor="@color/qmui_config_color_gray_2"
+                    android:textColor="@color/black"
                     android:text="课程时间设定"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"

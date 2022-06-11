@@ -68,7 +68,7 @@ public class ManageScheAct extends BasicActivity {
                                 dialog.dismiss();
                             }
                         })
-                        .addAction("确认", new QMUIDialogAction.ActionListener() {
+                        .addAction(0,"确认",  QMUIDialogAction.ACTION_PROP_NEGATIVE,new QMUIDialogAction.ActionListener() {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 if (FilesUtil.deleteScheFile(getApplicationContext(), name)) {

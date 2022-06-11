@@ -32,8 +32,8 @@
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_timelist.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/activity_timeset_axt.xml" value="0.4466666666666667" />
         <entry key="..\:/Classtool/app/src/main/res/layout/change_current_item.xml" value="0.39360222531293465" />
-        <entry key="..\:/Classtool/app/src/main/res/layout/class_edit_layout.xml" value="0.5" />
-        <entry key="..\:/Classtool/app/src/main/res/layout/class_info_card_item.xml" value="0.5" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/class_edit_layout.xml" value="0.22" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/class_info_card_item.xml" value="0.6" />
         <entry key="..\:/Classtool/app/src/main/res/layout/content_basic.xml" value="0.1" />
         <entry key="..\:/Classtool/app/src/main/res/layout/downcard_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Classtool/app/src/main/res/layout/fragment_check.xml" value="0.12817028985507245" />
@@ -43,7 +43,7 @@
         <entry key="..\:/Classtool/app/src/main/res/layout/ltesidayout.xml" value="0.3333333333333333" />
         <entry key="..\:/Classtool/app/src/main/res/layout/output_img_layout.xml" value="0.14666666666666667" />
         <entry key="..\:/Classtool/app/src/main/res/layout/previsit_schedul.xml" value="0.2702922077922078" />
-        <entry key="..\:/Classtool/app/src/main/res/layout/set_title_popup.xml" value="0.12817028985507245" />
+        <entry key="..\:/Classtool/app/src/main/res/layout/set_title_popup.xml" value="0.3333333333333333" />
         <entry key="..\:/Classtool/app/src/main/res/layout/simple_list_item.xml" value="0.12817028985507245" />
         <entry key="..\:/Classtool/app/src/main/res/layout/time_add_item.xml" value="0.39360222531293465" />
         <entry key="..\:/Classtool/app/src/main/res/layout/time_add_item_popup.xml" value="0.35614973262032085" />

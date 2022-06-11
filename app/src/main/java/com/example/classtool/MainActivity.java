@@ -220,7 +220,7 @@ public class MainActivity extends BasicActivity {
                                 dialog.dismiss();
                             }
                         })
-                        .addAction("确认", new QMUIDialogAction.ActionListener() {
+                        .addAction(0,"确认", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 alls.remove(position);
@@ -267,7 +267,7 @@ public class MainActivity extends BasicActivity {
         int padding = QMUIDisplayHelper.dp2px(MainActivity.this, 20);
         frameLayout.setPadding(padding, padding, padding, padding);
         int size = QMUIDisplayHelper.dp2px(MainActivity.this, 300);
-        int height = QMUIDisplayHelper.dp2px(MainActivity.this, 580);
+        int height = QMUIDisplayHelper.dp2px(MainActivity.this, 540);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(size, height);
 
 
@@ -431,7 +431,7 @@ public class MainActivity extends BasicActivity {
         TagColors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottom("标签颜色",10, Static_sets.colors,TagColors,false,false,FindSort.returnColorSort(Static_sets.colors,TagColors.getText().toString()),"colors");
+                showBottom("标签颜色",Static_sets.colors.length, Static_sets.colors,TagColors,false,false,FindSort.returnColorSort(Static_sets.colors,TagColors.getText().toString()),"colors");
             }
         });
 

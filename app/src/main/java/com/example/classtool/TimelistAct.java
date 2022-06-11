@@ -97,56 +97,56 @@ public class TimelistAct extends BasicActivity {
                                 dialog.dismiss();
                             }
                         })
-                        .addAction("确认", new QMUIDialogAction.ActionListener() {
+                        .addAction(0,"确认", QMUIDialogAction.ACTION_PROP_NEGATIVE,new QMUIDialogAction.ActionListener() {
+
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 if (is == false) {
                                     ToastUtils.show("删除失败！");
                                     dialog.dismiss();
-                                } else if(is==true){
-
+                                } else if (is == true) {
 
 
                                     //写入已经删除时间索引记录后的时间总索引数据
-                                    try{
+                                    try {
                                         //移除时间总索引中的记录
-                                        List<String> halls=new ArrayList<>();
+                                        List<String> halls = new ArrayList<>();
                                         halls.addAll(timetags);
-                                        String qtag=((SchedulModel) alls.get(position)).getSche();
-                                        for(String sd:timetags){
-                                            if(sd.split(",")[0].equals(qtag)){
+                                        String qtag = ((SchedulModel) alls.get(position)).getSche();
+                                        for (String sd : timetags) {
+                                            if (sd.split(",")[0].equals(qtag)) {
                                                 halls.remove(sd);
                                             }
                                         }
 
-                                        if(schedulModel.getSche().equals("云同步作息时间表")) {
+                                        if (schedulModel.getSche().equals("云同步作息时间表")) {
                                             List<DownloadBean> das = FilesUtil.readDownload_datas(TimelistAct.this);
-                                            for(DownloadBean d:das){
-                                                if(d.name.equals("云同步作息时间表")) das.remove(d);
+                                            for (DownloadBean d : das) {
+                                                if (d.name.equals("云同步作息时间表")) das.remove(d);
                                             }
-                                            FilesUtil.writeDownload_datas(TimelistAct.this,das,false);
+                                            FilesUtil.writeDownload_datas(TimelistAct.this, das, false);
                                         }
                                         //将课表索引中已经删除的时间表索引进行替换，预防相关BUG发生
-                                        List<String> sss=new ArrayList<>();
-                                        for(String sch:schedutimetags){
-                                            int sc=0;
-                                            if(sch.split(",")[1].equals(qtag)){
-                                               sc=1;
+                                        List<String> sss = new ArrayList<>();
+                                        for (String sch : schedutimetags) {
+                                            int sc = 0;
+                                            if (sch.split(",")[1].equals(qtag)) {
+                                                sc = 1;
                                             }
 
-                                            if(sc==1){
-                                                sss.add(sch.replace(qtag,"武鸣校区作息时间"));
-                                            }else{
+                                            if (sc == 1) {
+                                                sss.add(sch.replace(qtag, "武鸣校区作息时间"));
+                                            } else {
                                                 sss.add(sch);
                                             }
                                         }
                                         //刷新RECYCLERVIEW视图
                                         alls.remove(position);
                                         multiAd.notifyItemRemoved(position);
-                                        multiAd.notifyItemRangeChanged(0,alls.size());
-                                        FilesUtil.AppendTimeTags(getApplicationContext(),halls);
-                                        FilesUtil.RemoveScheDulAndTimeTag(TimelistAct.this,sss);
-                                    }catch (Exception e){
+                                        multiAd.notifyItemRangeChanged(0, alls.size());
+                                        FilesUtil.AppendTimeTags(getApplicationContext(), halls);
+                                        FilesUtil.RemoveScheDulAndTimeTag(TimelistAct.this, sss);
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     dialog.dismiss();

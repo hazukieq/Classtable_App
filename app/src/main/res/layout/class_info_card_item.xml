@@ -25,10 +25,10 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:text="课程：医学微生物学"
             android:id="@+id/class_info_card_course"
-            android:textColor="@color/qmui_config_color_gray_2"
+            android:textColor="@color/black"
             android:gravity="center_vertical"
             android:minLines="1"
             android:maxLines="1"/>
@@ -55,7 +55,7 @@
             android:textSize="14sp"
             android:text="上课时间：早上8:20"
             android:id="@+id/class_info_card_startClass"
-            android:textColor="@color/qmui_config_color_gray_2"
+            android:textColor="@color/text_pink"
             android:gravity="center_vertical|left"
             android:paddingLeft="8dp"/>
         <TextView
@@ -65,7 +65,7 @@
             android:textSize="14sp"
             android:text="共计节数：3节"
             android:id="@+id/class_info_card_totalClass"
-            android:textColor="@color/qmui_config_color_gray_2"
+            android:textColor="@color/class_orange"
             android:gravity="center_vertical|left"
             android:paddingLeft="8dp"/>
         <TextView

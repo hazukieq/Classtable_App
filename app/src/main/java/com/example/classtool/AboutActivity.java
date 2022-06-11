@@ -66,7 +66,7 @@ public class AboutActivity extends BasicActivity {
                         startActivity(inq);
                     }
                 })
-                .addItemView(about_list.createItemView("使用说明"), new View.OnClickListener() {
+                .addItemView(about_list.createItemView("软件更新"), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent in=new Intent();

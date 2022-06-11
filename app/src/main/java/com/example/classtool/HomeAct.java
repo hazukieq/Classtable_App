@@ -4,7 +4,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 public class HomeAct extends ActcomWeb {
     public HomeAct(){
-        open_url="https://www.hazukieq.top/html/downloan_page.html";
+        open_url="https://www.hazukieq.top/html/download_page.html";
     }
 
 
@@ -15,7 +15,7 @@ public class HomeAct extends ActcomWeb {
             @Override
             public void setTopbarTitle() {
                 super.setTopbarTitle();
-                topBarLayout.setTitle("使用说明");
+                topBarLayout.setTitle("软件更新");
             }
         };
     }

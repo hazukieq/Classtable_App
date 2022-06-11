@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="18dp"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
     android:background="@drawable/layout_bg"
     android:orientation="vertical"
     android:layout_margin="10dp">
@@ -13,17 +14,18 @@
         android:orientation="horizontal"
         android:background="@color/white"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:id="@+id/lia">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/qmui_config_color_gray_2"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:id="@+id/changeTitle"
-            android:text="修改标题"/>
+            android:text="修改标题"
+            android:gravity="center"/>
 
         <ImageButton
             android:layout_width="0dp"
@@ -35,7 +37,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="50dp"
         android:layout_below="@id/lia"
         android:id="@+id/alia">
@@ -45,11 +47,16 @@
             android:textColorHint="@color/text_red"
             android:hint="请输入文字以修改标题"
             android:id="@+id/set_title_popup_title"
+            android:inputType="text"
             android:background="@null"
             android:textColor="@color/qmui_btn_blue_text"
             android:textSize="18sp"
-            android:maxLines="1"
-            android:minLines="1"/>
+            android:maxLines="1"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/qmui_btn_blue_text"/>
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

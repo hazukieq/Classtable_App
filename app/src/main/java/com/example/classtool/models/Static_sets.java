@@ -11,7 +11,7 @@ public class Static_sets {
     };
 
     public static String[] colors=new String[]{
-            "红色","黄色","绿色","紫色","白色","粉红色","橙黄色","浅蓝色","浅黄色","浅紫色",
+            "红色","黄色","绿色","紫色","白色","粉红色","橙黄色","蓝色","浅蓝色","浅黄色","浅紫色",
     };
 
     public static   String[] start_classes=new String[]{
