@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">课表助手</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_title">关于</string>
+    <string name="about_app_name">课表助手</string>
+    <string name="about_copyright">©2022 created by 月色伊人</string>
+    <string name="about_contact">联系我</string>
+    <string name="about_name">软件名称：课表助手</string>
+    <string name="about_author">作者：月色伊人</string>
+    <string name="open_address">项目地址</string>
+    <string name="about_contact_details">E-mail：hazukie@qq.com\nQQ：2593753494</string>
+    <string name="about_allcited">本软件引用资源列表</string>
+    <string name="about_cite_list">
+         <big>开源库</big>\n
+        1.QMUI_Android(UI框架);\n项目地址：<a href="https://qmuiteam.com/android">qmuiteam.com/android</a>\n
+        2.Glide(图片加载)\n项目地址：<a href="https://github.com/bumptech/glide">github.com/bumptech/glide
+</a>\n
+ 3.MultiType(recyclerview)\n项目地址：<a href="https://github.com/drakeet/MultiType">github.com/drakeet/MultiType
+</a>\n
+    </string>
+    <string name="dialog_know">知道了</string>
+    <string name="webviewAct_webviewOpen">手机浏览器</string>
+    <string name="webviewAct_copy">复制网页链接</string>
+    <string name="webviewAct_refresh">刷新网页</string>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SharedManageActivity">
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:id="@+id/shared_topba"
+        android:layout_alignParentTop="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/shared_topba"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="8dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="18sp"
+            android:textColor="@color/qmui_config_color_gray_2"
+            android:text="云同步课表登录"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/edit_bg"
+            android:hint="输入验证码！"
+            android:textColor="@color/qmui_btn_blue_text"
+            android:id="@+id/shared_edit"
+            android:maxLines="1"
+            android:minLines="1"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textColor="@color/qmui_btn_blue_text"
+            android:textSize="18sp"
+            android:background="@color/class_btn_bg"
+            android:id="@+id/shared_info"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textColor="@color/qmui_btn_blue_text"
+            android:textSize="18sp"
+            android:background="@drawable/layout_clickable"
+            android:clickable="true"
+            android:id="@+id/shared_confirm"
+            android:gravity="center"
+            android:text="进入云同步界面"/>
+
+    </LinearLayout>
+</RelativeLayout>
