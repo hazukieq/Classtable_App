@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable-anydpi/ic_action_add.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable-anydpi/ic_action_back.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable-anydpi/right_press_btn.xml" value="0.18" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable-hdpi/right_press_btn.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/bottomdialog_bg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/btn_bg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/btn_round.xml" value="0.18" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/cardbg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/csidehead_cardbg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/dialog_bg.xml" value="0.18" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/dialog_bottom_radius.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/edit_bg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_action_back.xml" value="0.1" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_calendar_event_fill.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_card_heading.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_clock_fill.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_delete.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_empty.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_file_earmark_text.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_geo_alt_fill.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ic_plus.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ios_item_drawable.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/ios_itembg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/left_press_btn.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/navbar_bg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/popup_bg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/popup_bottombg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/press_btn.xml" value="0.18" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/recy_unibg.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/right_press_btn.xml" value="0.195" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/round_line_bg.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/setting_item_bg.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/shape_divider_line.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/shape_divider_verline.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/drawable/web_progress.xml" value="0.1405" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_about.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_fragment_container.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_localweb.xml" value="0.3493975903614458" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_main.xml" value="0.23533891850723535" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_manage.xml" value="0.4466666666666667" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_manage_lay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_preview.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_sche_make.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_setting.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/activity_timedit.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/bootmsheet_unilay.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/bottomialog.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/bottomsheet_schecard.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/crialoh_editlay.xml" value="0.4466666666666667" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/croh_editlay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/dialog_contentlay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/dialogment.xml" value="0.6" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/editaview.xml" value="0.4466666666666667" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_diagment.xml" value="0.14402173913043478" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_note.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_sche_manage.xml" value="0.4466666666666667" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_schecreate.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_schemake.xml" value="0.16666666666666666" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_scheprev.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_time_make.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_time_manage.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_timedit.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_timemake.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/fragment_web.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/main_included_sideheadlay.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/main_included_week.xml" value="0.4466666666666667" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/mainlayout_included_week.xml" value="0.12817028985507245" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/popup_lay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_editaview.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_horion_card.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_horizontalay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_ios_item.xml" value="0.6" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_schecard.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_sinedit_item.xml" value="0.5" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_time_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/recy_unitext.xml" value="0.6" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/testlay.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/topbarayout.xml" value="0.6" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/layout/unitext.xml" value="0.17074275362318841" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/ScheduleViews/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">课表助手</string>
+    <string name="schlibar_setting">课程助手设置</string>
+
+    <string name="dialog_title">课程详情</string>
+    <string name="dialog_cls_time_template">%1$s 第%2$d-%3$d节 计%4$d课时</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="export_schedule_img">导出课表截图</string>
+    <string name="flt_btn_add">添加</string>
+    <string name="schemake_save">保存</string>
+    <string name="schemake_sche">课表</string>
+    <string name="about_app_name">软件名称：课表助手</string>
+    <string name="about_app_author">开发作者：月色伊人</string>
+    <string name="about_app_address">项目地址</string>
+    <string name="about_app_update">软件更新</string>
+    <string name="about_app_contactus">联系我们</string>
+    <string name="about_app_advise">意见反馈</string>
+    <string name="about_app_cites">引用资源</string>
+    <string name="main_menu">菜单</string>
+    <string name="main_ouput">导出</string>
+    <string name="main_side_schemak">课表制作</string>
+    <string name="main_side_manage">文件管理</string>
+    <string name="main_side_setting">设置</string>
+    <string name="main_side_about">关于</string>
+    <string name="main_side_note">便签</string>
+    <string name="main_empty_table">空表</string>
+    <string name="main_default_time_table">默认作息表</string>
+    <string name="main_toast_success_change">切换成功！</string>
+    <string name="main_output_screenshot">导出截图</string>
+    <string name="main_ungranted_permis_tip">您未授予应用读写权限！</string>
+    <string name="main_exportSche_name">课表.jpg</string>
+</resources>

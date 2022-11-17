@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/ios_ext"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:gravity="center_vertical"
+        android:text="测试"
+        android:maxLines="1"
+        android:id="@+id/recy_ios_set_name">
+    </TextView>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/text_gray"
+        android:gravity="center"
+        android:text="秋季第一学期课表"
+        android:maxLines="1"
+        android:id="@+id/recy_ios_set_value"/>
+</LinearLayout>

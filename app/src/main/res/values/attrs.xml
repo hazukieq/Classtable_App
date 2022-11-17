@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ClassCardView">
+        <attr name="courseName" format="string"/>
+        <attr name="courseColor" format="color"/>
+        <attr name="courseSize" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="TopbarLayout">
+        <attr name="title_text_color" format="color"/>
+        <attr name="topbar_background_color" format="color"/>
+        <attr name="title_text" format="string"/>
+        <attr name="title_text_size" format="dimension"/>
+        <attr name="topbar_icon_tint" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CRecyclerView">
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
+</resources>

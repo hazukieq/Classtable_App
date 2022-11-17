@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.hazukie.scheduleviews.custom.TopbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/web_topbar"
+        android:layout_alignParentTop="true"
+        app:title_text_size="18sp"
+        app:topbar_background_color="@color/white">
+    </com.hazukie.scheduleviews.custom.TopbarLayout>
+    <ProgressBar
+        android:id="@+id/web_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="bottom"
+        android:progressDrawable="@drawable/web_progress"
+        android:layout_below="@id/web_topbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/web_progress">
+        <!--网页模板嵌入-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/web_frame">
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

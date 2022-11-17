@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gxmu">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@android:color/transparent"
+        android:id="@+id/preview_topView"/>
+    <com.hazukie.scheduleviews.custom.TopbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/topbar"
+        app:title_text="预览课表"
+        app:title_text_size="20sp"
+        app:title_text_color="@color/text_gray"
+        app:topbar_background_color="@android:color/transparent"
+        android:layout_marginBottom="12dp">
+    </com.hazukie.scheduleviews.custom.TopbarLayout>
+
+    <include layout="@layout/main_included_week"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:scrollbars="none">
+        <!--动态生成课表布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/preview"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

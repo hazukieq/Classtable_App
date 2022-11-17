@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ScheduleViews" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    </style>
+
+    <style name="Theme.Launcher" parent="Theme.ScheduleViews">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/gxmu</item>
+    </style>
+</resources>

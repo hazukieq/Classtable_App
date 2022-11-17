@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="6"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/ios_ext"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:gravity="center_vertical"
+        android:text="测试"
+        android:id="@+id/recy_sineidt_name">
+    </TextView>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/text_gray"
+        android:gravity="right"
+        android:paddingEnd="12dp"
+        android:background="@null"
+        android:hint="请输入文字"
+        android:textColorHint="@color/iosbutton_cancel"
+        android:maxLines="1"
+        android:inputType="text"
+        android:id="@+id/recy_sinedit_value"/>
+</LinearLayout>

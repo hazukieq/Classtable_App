@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:textSize="16sp"
+    android:textColor="@color/ios_ext"
+    android:gravity="center"
+    android:text="测试"
+    android:background="@drawable/recy_unibg"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/recy_uni_title">
+</TextView>
