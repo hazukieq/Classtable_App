@@ -30,4 +30,5 @@
     <string name="main_output_screenshot">导出截图</string>
     <string name="main_ungranted_permis_tip">您未授予应用读写权限！</string>
     <string name="main_exportSche_name">课表.jpg</string>
+    <string name="release_version">版本号：Release.1.0.1</string>
 </resources>

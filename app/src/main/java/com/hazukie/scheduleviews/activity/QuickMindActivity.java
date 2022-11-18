@@ -23,6 +23,6 @@ public class QuickMindActivity extends LocalWebActivity{
         super.configWebView(webView);
         //隐藏滚动条
 
-        hiddenStatusBar(false);
+        hiddenStatusBar(true);
     }
 }

@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity {
         ojs.add(new Unimodel(5,"思维导图"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
-        ojs.add(new Unimodel(6,"云桌面"));
+        //ojs.add(new Unimodel(6,"云桌面"));
 
 
         unibin.setJustify(txt->{
@@ -187,10 +187,10 @@ public class MainActivity extends BaseActivity {
                     startAct2Act(this,AboutActivity.class);
                     break;
                 case 4:
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/class/ote/editor.html","","");
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/quickmind/editor.html","","");
                     break;
                 case 5:
-                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/class/ote/quickmind.html","","");
+                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/quickote/quickmind.html","","");
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:

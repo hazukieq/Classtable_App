@@ -47,7 +47,7 @@
         android:id="@+id/about_version"
         android:layout_below="@id/about_img"
         android:layout_marginBottom="36dp"
-        android:text="版本号：Release.1.0"/>
+        android:text="@string/release_version"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

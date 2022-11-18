@@ -111,6 +111,13 @@ public class NativeInvoker {
             return String.valueOf(bs);
     }
 
+    @JavascriptInterface
+    public String renameFile(String file_name,String oldName,String neoName){
+        String[] parsed_file_nam=file_name.split("/");
+        FileHelper.RootMode rootMode=parsed_file_nam[0].equals("note")? FileHelper.RootMode.note: FileHelper.RootMode.mind;
+        boolean bs=fileHelper.rename(rootMode,oldName,neoName);
+        return String.valueOf(bs);
+    }
 /*        @JavascriptInterface
         public String readlist(String type){
             Log.i( "web-readlist>>","type="+type);
