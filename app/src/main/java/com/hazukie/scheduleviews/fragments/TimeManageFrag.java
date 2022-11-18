@@ -154,31 +154,39 @@ public class TimeManageFrag extends Fragment {
                             .onConfirm((crialoghue, view) -> {
                                 EditText ed=(EditText) view;
                                 String content=ed.getText().toString().replaceAll("\\s*","");
-                                List<TimeModel> tms=FileHelper.getRecordTms(getActivity());
+
                                 boolean isDuplicate=false;
-                                for(TimeModel tim:timez){
-                                    if((tim.getTimeName().equals(content)&&(!content.equals(uni.title)))||content.equals("默认作息表")){
-                                        isDuplicate=true;
-                                        break;
-                                    }
-                                }
-
-                                if(!isDuplicate){
-                                    boolean isRename=fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
-                                    Log.i( "doEdit>>","isRename="+isRename);
-
-                                    for(ScheWithTimeModel sct:sctz){
-                                        if(sct.getTimeName().equals(uni.title)){
-                                            sct.updateTimeName(content);
+                                if(content.equals(uni.title)){
+                                    crialoghue.dismiss();
+                                }else if(content.equals("默认作息表")){
+                                    DisplayHelper.Infost(getActivity(),"名称已重复！");
+                                }else{
+                                    for(TimeModel tim:timez){
+                                        if((tim.getTimeName().equals(content))){
+                                            isDuplicate=true;
+                                            break;
                                         }
                                     }
 
-                                    txt.setText(content);
-                                    uni.title=content;
-                                    crialoghue.dismiss();
-                                }else{
-                                    DisplayHelper.Infost(getActivity(),"名称已重复！");
+                                    if(!isDuplicate){
+                                        boolean isRename=fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
+                                        Log.i( "doEdit>>","isRename="+isRename);
+
+                                        for(ScheWithTimeModel sct:sctz){
+                                            if(sct.getTimeName().equals(uni.title)){
+                                                sct.updateTimeName(content+".txt");
+                                            }
+                                        }
+
+                                        txt.setText(content);
+                                        uni.title=content;
+                                        refreshThm();
+                                        crialoghue.dismiss();
+                                    }else{
+                                        DisplayHelper.Infost(getActivity(),"名称已重复！");
+                                    }
                                 }
+
                             })
                             .build(getActivity());
                     coh.show();
@@ -211,18 +219,25 @@ public class TimeManageFrag extends Fragment {
             for(TimeModel del:dels){
                 fileHelper.delete(FileHelper.RootMode.times,del.timeName);
             }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-            List<TimeModel> neo_tims=new ArrayList<>();
-            for(Object obj:recyItems){
-                Unimodel uni=(Unimodel)obj;
-                TimeModel tim=new TimeModel(uni.id, uni.getTitle()+".txt");
-                neo_tims.add(tim);
-            }
+    private void refreshThm(){
+        List<TimeModel> neo_tims=new ArrayList<>();
+        for(Object obj:recyItems){
+            Unimodel uni=(Unimodel)obj;
+            TimeModel tim=new TimeModel(uni.id, uni.getTitle()+".txt");
+            neo_tims.add(tim);
+        }
+        try{
             fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(sctz));
             fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(neo_tims));
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     @Override

@@ -88,30 +88,50 @@ public class Fileystem {
         List<Object> newlis=new ArrayList<>();
         File currentFile=selectFile(rootPathType,file_name);
         String rawData= ioeter.read(currentFile);
-        String[] rawData_splitN=rawData.split("\n");
-        boolean isStartup=rawData_splitN.length>0;
-        if(isStartup){
-            for (String s : rawData_splitN) {
-                newlis.add(converter.convertObj2Jsn(s));
+        if(rawData.length()==0) {
+            newlis.add(" ");
+        }else{
+            String[] rawData_splitN=rawData.split("\n");
+            boolean isStartup=rawData_splitN.length>0;
+            if(isStartup){
+                for (String s : rawData_splitN) {
+                    newlis.add(converter.convertJsn2Obj(s,type));
+                }
             }
         }
+
         return newlis;
     }
 
     public Object getData(FileRootTypes rootPathType,String file_name, Type type){
         File currentFile=selectFile(rootPathType,file_name);
         String rawData= ioeter.read(currentFile);
-        return converter.convertObj2Jsn(rawData);
+        return converter.convertJsn2Obj(rawData,type);
     }
 
-    public String getDataStr(FileRootTypes rootPathType,String file_name, Type type){
+    public String getDataStr(FileRootTypes rootPathType,String file_name){
         File currentFile=selectFile(rootPathType,file_name);
         return ioeter.read(currentFile);
     }
 
+    public void putDataList(FileRootTypes rootPathType,String file_name,List<Object> objs){
+        File currentFile=selectFile(rootPathType,file_name);
+        StringBuilder stringBuilder=new StringBuilder();
+        if(objs.size()>0){
+            for (Object obj:objs) {
+                String str= converter.convertObj2Jsn(obj)+"\n";
+                stringBuilder.append(str);
+            }
+        }else{
+            stringBuilder.append(" ");
+        }
+        ioeter.write(currentFile,stringBuilder.toString());
+    }
+
     public void putData(FileRootTypes rootPathType,String file_name,Object obj){
         File currentFile=selectFile(rootPathType,file_name);
-        String content=converter.convertObj2Jsn(obj);
+        String content="";
+        if(obj!=null) content=converter.convertObj2Jsn(obj);
         ioeter.write(currentFile,content);
     }
 

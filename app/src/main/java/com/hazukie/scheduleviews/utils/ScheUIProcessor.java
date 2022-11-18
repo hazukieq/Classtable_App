@@ -31,9 +31,9 @@ public class ScheUIProcessor {
     private int mWidth=600;
     private int default_time_grid_color=10000,default_empty_grid_color=10000;
 
-    public ScheUIProcessor(Context context,LinearLayout linearLay,int mWidth,int totalClnnums){
+    public ScheUIProcessor(Context context,LinearLayout linearLay,int mWidth,int default_totalClnnums){
         this.context=context;
-        this.totalClnnums=totalClnnums;
+        this.totalClnnums=default_totalClnnums;
         this.linearLay=linearLay;
         this.mWidth=mWidth;
     }

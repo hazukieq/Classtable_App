@@ -61,6 +61,7 @@ public class ManageAct extends BaseActivity {
             hideAllFrags(transactin);
             transactin.show(schemakeFrag);
             transactin.commit();
+            schemakeFrag.reshData();
         }catch (Exception e){
             e.printStackTrace();
         }

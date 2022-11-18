@@ -8,6 +8,7 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimeModel;
+import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.utils.CycleUtil;
 
@@ -85,6 +86,15 @@ public class FileAssist {
         //获取课表数据
         public List<Object> getRawClsList(String name){
             return fileystem.getDataList(FileRootTypes.sches,name,ClassLabel.class);
+        }
+
+        //写入数据
+        public void putRawSctList(List<ScheWithTimeModel> scts){
+            fileystem.putDataList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
+        }
+
+        public void putRawSct(ScheWithTimeModel sct){
+            fileystem.putData(FileRootTypes.index,default_sche_index_file_name,sct);
         }
 
         //获取已记录在案课表的所有课表名字
@@ -169,6 +179,39 @@ public class FileAssist {
             return fileystem.getData(FileRootTypes.times,time_name,TimeHeadModel.class);
         }
         /*---作息表方法---*/
+
+        /*-----课表作息表文件删除和重命名、索引表的添加和删除 START-----*/
+        public boolean checkSctDocIsDuplicate(String oldName,String neoName){
+            List<ScheWithTimeModel> scts=getRecordedScts();
+            boolean isDuplicate=false;
+            if(oldName.equals(neoName)) return true;
+
+            for (ScheWithTimeModel sct:scts) {
+                if(sct.getScheName().equals(neoName)){
+                    isDuplicate=true;
+                    break;
+                }
+            }
+            return isDuplicate;
+        }
+
+        public boolean checkThmDocIsDuplicate(String oldName,String neoName){
+            List<TimeModel> thms=getRecordTms();
+            boolean isDuplicate=false;
+            if(oldName.equals(neoName)) return true;
+
+            for(TimeModel thm:thms){
+                if(thm.getTimeName().equals(neoName)){
+                   isDuplicate=true;
+                   break;
+                }
+            }
+            return isDuplicate;
+        }
+
+
+
+        /*-----课表作息表文件删除和重命名、索引表的添加和删除 END-----*/
     }
 
 

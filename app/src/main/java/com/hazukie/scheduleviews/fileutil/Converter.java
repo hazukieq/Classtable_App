@@ -26,7 +26,7 @@ public class Converter {
         return s;
     }
 
-    public Object covertJsn2Obj(String content, Type type){
+    public Object convertJsn2Obj(String content, Type type){
         if(content.length()>0&&type!=null)
         return gson.fromJson(content,type);
         return "{}";

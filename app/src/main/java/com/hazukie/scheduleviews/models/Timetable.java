@@ -40,6 +40,10 @@ public class Timetable {
      * @return 返回时间
      */
     public static String exportTimes(List<Timetable> times, int startIndex, int clNum){
-        return times.get(startIndex).startTime+"-"+times.get(startIndex+clNum-1).endTime;
+        //重新计算开始下标索引和结束下标索引,防止出现下标索引大于作息表索引的情况
+        int start_index=startIndex>times.size()?0:startIndex;
+        int end_index=startIndex+clNum>times.size()?times.size()-1:startIndex+clNum-1;
+
+        return times.get(start_index).startTime+"-"+times.get(end_index).endTime;
     }
 }

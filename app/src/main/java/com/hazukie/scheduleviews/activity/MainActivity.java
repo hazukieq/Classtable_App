@@ -375,9 +375,13 @@ public class MainActivity extends BaseActivity {
     private void resh(){
         scts.clear();
         scts.addAll(FileHelper.getRecordedScts(getApplicationContext()));
-        String record=sp.getStringValue("record_name",Statics.record_name_default);
-        if(FileHelper.getSctByName(getApplicationContext(),record).scheName.equals("空表")) sp.setStringvalue("record_name",Statics.record_name_default);
 
+        String record=sp.getStringValue("record_name",Statics.record_name_default);
+        ScheWithTimeModel mSct=FileHelper.getSctByName(getApplicationContext(),record);
+        if(mSct.getScheName().equals("空表")) sp.setStringvalue("record_name",Statics.record_name_default);
+        updateSidebarTexts(record,mSct.getTimeName());
+
+        reloadProcess();
         Log.i("MainActivity-onResume>>>","record_name="+record+", sctList has updated,sctListSize="+scts.size());
     }
 
@@ -395,10 +399,10 @@ public class MainActivity extends BaseActivity {
                     .create();
             String weekth=dateHelper.getGapStr();
             topbarLayout.setTitle(weekth);
-            if(linearLayout!=null&&linearLayout.getWidth()>0&&linearLayout.getHeight()>0) reloadProcess();
+            if(linearLayout!=null&&linearLayout.getWidth()>0&&linearLayout.getHeight()>0) resh();
         }catch (Exception e){
             e.printStackTrace();
         }
-        resh();
+
     }
 }

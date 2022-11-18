@@ -6,14 +6,20 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
+import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.DataInitiation;
 import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +29,12 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FileAssist.applyOftenOpts ApplyOftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+
+        //Fileystem fileystem=Fileystem.getInstance(getApplicationContext());
+        //ClassLabel cls=new ClassLabel(10,0,1,2,"neosubject","A1-200","six weeks",0);
+        //fileystem.putData(FileRootTypes.sches,"neo_sche.txt",cls);
+        //ScheWithTimeModel.autoIncrementID(getApplicationContext(),"neo_sche", "默认作息表");
+
 /*        FileHelper fileHelper=new FileHelper(this);
         List<Timetable> s=DataInitiation.initialTimeDefaults();
         TimeHeadModel thm=new TimeHeadModel("默认作息表.txt",12,0,5,5,4,9,3,s);

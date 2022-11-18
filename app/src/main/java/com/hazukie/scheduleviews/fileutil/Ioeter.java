@@ -1,6 +1,7 @@
 package com.hazukie.scheduleviews.fileutil;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,7 +42,7 @@ public class Ioeter {
             BufferedReader reader=new BufferedReader(fileReader);
             String record;
             while ((record=reader.readLine())!=null){
-                stringBuilder.append(record);
+                stringBuilder.append(record+"\n");
             }
             reader.close();
         }catch (Exception e){
@@ -76,6 +77,7 @@ public class Ioeter {
         try{
             FileWriter fileWriter=new FileWriter(file,isAppendMode);
             BufferedWriter writer=new BufferedWriter(fileWriter);
+            Log.i( "IOETER-write>> ","content={"+content+"}");
             writer.write(content);
             writer.close();
         }catch (Exception e){

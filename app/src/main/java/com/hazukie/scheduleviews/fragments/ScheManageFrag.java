@@ -27,6 +27,9 @@ import com.hazukie.scheduleviews.activity.FragmentContainerAct;
 import com.hazukie.scheduleviews.activity.ScheMakeActivity;
 import com.hazukie.scheduleviews.binders.HorionCardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.HoricardModel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
@@ -193,27 +196,33 @@ public class ScheManageFrag extends Fragment {
                         EditText editV= (EditText) fireditLay.getChildAt(1);
 
                         String mSchName=editV.getText().toString().replaceAll("\\s*","");
-                        if(mSchName.length()>0){
-                            for(ScheWithTimeModel sct:scts){
-                                if(sct.getScheName().equals(mSchName)&&(!mSchName.equals(horic.getTitle()))){
-                                    isDuplicate=true;
-                                    break;
-                                }
-                            }
-
-                            if(!isDuplicate){
-                                boolean isRename=fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
-                                Log.i( "showSettinialoh>>","isRename="+isRename);
-
-                                horic.title=mSchName;
-                                mdp.notifyItemChanged(mobs.indexOf(horic),"updating");
-                                crialoghue.dismiss();
-                            }else{
-                                DisplayHelper.Infost(getActivity(),"文件名已重复，请重新输入！");
-                            }
+                        if(mSchName.equals(horic.getTitle())){
+                            mdp.notifyItemChanged(mobs.indexOf(horic),"updating");
+                            crialoghue.dismiss();
                         }else{
-                            DisplayHelper.Infost(getActivity(),"字数不能为0，请重新输入！ ");
+                            if(mSchName.length()>0){
+                                for(ScheWithTimeModel sct:scts){
+                                    if(sct.getScheName().equals(mSchName)){
+                                        isDuplicate=true;
+                                        break;
+                                    }
+                                }
+
+                                if(!isDuplicate){
+                                    boolean isRename=fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
+                                    Log.i( "showSettinialoh>>","isRename="+isRename);
+
+                                    horic.title=mSchName;
+                                    mdp.notifyItemChanged(mobs.indexOf(horic),"updating");
+                                    crialoghue.dismiss();
+                                }else{
+                                    DisplayHelper.Infost(getActivity(),"文件名已重复，请重新输入！");
+                                }
+                            }else{
+                                DisplayHelper.Infost(getActivity(),"字数不能为0，请重新输入！ ");
+                            }
                         }
+
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -230,17 +239,17 @@ public class ScheManageFrag extends Fragment {
     可以更换作息表
      */
     private void onEditTime(HoricardModel horic,TextView txt){
-
-
         PopupUtil pou=new PopupUtil(getContext());
         PopupWindow pouwin=pou.initDefaultPopup(120);
         pou.initDefaultViews((textView, recy, multiAdp, viewlist) -> {
+            String mSelectedTime=txt.getText().toString();
             recy.setMaxHeight(200);
             textView.setText("默认作息表");
             textView.setOnClickListener(v->{
                 txt.setText("默认作息表");
                 horic.subtitle="默认作息表";
                 horic.description=getTimedescription("默认作息表");
+                if(!mSelectedTime.equals("默认作息表")) refreshScts();
                 pouwin.dismiss();
             });
             UniBinder uni=new UniBinder();
@@ -248,6 +257,7 @@ public class ScheManageFrag extends Fragment {
                 horic.subtitle=uni1.title;
                 horic.description=getTimedescription(uni1.title);
                 txt.setText(uni1.title);
+                if(!mSelectedTime.equals(uni1.title)) refreshScts();
                 pouwin.dismiss();
             });
 
@@ -267,7 +277,7 @@ public class ScheManageFrag extends Fragment {
         try {
             Object thm=FileHelper.getInstance(getContext()).readObj(FileHelper.RootMode.times,name+".txt",TimeHeadModel.class);
             TimeHeadModel thdm=(TimeHeadModel) thm;
-            sdes=thdm.outputBasics();
+            if(thdm!=null) sdes=thdm.outputBasics();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -282,16 +292,22 @@ public class ScheManageFrag extends Fragment {
                 boolean isDel=fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
                 Log.i( "FileHelper>>>","delete "+del.scheName+" status="+isDel);
             }
-            List<ScheWithTimeModel> neo_scts=new ArrayList<>();
-            for(Object obj:mobs){
-                HoricardModel hor=(HoricardModel)obj;
-                neo_scts.add(new ScheWithTimeModel(mobs.indexOf(obj),hor.title+".txt",hor.subtitle+".txt"));
-                Log.i("ScheManageFrag>>","time="+hor.subtitle);
-            }
-            fileHelper.write(FileHelper.RootMode.index, "index.txt", new ArrayList<>(neo_scts));
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    //刷新数据，并将数据写入文件
+    public void refreshScts(){
+        FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(getActivity());
+        List<ScheWithTimeModel> neo_scts=new ArrayList<>();
+        for(Object obj:mobs){
+            HoricardModel hor=(HoricardModel)obj;
+            neo_scts.add(new ScheWithTimeModel(mobs.indexOf(obj),hor.title+".txt",hor.subtitle+".txt"));
+            Log.i("ScheManageFrag>>","time="+hor.subtitle);
+        }
+
+        oftenOpts.putRawSctList(neo_scts);
     }
 
     private void controlEmpty(){
@@ -304,28 +320,32 @@ public class ScheManageFrag extends Fragment {
         }
     }
 
+    //数据更新
+    public void reshData(){
+        if(mobs!=null&&scts!=null){
+            mobs.clear();
+            scts.clear();
+            scts.addAll(FileHelper.getRecordedScts(getActivity()));
+            for(int i=0;i<scts.size();i++){
+                ScheWithTimeModel sct=scts.get(i);
+                String sdes=getTimedescription(sct.getTimeName());
+                mobs.add(new HoricardModel(i,sct.getScheName(),sct.getTimeName(),sdes));
+            }
+            mdp.notifyDataSetChanged();
+            controlEmpty();
+            Log.i("onResume>>>","sct_datas has updating!");
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        //数据更新
-        mobs.clear();
-        scts.clear();
-
-        scts.addAll(FileHelper.getRecordedScts(getActivity()));
-        for(int i=0;i<scts.size();i++){
-            ScheWithTimeModel sct=scts.get(i);
-            String sdes=getTimedescription(sct.getTimeName());
-            mobs.add(new HoricardModel(i,sct.getScheName(),sct.getTimeName(),sdes));
-        }
-        mdp.notifyDataSetChanged();
-        controlEmpty();
-        Log.i("onResume>>>","sct_datas has updating!");
+        reshData();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         executeDel(delete_list);
     }
 }
