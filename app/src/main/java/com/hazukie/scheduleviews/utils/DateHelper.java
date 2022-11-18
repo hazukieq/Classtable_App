@@ -52,9 +52,11 @@ public class DateHelper{
     //开始周目和当前周目之差
     private String getWeekGap(int startWeek,int currentWeek,int total){
         boolean isOver=startWeek>currentWeek;
+        boolean isLess=currentWeek-startWeek>total;
         //因为一般开学日期当周目也包含其中，故需要+1以修正周目数
         int gap=isOver?startWeek-currentWeek+1:currentWeek-startWeek+1;
-        if(isOver) return "第"+gap+"(总周数"+total+")周";
+
+        if(isOver||isLess) return "第"+gap+"周"+"(总周数"+total+")";
         return "第"+gap+"周";
     }
 

@@ -157,8 +157,8 @@ public class MainActivity extends BaseActivity {
 
         ojs.add(new Unimodel(0,getString(R.string.main_side_schemak)));
         ojs.add(new Unimodel(1,getString(R.string.main_side_manage)));
-        ojs.add(new Unimodel(4,getString(R.string.main_side_note)));
-        ojs.add(new Unimodel(5,"思维导图"));
+        ojs.add(new Unimodel(5,getString(R.string.main_side_note)));
+        ojs.add(new Unimodel(4,"思维导图"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
         //ojs.add(new Unimodel(6,"云桌面"));
@@ -187,10 +187,10 @@ public class MainActivity extends BaseActivity {
                     startAct2Act(this,AboutActivity.class);
                     break;
                 case 4:
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/quickmind/editor.html","","");
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/quickmind/mind.html","","");
                     break;
                 case 5:
-                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/quickote/quickmind.html","","");
+                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/quickote/editor.html","","");
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:

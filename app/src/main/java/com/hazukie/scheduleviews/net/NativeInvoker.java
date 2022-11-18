@@ -57,6 +57,14 @@ public class NativeInvoker {
         }
 
         @JavascriptInterface
+        public void getname(String name){
+        mind_name=name;
+    }
+
+
+
+
+        @JavascriptInterface
         public String invokeFileNameList(int type){
             Log.i( "web-readlist>>","type="+type);
             FileHelper.RootMode rootMode=type==0? FileHelper.RootMode.note: FileHelper.RootMode.mind;
@@ -67,12 +75,12 @@ public class NativeInvoker {
         }
 
         @JavascriptInterface
-        public String sendDatas(String file_name,int type){
-            FileHelper.RootMode rootMode=type==0? FileHelper.RootMode.note: FileHelper.RootMode.mind;
-
+        public String getFileDatas(String file_name){
+            String[] parsed_file_nam=file_name.split("/");
+            FileHelper.RootMode rootMode=parsed_file_nam[0].equals("note")? FileHelper.RootMode.note: FileHelper.RootMode.mind;
             String datas="";
             try{
-                Object obj=fileHelper.readObj(rootMode,file_name, Unimodel.class);
+                Object obj=fileHelper.readObj(rootMode,parsed_file_nam[1], Unimodel.class);
                 Unimodel uni=(Unimodel) obj;
                 datas=gson.toJson(uni.title);
                 Log.i( "readDatas>>","file_contents="+datas);
@@ -82,25 +90,15 @@ public class NativeInvoker {
             return "{\"content\":"+datas+"}";
         }
 
-    @JavascriptInterface
-    public String getFileDatas(String file_name){
-        String[] parsed_file_nam=file_name.split("/");
-        FileHelper.RootMode rootMode=parsed_file_nam[0].equals("note")? FileHelper.RootMode.note: FileHelper.RootMode.mind;
-        String datas="";
-        try{
-            Object obj=fileHelper.readObj(rootMode,parsed_file_nam[1], Unimodel.class);
-            Unimodel uni=(Unimodel) obj;
-            datas=gson.toJson(uni.title);
-            Log.i( "readDatas>>","file_contents="+datas);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "{\"content\":"+datas+"}";
-    }
-
         @JavascriptInterface
-        public void getname(String name){
-            mind_name=name;
+        public void putFileDatas(String file_name,String content){
+            String[] parsed_file_nam=file_name.split("/");
+            FileHelper.RootMode rootMode=parsed_file_nam[0].equals("note")? FileHelper.RootMode.note: FileHelper.RootMode.mind;
+            try{
+                fileHelper.writeJsons(rootMode,file_name,content,false);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     @JavascriptInterface
@@ -118,7 +116,10 @@ public class NativeInvoker {
         boolean bs=fileHelper.rename(rootMode,oldName,neoName);
         return String.valueOf(bs);
     }
-/*        @JavascriptInterface
+
+
+        /*<!--即将废弃部分-->*/
+        @JavascriptInterface
         public String readlist(String type){
             Log.i( "web-readlist>>","type="+type);
             FileHelper.RootMode rootMode=type.equals("mind")? FileHelper.RootMode.mind: FileHelper.RootMode.note;
@@ -225,7 +226,10 @@ public class NativeInvoker {
                     }).build(context);
 
             crialoghue.show();
-        }*/
+        }
+    /*<!--即将废弃部分-->*/
+
+
 }
 
 
