@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ScheWithTimeModel {
     private final static String default_index="index.txt";
+    private final static String default_timetable_name="默认作息表.txt";
     public int id;
     public String scheName;
     public String timeName;
@@ -38,9 +39,10 @@ public class ScheWithTimeModel {
 
     //删除该字段名字，即将其值置换为default.txt;
     public void restoreTimeName(){
-        this.timeName="默认作息表.txt";
+        this.timeName=default_timetable_name;
     }
 
+    /**---新增方法---**/
     public static void autoIncrementID(Context context,String scheName,String timeName){
         FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(context);
 

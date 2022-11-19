@@ -49,7 +49,7 @@ public class TimeManageFrag extends Fragment {
     private FileHelper fileHelper;
     private List<ScheWithTimeModel> sctz;
     private List<TimeModel> timez;
-    private List<TimeModel> delete_list;
+    //private List<TimeModel> delete_list;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -104,7 +104,7 @@ public class TimeManageFrag extends Fragment {
         recyItems=new ArrayList<>();
         sctz=new ArrayList<>();
         timez=new ArrayList<>();
-        delete_list=new ArrayList<>();
+        //delete_list=new ArrayList<>();
 
 
         sctz=FileHelper.getRecordedScts(getActivity());
@@ -127,7 +127,7 @@ public class TimeManageFrag extends Fragment {
                         .addContent("确定删除此作息表文件吗？")
                         .onConfirm((cRialog, rootView) -> {
                             TimeModel tim=new TimeModel(uni.id, uni.title+".txt");
-                            delete_list.add(tim);
+                            //delete_list.add(tim);
                             for(ScheWithTimeModel sct:sctz){
                                 if(sct.getTimeName().equals(uni.getTitle())){
                                     sct.restoreTimeName();
@@ -136,6 +136,7 @@ public class TimeManageFrag extends Fragment {
                             timez.remove(tim);
                             recyItems.remove(uni);
                             recyAdp.notifyDataSetChanged();
+                            executeDel(tim);
                             DisplayHelper.Infost(getActivity(),"删除成功！");
                             cRialog.dismiss();
                             controlEmpty();
@@ -214,37 +215,37 @@ public class TimeManageFrag extends Fragment {
         }
     }
 
-    private void executeDels(List<TimeModel> dels){
+    private void executeDel(TimeModel del){
         try {
-            for(TimeModel del:dels){
-                fileHelper.delete(FileHelper.RootMode.times,del.timeName);
-            }
+            fileHelper.delete(FileHelper.RootMode.times,del.timeName);
+            fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private List<TimeModel> getCurentThmList(){
+        List<TimeModel> neo_tims=new ArrayList<>();
+        if(recyItems.size()>0){
+            for(Object obj:recyItems){
+                Unimodel uni=(Unimodel)obj;
+                TimeModel tim=new TimeModel(uni.id, uni.getTitle()+".txt");
+                neo_tims.add(tim);
+            }
+        }
+        return neo_tims;
     }
 
     private void refreshThm(){
-        List<TimeModel> neo_tims=new ArrayList<>();
-        for(Object obj:recyItems){
-            Unimodel uni=(Unimodel)obj;
-            TimeModel tim=new TimeModel(uni.id, uni.getTitle()+".txt");
-            neo_tims.add(tim);
-        }
         try{
             fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(sctz));
-            fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(neo_tims));
+            fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        executeDels(delete_list);
-    }
 
     @Override
     public void onResume() {

@@ -53,7 +53,7 @@ public class ScheManageFrag extends Fragment {
     private LinearLayout emptyLay;
     private MultiTypeAdapter mdp;
     private List<Object> mobs;
-    private List<ScheWithTimeModel> delete_list;
+    //private List<ScheWithTimeModel> delete_list;
     private List<ScheWithTimeModel> scts;
 
 
@@ -130,13 +130,14 @@ public class ScheManageFrag extends Fragment {
                     .onConfirm((cDialoh, view) -> {
                         for(ScheWithTimeModel sct:scts){
                             if(sct.getScheName().equals(hrc.title)){
-                                delete_list.add(sct);
+                                //delete_list.add(sct);
+                                mobs.remove(hrc);
+                                mdp.notifyItemRemoved(indx_);
+                                executeDel(sct);
                                 break;
                             }
                         }
                         DisplayHelper.Infost(getActivity(),"删除成功！");
-                        mobs.remove(hrc);
-                        mdp.notifyItemRemoved(indx_);
                         controlEmpty();
                         cDialoh.dismiss();
                     })
@@ -150,7 +151,7 @@ public class ScheManageFrag extends Fragment {
         horionCardBinder.setOnOpenDoc((sche, time) -> ScheMakeActivity.startActivityWithData(getActivity(),sche,time));
 
         mobs=new ArrayList<>();
-        delete_list=new ArrayList<>();
+        //delete_list=new ArrayList<>();
         mdp=new MultiTypeAdapter();
         mdp.register(HoricardModel.class,horionCardBinder);
 
@@ -286,28 +287,32 @@ public class ScheManageFrag extends Fragment {
 
     //处理删除列表中的数据
     //写入修改后数据
-    private void executeDel(List<ScheWithTimeModel> dels){
+    private void executeDel(ScheWithTimeModel del){
         try {
-            for(ScheWithTimeModel del:dels){
-                boolean isDel=fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
-                Log.i( "FileHelper>>>","delete "+del.scheName+" status="+isDel);
-            }
+            boolean isDel=fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
+            Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
         }catch (Exception e){
             e.printStackTrace();
         }
+        refreshScts();
     }
 
     //刷新数据，并将数据写入文件
     public void refreshScts(){
-        FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(getActivity());
+        //FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(getActivity());
         List<ScheWithTimeModel> neo_scts=new ArrayList<>();
         for(Object obj:mobs){
             HoricardModel hor=(HoricardModel)obj;
             neo_scts.add(new ScheWithTimeModel(mobs.indexOf(obj),hor.title+".txt",hor.subtitle+".txt"));
             Log.i("ScheManageFrag>>","time="+hor.subtitle);
         }
+        try{
+            fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(neo_scts),false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        oftenOpts.putRawSctList(neo_scts);
+        //oftenOpts.putRawSctList(neo_scts);
     }
 
     private void controlEmpty(){
@@ -346,6 +351,5 @@ public class ScheManageFrag extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        executeDel(delete_list);
     }
 }
