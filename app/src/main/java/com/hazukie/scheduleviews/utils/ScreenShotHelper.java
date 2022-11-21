@@ -5,18 +5,29 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Environment;
+import android.print.PrintAttributes;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.fragment.app.FragmentActivity;
 
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.models.ClassLabel;
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -122,4 +133,55 @@ public class ScreenShotHelper {
     }
 
 
+    public static boolean saveTXT(Context context, List<ClassLabel> clsLis,String fileName){
+        Fileystem fileystem=Fileystem.getInstance(context);
+        StringBuilder builder=new StringBuilder();
+        for(ClassLabel cls:clsLis){
+            builder.append(cls.toString()+"\n");
+        }
+        File file=FileHelper.getPublicFile("课表.txt");
+        fileystem.putDataStr(file,builder.toString());
+        return true;
+    }
+
+    public static void ScheToPdf(Context context,Bitmap v,String fileName){
+        PdfDocument document=new PdfDocument();
+
+        int pageWidth = PrintAttributes.MediaSize.ISO_A4.getWidthMils() * 72 / 1000;
+
+        float scale = (float) pageWidth / (float) v.getWidth();
+        int pageHeight = (int) ((v.getHeight()+500) * scale);
+        Log.i( "PngToPdf: ","width="+pageWidth+", height="+pageHeight);
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        PdfDocument.PageInfo pageInfo=new PdfDocument.PageInfo
+                .Builder(pageWidth,pageHeight,1).create();
+        PdfDocument.Page page=document.startPage(pageInfo);
+        Canvas canvas=page.getCanvas();
+        canvas.drawBitmap(v,matrix,paint);
+        document.finishPage(page);
+
+        File file = FileHelper.getPublicFile(fileName+".pdf");
+
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+            document.writeTo(outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  finally {
+            document.close();
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        DisplayHelper.Infost(context,"pdf文件已导出到文档公共目录下！");
+    }
 }

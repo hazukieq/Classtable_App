@@ -169,7 +169,7 @@ public class NativeInvoker {
         public void saviloh(String type,String name,String contents){
             Crialoghue crialoghue=new Crialoghue.LeditBuilder()
                     .addTitle("保存数据")
-                    .addLeftContent("文件名称")
+                    .addLeftContent("名称")
                     .addContents(name.replace(".md",""))
                     .onConfirm((crialoghue1, view) -> {
                         EditText edit=(EditText) view;

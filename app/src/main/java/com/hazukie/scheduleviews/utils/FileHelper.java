@@ -240,9 +240,23 @@ public class FileHelper {
         File docs=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         File classhelper=new File(docs,public_pdf_root_file_name);
         if(!classhelper.exists()) classhelper.mkdir();
-        File file=new File(classhelper,name);
+        File pdf_root=new File(classhelper,"思维导图");
+        if(!pdf_root.exists()) pdf_root.mkdir();
+        File file=new File(pdf_root,name);
         return file;
     }
+
+    public static File getPublicFile(String name){
+        File docs=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        String public_txt_root_file_name="课表导出文件";
+        File classhelper=new File(docs,public_pdf_root_file_name);
+        if(!classhelper.exists()) classhelper.mkdir();
+        File sche_root=new File(classhelper,"课表导出");
+        if(!sche_root.exists()) sche_root.mkdir();
+        File file=new File(sche_root,name);
+        return file;
+    }
+
 
     public static  String[] getPdfLists(){
         File docs=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);

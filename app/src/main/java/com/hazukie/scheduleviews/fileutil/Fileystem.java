@@ -139,4 +139,8 @@ public class Fileystem {
         File currentFile=selectFile(rootPathType,file_name);
         ioeter.write(currentFile,strs);
     }
+
+    public void putDataStr(File file,String strs){
+        ioeter.write(file,strs);
+    }
 }

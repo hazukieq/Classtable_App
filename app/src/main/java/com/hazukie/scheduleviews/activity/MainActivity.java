@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
@@ -32,6 +33,7 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
+import com.hazukie.scheduleviews.net.Base64Util;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.CheckUtil;
 import com.hazukie.scheduleviews.utils.ColorSeletor;
@@ -43,6 +45,7 @@ import com.hazukie.scheduleviews.utils.ScreenShotHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +113,7 @@ public class MainActivity extends BaseActivity {
         String weekth=dateHelper.getGapStr();
         topbarLayout.setTitle(weekth)
                 .addLeftTextView(getString(R.string.main_menu), getColor(R.color.text_gray), 18, v -> drawerLayout.openDrawer(Gravity.LEFT))
-                .addRightTextView(getString(R.string.main_ouput), getColor(R.color.text_gray), 18, v -> exportSche());
+                .addRightTextView(getString(R.string.main_ouput), getColor(R.color.text_gray), 18, this::exportSchepopus);//exportSche());
 
         scheName=findViewById(R.id.change_current_sche);
         scheTime=findViewById(R.id.change_current_time);
@@ -256,9 +259,75 @@ public class MainActivity extends BaseActivity {
 
 
     /*
+    导出课表截图弹窗
+     */
+    private void exportSchepopus(View v){
+        CPoWin cpwin=new CPoWin.Builder()
+                                .addView(R.layout.popup_lay, MainActivity.this,
+                                        (pop,viewGroup) -> {
+                                            TextView txt=viewGroup.findViewById(R.id.popup_create);
+                                           txt.setVisibility(View.GONE);
+
+                                            RecyclerView recy_=viewGroup.findViewById(R.id.popup_recy);
+                                            recy_.setLayoutManager(new LinearLayoutManager(this));
+                                            MultiTypeAdapter muDp=new MultiTypeAdapter();
+                                            List<Object> viewList=new ArrayList<>();
+                                            viewList.add(new Unimodel(0,"图片"));
+                                            viewList.add(new Unimodel(1,"Pdf文件"));
+                                            viewList.add(new Unimodel(2,"Txt文件"));
+
+                                            int pa=DisplayHelper.dp2px(this,8);
+                                            recy_.setPadding(pa,pa,pa,pa);
+
+                                            UniBinder unib = new UniBinder();
+                                            unib.setClickListener((v1, uni) -> {
+                                                switch (uni.id){
+                                                    case 0:
+                                                        exportSche(1);
+                                                        pop.dismiss();
+                                                        break;
+
+                                                    case 1:
+                                                        exportSche(0);
+                                                        pop.dismiss();
+                                                        break;
+                                                    case 2:
+                                                        FileHelper fileHelper=FileHelper.getInstance(this);
+                                                        String rec=sp.getStringValue("record_name",Statics.record_name_default);
+                                                        String rec_name=rec.equals(Statics.record_name_default)?"空表.txt":rec+".txt";
+                                                        Crialoghue crip=new Crialoghue.TxtBuilder()
+                                                                .addTitle("导出文件")
+                                                                .addContent("是否导出当前课表数据到公共文档下？")
+                                                                .onConfirm((crialoghue, view) -> {
+                                                                    try{
+                                                                        List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,rec_name,ClassLabel.class);
+                                                                        List<ClassLabel> cls=new ArrayList<>();
+                                                                        for(Object obj:objs) cls.add((ClassLabel) obj);
+                                                                        ScreenShotHelper.saveTXT(this,cls,"课表");
+                                                                    }catch (Exception e){
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                    DisplayHelper.Infost(this,"成功导出至公共文档目录！");
+                                                                    crialoghue.dismiss();
+                                                                })
+                                                                .build(this);
+                                                        pop.dismiss();
+                                                        crip.show();
+                                                        break;
+                                                }
+                                            });
+                                            muDp.register(Unimodel.class, unib);
+                                            muDp.setItems(viewList);
+                                            recy_.setAdapter(muDp);
+                                        })
+                                .build(this);
+        cpwin.showAsDropDown(v,-20,0,Gravity.END);
+    }
+
+    /*
      * 导出截图
      */
-    private void exportSche(){
+    private void exportSche(int type){
         ScrollView scrollView=new ScrollView(this);
         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(DisplayHelper.dp2px(this,280),0);
         params.weight=4;
@@ -275,11 +344,20 @@ public class MainActivity extends BaseActivity {
                 .addTitle(getString(R.string.main_output_screenshot))
                 .addDrawableSrc(mergeBitmap)
                 .onConfirm((dialog, view) -> {
-                    if(ScreenShotHelper.saveImg(this,mergeBitmap,getString(R.string.main_exportSche_name))) DisplayHelper.Infost(this,"导出成功");
-                    else{
-                        if(ScreenShotHelper.saveImgBySys(this,mergeBitmap,getString(R.string.main_exportSche_name))) DisplayHelper.Infost(this,"导出成功");
-                        else DisplayHelper.Infost(this,getString(R.string.main_ungranted_permis_tip));
+                    switch (type){
+                        case 0:
+                            ScreenShotHelper.ScheToPdf(this,mergeBitmap,"课表");
+                            break;
+                        case 1:
+                            if(ScreenShotHelper.saveImg(this,mergeBitmap,getString(R.string.main_exportSche_name))) DisplayHelper.Infost(this,"导出成功");
+                            else{
+                                if(ScreenShotHelper.saveImgBySys(this,mergeBitmap,getString(R.string.main_exportSche_name))) DisplayHelper.Infost(this,"导出成功");
+                                else DisplayHelper.Infost(this,getString(R.string.main_ungranted_permis_tip));
+                            }
+                            break;
                     }
+
+                    //Base64Util.PngToPdf(this,mergeBitmap,"课表");
                     dialog.dismiss();
                 }).build(this);
         crialoh.show();
@@ -379,7 +457,7 @@ public class MainActivity extends BaseActivity {
         String record=sp.getStringValue("record_name",Statics.record_name_default);
         ScheWithTimeModel mSct=FileHelper.getSctByName(getApplicationContext(),record);
         if(mSct.getScheName().equals("空表")) sp.setStringvalue("record_name",Statics.record_name_default);
-        updateSidebarTexts(record,mSct.getTimeName());
+        updateSidebarTexts(mSct.getScheName(),mSct.getTimeName());
 
         reloadProcess();
         Log.i("MainActivity-onResume>>>","record_name="+record+", sctList has updated,sctListSize="+scts.size());

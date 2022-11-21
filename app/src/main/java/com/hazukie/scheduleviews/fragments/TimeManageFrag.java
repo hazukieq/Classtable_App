@@ -95,7 +95,7 @@ public class TimeManageFrag extends Fragment {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_time_manage, container, false);
         TextView addV=root.findViewById(R.id.frag_time_manage_add);
-        addV.setOnClickListener(v-> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeMakeFrag.class,true));
+        addV.setOnClickListener(v-> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeMakeFrag.class));
 
         recy=root.findViewById(R.id.frag_time_manage_recy);
         emptyLay=root.findViewById(R.id.frag_time_empty);

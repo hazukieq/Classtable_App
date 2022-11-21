@@ -221,31 +221,31 @@ public class FileAssist {
         public applyWebFileOpts(Context context){
             this.context=context;
         }
-        
+
+        private File getPublicRoot(FileRootTypes rootTypes){
+            File public_docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File classhelper_root=new File(public_docs,"课表助手");
+            if(!classhelper_root.exists()) classhelper_root.mkdir();
+            File file=new File(classhelper_root,rootTypes.name());
+            if(!file.exists()) file.mkdir();
+            return file;
+        }
+
         /*---- WebView part START----*/
         public String[] getUnderFileLists(FileRootTypes rootMode){
             File f=context.getDir(rootMode.name(), Context.MODE_PRIVATE);
             return f.list();
         }
 
-        public static File getPdfFile(String name){
-            File docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-
-            File classhelper=new File(docs,public_pdf_root_file_name);
-            if(!classhelper.exists()) classhelper.mkdir();
-            File file=new File(classhelper,name);
+        public File getPublicFile(FileRootTypes rootTypes,String name){
+            File root=getPublicRoot(rootTypes);
+            File file=new File(root,name);
             return file;
         }
 
-        public static  String[] getPdfLists(){
-            File docs=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File classhelper=new File(docs,public_pdf_root_file_name);
-            if(!classhelper.exists()){
-                boolean is=classhelper.mkdir();
-                Log.i("getPdfLists>>","list has mkdir="+is);
-            }
-
-            return classhelper.list();
+        public  String[] getPublicLists(FileRootTypes rootTypes){
+            File file=getPublicRoot(rootTypes);
+            return file.list();
         }
         /*---- WebView part END----*/
     }

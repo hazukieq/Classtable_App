@@ -83,18 +83,18 @@ public class ClassLabel implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "ClassLabel{" +
-                "clNums=" + clNums +
-                ", startCl=" + startCl +
-                ", week=" + week +
-                ", color=" + color +
-                ", detailTime=" + detailTime +
-                ", subjectName='" + subjectName + '\'' +
-                ", plaNote='" + plaNote + '\'' +
-                ", clRoom='" + clRoom + '\'' +
-                ", startTag=" + startTag +
-                ", endTag=" + endTag +
-                ", customTime='" + customTime + '\'' +
+        return '{'+
+                "clNums:" + clNums +
+                ", startCl:" + startCl +
+                ", week:" + week +
+                ", color:" + color +
+                ", detailTime:" + detailTime +
+                ", subjectName:\"" + subjectName + '\"' +
+                ", plaNote:\"" + plaNote + '\"' +
+                ", clRoom:\"" + clRoom + '\"' +
+                ", startTag:" + startTag +
+                ", endTag:" + endTag +
+                ", customTime:\"" + customTime + '\"' +
                 '}';
     }
 
