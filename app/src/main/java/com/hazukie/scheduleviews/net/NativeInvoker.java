@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.gson.Gson;
 import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
+import com.hazukie.jbridge.lib.JBridgeInvokeDispatcher;
+import com.hazukie.jbridge.lib.JBridgeObject;
 import com.hazukie.scheduleviews.custom.CnWebView;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
@@ -34,7 +36,17 @@ public class NativeInvoker {
             this(context);
             this.mWebView=mWebView;
         }
-        
+
+
+        /*测试*/
+        @JavascriptInterface
+        public void ijbridge(String str){
+            if(str.length()>0&&str.startsWith("{")&&str.endsWith("}")) {
+                Log.i( "ijbridge>> ","datas="+str);
+                JBridgeObject jBridgeObject=gson.fromJson(str,JBridgeObject.class);
+                JBridgeInvokeDispatcher.getInstance().sendCmd(context,mWebView,jBridgeObject);
+            }
+        }
 
         @JavascriptInterface
         public void down(String base64) {

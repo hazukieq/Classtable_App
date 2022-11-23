@@ -5,31 +5,20 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hazukie.scheduleviews.fileutil.FileAssist;
-import com.hazukie.scheduleviews.fileutil.FileRootTypes;
-import com.hazukie.scheduleviews.fileutil.Fileystem;
-import com.hazukie.scheduleviews.models.ClassLabel;
-import com.hazukie.scheduleviews.models.ScheWithTimeModel;
-import com.hazukie.scheduleviews.models.TimeHeadModel;
-import com.hazukie.scheduleviews.models.TimeModel;
-import com.hazukie.scheduleviews.models.Timetable;
-import com.hazukie.scheduleviews.statics.Statics;
-import com.hazukie.scheduleviews.utils.DataInitiation;
-import com.hazukie.scheduleviews.utils.FileHelper;
-import com.hazukie.scheduleviews.utils.SpvalueStorage;
+import com.hazukie.jbridge.lib.IJBridgeUtil;
+import com.hazukie.jbridge.lib.JBridgeInvokeDispatcher;
+import com.hazukie.jbridge.lib.JBridgeObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
 
 public class LauncherActivity extends AppCompatActivity {
-    private SpvalueStorage sp;
+    //private SpvalueStorage sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //测试独立WebView链接器
+        IJBridgeUtil.init();
         //Fileystem fileystem=Fileystem.getInstance(getApplicationContext());
         //ClassLabel cls=new ClassLabel(10,0,1,2,"neosubject","A1-200","six weeks",0);
         //fileystem.putData(FileRootTypes.sches,"neo_sche.txt",cls);

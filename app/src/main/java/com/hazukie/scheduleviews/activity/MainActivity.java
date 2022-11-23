@@ -164,7 +164,7 @@ public class MainActivity extends BaseActivity {
         ojs.add(new Unimodel(4,"思维导图"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
-        //ojs.add(new Unimodel(6,"云桌面"));
+        ojs.add(new Unimodel(6,"测试"));
 
 
         unibin.setJustify(txt->{
@@ -198,7 +198,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 6:
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"http://cloud.hazukieq.top","","");
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"http://10.17.48.30:8080/","","");//"http://cloud.hazukieq.top","","");
                     break;
                 default:
             }
