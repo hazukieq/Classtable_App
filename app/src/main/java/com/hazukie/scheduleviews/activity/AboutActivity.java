@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
@@ -57,9 +55,11 @@ public class AboutActivity extends BaseActivity {
         uniBinder.setClickListener((v, uni) -> {
             switch (uni.id){
                 case 2:
+                    int dpwd=DisplayHelper.dp2px(this,10);
                     Crialoghue crialoghue=new Crialoghue.TxtBuilder()
                             .addTitle("项目地址")
                             .addContent("是否通过本地浏览器打开？")
+                            .addFontPadding(new int[]{dpwd,0,0,10})
                             .onConfirm((crialoghue1, view) -> {
                                 Intent in=new Intent();
                                 in.setAction(Intent.ACTION_VIEW);

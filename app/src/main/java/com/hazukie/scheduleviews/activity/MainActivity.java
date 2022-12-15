@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
@@ -27,13 +26,11 @@ import com.hazukie.scheduleviews.custom.CPoWin;
 import com.hazukie.scheduleviews.custom.CRecyclerView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.databinding.BottomialogBinding;
-import com.hazukie.scheduleviews.fragments.Mindmap;
 import com.hazukie.scheduleviews.fragments.SchePrevFrag;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.net.Base64Util;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.CheckUtil;
 import com.hazukie.scheduleviews.utils.ColorSeletor;
@@ -198,7 +195,8 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 6:
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"http://10.17.48.30:8080/","","");//"http://cloud.hazukieq.top","","");
+                    String test_url="file:///android_asset/tesing.html";
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,test_url,"","");//"http://cloud.hazukieq.top","","");
                     break;
                 default:
             }
@@ -295,6 +293,7 @@ public class MainActivity extends BaseActivity {
                                                         FileHelper fileHelper=FileHelper.getInstance(this);
                                                         String rec=sp.getStringValue("record_name",Statics.record_name_default);
                                                         String rec_name=rec.equals(Statics.record_name_default)?"空表.txt":rec+".txt";
+
                                                         Crialoghue crip=new Crialoghue.TxtBuilder()
                                                                 .addTitle("导出文件")
                                                                 .addContent("是否导出当前课表数据到公共文档下？")

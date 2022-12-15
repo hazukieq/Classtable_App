@@ -4,39 +4,50 @@ package com.hazukie.scheduleviews.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
+import android.webkit.JsPromptResult;
+import android.webkit.JsResult;
+import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
 import com.hazukie.scheduleviews.custom.CnWebView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.net.NativeInvoker;
+import com.hazukie.scheduleviews.net.WebStacker;
 import com.hazukie.scheduleviews.utils.ProgressHandler;
-import com.hazukie.scheduleviews.utils.ScreenShotHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
-
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LocalWebActivity extends BaseActivity {
 
 
+    private static final String TAG = "LocalWebActivity";
     private FrameLayout web_frame;
     private TopbarLayout topBarLayout;
     private ProgressBar mProgressBar;
@@ -137,19 +148,15 @@ public class LocalWebActivity extends BaseActivity {
     }
 
     protected void initWebView() {
-        mWebView = new CnWebView(getApplicationContext());
+        mWebView = WebStacker.getInstance(getApplicationContext()).getCnWebView(this);//new CnWebView(getApplicationContext());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         web_frame.addView(mWebView, params);
 
         mWebView.setWebChromeClient(getWebViewChromeClient());
         mWebView.setWebViewClient(getWebViewClient());
-       mWebView.addJavascriptInterface(new NativeInvoker(LocalWebActivity.this,mWebView), "java");
+        mWebView.addJavascriptInterface(new NativeInvoker(LocalWebActivity.this,mWebView), "java");
 
-        //隐藏滚动条
-        mWebView.setVerticalScrollBarEnabled(false);
-        mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.requestFocus(View.FOCUS_DOWN);
         configWebView(mWebView);
         mWebView.loadUrl(mUrl);
     }
@@ -198,6 +205,59 @@ public class LocalWebActivity extends BaseActivity {
                 mActivity.sendProgressMessage(PRORESS_PROGRESS, newProgress, 100);
             }
         }
+
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            Crialoghue crialoghue=new Crialoghue.TxtBuilder()
+                    .addTitle("警告")
+                    .addContent(message)
+                    .onConfirm((crialoghue1, view1) -> {
+                        crialoghue1.dismiss();
+                        result.confirm();
+                    })
+                    .onCancel((crigh,v)->{
+                        crigh.dismiss();
+                        result.cancel();
+                    }).build(view.getContext());
+            crialoghue.show();
+            return true;
+        }
+
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+            Crialoghue crialoghue=new Crialoghue.TxtBuilder()
+                    .addTitle("警告")
+                    .addContent(message)
+                    .onConfirm((crialoghue1, view1) -> {
+                        crialoghue1.dismiss();
+                        result.confirm();
+                    })
+                    .onCancel((crigh,v)->{
+                        crigh.dismiss();
+                        result.cancel();
+                    }).build(view.getContext());
+            crialoghue.show();
+            return true;
+        }
+
+        @Override
+        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+            Crialoghue crialoghue=new Crialoghue.LeditBuilder()
+                    .addTitle(message)
+                    .addHint(defaultValue)
+                    .onConfirm((crialoghue1, view1) -> {
+                        EditText editText=(EditText) view1;
+                        crialoghue1.dismiss();
+                        result.confirm(editText.getText().toString());
+                    })
+                    .onCancel((crialoghue12, view12) -> {
+                        crialoghue12.dismiss();
+                        result.cancel();
+                    })
+                    .build(view.getContext());
+            crialoghue.show();
+            return super.onJsPrompt(view, url, message, defaultValue, result);
+        }
     }
 
     protected class ActcomwebClient extends WebViewClient {
@@ -229,21 +289,30 @@ public class LocalWebActivity extends BaseActivity {
             sendProgressMessage(PROGRESS_GONE, 100, 0);
         }
 
+        @Nullable
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            WebResourceResponse resp;
+            if(isAssetRes(request)) resp=assetResRequest(view.getContext(),request);
+            else if(isCacheRes(request)) resp=cacheResRequest(view.getContext(),request);
+            else resp=super.shouldInterceptRequest(view, request);
+            return resp;
+        }
     }
 
 
-    @Override
+/*    @Override
     protected void onStop() {
-        mWebView.getSettings().setJavaScriptEnabled(false);
         super.onStop();
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onResume() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         super.onResume();
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
@@ -251,9 +320,9 @@ public class LocalWebActivity extends BaseActivity {
 
         //销毁WebView组件，防止内存泄露
         if (mWebView != null) {
-            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             web_frame.removeView(mWebView);
-            mWebView.destroy();
+            WebStacker.getInstance(getApplicationContext()).recycleCnWebView(mWebView);
+            Log.i(TAG, "onDestroy: 回收CnWebView成功！");
             mWebView = null;
         }
     }
@@ -267,33 +336,92 @@ public class LocalWebActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public boolean getFullWebViewSnapshot(WebView webView) {
-        //重新调用WebView的measure方法测量实际View的大小（将测量模式设置为UNSPECIFIED模式也就是需要多大就可以获得多大的空间）
-        webView.measure(View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        //调用layout方法设置布局（使用新测量的大小）
-        webView.layout(0, 0, webView.getMeasuredWidth(), webView.getMeasuredHeight());
-        //开启WebView的缓存(当开启这个开关后下次调用getDrawingCache()方法的时候会把view绘制到一个bitmap上)
-        webView.setDrawingCacheEnabled(true);
-        //强制绘制缓存（必须在setDrawingCacheEnabled(true)之后才能调用，否者需要手动调用destroyDrawingCache()清楚缓存）
-        webView.buildDrawingCache();
-        //根据测量结果创建一个大小一样的bitmap
-        Bitmap picture = Bitmap.createBitmap(webView.getMeasuredWidth(),
-                webView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        //已picture为背景创建一个画布
-        Canvas canvas = new Canvas(picture); // 画布的宽高和 WebView 的网页保持一致
-        Paint paint = new Paint();
-        //设置画笔的定点位置，也就是左上角
-        canvas.drawBitmap(picture, 0, webView.getMeasuredHeight(), paint);
-        //将webview绘制在刚才创建的画板上
-        webView.draw(canvas);
-        try {
-            //将bitmap保存到SD卡
-            ScreenShotHelper.saveImgBySys(this,picture,"思维导图");
-            return true;
-        } catch (Exception e) {
+
+    private boolean isAssetRes(WebResourceRequest request){
+        String url=request.getUrl().toString();
+        return url.startsWith("file:///android_asset/");
+    }
+
+    private WebResourceResponse assetResRequest(Context context,WebResourceRequest request){
+        String url=request.getUrl().toString();
+        try{
+            int fileIndex=url.lastIndexOf("/")+1;
+            String fileName=url.substring(fileIndex);
+            int suffixIndex=url.lastIndexOf(".")+1;
+            String suffix=url.substring(suffixIndex);
+            String whole_res_path_head="";
+            boolean checkImgType=suffix.equals("png")||suffix.equals("jpg")||
+                    suffix.equals("jpeg")||suffix.equals("ico")||
+                    suffix.equals("gif")||suffix.equals("svg")||suffix.equals("img");
+
+            //boolean checkOthers=suffix.equals("js")||suffix.equals("css");
+            //boolean checkVideos=suffix.equals("mp3")||suffix.equals("mp4")||suffix.equals("m4a")||;
+
+            if(checkImgType) whole_res_path_head="img/";
+            else whole_res_path_head=suffix+"/";
+            Log.i(TAG, "assetResRequest: "+whole_res_path_head+fileName);
+
+            WebResourceResponse resourceResponse=new WebResourceResponse(getMimeTypeFromUrl(url),"UTF-8",context.getAssets().open(whole_res_path_head+fileName));
+            Map<String,String> headers=new HashMap<>();
+            headers.put("access-control-allow-origin","*");
+            resourceResponse.setResponseHeaders(headers);
+            return resourceResponse;
+        }catch (Exception e){
             e.printStackTrace();
-            return false;
         }
+        return null;
+    }
+
+
+    private boolean isCacheRes(WebResourceRequest request){
+        String url=request.getUrl().toString();
+        String extension=MimeTypeMap.getFileExtensionFromUrl(url);
+        return extension.equals("icon")||extension.equals("bmp")||extension.equals("png")||
+                extension.equals("jpg")||extension.equals("gif")||extension.equals("jpeg")||
+                extension.equals("svg")||extension.equals("webp")||
+                extension.equals("json")||extension.equals("eot")||
+                extension.equals("otf")||extension.equals("ttf")||extension.equals("wotf");
+                //extension.equals("css")||extension.equals("js");
+    }
+
+    private WebResourceResponse cacheResRequest(Context context,WebResourceRequest request){
+        String url=request.getUrl().toString();
+        String mimeType=getMimeTypeFromUrl(url);
+        if(isImgRes(request)){
+            try{
+                File file= Glide.with(this).download(url).submit().get();
+                WebResourceResponse resp=new WebResourceResponse(mimeType,"utf-8",new FileInputStream(file));
+                Map<String,String> headers=new HashMap<>();
+                headers.put("access-control-allo-origin","*");
+                resp.setResponseHeaders(headers);
+                return resp;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private boolean isImgRes(WebResourceRequest request){
+        String url=request.getUrl().toString();
+        String extension=MimeTypeMap.getFileExtensionFromUrl(url);
+        return extension.equals("jpg")||extension.equals("jpeg")||extension.equals("png")||
+                extension.equals("ico")||extension.equals("bmp")||extension.equals("gif")||
+                extension.equals("svg")||extension.equals("webp");
+    }
+
+    private String getMimeTypeFromUrl(String url) {
+        try{
+            String extension= MimeTypeMap.getFileExtensionFromUrl(url);
+            if(!extension.isEmpty()&&!extension.equals("null")){
+                if(extension.equals("json")){
+                    return "application/json";
+                }
+                return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)==null?"*/*":MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "*/*";
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Timetable;
+import com.hazukie.scheduleviews.net.WebStacker;
 import com.hazukie.scheduleviews.utils.DataInitiation;
 import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
@@ -26,6 +27,7 @@ public class baseApplication extends Application {
             SpvalueStorage.getInstance(this).setIntValue("isInit",1);
         }
 
+        WebStacker.getInstance(getApplicationContext()).preload();
     }
 
     //初始化必需文件数据;
