@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/NormalText"
+            android:padding="8dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/__round_light_bg"
+            android:textColorHint="@color/__qmuibtn_text"
+            android:hint="请输入文字"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_margin="6dp"
+        style="@style/NormalText"
+        android:text="hello"/>
+</LinearLayout>
