@@ -18,6 +18,9 @@ import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.binders.EditemBinder;
 import com.hazukie.scheduleviews.binders.TimemakeBinder;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.EditModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimeModel;
@@ -28,6 +31,7 @@ import com.hazukie.scheduleviews.statics.Laytatics;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.FileHelper;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,12 +213,13 @@ public class TimeMakeFrag extends Fragment {
         totalNum=amCl+pmCl+mmCl;
         TimeHeadModel timeHeadM=new TimeHeadModel(docName,totalNum,amStart,amCl,amCl,pmCl,mmStart,mmCl,tms);
 
-        FileHelper fileHelper=new FileHelper(getActivity());
+        FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(getContext());
+        //FileHelper fileHelper=new FileHelper(getActivity());
         try{
             boolean isDuplicate=false;
-            List<Object> timeModels=fileHelper.read(FileHelper.RootMode.times,"time_index.txt",TimeModel.class);
-           for(Object obj:timeModels){
-               TimeModel tm=(TimeModel) obj;
+            List<TimeModel> timeModels=oftenOpts.getRecordTms();//fileHelper.read(FileHelper.RootMode.times,"time_index.txt",TimeModel.class);
+           for(TimeModel tm:timeModels){
+               //TimeModel tm=(TimeModel) obj;
                if (tm.timeName.equals(docName)||docName.equals("默认作息表.txt")) {
                    isDuplicate = true;
                    break;
@@ -222,8 +227,8 @@ public class TimeMakeFrag extends Fragment {
            }
             Log.i( "assembleDatas: ","docName="+(!docName.isEmpty())+", isDuplicate="+isDuplicate);
            if(!docName.isEmpty()&&!isDuplicate&&tms.size()>0){
-               boolean isCreate=fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
-               boolean isWirte2Index=fileHelper.write(FileHelper.RootMode.times,"time_index.txt",new TimeModel(0,docName),true);
+               boolean isCreate= Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,docName,timeHeadM);//fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
+               boolean isWirte2Index=Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,"time_index.txt",new TimeModel(0,docName),true);//fileHelper.write(FileHelper.RootMode.times,"time_index.txt",new TimeModel(0,docName),true);
 
                if(isCreate&&isWirte2Index){
                    DisplayHelper.Infost(getActivity(),"创建成功！");

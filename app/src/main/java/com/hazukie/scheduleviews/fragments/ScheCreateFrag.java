@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.activity.FragmentContainerAct;
 import com.hazukie.scheduleviews.activity.ScheCreateActivity;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
@@ -31,6 +34,7 @@ import java.util.TimerTask;
  * create an instance of this fragment.
  */
 public class ScheCreateFrag extends Fragment {
+    private FileAssist.applyOftenOpts oftenOpts;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -83,6 +87,8 @@ public class ScheCreateFrag extends Fragment {
             String file_name=edit.getText().toString().replaceAll("\\s*","")+".txt";
             writInits(file_name);
         });
+
+        oftenOpts=new FileAssist.applyOftenOpts(getContext());
         return root;
     }
 
@@ -93,10 +99,10 @@ public class ScheCreateFrag extends Fragment {
         String globalTime = fragmentContainerAct.getParam();
         Log.i("write>>>",""+ main_list.size()+",str="+ globalTime);
 
-        FileHelper fileHelper=FileHelper.getInstance(getContext());
+        //FileHelper fileHelper=FileHelper.getInstance(getContext());
         try{
             //获取所有课表名字，和其比较是否重复
-            List<ScheWithTimeModel> recorded_sches=FileHelper.getRecordedScts(getContext());
+            List<ScheWithTimeModel> recorded_sches=oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getContext());
             //List<ScheModel> recorded_sche=FileHelper.getRecordScms(getContext());
             boolean isDuplicate=false;
             for(ScheWithTimeModel sche:recorded_sches){
@@ -108,11 +114,11 @@ public class ScheCreateFrag extends Fragment {
 
            // Log.i("writInits: ","isDup="+(!isDuplicate)+", mains="+(main_list.size()>0));
             if(!isDuplicate&& main_list.size()>0){
-                boolean isCreate=fileHelper.write(FileHelper.RootMode.sches,sche_file_name,new ArrayList<>(main_list));
+                boolean isCreate= oftenOpts.putRawClsList(sche_file_name,main_list);//fileHelper.write(FileHelper.RootMode.sches,sche_file_name,new ArrayList<>(main_list));
                 recorded_sches.add(new ScheWithTimeModel(recorded_sches.size(),sche_file_name, globalTime));
                // recorded_sche.add(new ScheModel(recorded_sche.size(),sche_file_name));
                 //boolean isWrite2ScheIndex=fileHelper.write(FileHelper.RootMode.sches,"sche_index.txt",new ArrayList<>(recorded_sche));
-                boolean isWrite2Index=fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(recorded_sches));
+                boolean isWrite2Index=oftenOpts.putRawSctzList(recorded_sches);//fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(recorded_sches));
 
                 if(isCreate&&isWrite2Index){
                     Toast.makeText(getContext(), "保存成功", Toast.LENGTH_SHORT).show();

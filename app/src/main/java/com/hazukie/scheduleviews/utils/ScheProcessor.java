@@ -19,8 +19,8 @@ public class ScheProcessor {
     private static ScheProcessor instance;
     private final Context context;
     //默认时间格子色为灰白色
-    private int default_time_grid_color=10000;
-    private int default_empty_grid_color=10000;
+    private int default_time_grid_color=0x10000;
+    private int default_empty_grid_color=0x10000;
 
     public ScheProcessor(Context context){ this.context=context; }
 
@@ -109,10 +109,10 @@ public class ScheProcessor {
         String content=(x< timetable.size())?timetable.get(x).toString():"";
         if(y==0){
             textView.setText(Html.fromHtml(content));
-            int colorbg=default_time_grid_color!=10000?default_time_grid_color: context.getColor(R.color.light_white);
+            int colorbg=default_time_grid_color!=0x10000?default_time_grid_color: context.getColor(R.color.light_white);
             textView.setBackgroundColor(colorbg);
         }else {
-            int colorv=default_empty_grid_color!=10000?default_empty_grid_color: context.getColor(R.color.white);
+            int colorv=default_empty_grid_color!=0x10000?default_empty_grid_color: context.getColor(R.color.white);
             textView.setBackgroundColor(colorv);
         }
 

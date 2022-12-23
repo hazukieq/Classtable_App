@@ -19,14 +19,15 @@ import com.hazukie.scheduleviews.base.BaseActivity;
 import com.hazukie.scheduleviews.binders.IOSItemBinder;
 import com.hazukie.scheduleviews.binders.TimemakeBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimemakeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.statics.Laytatics;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
 import java.util.ArrayList;
@@ -34,7 +35,8 @@ import java.util.List;
 
 public class TimeditActivity extends BaseActivity {
     private List<Object> all;
-    List<Unimodel> amLs,pmLs,mmLs;
+    private List<Unimodel> amLs,pmLs,mmLs;
+    private FileAssist.applyOftenOpts oftenOpts;
     
     private String globalTime;
     @Override
@@ -43,6 +45,7 @@ public class TimeditActivity extends BaseActivity {
         setContentView(R.layout.activity_timedit);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         getDatas();
+        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
         initViews();
     }
 
@@ -63,7 +66,7 @@ public class TimeditActivity extends BaseActivity {
         pmLs=new ArrayList<>();
         mmLs=new ArrayList<>();
         
-        TimeHeadModel thm= FileHelper.getThm(this,globalTime);
+        TimeHeadModel thm= oftenOpts.getThm(globalTime);//FileHelper.getThm(this,globalTime);
         if(thm!=null) parseThmData(thm);
         
         all.add(new ScheWithTimeModel(0,"作息表文件名",globalTime.replace(".txt","")));
@@ -187,10 +190,10 @@ public class TimeditActivity extends BaseActivity {
         totalNum=amCl+pmCl+mmCl;
         TimeHeadModel timeHeadM=new TimeHeadModel(docName,totalNum,amStart,amCl,amCl,pmCl,mmStart,mmCl,tms);
 
-        FileHelper fileHelper=new FileHelper(TimeditActivity.this);
+        //FileHelper fileHelper=new FileHelper(TimeditActivity.this);
         try{
             if(tms.size()>0){
-                boolean isWirte2TimeFile=fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
+                boolean isWirte2TimeFile= Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.times,docName,timeHeadM);//fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
 
                 if(isWirte2TimeFile){
                     DisplayHelper.Infost(TimeditActivity.this,"修改成功！");

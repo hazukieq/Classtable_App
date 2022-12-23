@@ -23,6 +23,9 @@ import com.hazukie.scheduleviews.binders.BinderClickListener;
 import com.hazukie.scheduleviews.binders.SchecardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Unimodel;
@@ -46,6 +49,7 @@ public class ScheMakeActivity extends BaseActivity {
     private TopbarLayout titleLabel;
     private TimeHeadModel timeheadModel;
     private String globalTime,globalSche;
+    private FileAssist.applyOftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class ScheMakeActivity extends BaseActivity {
         setContentView(R.layout.activity_sche_make);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         getDatas();
+        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
         initViews();
     }
 
@@ -202,15 +207,19 @@ public class ScheMakeActivity extends BaseActivity {
 
     //加载课表文件数据
     public void loadInits(String scheName,String timeName){
-        //查看上一次是否存储有数据，有则加载，无则加载默认课表数据
-        FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
+        //查看上一次是否存储有数据，有则加载，无则加载默认数据
+        //FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
         try{
-            List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,scheName,ClassLabel.class);
+            List<ClassLabel> clssLs=oftenOpts.getClsList(scheName);
+            //List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,scheName,ClassLabel.class);
             timeheadModel=FileHelper.getThm(getApplicationContext(),timeName);//(TimeHeadModel) fileHelper.read(FileHelper.RootMode.times,timeName,TimeHeadModel.class).get(0);
             main_list.clear();
-            CycleUtil.cycle(objs, (obj, objects) -> {
+            for(ClassLabel clss:clssLs){
+                if(clss.clNums>0) main_list.add(clss);
+            }
+            /*CycleUtil.cycle(objs, (obj, objects) -> {
                 if(((ClassLabel)obj).clNums>0) main_list.add(obj);
-            });
+            });*/
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -218,9 +227,9 @@ public class ScheMakeActivity extends BaseActivity {
 
     //写入课表文件数据
     public void writInits(String sche,Crialoghue cih){
-        FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
-        try{
-            if(fileHelper.write(FileHelper.RootMode.sches,sche,main_list)){
+        //FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
+/*        try{
+            //if(fileHelper.write(FileHelper.RootMode.sches,sche,main_list)){
                 Toast.makeText(ScheMakeActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                 cih.dismiss();
                 finish();
@@ -229,6 +238,14 @@ public class ScheMakeActivity extends BaseActivity {
             }
         }catch (Exception e){
             e.printStackTrace();
+        }*/
+
+        if(Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.sches,sche,main_list)){
+            Toast.makeText(ScheMakeActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+            cih.dismiss();
+            finish();
+        }else{
+            Toast.makeText(ScheMakeActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
         }
     }
 

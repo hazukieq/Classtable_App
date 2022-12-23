@@ -21,6 +21,9 @@ import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.activity.FragmentContainerAct;
 import com.hazukie.scheduleviews.activity.TimeditActivity;
 import com.hazukie.scheduleviews.binders.TimeItemBinder;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
@@ -46,7 +49,9 @@ public class TimeManageFrag extends Fragment {
     private RecyclerView recy;
     private LinearLayout emptyLay;
 
-    private FileHelper fileHelper;
+    //private FileHelper fileHelper;
+    private FileAssist.applyOftenOpts oftenOpts;
+    private FileAssist.applyBasicFileOpts basicOpts;
     private List<ScheWithTimeModel> sctz;
     private List<TimeModel> timez;
     //private List<TimeModel> delete_list;
@@ -100,15 +105,17 @@ public class TimeManageFrag extends Fragment {
         recy=root.findViewById(R.id.frag_time_manage_recy);
         emptyLay=root.findViewById(R.id.frag_time_empty);
 
-        fileHelper=new FileHelper(getActivity());
+        //fileHelper=new FileHelper(getActivity());
+        oftenOpts=new FileAssist.applyOftenOpts(getContext());
+        basicOpts=new FileAssist.applyBasicFileOpts(getContext());
         recyItems=new ArrayList<>();
         sctz=new ArrayList<>();
         timez=new ArrayList<>();
         //delete_list=new ArrayList<>();
 
 
-        sctz=FileHelper.getRecordedScts(getActivity());
-        timez= FileHelper.getRecordTms(getActivity());
+        sctz=oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
+        timez=oftenOpts.getRecordTms(); //FileHelper.getRecordTms(getActivity());
         for (int i = 0; i < timez.size(); i++) {
             recyItems.add(new Unimodel(i,timez.get(i).getTimeName()));
         }
@@ -170,7 +177,7 @@ public class TimeManageFrag extends Fragment {
                                     }
 
                                     if(!isDuplicate){
-                                        boolean isRename=fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
+                                        boolean isRename=basicOpts.rename(FileRootTypes.times,uni.title+".txt", content+".txt");//fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
                                         Log.i( "doEdit>>","isRename="+isRename);
 
                                         for(ScheWithTimeModel sct:sctz){
@@ -217,8 +224,9 @@ public class TimeManageFrag extends Fragment {
 
     private void executeDel(TimeModel del){
         try {
-            fileHelper.delete(FileHelper.RootMode.times,del.timeName);
-            fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
+            basicOpts.delete(FileRootTypes.times,del.timeName);//fileHelper.delete(FileHelper.RootMode.times,del.timeName);
+            Fileystem.getInstance(getContext()).putDataList(FileRootTypes.times,"time_index.txt",new ArrayList<>(getCurentThmList()));
+            //fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -238,8 +246,10 @@ public class TimeManageFrag extends Fragment {
 
     private void refreshThm(){
         try{
-            fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(sctz));
-            fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
+            //fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(sctz));
+            //fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
+            oftenOpts.putRawSctList(sctz);
+            Fileystem.getInstance(getContext()).putDataList(FileRootTypes.times,"time_index.txt",new ArrayList<>(getCurentThmList()));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -254,8 +264,8 @@ public class TimeManageFrag extends Fragment {
         sctz.clear();
         timez.clear();
         recyItems.clear();
-        sctz.addAll(FileHelper.getRecordedScts(getActivity()));
-        timez.addAll(FileHelper.getRecordTms(getActivity()));
+        sctz.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getActivity()));
+        timez.addAll(oftenOpts.getRecordTms());//FileHelper.getRecordTms(getActivity()));
         for (int i = 0; i < timez.size(); i++) {
             recyItems.add(new Unimodel(i,timez.get(i).getTimeName()));
         }

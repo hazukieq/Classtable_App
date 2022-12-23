@@ -88,9 +88,17 @@ public class FileAssist {
             return fileystem.getDataList(FileRootTypes.sches,name,ClassLabel.class);
         }
 
+        public boolean putRawClsList(String file_name,List<ClassLabel> classLabels){
+            return fileystem.putDatazList(FileRootTypes.sches,file_name,new ArrayList<>(classLabels));
+        }
         //写入数据
         public void putRawSctList(List<ScheWithTimeModel> scts){
             fileystem.putDataList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
+        }
+
+        //写入数据
+        public boolean putRawSctzList(List<ScheWithTimeModel> scts){
+            return fileystem.putDatazList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
         }
 
         public void putRawSct(ScheWithTimeModel sct){
@@ -178,6 +186,16 @@ public class FileAssist {
         public Object getRawThm(String time_name){
             return fileystem.getData(FileRootTypes.times,time_name,TimeHeadModel.class);
         }
+
+/*        **
+         * 写入一个文件
+         * @param file_name 文件名
+         * @param thm 数据
+         *//*
+        public void putRawThm(String file_name,TimeHeadModel thm){
+            fileystem.putData(FileRootTypes.times,file_name,thm);
+        }*/
+
         /*---作息表方法---*/
 
         /*-----课表作息表文件删除和重命名、索引表的添加和删除 START-----*/
@@ -224,7 +242,7 @@ public class FileAssist {
 
         private File getPublicRoot(FileRootTypes rootTypes){
             File public_docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File classhelper_root=new File(public_docs,"课表助手");
+            File classhelper_root=new File(public_docs,public_pdf_root_file_name);
             if(!classhelper_root.exists()) classhelper_root.mkdir();
             File file=new File(classhelper_root,rootTypes.name());
             if(!file.exists()) file.mkdir();

@@ -57,7 +57,9 @@ public class ScheManageFrag extends Fragment {
     private List<ScheWithTimeModel> scts;
 
 
-    private FileHelper fileHelper;
+    //private FileHelper fileHelper;
+    private FileAssist.applyOftenOpts oftenOpts;
+    private FileAssist.applyBasicFileOpts basicFileOpts;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -104,15 +106,16 @@ public class ScheManageFrag extends Fragment {
         emptyLay=v.findViewById(R.id.frag_sche_empty);
         TextView addView=v.findViewById(R.id.frag_sche_manage_add);
 
-        fileHelper=new FileHelper(getActivity());
-
+        //fileHelper=new FileHelper(getActivity());
+        oftenOpts=new FileAssist.applyOftenOpts(getContext());
+        basicFileOpts=new FileAssist.applyBasicFileOpts(getContext());
 
         //跳转新界面创建课表文件
         addView.setOnClickListener(v1 -> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), SchePrevFrag.class));
 
 
         //获取记录在案的所有文件数据
-        scts=FileHelper.getRecordedScts(getActivity());
+        scts=oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
 
         HorionCardBinder horionCardBinder=new HorionCardBinder();
         //设置文件详情展开功能
@@ -210,7 +213,7 @@ public class ScheManageFrag extends Fragment {
                                 }
 
                                 if(!isDuplicate){
-                                    boolean isRename=fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
+                                    boolean isRename=basicFileOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");//fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
                                     Log.i( "showSettinialoh>>","isRename="+isRename);
 
                                     horic.title=mSchName;
@@ -263,7 +266,7 @@ public class ScheManageFrag extends Fragment {
             });
 
             multiAdp.register(Unimodel.class,uni);
-            List<TimeModel> tims= FileHelper.getRecordTms(getActivity());
+            List<TimeModel> tims= oftenOpts.getRecordTms();//FileHelper.getRecordTms(getActivity());
             for(int i=0;i<tims.size();i++){
                 TimeModel ti=tims.get(i);
                 viewlist.add(new Unimodel(ti.id,ti.getTimeName()));
@@ -275,13 +278,15 @@ public class ScheManageFrag extends Fragment {
 
     private String getTimedescription(String name){
         String sdes="";
-        try {
-            Object thm=FileHelper.getInstance(getContext()).readObj(FileHelper.RootMode.times,name+".txt",TimeHeadModel.class);
-            TimeHeadModel thdm=(TimeHeadModel) thm;
+        TimeHeadModel thdm=oftenOpts.getThm(name+".txt");//(TimeHeadModel) thm;
+        if(thdm!=null) sdes=thdm.outputBasics();
+ /*       try {
+            //Object thm=FileHelper.getInstance(getContext()).readObj(FileHelper.RootMode.times,name+".txt",TimeHeadModel.class);
+            TimeHeadModel thdm=oftenOpts.getThm(name+".txt");//(TimeHeadModel) thm;
             if(thdm!=null) sdes=thdm.outputBasics();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return sdes;
     }
 
@@ -289,7 +294,7 @@ public class ScheManageFrag extends Fragment {
     //写入修改后数据
     private void executeDel(ScheWithTimeModel del){
         try {
-            boolean isDel=fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
+            boolean isDel=basicFileOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
             Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
         }catch (Exception e){
             e.printStackTrace();
@@ -307,7 +312,8 @@ public class ScheManageFrag extends Fragment {
             Log.i("ScheManageFrag>>","time="+hor.subtitle);
         }
         try{
-            fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(neo_scts),false);
+            oftenOpts.putRawSctList(neo_scts);
+            //fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(neo_scts),false);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -330,7 +336,7 @@ public class ScheManageFrag extends Fragment {
         if(mobs!=null&&scts!=null){
             mobs.clear();
             scts.clear();
-            scts.addAll(FileHelper.getRecordedScts(getActivity()));
+            scts.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getActivity()));
             for(int i=0;i<scts.size();i++){
                 ScheWithTimeModel sct=scts.get(i);
                 String sdes=getTimedescription(sct.getTimeName());

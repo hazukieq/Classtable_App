@@ -21,6 +21,7 @@ import com.hazukie.scheduleviews.binders.BinderClickListener;
 import com.hazukie.scheduleviews.binders.SchecardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.fragments.ScheCreateFrag;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
@@ -30,7 +31,6 @@ import com.hazukie.scheduleviews.utils.BottomialogUtil;
 import com.hazukie.scheduleviews.utils.CycleUtil;
 import com.hazukie.scheduleviews.utils.DialogUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
 import java.util.ArrayList;
@@ -46,6 +46,7 @@ public class ScheCreateActivity extends BaseActivity {
     private FloatingActionButton floatingActionBtn;
     private TimeHeadModel timeheadModel;
     private String globalTime="默认课表.txt";
+    private FileAssist.applyOftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class ScheCreateActivity extends BaseActivity {
         getDatas();
         instance=this;
         Log.i("SchecreateAct>>","globalTimeName="+globalTime);
+        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
         initViews();
     }
 
@@ -219,48 +221,8 @@ public class ScheCreateActivity extends BaseActivity {
 
     //加载作息表文件数据
     private void loadInits(String loadFile_time){
-        timeheadModel=FileHelper.getThm(getApplicationContext(),loadFile_time);
+        timeheadModel=oftenOpts.getThm(loadFile_time);//FileHelper.getThm(getApplicationContext(),loadFile_time);
     }
-
-
-/*    //写入课表文件数据
-    public void writInits(String sche_file_name){
-        FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
-        try{
-            //获取所有课表名字，和其比较是否重复
-            List<ScheWithTimeModel> recorded_sches=FileHelper.getRecordedScts(getApplicationContext());
-            //List<ScheModel> recorded_sche=FileHelper.getRecordScms(getApplicationContext());
-            boolean isDuplicate=false;
-            for(ScheWithTimeModel sche:recorded_sches){
-                if (sche.scheName.equals(sche_file_name)) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-
-            Log.i("writInits: ","isDup="+(!isDuplicate)+", mains="+(main_list.size()>0));
-            if(!isDuplicate&&main_list.size()>0){
-                boolean isCreate=fileHelper.write(FileHelper.RootMode.sches,sche_file_name,main_list);
-                recorded_sches.add(new ScheWithTimeModel(recorded_sches.size(),sche_file_name,globalTime));
-                //recorded_sche.add(new ScheModel(recorded_sche.size(),sche_file_name));
-               // boolean isWrite2ScheIndex=fileHelper.write(FileHelper.RootMode.sches,"sche_index.txt",new ArrayList<>(recorded_sche));
-                boolean isWrite2Index=fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(recorded_sches));
-
-                if(isCreate&&isWrite2Index){
-                    Toast.makeText(ScheCreateActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ScheCreateActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
-                }
-            }else if(main_list.size()==0){
-                DisplayHelper.Infost(this,"您似乎没有进行添加操作！");
-            }else {
-                DisplayHelper.Infost(this,"文件已存在，请重新输入!");
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

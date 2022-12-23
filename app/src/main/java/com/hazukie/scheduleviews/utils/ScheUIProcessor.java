@@ -29,7 +29,7 @@ public class ScheUIProcessor {
     private final LinearLayout linearLay;
     private ScheInformation scheInformation;
     private int mWidth=600;
-    private int default_time_grid_color=10000,default_empty_grid_color=10000;
+    private int default_time_grid_color=0x10000,default_empty_grid_color=0x10000;
 
     public ScheUIProcessor(Context context,LinearLayout linearLay,int mWidth,int default_totalClnnums){
         this.context=context;
@@ -40,8 +40,8 @@ public class ScheUIProcessor {
 
 
     public void setDefaultColors(int time_color,int empty_color){
-        if(time_color!=10000) this.default_time_grid_color=time_color;
-        if(empty_color!=10000) this.default_empty_grid_color=empty_color;
+        if(time_color!=0x10000) this.default_time_grid_color=time_color;
+        if(empty_color!=0x10000) this.default_empty_grid_color=empty_color;
     }
 
 
@@ -82,32 +82,32 @@ public class ScheUIProcessor {
     private void findFile(String record_name,int mWid) throws IOException {
         Log.i("ScheProcessor>>","record_name="+record_name);
         List<Object> classLabels=new ArrayList<>();
-        Object timetable_obj=null;
+        Object timetableObj=null;
 
-        List<ClassLabel> clss_list=new ArrayList<>();
-        TimeHeadModel time_model=null;
+        List<ClassLabel> clssList=new ArrayList<>();
+        TimeHeadModel timeModel=null;
 
-        //FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(context);
-        //FileAssist.applyBasicFileOpts basicOpts=new FileAssist.applyBasicFileOpts(context);
+        FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(context);
+        FileAssist.applyBasicFileOpts basicOpts=new FileAssist.applyBasicFileOpts(context);
         FileHelper fileHelper=FileHelper.getInstance(context);
 
         //为避免和现有课表名字冲突，默认值使用二进制表示
         boolean isInitiate=!record_name.equals(Statics.record_name_default);
 
         //索引统一储存在index.txt文件
-        String index_name="index.txt";
+        String indexName="index.txt";
 
         //判断index.txt文件是否存在
-        boolean isIndexFile_exist=fileHelper.exist(FileHelper.RootMode.index,index_name);
-        //boolean isIndexFile_exist=basicOpts.exist(FileRootTypes.index,index_name);
+        //boolean isIndexFileExist=fileHelper.exist(FileHelper.RootMode.index,indexName);
+        boolean isIndexFileExist=basicOpts.exist(FileRootTypes.index,indexName);
 
         //索引数据
-        ScheWithTimeModel mSct= FileHelper.getSctByName(context,record_name);
-        //ScheWithTimeModel mSct=oftenOpts.getSctByName(record_name);
+        //ScheWithTimeModel mSct= FileHelper.getSctByName(context,record_name);
+        ScheWithTimeModel mSct=oftenOpts.getSctByName(record_name);
 
         if(isInitiate){
             //判断记录ID是否在总索引范围内、总索引文件是否存在、总索引大小是否为0，如若为假则空加载
-            if(isIndexFile_exist){
+            if(isIndexFileExist){
                 //再次判断ID对应的数据是否存在
                 boolean isGetNotNull=mSct!=null;
 
@@ -134,18 +134,18 @@ public class ScheUIProcessor {
 
                     //再次判断作息文件是否存在
                     if(fileHelper.exist(FileHelper.RootMode.times,time_name))
-                        timetable_obj=fileHelper.readObj(FileHelper.RootMode.times,time_name,TimeHeadModel.class);
+                        timetableObj=fileHelper.readObj(FileHelper.RootMode.times,time_name,TimeHeadModel.class);
 
                     //判断数据大小，防止出错
                     if(classLabels.size()>0)
-                        CycleUtil.cycle(classLabels, (obj1, objects) -> clss_list.add((ClassLabel) obj1));
-                    if(timetable_obj!=null)
-                        time_model=(TimeHeadModel) timetable_obj;
+                        CycleUtil.cycle(classLabels, (obj1, objects) -> clssList.add((ClassLabel) obj1));
+                    if(timetableObj!=null)
+                        timeModel=(TimeHeadModel) timetableObj;
                 }
             }
         }
         //加载数据
-        initDatas(clss_list,time_model,mWid);
+        initDatas(clssList,timeModel,mWid);
     }
 
     public void directRenderUI(List<ClassLabel> clssLst,String time){

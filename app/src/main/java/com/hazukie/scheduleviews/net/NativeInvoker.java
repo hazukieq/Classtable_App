@@ -2,15 +2,11 @@ package com.hazukie.scheduleviews.net;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.EditText;
 
 import androidx.fragment.app.FragmentActivity;
-
 import com.google.gson.Gson;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.jbridge.lib.JBridgeInvokeDispatcher;
 import com.hazukie.jbridge.lib.JBridgeObject;
@@ -38,8 +34,12 @@ public class NativeInvoker {
         }
 
 
-        /*测试*/
-        @JavascriptInterface
+    /**
+     * JS和Native通讯桥
+     * 主要是JS端调用Native的方法
+     * @param str raw_json
+     */
+    @JavascriptInterface
         public void ijbridge(String str){
             if(str.length()>0&&str.startsWith("{")&&str.endsWith("}")) {
                 Log.i( "ijbridge>> ","datas="+str);
@@ -48,6 +48,16 @@ public class NativeInvoker {
             }
         }
 
+        //Native执行JS命令
+        public void excecuteJs(JBridgeObject jBridgeObject){
+            context.runOnUiThread(() -> {
+                String args=gson.toJson(jBridgeObject);
+                Log.i( "excecuteJs","args="+args);
+                mWebView.loadUrl("javascript:HJBridgeCmdDispatcher().send('"+args+"')");
+            });
+        }
+
+        /*---即将废弃部分--*/
         @JavascriptInterface
         public void down(String base64) {
             //这里收到下载解析的base64、做相关处理
@@ -72,7 +82,7 @@ public class NativeInvoker {
         public void getname(String name){
         mind_name=name;
     }
-
+    /*---即将废弃部分---*/
 
 
 

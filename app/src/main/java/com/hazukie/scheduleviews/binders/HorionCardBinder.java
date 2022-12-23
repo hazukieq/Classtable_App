@@ -64,8 +64,8 @@ public class HorionCardBinder extends ItemViewBinder<HoricardModel, HorionCardBi
 
     @Override
     public void onBindViewHolder(@NonNull HCV hcv, HoricardModel hrc) {
-        hcv.fileName.setText(""+hrc.title);
-        hcv.detailBtn.setText(""+hrc.subtitle);
+        hcv.fileName.setText(hrc.title);
+        hcv.detailBtn.setText(hrc.subtitle);
         hcv.fileDescription.setText(Html.fromHtml(hrc.description));
         hcv.deleteBtn.setOnClickListener(v -> {
             if(delListener!=null) delListener.onDel(v,hrc);
@@ -91,8 +91,8 @@ public class HorionCardBinder extends ItemViewBinder<HoricardModel, HorionCardBi
         if(!payloads.isEmpty()) {
             String isLoad = payloads.get(0).toString();
             if (isLoad.equals("updating")) {
-                hcv.fileName.setText(""+hrc.title);
-                hcv.detailBtn.setText(""+hrc.subtitle);
+                hcv.fileName.setText(hrc.title);
+                hcv.detailBtn.setText(hrc.subtitle);
                 hcv.fileDescription.setText(Html.fromHtml(hrc.description));
             }
         }

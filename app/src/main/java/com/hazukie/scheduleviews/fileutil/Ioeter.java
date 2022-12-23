@@ -90,6 +90,23 @@ public class Ioeter {
         write(file_path,content,false);
     }
 
+    public boolean writeObj(File file,String content){
+        return writeObj(file,content,false);
+    }
+
+    public boolean writeObj(File file,String content,boolean isAppend){
+        boolean isWriteSuccessfully=true;
+        try{
+            FileWriter fileWriter=new FileWriter(file,isAppend);
+            BufferedWriter writer=new BufferedWriter(fileWriter);
+            writer.write(content);
+            writer.close();
+        }catch (Exception e){
+            isWriteSuccessfully=false;
+            e.printStackTrace();
+        }
+        return isWriteSuccessfully;
+    }
 
     public void write(String file_path,String content,boolean isAppendMode){
         File file=checkPath(file_path);

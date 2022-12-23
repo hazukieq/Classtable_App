@@ -2,6 +2,6 @@ package com.hazukie.scheduleviews.fragments;
 
 public class Mindmap extends WebFrag{
     public Mindmap(){
-        open_url="http://cloud.hazukieq.top";
+        open_url="https://www.hazukieq.top/html/download_page.html";
     }
 }

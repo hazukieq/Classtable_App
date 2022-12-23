@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1002000,
-      "versionName": "1.0.2",
-      "outputFile": "课表助手(ver.R.1.0.2).apk"
+      "versionCode": 1003000,
+      "versionName": "1.0.3",
+      "outputFile": "课表助手(ver.R.1.0.3).apk"
     }
   ],
   "elementType": "File"

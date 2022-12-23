@@ -15,7 +15,7 @@ import com.hazukie.scheduleviews.R;
 
 import java.io.File;
 
-public class  CnWebView extends WebView {
+public class    CnWebView extends WebView {
 
     private static final String TAG ="CnWebView" ;
 
@@ -61,7 +61,7 @@ public class  CnWebView extends WebView {
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
 
-        webSettings.setLoadsImagesAutomatically(false);
+        webSettings.setLoadsImagesAutomatically(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setBlockNetworkLoads(false);
         webSettings.setDomStorageEnabled(true);
@@ -75,7 +75,9 @@ public class  CnWebView extends WebView {
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
         //set web cache strategy
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        boolean isDebug=true;
+        int loadMode=isDebug?WebSettings.LOAD_NO_CACHE:WebSettings.LOAD_DEFAULT;
+        webSettings.setCacheMode(loadMode);
         String appCache_path=getWebCacheDir(context);
         File cacheDir=new File(appCache_path);
         if(!cacheDir.exists()&&!cacheDir.isDirectory()) cacheDir.mkdirs();

@@ -22,6 +22,7 @@ import com.hazukie.scheduleviews.binders.IOSItemBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.CRecyclerView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.Unimodel;
@@ -141,7 +142,7 @@ public class SchePrevFrag extends Fragment {
             txt.setOnClickListener(v->
                 FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeMakeFrag.class));//"com.hazukie.scheduleviews.fragments.TimemakeFragment"));
 
-            List<TimeModel> tms=FileHelper.getRecordTms(getActivity());
+            List<TimeModel> tms=new FileAssist.applyOftenOpts(getContext()).getRecordTms();//FileHelper.getRecordTms(getActivity());
 
             int pa= DisplayHelper.dp2px(getContext(),8);
             recy_.setPadding(pa,pa,pa,pa);

@@ -32,7 +32,7 @@ public class Fileystem {
     }
 
 
-    private void initial(){
+    public void initial(){
         File sche_root=context.getDir(sche_root_path,Context.MODE_PRIVATE);
         File time_root=context.getDir(time_root_path,Context.MODE_PRIVATE);
         File index_root=context.getDir(index_root_path,Context.MODE_PRIVATE);
@@ -133,6 +133,35 @@ public class Fileystem {
         String content="";
         if(obj!=null) content=converter.convertObj2Jsn(obj);
         ioeter.write(currentFile,content);
+    }
+
+
+    public boolean putDatazList(FileRootTypes rootPathType,String file_name,List<Object> objs){
+        File currentFile=selectFile(rootPathType,file_name);
+        StringBuilder stringBuilder=new StringBuilder();
+        if(objs.size()>0){
+            for (Object obj:objs) {
+                String str= converter.convertObj2Jsn(obj)+"\n";
+                stringBuilder.append(str);
+            }
+        }else{
+            stringBuilder.append(" ");
+        }
+        return ioeter.writeObj(currentFile,stringBuilder.toString());
+    }
+
+    public boolean putDataz(FileRootTypes rootPathType,String file_name,Object obj){
+        File currentFile=selectFile(rootPathType,file_name);
+        String content="";
+        if(obj!=null) content=converter.convertObj2Jsn(obj);
+        return ioeter.writeObj(currentFile,content);
+    }
+
+    public boolean putDataz(FileRootTypes rootPathType,String file_name,Object obj,boolean isAppend){
+        File currentFile=selectFile(rootPathType,file_name);
+        String content="";
+        if(obj!=null) content=converter.convertObj2Jsn(obj);
+        return ioeter.writeObj(currentFile,content,isAppend);
     }
 
     public void putDataStr(FileRootTypes rootPathType,String file_name,String strs){

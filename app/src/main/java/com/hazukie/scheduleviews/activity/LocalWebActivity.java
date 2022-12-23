@@ -14,6 +14,7 @@ import android.webkit.ConsoleMessage;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.MimeTypeMap;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -58,8 +59,6 @@ public class LocalWebActivity extends BaseActivity {
 
     private ProgressHandler mProgressHandler;
     public boolean NEED_CLEAR = false;
-
-    private String mind_name="";
 
     //默认链接
     public String open_url = "https://www.baidu.com";
@@ -283,9 +282,9 @@ public class LocalWebActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if(!view.getSettings().getLoadsImagesAutomatically()){
+            /*if(!view.getSettings().getLoadsImagesAutomatically()){
                 view.getSettings().setLoadsImagesAutomatically(true);
-            }
+            }*/
             sendProgressMessage(PROGRESS_GONE, 100, 0);
         }
 
@@ -327,9 +326,10 @@ public class LocalWebActivity extends BaseActivity {
         }
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK&&mWebView.canGoBack()){
             mWebView.goBack();
             return true;
         }
@@ -380,8 +380,8 @@ public class LocalWebActivity extends BaseActivity {
                 extension.equals("jpg")||extension.equals("gif")||extension.equals("jpeg")||
                 extension.equals("svg")||extension.equals("webp")||
                 extension.equals("json")||extension.equals("eot")||
-                extension.equals("otf")||extension.equals("ttf")||extension.equals("wotf");
-                //extension.equals("css")||extension.equals("js");
+                extension.equals("otf")||extension.equals("ttf")||extension.equals("wotf")||
+                extension.equals("css")||extension.equals("js");
     }
 
     private WebResourceResponse cacheResRequest(Context context,WebResourceRequest request){

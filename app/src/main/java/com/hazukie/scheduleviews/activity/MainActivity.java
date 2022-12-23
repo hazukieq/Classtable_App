@@ -26,6 +26,7 @@ import com.hazukie.scheduleviews.custom.CPoWin;
 import com.hazukie.scheduleviews.custom.CRecyclerView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.databinding.BottomialogBinding;
+import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.fragments.SchePrevFrag;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
@@ -36,13 +37,11 @@ import com.hazukie.scheduleviews.utils.CheckUtil;
 import com.hazukie.scheduleviews.utils.ColorSeletor;
 import com.hazukie.scheduleviews.utils.DateHelper;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.ScheUIProcessor;
 import com.hazukie.scheduleviews.utils.ScreenShotHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +59,7 @@ public class MainActivity extends BaseActivity {
     private ScheUIProcessor uiProcessor;
     private List<ScheWithTimeModel> scts;
     private SpvalueStorage sp;
-
+    private FileAssist.applyOftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,9 @@ public class MainActivity extends BaseActivity {
 
     private void initViews(){
         scts=new ArrayList<>();
-        scts=FileHelper.getRecordedScts(getApplicationContext());
+        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+        scts=oftenOpts.getRecordedScts();
+        //scts=FileHelper.getRecordedScts(getApplicationContext());
         sp=SpvalueStorage.getInstance(getApplicationContext());
         InitWithHeadViews();
         InitWithMainViews();
@@ -97,6 +98,7 @@ public class MainActivity extends BaseActivity {
                 .setStartDate(startMonth,startDay)
                 .setTotalNum(term_totalWeek)
                 .create();
+
         TextView txt_refresh=(TextView) topweeks.getChildAt(0);
         String html_="<small>刷新</small><br/><b><font color=\"gray\">%1$s月</font></b>";
         txt_refresh.setText(Html.fromHtml(String.format(html_,dateHelper.getCurrentMont())));
@@ -106,7 +108,7 @@ public class MainActivity extends BaseActivity {
         for(int i=1;i<childs;i++)
             ((TextView) topweeks.getChildAt(i))
                                 .setText(Html.fromHtml(weekDaitz[i]));
-
+        //获取现在属于第几周
         String weekth=dateHelper.getGapStr();
         topbarLayout.setTitle(weekth)
                 .addLeftTextView(getString(R.string.main_menu), getColor(R.color.text_gray), 18, v -> drawerLayout.openDrawer(Gravity.LEFT))
@@ -187,7 +189,7 @@ public class MainActivity extends BaseActivity {
                     startAct2Act(this,AboutActivity.class);
                     break;
                 case 4:
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/quickmind/mind.html","","");
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"file:///android_asset/quickmind/index.html","","");
                     break;
                 case 5:
                     QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/quickote/editor.html","","");
@@ -195,7 +197,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 6:
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
-                    String test_url="file:///android_asset/tesing.html";
+                    String test_url="http://192.168.2.3:80/jbridge/temp.html";
                     QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,test_url,"","");//"http://cloud.hazukieq.top","","");
                     break;
                 default:
@@ -209,8 +211,8 @@ public class MainActivity extends BaseActivity {
 
     //更新侧边栏头部数据
     private void updateSidebarTexts(String shce,String time){
-        scheName.setText(""+shce);
-        scheTime.setText(""+time);
+        scheName.setText(shce);
+        scheTime.setText(time);
     }
 
 
@@ -222,7 +224,8 @@ public class MainActivity extends BaseActivity {
         String record_name=sp.getStringValue("record_name",Statics.record_name_default);
 
         if(!record_name.equals(Statics.record_name_default)){
-            ScheWithTimeModel sct_=FileHelper.getSctByName(getApplicationContext(),record_name);
+
+            ScheWithTimeModel sct_=oftenOpts.getSctByName(record_name);//FileHelper.getSctByName(getApplicationContext(),record_name);
             updateSidebarTexts(sct_.getScheName(),sct_.getTimeName());
         }else{
             updateSidebarTexts(getString(R.string.main_empty_table),getString(R.string.main_default_time_table));
@@ -290,7 +293,7 @@ public class MainActivity extends BaseActivity {
                                                         pop.dismiss();
                                                         break;
                                                     case 2:
-                                                        FileHelper fileHelper=FileHelper.getInstance(this);
+                                                        //FileHelper fileHelper=FileHelper.getInstance(this);
                                                         String rec=sp.getStringValue("record_name",Statics.record_name_default);
                                                         String rec_name=rec.equals(Statics.record_name_default)?"空表.txt":rec+".txt";
 
@@ -299,9 +302,9 @@ public class MainActivity extends BaseActivity {
                                                                 .addContent("是否导出当前课表数据到公共文档下？")
                                                                 .onConfirm((crialoghue, view) -> {
                                                                     try{
-                                                                        List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,rec_name,ClassLabel.class);
-                                                                        List<ClassLabel> cls=new ArrayList<>();
-                                                                        for(Object obj:objs) cls.add((ClassLabel) obj);
+                                                                        //List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,rec_name,ClassLabel.class);
+                                                                        List<ClassLabel> cls=oftenOpts.getClsList(rec_name);//new ArrayList<>();
+                                                                        //for(Object obj:objs) cls.add((ClassLabel) obj);
                                                                         ScreenShotHelper.saveTXT(this,cls,"课表");
                                                                     }catch (Exception e){
                                                                         e.printStackTrace();
@@ -430,7 +433,7 @@ public class MainActivity extends BaseActivity {
                         //更新sp值
                         sp.setStringvalue("record_name",uni.title);
                         //读取数据
-                        ScheWithTimeModel sct=FileHelper.getSctByName(getApplicationContext(),uni.title);
+                        ScheWithTimeModel sct=oftenOpts.getSctByName(uni.title);//FileHelper.getSctByName(getApplicationContext(),uni.title);
 
                         //更新侧边栏文字
                         updateSidebarTexts(sct.getScheName(), sct.getTimeName());
@@ -451,10 +454,10 @@ public class MainActivity extends BaseActivity {
     //处理Resume周期中更新UI视图的任务
     private void resh(){
         scts.clear();
-        scts.addAll(FileHelper.getRecordedScts(getApplicationContext()));
+        scts.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getApplicationContext()));
 
         String record=sp.getStringValue("record_name",Statics.record_name_default);
-        ScheWithTimeModel mSct=FileHelper.getSctByName(getApplicationContext(),record);
+        ScheWithTimeModel mSct=oftenOpts.getSctByName(record);//FileHelper.getSctByName(getApplicationContext(),record);
         if(mSct.getScheName().equals("空表")) sp.setStringvalue("record_name",Statics.record_name_default);
         updateSidebarTexts(mSct.getScheName(),mSct.getTimeName());
 

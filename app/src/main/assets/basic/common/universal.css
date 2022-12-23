@@ -1,0 +1,172 @@
+html,body{
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+}
+body{
+    background-color: #f1f3f5;
+   /* background-color: #0f1421;*/
+}
+
+.rootbg{
+    background-color: #f1f3f5;
+}
+
+/*bootstrap5美化*/
+.form-control:focus,.form-select:focus,.page-link:focus,.btn:focus,.navbar-toggler:focus{
+    box-shadow:none!important;
+    }
+
+
+.accordion-button:focus,.accordion-button:not(.collapse){
+        border-color: white;
+        background-color: white;
+        box-shadow:none !important;
+    }
+
+.accordion-button:focus,.accordion-button:not(.collapse){
+        border-color: white;
+        background-color: white;
+        box-shadow:none !important;
+    }
+
+    /*卡片美化*/
+.card,.card-header,.card-body,.card-footer{
+        background-color: white;
+    }
+    
+
+.dropdown-item:active{
+    background-color: #e9ecef;
+    color: #1e2125;
+}
+
+.form-check-input:focus{
+    /*outline: none!important;*/
+    box-shadow: none!important;
+}
+
+/*自定义颜色背景等样式*/
+.tip{
+    color: #495050;
+    font-size: 16px;
+    line-height: 2.4em;
+}
+
+.grayext{
+    color: #495050;
+}
+
+.iosext{
+    color: #333333;
+}
+
+.qmuitext{
+    color: #1b88ee;
+}
+
+.iosred{
+    color: #ff3300;
+}
+.iosblue{
+    color: #007AFF;
+}
+
+.lightwhite{
+    background-color: #f1f3f5;
+}
+
+.deepwhite{
+    background-color: #ededed;
+}
+
+.dividerline{
+    background-color: #f6f6f6;
+}
+
+.hrLine{
+    width: 24%;
+    color: gray;
+    vertical-align: middle;display: inline-block;
+}
+
+blockquote{
+    position: relative;
+    color: #495050;
+    background-color: #ededed;
+    padding: 5px 10px;
+    font-weight: 400;
+    text-align: justify;
+    line-height: 2em;
+    font-size: 15px;
+    border-left: 2px solid #1abc9c;
+    padding-left: 1em;
+}
+
+blockquote p{
+    color: #495050;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.item .item-box{
+    display: flex;
+    flex:1;
+}
+
+.item .item-box .column{
+    height: 46px;
+    line-height: 46px;
+    font-weight: bold;
+}
+
+.item .item-box .column:nth-child(2){
+    color: #04adbf;
+    text-align: center;
+    background-color: white;
+}
+
+.item .item-del{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 76px;
+    text-align: center;
+    background-color: #fbe8e8;
+    color: #f23d3d;
+    border: 2px solid #f23d3d;
+    font-size: 16px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-left: 8px;
+}
+
+.menuside{
+    background-color: white;
+    opacity: .98;
+}
+
+.docClick{
+    color: #333333;
+    background-color: white;
+    opacity: .9;
+    transition: .3s;
+}
+
+.docClick:hover{
+    opacity:.8;
+    color: #1b88ee;
+}
+
+.resizable{
+    width: 100%;
+}
+

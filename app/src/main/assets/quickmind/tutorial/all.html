@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>all.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E4%BB%80%E4%B9%88%E6%98%AF-markdown">什么是 Markdown?</h1>
+<ol>
+<li><strong>Markdown</strong> 是一款轻量级标记语言，不同于HTML <strong>(Hypertext Markup Language)</strong>，<strong>Markdown</strong> 的语法非常简单，且容易上手</li>
+<li><strong>Markdown</strong> 以 <strong>纯文本格式</strong> 编写文档，依赖键盘而非鼠标，专注于<strong>写作本身</strong>，感受<strong>书写</strong>的魅力</li>
+<li><strong>Markdown</strong> 的通过添加一些简单的 <strong>标识符</strong>，让文本具有<strong>恰到好处</strong>的格式</li>
+<li><strong>Markdown</strong> 核心特征就是 <strong>删繁剪芜</strong>， <strong>简扼</strong> + <strong>精炼</strong></li>
+<li><strong>Markdown</strong> 是 <strong>笔记</strong> 与 <strong>网页文章</strong> 的最佳载体</li>
+<li><strong>Down</strong> 的核心：坐 <strong>下</strong> 来，就能把思维写 <strong>下</strong> 来
+<ul>
+<li><strong>牛津高阶英汉双解词典第九版</strong> 中，关于 <strong>down</strong> 的释义：</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><img src="https://z3.ax1x.com/2021/10/12/5mqsGF.png" alt="牛津9 down释义" title="牛津9 down释义"></p>
+<br>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8-markdown">为什么要使用 Markdown?</h2>
+<p>有朋友问我 ，<strong>Markdown</strong> 的效果 用Word 完全可以复现，甚至功能更多，那为何要用 <strong>Markdown</strong> 呢？</p>
+<p><strong>答：</strong></p>
+<ul>
+<li>功能多，不一定是好事
+<ul>
+<li>功能一多，选择就会变多，然后你会开始纠结……
+<ul>
+<li>这个字号是不是该大一点呢？</li>
+<li>这个颜色好像有点不太搭呢？</li>
+<li>这个粗体，是不是该再加点颜色呢？</li>
+<li>这个图片的位置看起来有点不大对劲呢？</li>
+</ul>
+</li>
+<li>结果，写了半天，就憋出一点点东西
+<ul>
+<li>写出来的内容...好像...也不咋滴</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>MD的优势：</strong></p>
+<ol>
+<li><strong>Markdown</strong> 让我们免于 <strong>被繁杂臃肿的功能晃花了眼</strong> 的困扰</li>
+<li><strong>Markdown</strong> 让我们回归内容本身，拥抱笔记的<strong>内核</strong>，而非浮于<strong>表象</strong>的样式，写出<strong>高效精练</strong>的笔记！</li>
+</ol>
+<p>用 <strong>Markdown</strong> 写东西，记住一个原则</p>
+<blockquote>
+<p>能用10个字搞定的，绝不用11个字</p>
+</blockquote>
+<p>经常使用 <strong>Markdown</strong> 书写的朋友，也许会有一种奇妙的感触</p>
+<ul>
+<li>书写，会==倒逼==思维的跃进。像是有东西拽着你的思绪往前冲
+<ul>
+<li>倒逼：逆向逼迫，反向推动</li>
+</ul>
+</li>
+</ul>
+<p><strong>关于标识符的滥用</strong></p>
+<p>这个其实是写在最后的，之所以放在这里，是因为它<strong>很重要</strong>！</p>
+<p>如果你有一定的MD语法基础，可以直接[[#19 避免标识符的滥用|点击跳转]]</p>
+<br>
+<h2 id="markdown-%E7%9B%B8%E5%85%B3%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90">Markdown 相关软件推荐</h2>
+<ul>
+<li><strong>Markdown</strong> <strong>书写软件</strong> 推荐：<strong>Typora</strong>     优秀的 MD网页文章 书写软件
+<ul>
+<li><a href="https://www.typora.io/" title="Typora编辑器">点击跳转下载地址</a>
+<ul>
+<li>#提示 以前是免费的，现在收费了，不过是买断制</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Markdown</strong> <strong>笔记软件</strong> 推荐：<strong>Obsidian</strong>    <strong>银河系最强</strong> <strong>MD+双向链</strong> 笔记软件
+<ul>
+<li><a href="https://obsidian.md/" title="银河系第一笔记软件 Obsidian">点击跳转下载地址</a></li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h1 id="markdown-%E8%AF%AD%E6%B3%95">Markdown 语法</h1>
+<ul>
+<li><strong>提示1：</strong> 本教程推荐使用 <strong>Obsidian</strong> 打开阅读</li>
+<li><strong>提示2：</strong> 下文提到的所有标识符都是 <strong>英文状态</strong> 的 <strong>！</strong></li>
+</ul>
+<h2 id="1-%E6%A0%87%E9%A2%98%E7%9B%AE%E5%BD%95">1. 标题&amp;目录</h2>
+<br>
+<h3 id="11-%E6%A0%87%E9%A2%98">1.1 标题</h3>
+<ul>
+<li>Markdown标题共有 <strong>六级</strong>，和 HTML 一样</li>
+<li>区分  <strong>一级标题 → 六级标题</strong>
+<ul>
+<li><strong>标题 的格式：</strong>
+<ul>
+<li><strong><kbd>#</kbd></strong> × 标题级数  + <strong><kbd>空格</kbd></strong> + 文本内容</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通的文本
+
+<span class="hljs-section"># 这是一级标题</span>
+<span class="hljs-section">## 这是二级标题</span>
+<span class="hljs-section">### 这是三级标题</span>
+<span class="hljs-section">#### 这是四级标题</span>
+<span class="hljs-section">##### 这是五级标题</span>
+<span class="hljs-section">###### 这是六级标题 </span>
+</div></code></pre>
+<br>
+<br>
+<h2 id="2-%E6%96%9C%E4%BD%93%E7%B2%97%E4%BD%93">2. 斜体&amp;粗体</h2>
+<br>
+<h3 id="21-%E6%96%9C%E4%BD%93">2.1 斜体</h3>
+<ul>
+<li><strong>斜体 的格式：</strong>
+<ol>
+<li><code>*</code> + 文本内容 + <code>*</code></li>
+<li><code>_</code> + 文本内容 + <code>_</code>   ( 下划线 )</li>
+</ol>
+</li>
+<li><strong>说明：</strong>
+<ul>
+<li>斜体文本，首尾只有 <strong>单个</strong> 标识符</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通文本
+
+<span class="hljs-emphasis">*这里是一段斜体文本*</span>
+<span class="hljs-emphasis">_这也是一段斜体文本_</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p>这是一段普通文本</p>
+<p><em>这里是一段斜体文本</em>
+<em>这也是一段斜体文本</em></p>
+ <br>
+<h3 id="22-%E7%B2%97%E4%BD%93">2.2 粗体</h3>
+<ul>
+<li>
+<p><strong>粗体 的格式：</strong></p>
+<ol>
+<li><code>**</code> + 文本内容 + <code>**</code></li>
+<li><code>__</code> + 文本内容 + <code>__</code>    (这里是两个 <strong><kbd>_</kbd></strong> )</li>
+</ol>
+</li>
+<li>
+<p><strong>说明：</strong></p>
+<ul>
+<li>粗体文本，首尾各有 <strong>两个</strong> 标识符</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通文本
+
+<span class="hljs-strong">**这里是一段加粗文本**</span>
+<span class="hljs-strong">__这也是一段加粗文本__</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p>这是一段普通文本</p>
+<p><strong>这里是一段加粗文本</strong>
+<strong>这也是一段加粗文本</strong></p>
+<br>
+<h3 id="23-%E7%B2%97%E6%96%9C%E4%BD%93-%E6%96%9C%E7%B2%97%E4%BD%93">2.3 粗斜体 (斜粗体)</h3>
+<ul>
+<li>
+<p><strong>粗斜体 的格式：</strong></p>
+<ol>
+<li><code>***</code> + 文本内容 + <code>***</code></li>
+<li><code>___</code> + 文本内容 + <code>___</code>   （ 这里是3个 <kbd>_</kbd> )</li>
+<li><code>**_</code> + 文本内容 + <code>_**</code></li>
+<li><code>__*</code> + 文本内容 +  <code>*__</code></li>
+<li><code>*__</code> + 文本内容 + <code>__*</code></li>
+<li><code>_**</code> + 文本内容 + <code>**_</code></li>
+</ol>
+</li>
+<li>
+<p><strong>说明：</strong></p>
+<ul>
+<li>粗斜体文本，首尾各有 <strong>三个</strong> 标识符</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通文本
+
+<span class="hljs-strong">***粗斜体文本1**</span>*
+<span class="hljs-strong">___粗斜体文本2__</span>_
+<span class="hljs-strong">**_粗斜体文本3_*</span>*
+<span class="hljs-strong">__*粗斜体文本4*_</span>_
+<span class="hljs-strong">*__粗斜体文本5__</span>*
+<span class="hljs-strong">_**粗斜体文本6**</span>_
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p>这是一段普通文本</p>
+<p><em><strong>粗斜体文本1</strong></em>
+<em><strong>粗斜体文本2</strong></em>
+<strong><em>粗斜体文本3</em></strong>
+<strong><em>粗斜体文本4</em></strong>
+<em><strong>粗斜体文本5</strong></em>
+<em><strong>粗斜体文本6</strong></em></p>
+<br>
+<h3 id="24-%E6%96%9C%E4%BD%93%E5%8C%85%E5%90%AB%E7%B2%97%E4%BD%93">2.4 斜体包含粗体</h3>
+<ul>
+<li>
+<p><strong>斜体中包含粗体 的格式：</strong></p>
+<ol>
+<li><code>*</code> +  斜体文本 + <code>**</code> + 粗体文本 + <code>**</code> + 斜体文本 + <code>*</code></li>
+<li><code>_</code> + 斜体文本 + <strong><code>__</code></strong> + 粗体文本 + <code>__</code> + 斜体文本 + <code>_</code> （ 这里是两个 <strong><kbd>_</kbd></strong> )</li>
+<li><code>*</code> + 斜体文本 + <code>__</code> + 粗体文本 + <code>__</code> + 斜体文本 + <code>*</code></li>
+<li><code>_</code> + 斜体文本 + <code>**</code> + 粗体文本 + <code>**</code> + 斜体文本 + <code>_</code></li>
+</ol>
+</li>
+<li>
+<p><strong>说明：</strong></p>
+<ul>
+<li><strong>斜体</strong> 中包含 <strong>粗体</strong>，其实就是嵌套的关系，<strong>外层</strong> 是 <strong>斜体</strong>，<strong>内层</strong> 是 <strong>粗体</strong></li>
+<li>外层是<strong>斜体</strong>，标识符是<strong>单个</strong>；内层是<strong>粗体</strong>，标识符是<strong>两个</strong></li>
+<li>因为 <strong>粗体</strong> 是被包裹在 <strong>斜体</strong> 中的，所以显示效果为 <strong>斜粗体</strong></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通文本
+
+<span class="hljs-emphasis">*这里是一段斜体中*</span><span class="hljs-emphasis">*包含粗体*</span><span class="hljs-emphasis">*的文字*</span>
+<span class="hljs-emphasis">_这也是一段斜体中**包含粗体**的文字_</span>
+<span class="hljs-emphasis">*这又是一段斜体中__包含粗体__的文字*</span>
+<span class="hljs-emphasis">_这还是一段斜体中**包含粗体**的文字_</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p>这是一段普通文本</p>
+<p><em>这里是一段斜体中<strong>包含粗体</strong>的文字</em>
+<em>这也是一段斜体中<strong>包含粗体</strong>的文字</em>
+<em>这又是一段斜体中__包含粗体__的文字</em>
+<em>这还是一段斜体中<strong>包含粗体</strong>的文字</em></p>
+<br>
+<h3 id="25-%E7%B2%97%E4%BD%93%E5%8C%85%E5%90%AB%E6%96%9C%E4%BD%93">2.5 粗体包含斜体</h3>
+<ul>
+<li><strong>粗体中包含斜体 的格式：</strong>
+<ol>
+<li><code>**</code> + 粗体文本 + <code>*</code> + 斜体文本 + <code>*</code> + 粗体文本 + <code>**</code></li>
+<li><code>__</code> + 粗体文本 + <code>_</code> + 斜体文本 + <code>_</code> + 粗体文本 + <code>__</code>   （ 这里是两个 <strong><kbd>_</kbd></strong> )</li>
+<li><code>**</code> + 粗体文本 + <code>_</code> + 斜体文本 + <code>_</code> + 粗体文本 + <code>**</code></li>
+<li><code>__</code> + 粗体文本 + <code>*</code> + 斜体文本 +  <code>*</code> + 粗体文本 + <code>__</code></li>
+</ol>
+</li>
+<li><strong>说明：</strong>
+<ul>
+<li><strong>粗体</strong> 中包含 <strong>斜体</strong>，也就是嵌套的关系，<strong>外层</strong> 是 <strong>粗体</strong>，<strong>内层</strong> 是 <strong>斜体</strong></li>
+<li>外层是<strong>粗体</strong>，标识符是<strong>两个</strong>；内层是<strong>斜体</strong>，标识符是<strong>单个</strong></li>
+<li>因为 <strong>斜体</strong> 是被包裹在 <strong>粗体</strong> 中的，所以显示效果为 <strong>粗斜体</strong></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>这是一段普通文本
+
+<span class="hljs-strong">**这里是一段粗体中*包含斜体*的文字**</span>
+<span class="hljs-strong">__这也是一段粗体中_包含斜体_的文字__</span>
+<span class="hljs-strong">**这又是一段粗体中_包含斜体_的文字**</span>
+<span class="hljs-strong">__这还是一段粗体中*包含斜体*的文字__</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p>这是一段普通文本</p>
+<p><strong>这里是一段粗体中<em>包含斜体</em>的文字</strong>
+<strong>这也是一段粗体中_包含斜体_的文字</strong>
+<strong>这又是一段粗体中_包含斜体_的文字</strong>
+<strong>这还是一段粗体中<em>包含斜体</em>的文字</strong></p>
+<p><br><br></p>
+<h2 id="3-%E7%BA%BF">3. 线</h2>
+<br>
+<h3 id="31-%E6%B0%B4%E5%B9%B3%E5%88%86%E5%89%B2%E7%BA%BF">3.1 水平分割线</h3>
+<ul>
+<li>水平分割线由至少 <strong>3</strong> 个 <code>*</code> 或 <code>-</code> 组成</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-section">下面是一条水平分割线：
+---</span>
+<span class="hljs-emphasis">***</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<hr>
+<hr>
+<br>
+<h3 id="32-%E6%96%87%E6%9C%AC%E5%88%A0%E9%99%A4%E7%BA%BF">3.2 文本删除线</h3>
+<ul>
+<li><strong>删除线 的格式：</strong>
+<ul>
+<li><strong><code>~~</code></strong> + 文本内容 +<strong><code>~~</code></strong>   首尾各加两个 <strong><kbd>~</kbd></strong> 波浪号</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>~~这是一段加了删除线的文本~~
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p><s>这是一段加了删除线的文本</s></p>
+  <br>
+<h3 id="33-%E6%96%87%E6%9C%AC%E4%B8%8B%E5%88%92%E7%BA%BF">3.3 文本下划线</h3>
+<ul>
+<li>下划线的格式，和 HTML 是一样的
+<ul>
+<li><strong><code>&lt;u&gt;</code></strong> + 文本内容 + <strong><code>&lt;/u&gt;</code></strong></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">u</span>&gt;</span>这是一段加了下划线的文本<span class="hljs-tag">&lt;/<span class="hljs-name">u</span>&gt;</span>
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p><u>这是一段加了下划线的文本</u></p>
+<p><br><br></p>
+<h2 id="4-%E5%88%97%E8%A1%A8%E5%BC%95%E7%94%A8">4. 列表&amp;引用</h2>
+<br>
+<h3 id="41-%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8">4.1 有序列表</h3>
+<ul>
+<li>
+<p><strong>有序列表 的格式：</strong></p>
+<ul>
+<li><strong><code>1.</code></strong> + <strong><kbd>空格</kbd></strong> + 文本内容</li>
+</ul>
+</li>
+<li>
+<p><strong>说明：</strong></p>
+<ul>
+<li>输入文本内容后，敲击 <strong><kbd>Enter</kbd></strong> 自动补全格式，并进入 <strong>下个</strong> 有序列表</li>
+<li>若需要在同个列表内，增加 <strong>换行显示</strong> 的内容 (<strong>但不进入下个列表</strong>)
+敲击 <strong><kbd>Shift</kbd></strong> + <strong><kbd>Enter</kbd></strong> ，即可另起一行输入文本</li>
+<li>在有序列表的中间，插入一个新的列表，后面列表的 <strong>数字序号</strong> 会自动 <strong>递进</strong> 一层</li>
+<li>即便在源代码模式中修改了数字序号，渲染界面依然是 <strong>依照顺序</strong> 显示的</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-bullet">1. </span>这是第一个有序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-bullet">2. </span>这是第二个有序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-bullet">3. </span>这是第三个有序列表 
+<span class="hljs-bullet">
+
+1. </span>这是第一个有序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Shift + Enter) --&gt;</span></span>
+   这是同个列表下，另起一行的文本内容 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-bullet">2. </span>这是第二个有序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Shift + Enter) --&gt;</span></span>
+   这是同个列表下，另起一行的文本内容 
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<ol>
+<li>
+<p>这是第一个有序列表</p>
+</li>
+<li>
+<p>这是第二个有序列表</p>
+</li>
+<li>
+<p>这是第三个有序列表</p>
+</li>
+<li>
+<p>这是第一个有序列表
+这是同个列表下，另起一行的文本内容</p>
+</li>
+<li>
+<p>这是第二个有序列表
+这是同个列表下，另起一行的文本内容</p>
+</li>
+</ol>
+<h4 id="%E8%A1%A5%E5%85%85">补充</h4>
+<ul>
+<li>由于有序列表存在<strong>强制排序性</strong>，它的数字序号必然是<strong>逐一递进</strong>的
+若你希望内容前的数字，不依照<strong>递进顺序</strong>排序，或者以 <strong>整百</strong>，<strong>整十数</strong> 排序</li>
+<li>可以配合<strong>无序列表</strong>，在无序列表中输入：
+<ul>
+<li><code>数字</code> + <code>.</code> + 内容<br>
+#注意  点号 与 内容 之间，<strong>没有空格</strong>   (其实有空格也行，就是会感觉有点奇怪)</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-bullet">- </span>10.这是无序列表下，整十数排列的内容
+<span class="hljs-bullet">- </span>20.这是无序列表下，整十数排列的内容
+<span class="hljs-bullet">- </span>30.这是无序列表下，整十数排列的内容
+<span class="hljs-bullet">
+
+- </span>100.这是无序列表下，整百数排列的内容
+<span class="hljs-bullet">- </span>200.这是无序列表下，整百数排列的内容
+<span class="hljs-bullet">- </span>300.这是无序列表下，整百数排列的内容
+</div></code></pre>
+<p><strong>效果：</strong></p>
+<ul>
+<li>10.这是无序列表下，整十数排列的内容</li>
+<li>20.这是无序列表下，整十数排列的内容</li>
+<li>30.这是无序列表下，整十数排列的内容</li>
+</ul>
+<br>
+<ul>
+<li>100.这是无序列表下，整百数排列的内容</li>
+<li>200.这是无序列表下，整百数排列的内容</li>
+<li>300.这是无序列表下，整百数排列的内容</li>
+</ul>
+<br>
+<h3 id="42-%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8">4.2 无序列表</h3>
+<ul>
+<li><strong>无序列表 的格式：</strong></li>
+<li><strong><kbd>-</kbd></strong> + <strong><kbd>空格</kbd></strong> + 文本内容</li>
+<li><strong>说明：</strong>
+<ul>
+<li>输入文本内容后，敲击 <strong><kbd>Enter</kbd></strong> 自动补全格式，并进入 <strong>下个</strong> 无序列表</li>
+<li>若需要在同个列表内，增加<strong>换行</strong>显示的内容 (<strong>但不进入下个列表</strong>)
+敲击 <strong><kbd>Shift</kbd></strong> + <strong><kbd>Enter</kbd></strong> ，即可另起一行输入文本</li>
+</ul>
+</li>
+<li><strong>补充：</strong>
+<ul>
+<li>在<strong>Obsidian</strong>中，按下 <strong><kbd>Ctrl</kbd></strong> + <strong><kbd>Enter</kbd></strong></li>
+<li>即可快速生成一个无序列表</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-bullet">- </span>这是第1个无序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-bullet">- </span>这是第2个无序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-bullet">- </span>这是第3个无序列表
+<span class="hljs-bullet">
+- </span>这是第一个无序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Shift + Enter) --&gt;</span></span>
+  这是同个列表下，另起一行的文本内容
+<span class="hljs-bullet">- </span>这是第二个无序列表 <span class="xml"><span class="hljs-comment">&lt;!-- (Shift + Enter) --&gt;</span></span>
+  这是同个列表下，另起一行的文本内容 
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<ul>
+<li>这是第1个无序列表</li>
+<li>这是第2个无序列表</li>
+<li>这是第3个无序列表</li>
+</ul>
+<br>
+<ul>
+<li>这是第一个无序列表
+这是同个列表下，另起一行的文本内容</li>
+<li>这是第二个无序列表
+这是同个列表下，另起一行的文本内容</li>
+</ul>
+<br>
+<h3 id="43-%E5%BC%95%E7%94%A8">4.3 引用</h3>
+<ul>
+<li><strong>引用 的格式：</strong>
+<ul>
+<li><strong><kbd>&gt;</kbd></strong> + 文本内容 （<strong>不需要空格</strong>)</li>
+</ul>
+</li>
+<li><strong>说明：</strong>
+<ul>
+<li><strong>同个引用段落</strong>内的换行直接敲击 <strong><kbd>Enter</kbd></strong> 即可</li>
+<li>若需添加 <strong>第二个独立引用段落</strong> ，连续敲击 <strong>两下</strong> <strong><kbd>Enter</kbd></strong> 即可</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>&gt;这是第一段引用文本的第1行 &lt;!-- (Enter) --&gt;
+&gt;这是第一段引用文本的第2行 &lt;!-- (Enter) --&gt;
+&lt;!-- (Enter) --&gt;
+&gt;这是第二段引用文本的第1行 &lt;!-- (Enter) --&gt;
+&gt;这是第二段引用文本内第2行
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<blockquote>
+<p>这是第一段引用文本的第1行
+这是第一段引用文本的第2行</p>
+</blockquote>
+<blockquote>
+<p>这是第二段引用文本的第1行
+这是第二段引用文本的第2行</p>
+</blockquote>
+<br>
+<h3 id="44-%E7%BC%A9%E8%BF%9B%E9%80%80%E6%A0%BC">4.4 缩进&amp;退格</h3>
+<p><strong>在列表和引用的书写过程中，我们需要利用 ==缩进== 与 ==退格== ，让文章肌理分明，更具层级</strong></p>
+<ul>
+<li>
+<p><strong>缩进：</strong></p>
+<ol>
+<li><strong><kbd>Tab</kbd></strong></li>
+<li><strong><kbd>Ctrl</kbd></strong> + <strong><kbd>[</kbd></strong>   (左中括号)</li>
+</ol>
+</li>
+<li>
+<p><strong>退格：</strong></p>
+<ol>
+<li><strong><kbd>Shift</kbd></strong> + <strong><kbd>Tab</kbd></strong></li>
+<li><strong><kbd>Ctrl</kbd></strong> + <strong><kbd>]</kbd></strong> （右中括号）</li>
+</ol>
+</li>
+</ul>
+<br>
+<h4 id="441-%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8%E7%9A%84%E7%BC%A9%E9%80%80">4.4.1 有序列表的缩&amp;退</h4>
+<pre class="hljs"><code><div><span class="hljs-bullet">1. </span>第一级有序列表1 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+<span class="hljs-code">	(前面空3格)1. 第二级有序列表1    &lt;!-- 写文本之前，先敲3个空格 ) ；写完文本后，再(Enter) --&gt;</span>
+<span class="hljs-bullet">2. </span>第一级有序列表2 <span class="xml"><span class="hljs-comment">&lt;!-- (Enter) --&gt;</span></span>
+</div></code></pre>
+<h5 id="%E7%A4%BA%E8%8C%83">示范</h5>
+<ol>
+<li>第一级有序列表1
+<ol>
+<li>第二级有序列表1</li>
+<li>第二级有序列表2</li>
+</ol>
+</li>
+<li>第一级有序列表2</li>
+</ol>
+<br>
+<h2 id="5-%E7%BD%91%E9%A1%B5%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%9B%BE%E5%83%8F">5. 网页链接与图像</h2>
+<br>
+<h3 id="51-%E7%BD%91%E9%A1%B5%E9%93%BE%E6%8E%A5">5.1 网页链接</h3>
+<ul>
+<li><strong>网页链接的 格式：</strong>
+<ul>
+<li><strong><kbd>[</kbd></strong> + 显示文本内容 + <strong><kbd>]</kbd></strong> + <strong><kbd>(</kbd></strong> + 链接地址 + <strong><kbd>空格</kbd></strong>  + <strong><kbd>&quot;</kbd></strong> + 提示信息文本 + <strong><kbd>&quot;</kbd></strong> + <strong><kbd>)</kbd></strong></li>
+</ul>
+</li>
+<li><strong>说明：</strong>
+<ul>
+<li>显示文本内容，是在渲染界面实际 <strong>可见</strong> 的文本，用以 <strong>说明</strong> 链接</li>
+<li>提示信息文本，需鼠标悬停于 <strong>显示文本内容</strong> 方可触发，用于增加额外提示信息
+<ul>
+<li>#注意 <strong><code>&quot;提示信息文本&quot;</code></strong>  是<strong>可选项</strong>，一般不会填</li>
+<li>一般来讲，需按住 <strong><kbd>Ctrl</kbd></strong> + <strong><code>鼠标左键点击</code></strong>  才可跳转链接，不过也有 <strong>直接鼠标点击</strong> 就能跳转的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>[<span class="hljs-string">显示文本内容</span>](<span class="hljs-link">链接地址 "提示信息文本"</span>)
+
+[<span class="hljs-string">百度一下，你就知道</span>](<span class="hljs-link">http://www.baidu.com "按住Ctrl点击跳转百度"</span>)
+</div></code></pre>
+<p><strong>示范：</strong></p>
+<p><a href="http://www.baidu.com" title="按住Ctrl点击跳转百度">百度一下，你就知道</a></p>
+<br>
+<h4 id="511%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8A%A0%E7%B2%97">5.1.1链接的加粗</h4>
+<ul>
+<li><strong>格式有两种：</strong>
+<ol>
+<li>
+<p>把一对 <kbd>**</kbd> 加在 ==显示文本内容==的首尾</p>
+<ul>
+<li><strong>格式1：</strong><code>[**显示文本内容**](链接地址)</code></li>
+<li><strong>效果：</strong> <a href="http://www.baidu.com"><strong>百度一下，你就知道</strong></a></li>
+</ul>
+</li>
+<li>
+<p>把一对 <kbd>**</kbd> 加在 链接格式==整体== 的首尾</p>
+<ul>
+<li><strong>格式2：</strong><code>**[显示文本内容](链接地址)**</code></li>
+<li><strong>效果：</strong> <strong><a href="http://www.baidu.com">百度一下，你就知道</a></strong></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="52-%E5%9B%BE%E5%83%8F">5.2 图像</h3>
+<ul>
+<li><strong>图像格式：</strong>
+<ul>
+<li>图像格式，就是在网页链接前面加个  <strong><kbd>!</kbd></strong>  (英文格式的)，<strong><code>!</code></strong> 代表 <strong>可见</strong></li>
+<li>图片的提示信息，和网页链接一样，写在 <strong><code>&quot; &quot;</code></strong>  内</li>
+<li><strong><code>[ ]</code></strong>  方括号里的文字信息在 <strong>Markdown</strong> 没啥实质的作用，只是方便在源代码模式下，知道这个图片是什么，在渲染界面是不会显示的。有点类似于HTML  <strong>img标签</strong> 里的 <strong>alt属性</strong>。</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>![<span class="hljs-string">文字信息</span>](<span class="hljs-link">图片链接 "提示文本信息"</span>)	
+
+![<span class="hljs-string">湘湖1</span>](<span class="hljs-link">https://z3.ax1x.com/2021/08/06/fuNkXq.jpg "湘湖一角"</span>)
+</div></code></pre>
+<ul>
+<li>
+<p><strong>补充：</strong></p>
+<ul>
+<li>图像链接可以是<strong>本地</strong>的，也可以是<strong>在线</strong>的
+<ul>
+<li>本地图像直接  <strong><code>Ctrl + C</code></strong>  黏贴，<strong><code>Ctrl + V</code></strong>  复制 就可以</li>
+<li>在线图像推荐使用 <a href="https://imgtu.com/" title="这是一个在线图床网址">图床</a></li>
+</ul>
+</li>
+<li>调整图像的大小需要使用 HTML 和 CSS，在 <strong>Typora编辑器</strong> 中右键可以直接缩放图片
+本质是转成了HTML的格式，最后会有一个 <code>style=&quot;zoom: %;&quot;</code> ，这里数值可以自己修改</li>
+<li>如果有使用 <strong>Obsidian</strong> 的朋友，在线图片链接是通用的。不过，因为 <strong>Obsidian</strong> 是双向链笔记
+它的<strong>本地图片</strong>格式不太一样
+<ul>
+<li><strong><code>![[图片名]]</code></strong>
+<ul>
+<li><strong>Obsidian</strong> 中的图片是以<strong>双链</strong>的格式引用在目标笔记中，用 <strong><kbd>!</kbd></strong> 使它可见</li>
+<li><strong>Obsidian</strong>的图片设置大小是用 <strong><kbd>|</kbd></strong> 分隔，后面写宽度数值，单位是px。
+设定好宽度，高度会自动<strong>等比例调整</strong>
+<ul>
+<li><code>![[图片名|宽度数值]]</code>
+- 若想自主调整图片宽高，则用：
+- <code>![[图片名|宽度数值x高度数值]]</code>
+- #提示 这里的 <code>x</code> 是 英文字母<strong>x</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果是<strong>在线图床</strong>，需要调整图片大小：
+<ul>
+<li><code>![图床|宽度数值](链接地址)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<p><img src="https://z3.ax1x.com/2021/08/06/fuNkXq.jpg" alt="湘湖1|400" title="湘湖一角"></p>
+<p><br><br></p>
+<h2 id="6-%E8%A1%A8%E6%A0%BC">6. 表格</h2>
+<ul>
+<li>Markdown的表格，比HTML简单很多
+<ul>
+<li><strong><kbd>|</kbd></strong>  是构成表格的主要 <strong>框架</strong></li>
+<li><strong><kbd>-</kbd></strong> 区分 <strong>表头</strong> 和 <strong>表格主体</strong></li>
+<li><strong><kbd>:</kbd></strong> 控制 表格内 <strong>文本内容</strong> 的 <strong>对齐方式</strong></li>
+<li>**Typora编辑器中 **  输入 <strong><code>Ctrl + T</code></strong> 即可快速插入表格，自由定义样式</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>|这里是表头1|这里是表头2|这里是表头3|
+|:-|:-:|-:|    <span class="xml"><span class="hljs-comment">&lt;!--区分表头和表格主体，:代表文本对齐方式，分别是左对齐，居中对齐，右对齐--&gt;</span></span>
+|单元格数据1|单元格数据2|单元格数据3|
+|单元格数据4|单元格数据5|单元格数据6|
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">这里是表头1</th>
+<th style="text-align:center">这里是表头2</th>
+<th style="text-align:right">这里是表头3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">单元格数据1</td>
+<td style="text-align:center">单元格数据2</td>
+<td style="text-align:right">单元格数据3</td>
+</tr>
+<tr>
+<td style="text-align:left">单元格数据4</td>
+<td style="text-align:center">单元格数据5</td>
+<td style="text-align:right">单元格数据6</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 id="61-%E8%A1%A8%E6%A0%BC%E4%B8%AD%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E7%9A%84%E6%8D%A2%E8%A1%8C">6.1 表格中文本内容的换行</h3>
+<ul>
+<li>Mardown中表格，它的宽高是由 单元格数据内的文本内容 <strong>撑开</strong> 的</li>
+<li>当我们输入一段很长很长的文本，它所在的单元格会变得过宽</li>
+</ul>
+<p><strong>如下图所示：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">表头1</th>
+<th style="text-align:center">表头2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本</td>
+<td style="text-align:center">普通文本</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>若想对一段长文本进行换行，可以在 <strong>中间</strong> 插入一个  <strong><code>&lt;br&gt;</code></strong>  （ 换行标签 )</li>
+</ul>
+<pre class="hljs"><code><div>| 表头1 |  表头2 |
+|:-:|:-:|
+|这是第一行文本<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span>这是另起一行的文本|普通文本|
+</div></code></pre>
+<h4 id="%E7%A4%BA%E8%8C%83">示范</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">表头1</th>
+<th style="text-align:center">表头2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">这是第一行文本<br>这是另起一行的文本</td>
+<td style="text-align:center">普通文本</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+<h2 id="7-%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E5%BE%85%E5%8A%9E">7. 任务列表（待办）</h2>
+<ul>
+<li>
+<p><strong>任务列表 的格式：</strong></p>
+<ul>
+<li><strong><kbd>-</kbd></strong> + <strong><kbd>空格</kbd></strong> +<strong><code>[ ]</code></strong> +<strong><kbd>空格</kbd></strong> + 任务列表内容    ( 中括号<code>[ ]</code> 里面必须有个空格)</li>
+<li>给待办任务列表打 <strong><code>√</code></strong> ，变成 <strong>已办</strong>
+<ol>
+<li>在渲染界面，直接鼠标左键点击框框</li>
+<li>在源代码界面，在中括号内输入 <strong>英文字母x</strong>
+<ul>
+<li>部分编辑器，在 中括号内 输入<strong>任意字符</strong>都可以打 <strong><code>√</code></strong>   ( 例如 <strong>Obsidian</strong> )</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>补充：</strong></p>
+<ul>
+<li>大部分 MD编辑器  支持输入第一个任务列表后，按下 <strong><kbd>Enter</kbd></strong> 进入下一行会 <strong>自动补全待办格式</strong></li>
+<li>在<strong>Obsidian</strong>中，连续输入<strong>两次</strong> <code>Ctrl + Enter</code>  ，即可生成一个待办列表
+<ul>
+<li>再输入一次 <code>Ctrl + Enter</code>  ，会在待办列表 打 <strong><code>√</code></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>格式：</strong></p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-bullet">- </span>[ ] 待办任务列表1
+<span class="hljs-bullet">- </span>[ ] 待办任务列表2
+<span class="hljs-bullet">- </span>[x] 已办任务列表1    <span class="xml"><span class="hljs-comment">&lt;!-- 英文字母X --&gt;</span></span>
+<span class="hljs-bullet">- </span>[x] 已办任务列表2
+</div></code></pre>
+<h3 id="%E7%A4%BA%E8%8C%83">示范</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">待办任务列表1</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">待办任务列表2</label></li>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2">已办任务列表1</label></li>
+<li><input type="checkbox" id="checkbox3" checked="true"><label for="checkbox3">已办任务列表2</label></li>
+</ul>
+<br>  
+<ul>
+<li>在 <strong>Obsidian</strong> 中，可以利用 <strong><kbd>Ctrl</kbd></strong> + <strong><kbd>Enter</kbd></strong> ，快速生成任务列表
+<ol>
+<li><strong><code>-</code></strong> + <strong><kbd>空格</kbd></strong> + <strong><kbd>Ctrl</kbd></strong> + <strong><kbd>Enter</kbd></strong>  +待办文本内容</li>
+<li>待办文本内容 + <strong><kbd>Ctrl</kbd></strong> + <strong><kbd>Enter</kbd></strong> <strong>×2</strong>     ( 输入文本后，连续2次 <code>Ctrl + enter</code> )</li>
+</ol>
+</li>
+</ul>
+<br>
+<ul>
+<li><strong>任务列表也是可以缩进+退格的，操作跟 无序、有序列表一样</strong></li>
+</ul>
+<h3 id="%E7%A4%BA%E8%8C%83">示范</h3>
+<ul>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">第一级待办列表1</label>
+<ul>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">第二级待办列表1</label>
+另起一行的第二级待办列表1
+<ul>
+<li><input type="checkbox" id="checkbox6" checked="true"><label for="checkbox6">第三级已办列表1</label></li>
+<li><input type="checkbox" id="checkbox7" checked="true"><label for="checkbox7">第三级已办列表2</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">第二级待办列表2</label>
+另起一行的第二级待办列表2</li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">第一级待办列表2</label></li>
+</ul>
+<p><br> <br></p>
+<h3 id="81-%E7%BC%A9%E5%B0%8F%E6%96%87%E6%9C%AC">8.1 缩小文本</h3>
+<ul>
+<li><strong>缩小文本 的格式：</strong>
+<ul>
+<li><strong><code>这是一段普通文本</code></strong>
+<strong><code>&lt;small&gt;这是一段缩小文本&lt;/small&gt;</code></strong></li>
+</ul>
+</li>
+<li><strong>效果：</strong>
+<ul>
+<li>这是一段普通文本
+<small>这是一段缩小文本</small></li>
+</ul>
+</li>
+</ul>
+<h4 id="811-%E7%BC%A9%E5%B0%8F%E6%96%9C%E4%BD%93%E6%96%87%E6%9C%AC">8.1.1 缩小斜体文本</h4>
+<ul>
+<li><strong>斜体</strong>缩小文本 的格式有<strong>两种</strong>：
+<ol>
+<li><code>&lt;small&gt;*这是一段缩小斜体文本*&lt;/small&gt;</code></li>
+<li><code>*&lt;small&gt;这是一段缩小斜体文本&lt;/small&gt;*</code></li>
+</ol>
+</li>
+<li><strong>效果：</strong>
+<ol>
+<li><small><em>这是一段缩小斜体文本</em></small></li>
+<li><em><small>这是一段缩小斜体文本</small></em></li>
+</ol>
+</li>
+</ul>
+<br>
+<h3 id="82-%E5%A4%9A%E5%BD%A9%E6%96%87%E6%9C%AC">8.2 多彩文本</h3>
+<ul>
+<li><strong>多彩文本 的格式：</strong>
+<ul>
+<li><strong><code>&lt;font color=orange&gt;这是一段橘色文本&lt;/font&gt;</code></strong></li>
+</ul>
+</li>
+<li><strong>效果：</strong>
+<ul>
+<li><font color=orange>这是一段橘色文本</font>
+<ul>
+<li>color 里的颜色支持 英文单词，<strong><a href="http://c.runoob.com/front-end/55" title="可跳转至菜鸟教程了解">16进制</a>，<a href="https://www.runoob.com/cssref/func-rgb-css.html" title="可跳转至菜鸟教程了解">rgb</a>，<a href="https://www.runoob.com/cssref/func-rgba.html" title="可跳转至菜鸟教程了解">rgba</a></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+<h4 id="821-%E5%A4%9A%E5%BD%A9%E7%B2%97%E4%BD%93%E6%96%87%E6%9C%AC">8.2.1 多彩粗体文本</h4>
+<ul>
+<li>只需要在上面示例的基础上，加上 <strong>加粗标识符</strong>，有<strong>两种</strong>格式：
+<ol>
+<li><strong>格式1：</strong> <code>**&lt;font color=teal&gt;这是一段加粗的水鸭色文本&lt;/font&gt;**</code>
+<ul>
+<li><strong>效果：</strong>  <strong><font color=teal>这是一段加粗的水鸭色文本</font></strong></li>
+</ul>
+</li>
+<li><strong>格式2：</strong> <code>&lt;font color=teal&gt;**这是一段加粗的水鸭色文本**&lt;/font&gt;</code>
+<ul>
+<li><strong>效果：</strong>  <font color=teal><strong>这是一段加粗的水鸭色文本</strong></font></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>若上述混搭方法的样式<strong>失效</strong> ，可以使用 纯HTML标记
+<ul>
+<li><strong>格式：</strong> <code>&lt;strong style=&quot;color:teal;&quot;&gt;这是一段加粗的水鸭色文本&lt;/strong&gt;</code>   (标记略复杂，不是很推荐)</li>
+<li><strong>效果：</strong> <strong style="color:teal;">这是一段加粗的水鸭色文本</strong></li>
+</ul>
+</li>
+</ul>
+<br>
+<h4 id="822-%E5%A4%9A%E5%BD%A9%E6%96%9C%E4%BD%93%E6%96%87%E6%9C%AC">8.2.2 多彩斜体文本</h4>
+<ul>
+<li>跟多彩加粗文本完全一样，只需把首尾的 <code>**</code> 换成 <code>*</code> 即可</li>
+</ul>
+<ol>
+<li><strong>格式1：</strong> <code>*&lt;font color=teal&gt;This is an italic teal text&lt;/font&gt;*</code>
+<ul>
+<li><strong>效果：</strong>  <em><font color=teal>This is an italic teal text</font></em></li>
+</ul>
+</li>
+<li><strong>格式2：</strong> <code>&lt;font color=teal&gt;*This is an italic teal text*&lt;/font&gt;</code>
+<ul>
+<li><strong>效果：</strong> <font color=teal><em>This is an italic teal text</em></font></li>
+</ul>
+</li>
+</ol>
+<br>
+<h4 id="823-%E5%A4%9A%E5%BD%A9%E7%B2%97%E6%96%9C%E4%BD%93%E6%96%87%E6%9C%AC">8.2.3   多彩粗斜体文本</h4>
+<ul>
+<li>首尾换成 <code>***</code></li>
+</ul>
+<ol>
+<li><strong>格式1：</strong>  <code>***&lt;font color=teal&gt;This is a bold italic teal text&lt;/font&gt;***</code>
+<ul>
+<li><strong>效果：</strong>  <em><strong><font color=teal>This is a bold italic teal text</font></strong></em></li>
+</ul>
+</li>
+<li><strong>格式2：</strong> <code>&lt;font color=teal&gt;***This is a bold italic teal text***&lt;/font&gt;</code>
+<ul>
+<li><strong>效果：</strong> <font color=teal><em><strong>This is a bold italic teal text</strong></em></font></li>
+</ul>
+</li>
+</ol>
+<br>
+<p>#注意  多彩文本尽量慎用，<strong>Markdown</strong> 的核心就是 <strong>简洁精炼</strong>，注重 <strong>实质内容</strong>，而非花哨的 颜色样式</p>
+<p><br><br></p>
+<h2 id="9-%E6%8B%93%E5%B1%95%E6%96%87%E6%9C%AC%E6%98%BE%E7%A4%BA%E6%95%88%E6%9E%9C">9. 拓展文本显示效果</h2>
+<ul>
+<li>拓展显示效果既不是原生 <strong>Markdown语法</strong> 支持的，也非 HTML标记，而是部分编辑器 提供的 <strong>额外标识符</strong>，属于拓展语法，旨在为 <strong>Markdown使用者</strong> 提供更多样式选择</li>
+<li>不同编辑器，支持不一样，这里以 <strong>Typora编辑器</strong> 为例</li>
+</ul>
+<br>
+<h3 id="91-%E6%96%87%E6%9C%AC%E9%AB%98%E4%BA%AE">9.1 文本高亮</h3>
+<ul>
+<li><strong>文本高亮 的格式：</strong>
+<ul>
+<li><strong><code>==这里是一段高亮文本==</code></strong></li>
+</ul>
+</li>
+<li><strong>效果：</strong>
+<ul>
+<li>==这里是一段高亮文本==</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="92-%E4%B8%8A%E6%A0%87">9.2 上标</h3>
+<ul>
+<li>用一对 <strong><kbd>^</kbd></strong> 包裹     (<strong><kbd>Shift</kbd>+ <kbd>6</kbd></strong>)
+<ul>
+<li><strong>格式：</strong> <strong><code>x^2^</code></strong></li>
+<li><strong>效果：</strong> x^2^</li>
+</ul>
+</li>
+<li><strong>Obsidian</strong> 没效果的，可以用后面会讲的 <strong>Latex</strong></li>
+<li>或者，也可以使用 <strong>HTML标记</strong>
+<ul>
+<li><code>&lt;sup&gt;这里是上标内容&lt;/sup&gt;</code></li>
+<li><code>X&lt;sup&gt;2&lt;/sup&gt;</code></li>
+</ul>
+</li>
+<li><strong>效果：</strong>
+<ul>
+<li><strong>X<sup>2</sup></strong></li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="93-%E4%B8%8B%E6%A0%87">9.3 下标</h3>
+<ul>
+<li>用一对 <strong><kbd>~</kbd></strong> 包裹    (<strong><kbd>Shift</kbd> + <kbd>`</kbd></strong>)
+<ul>
+<li><strong>格式：</strong> <strong><code>H~2~O</code></strong></li>
+<li><strong>效果：</strong> H~2~O</li>
+</ul>
+</li>
+<li><strong>Obsidian</strong> 没效果的，可以用后面会讲的 <strong>Latex</strong></li>
+<li>或者，也可以使用 <strong>HTML标记</strong>
+<ul>
+<li><code>&lt;sub&gt;这里是下标内容&lt;/sub&gt;</code></li>
+<li><code>H&lt;sub&gt;2&lt;/sub&gt;O</code></li>
+</ul>
+</li>
+<li><strong>效果：</strong>
+<ul>
+<li><strong>H<sub>2</sub>O</strong></li>
+</ul>
+</li>
+</ul>
+<br>
+</body>
+</html>
