@@ -215,6 +215,7 @@ public class TimeCreateFrag extends Fragment {
             boolean isDuplicate=false;
             List<TimeModel> timeModels=oftenOpts.getRecordTms();//fileHelper.read(FileHelper.RootMode.times,"time_index.txt",TimeModel.class);
            for(TimeModel tm:timeModels){
+               //TimeModel tm=(TimeModel) obj;
                if (tm.timeName.equals(docName)||docName.equals("默认作息表.txt")) {
                    isDuplicate = true;
                    break;

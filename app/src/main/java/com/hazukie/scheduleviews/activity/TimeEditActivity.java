@@ -188,6 +188,7 @@ public class TimeEditActivity extends BaseActivity {
         totalNum=amCl+pmCl+mmCl;
         TimeHeadModel timeHeadM=new TimeHeadModel(docName,totalNum,amStart,amCl,amCl,pmCl,mmStart,mmCl,tms);
 
+        //FileHelper fileHelper=new FileHelper(TimeditActivity.this);
         try{
             if(tms.size()>0){
                 boolean isWirte2TimeFile= Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.times,docName,timeHeadM);//fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);

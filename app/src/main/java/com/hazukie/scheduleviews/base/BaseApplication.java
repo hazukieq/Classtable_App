@@ -27,24 +27,6 @@ public class BaseApplication extends Application {
 
     //初始化必需文件数据;
     public void initFiles(){
-/*        try {
-            String time_n="默认作息表.txt";
-            //固定查询ID字段，通过查找ID是否大于0来确认；如果ID>0,则说明有变动，否则就默认没有初始化；
-            String scheAndtimeTB_record="record_id";
-            SpvalueStorage.getInstance(this).setIntValue(scheAndtimeTB_record,0);
-            Fileystem fileystem=Fileystem.getInstance(this);
-           // FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
-
-
-            //初始化默认时间文件数据，写入作息时间数据
-            List<Timetable> isl= DataInitiation.initialTimeDefaults();
-            TimeHeadModel thm=new TimeHeadModel(time_n,12,0,5,5,4,9,3,isl);
-            fileystem.putData(FileRootTypes.times,time_n,thm);
-            //fileHelper.write(FileHelper.RootMode.times,time_n,thm,false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         String time_n="默认作息表.txt";
         //固定查询ID字段，通过查找ID是否大于0来确认；如果ID>0,则说明有变动，否则就默认没有初始化；
         String scheAndtimeTB_record="record_id";

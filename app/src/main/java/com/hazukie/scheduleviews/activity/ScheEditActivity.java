@@ -24,15 +24,14 @@ import com.hazukie.scheduleviews.binders.SchecardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
-import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.scheutil.ScheDataInitiation;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.BottomialogUtil;
 import com.hazukie.scheduleviews.utils.CycleUtil;
+import com.hazukie.scheduleviews.scheutil.ScheDataInitiation;
 import com.hazukie.scheduleviews.utils.DialogUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
@@ -45,8 +44,6 @@ public class ScheEditActivity extends BaseActivity {
     private MultiTypeAdapter mainAdp,headAdp;
     private ArrayList<Object> main_list,filtered_list,headList;
     private FloatingActionButton floatingActionBtn;
-    private TextView scheLabel;
-    private TopbarLayout titleLabel;
     private TimeHeadModel timeheadModel;
     private String globalTime,globalSche;
     private OftenOpts oftenOpts;
@@ -83,21 +80,21 @@ public class ScheEditActivity extends BaseActivity {
             }
             });
 
-        titleLabel=findViewById(R.id.class_schedule_title);
+        TopbarLayout titleLabel = findViewById(R.id.class_schedule_title);
 
-        if(globalSche!=null)titleLabel.setTitle(globalSche.replace(".txt",""));
-        titleLabel.addLftTextView("预览",v->{
+        if(globalSche!=null) titleLabel.setTitle(globalSche.replace(".txt",""));
+        titleLabel.addLftTextView("预览", v->{
             List<ClassLabel> clssLs=new ArrayList<>();
             CycleUtil.cycle(main_list, (obj, objects) -> clssLs.add((ClassLabel) obj));
             SchePreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
         });
 
-        titleLabel.addRightTextView("保存",v1->showDialog());
+        titleLabel.addRightTextView("保存", v1->showDialog());
 
         TextView saveLabel = findViewById(R.id.schemake_saveLabel);
         saveLabel.setVisibility(View.GONE);
 
-        scheLabel=findViewById(R.id.schemake_scheLabel);
+        TextView scheLabel = findViewById(R.id.schemake_scheLabel);
         scheLabel.setVisibility(View.GONE);
 
         headAdpInits();
@@ -228,20 +225,19 @@ public class ScheEditActivity extends BaseActivity {
     //写入课表文件数据
     public void writInits(String sche,Crialoghue cih){
         if(main_list.size()>0&&main_list.get(0)!=null){
-            if(Fileystem.getInstance(getApplicationContext()).putDatazList(FileRootTypes.sches,sche,main_list)){
-                Toast.makeText(ScheEditActivity.this, "保存成功!", Toast.LENGTH_SHORT).show();
+            if(oftenOpts.putDatazList(FileRootTypes.sches,sche,main_list)){
+                Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
                 cih.dismiss();
                 finish();
             }else{
                 Toast.makeText(ScheEditActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        }else if(main_list.size()==0){
             oftenOpts.putDataList(FileRootTypes.sches,sche,new ArrayList<>());
-            Toast.makeText(ScheEditActivity.this, "保存成功!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
             cih.dismiss();
             finish();
         }
-
     }
 
     @Override
@@ -276,7 +272,7 @@ public class ScheEditActivity extends BaseActivity {
 
     public static void startActivityWithData(Context context,String scheName,String timeName){
         Intent in=new Intent();
-        in.setClass(context,ScheEditActivity.class);
+        in.setClass(context, ScheEditActivity.class);
         in.putExtra("name",scheName+","+timeName);
         context.startActivity(in);
     }
