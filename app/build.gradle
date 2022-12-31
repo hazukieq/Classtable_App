@@ -4,9 +4,9 @@ plugins {
 /**
  * 版本控制
  * */
-def versionNameStr="1.0.3"
-def versionCodeInt=1003000
-def isRelease=false
+def versionNameStr="1.0.4.00"
+def versionCodeInt=1004000
+def isRelease=true
 
 android {
     compileSdk 32
