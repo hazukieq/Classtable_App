@@ -2,17 +2,15 @@ package com.hazukie.scheduleviews.base;
 
 import android.app.Application;
 
-import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.fileutil.SctManager;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.net.WebStacker;
 import com.hazukie.scheduleviews.utils.DataInitiation;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
-import java.io.IOException;
 import java.util.List;
 
 public class baseApplication extends Application {
@@ -31,6 +29,7 @@ public class baseApplication extends Application {
             SpvalueStorage.getInstance(this).setIntValue("isInit",1);
         }
         WebStacker.getInstance(getApplicationContext()).preload();
+        SctManager.getInstance(this).init();
     }
 
     //初始化必需文件数据;

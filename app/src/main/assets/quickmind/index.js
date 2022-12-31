@@ -38,15 +38,15 @@ const docItem=
         <div class="column" style="flex:9;width:100%">
             <div class="row g-0">
                 <div class="col-2 bg-white">
-                    <img src="${filetype_img_path}" class="img-fluid" style="opacity:.76" width="32" height="32"></img>
+                    <img src="${filetype_img_path}" class="img-fluid" style="opacity:.76" width="32" height="32" alt="..."></img>
                 </div>
                 <div class="col-10 docClick ps-2" id="{more_id}" onclick="openMdFile('{doc}')">{doc}</div>
             </div>
         
         </div>
-        <div class="column" style="flex: 3;" onclick="editDoc('{more_id}')">编辑</div>
+        <div class="column" style="flex: 3;" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="editFn" data-bs-id="{more_id}"  data-bs-name="{doc}">编辑</div>
     </div>
-    <div class="item-del" onclick="delDoc('root_{more_id}')">删除</div>
+    <div class="item-del" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="delFn" data-bs-id="root_{more_id}">删除</div>
 </div>`
 
 const parseSlideItem=()=>{

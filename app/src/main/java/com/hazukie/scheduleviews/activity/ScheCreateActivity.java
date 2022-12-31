@@ -29,6 +29,7 @@ import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.BottomialogUtil;
 import com.hazukie.scheduleviews.utils.CycleUtil;
+import com.hazukie.scheduleviews.utils.DataInitiation;
 import com.hazukie.scheduleviews.utils.DialogUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
@@ -74,8 +75,13 @@ public class ScheCreateActivity extends BaseActivity {
 
             if(weekRID==0)weekRID=1;
             ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
-            new BottomialogUtil(ScheCreateActivity.this).
-                    showBottomEditedSheet(main_list,filtered_list,mainAdp,timeheadModel,cl,floatingActionBtn,false,weekRID);
+            try {
+                if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3,DataInitiation.initialTimeDefaults());
+                new BottomialogUtil(ScheCreateActivity.this).
+                        showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         TopbarLayout titleLabel = findViewById(R.id.class_schedule_title);
@@ -204,7 +210,9 @@ public class ScheCreateActivity extends BaseActivity {
             @Override
             public void onEdit(View v, ClassLabel classLabel) {
                 new BottomialogUtil(ScheCreateActivity.this)
-                    .showBottomEditedSheet(main_list,filtered_list,mainAdp,timeheadModel,classLabel,v,true,-1);}
+                        .showBottomEditedSheet(main_list,filtered_list,mainAdp,timeheadModel,classLabel,v,true,-1);
+
+            }
         });
 
         mainAdp.register(ClassLabel.class,schecardBinder);

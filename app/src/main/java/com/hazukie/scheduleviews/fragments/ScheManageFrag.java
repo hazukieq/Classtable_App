@@ -1,9 +1,6 @@
 package com.hazukie.scheduleviews.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.cskheui.LeditView.LeditView;
 import com.hazukie.cskheui.LetxtView.LetxtView;
@@ -29,17 +25,14 @@ import com.hazukie.scheduleviews.binders.HorionCardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
-import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.HoricardModel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.PopupUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,10 +208,15 @@ public class ScheManageFrag extends Fragment {
                                 if(!isDuplicate){
                                     boolean isRename=basicFileOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");//fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
                                     Log.i( "showSettinialoh>>","isRename="+isRename);
+                                    if(isRename){
+                                        horic.title=mSchName;
+                                        mdp.notifyItemChanged(mobs.indexOf(horic),"updating");
+                                        refreshScts();
+                                        crialoghue.dismiss();
+                                    }else{
+                                        DisplayHelper.Infost(getContext(),"修改文件名失败！");
+                                    }
 
-                                    horic.title=mSchName;
-                                    mdp.notifyItemChanged(mobs.indexOf(horic),"updating");
-                                    crialoghue.dismiss();
                                 }else{
                                     DisplayHelper.Infost(getActivity(),"文件名已重复，请重新输入！");
                                 }
@@ -293,32 +291,20 @@ public class ScheManageFrag extends Fragment {
     //处理删除列表中的数据
     //写入修改后数据
     private void executeDel(ScheWithTimeModel del){
-        try {
-            boolean isDel=basicFileOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
-            Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        boolean isDel=basicFileOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
+        Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
         refreshScts();
     }
 
     //刷新数据，并将数据写入文件
     public void refreshScts(){
-        //FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(getActivity());
         List<ScheWithTimeModel> neo_scts=new ArrayList<>();
         for(Object obj:mobs){
             HoricardModel hor=(HoricardModel)obj;
             neo_scts.add(new ScheWithTimeModel(mobs.indexOf(obj),hor.title+".txt",hor.subtitle+".txt"));
             Log.i("ScheManageFrag>>","time="+hor.subtitle);
         }
-        try{
-            oftenOpts.putRawSctList(neo_scts);
-            //fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(neo_scts),false);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //oftenOpts.putRawSctList(neo_scts);
+        oftenOpts.putRawSctList(neo_scts);
     }
 
     private void controlEmpty(){
@@ -337,11 +323,14 @@ public class ScheManageFrag extends Fragment {
             mobs.clear();
             scts.clear();
             scts.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getActivity()));
-            for(int i=0;i<scts.size();i++){
-                ScheWithTimeModel sct=scts.get(i);
-                String sdes=getTimedescription(sct.getTimeName());
-                mobs.add(new HoricardModel(i,sct.getScheName(),sct.getTimeName(),sdes));
+            if(scts.size()>0&&scts.get(0)!=null){
+                for(int i=0;i<scts.size();i++){
+                    ScheWithTimeModel sct=scts.get(i);
+                    String sdes=getTimedescription(sct.getTimeName());
+                    mobs.add(new HoricardModel(i,sct.getScheName(),sct.getTimeName(),sdes));
+                }
             }
+
             mdp.notifyDataSetChanged();
             controlEmpty();
             Log.i("onResume>>>","sct_datas has updating!");

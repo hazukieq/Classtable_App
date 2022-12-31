@@ -14,7 +14,7 @@ public class DateHelper{
     public DateHelper(){
         instance=Calendar.getInstance();
         instance.setFirstDayOfWeek(Calendar.MONDAY);
-        instance.setMinimalDaysInFirstWeek(1);
+        instance.setMinimalDaysInFirstWeek(4);
     }
 
     public DateHelper(Builder builder){

@@ -8,7 +8,6 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.TimeModel;
-import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.utils.CycleUtil;
 
@@ -24,7 +23,8 @@ public class FileAssist {
 
     private static final String default_sche_index_file_name="index.txt";
     private static final String default_time_index_file_name="time_index.txt";
-    
+
+
     public static class applyBasicFileOpts{
         private final Context context;
         public applyBasicFileOpts(Context context){
@@ -79,7 +79,9 @@ public class FileAssist {
             List<ClassLabel> lis=new ArrayList<>();
 
             List<Object> currentLis=fileystem.getDataList(FileRootTypes.sches,name,ClassLabel.class);
-            CycleUtil.cycle(currentLis,(obj, objects) -> lis.add((ClassLabel) obj));
+            if(currentLis.size()>0&&currentLis.get(0)!=null)
+                CycleUtil.cycle(currentLis,(obj, objects) -> lis.add((ClassLabel) obj));
+
             return lis;
         }
 
@@ -89,11 +91,13 @@ public class FileAssist {
         }
 
         public boolean putRawClsList(String file_name,List<ClassLabel> classLabels){
-            return fileystem.putDatazList(FileRootTypes.sches,file_name,new ArrayList<>(classLabels));
+            if(classLabels.size()>0&&classLabels.get(0)!=null)
+                return fileystem.putDatazList(FileRootTypes.sches,file_name,new ArrayList<>(classLabels));
+            else return false;
         }
         //写入数据
         public void putRawSctList(List<ScheWithTimeModel> scts){
-            fileystem.putDataList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
+                fileystem.putDataList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
         }
 
         //写入数据
@@ -102,7 +106,7 @@ public class FileAssist {
         }
 
         public void putRawSct(ScheWithTimeModel sct){
-            fileystem.putData(FileRootTypes.index,default_sche_index_file_name,sct);
+            if(sct!=null) fileystem.putData(FileRootTypes.index,default_sche_index_file_name,sct);
         }
 
         //获取已记录在案课表的所有课表名字
@@ -110,7 +114,8 @@ public class FileAssist {
             List<ScheWithTimeModel> scts=new ArrayList<>();
 
             List<Object> lis=fileystem.getDataList(FileRootTypes.index,default_sche_index_file_name,ScheWithTimeModel.class);
-            CycleUtil.cycle(lis, (obj, objects) -> scts.add((ScheWithTimeModel) obj));
+            if(lis.size()>0)
+                CycleUtil.cycle(lis, (obj, objects) -> scts.add((ScheWithTimeModel) obj));
 
             return scts;
         }
@@ -120,11 +125,12 @@ public class FileAssist {
             List<Unimodel> unis_=new ArrayList<>();
 
             List<Object> lis=fileystem.getDataList(FileRootTypes.index,default_sche_index_file_name,ScheWithTimeModel.class);
-            CycleUtil.cycle(lis, (obj, objects) -> {
-                ScheWithTimeModel sct=(ScheWithTimeModel)obj;
-                unis_.add(new Unimodel(0,sct.getScheName()));
-            });
-
+            if(lis.size()>0&&lis.get(0)!=null){
+                CycleUtil.cycle(lis, (obj, objects) -> {
+                    ScheWithTimeModel sct=(ScheWithTimeModel)obj;
+                    unis_.add(new Unimodel(0,sct.getScheName()));
+                });
+            }
             return unis_;
         }
 
@@ -132,35 +138,40 @@ public class FileAssist {
         public ScheWithTimeModel getSctByIndex(int index){
             ScheWithTimeModel sct=new ScheWithTimeModel(0,default_sch,default_time);
             List<Object> scts_=fileystem.getDataList(FileRootTypes.index,default_sche_index_file_name,ScheWithTimeModel.class);
-            ScheWithTimeModel sct_=(ScheWithTimeModel)scts_.get(index);
-            applyBasicFileOpts applybasicFileOpts=new applyBasicFileOpts(context);
+            if(scts_.size()>0&&scts_.get(0)!=null){
+                ScheWithTimeModel sct_=(ScheWithTimeModel)scts_.get(index);
+                applyBasicFileOpts applybasicFileOpts=new applyBasicFileOpts(context);
 
-            boolean isAccess=applybasicFileOpts.exist(FileRootTypes.sches,sct_.scheName)&&applybasicFileOpts.exist(FileRootTypes.times,sct_.timeName);
-            if(isAccess) sct=sct_;
+                boolean isAccess=applybasicFileOpts.exist(FileRootTypes.sches,sct_.scheName)&&applybasicFileOpts.exist(FileRootTypes.times,sct_.timeName);
+                if(isAccess) sct=sct_;
+            }
             return sct;
         }
 
         //通过索课表名字获取数据,返回课表名字和时间课表名字，并对相关文件是否存在进行确认
-        public ScheWithTimeModel getSctByName(String scheName){
-            ScheWithTimeModel sct=new ScheWithTimeModel(0,default_sch,default_time);
+        public ScheWithTimeModel getSctByName(String scheName) {
+            ScheWithTimeModel sct = new ScheWithTimeModel(0, default_sch, default_time);
 
-            List<Object> scts_=fileystem.getDataList(FileRootTypes.index,default_sche_index_file_name,ScheWithTimeModel.class);
-            applyBasicFileOpts applybasicFileOpts=new applyBasicFileOpts(context);
+            List<Object> scts_ = fileystem.getDataList(FileRootTypes.index, default_sche_index_file_name, ScheWithTimeModel.class);
+            applyBasicFileOpts applybasicFileOpts = new applyBasicFileOpts(context);
 
-            ScheWithTimeModel tc=null;
-            for(Object obj:scts_){
-                ScheWithTimeModel ct=(ScheWithTimeModel) obj;
-                if(scheName.equals(ct.getScheName())){
-                    tc=ct;
-                    break;
+            ScheWithTimeModel tc = null;
+            if(scts_.size()>0){
+                for(Object obj:scts_){
+                    ScheWithTimeModel ct=(ScheWithTimeModel) obj;
+                    if(scheName.equals(ct.getScheName())){
+                        tc=ct;
+                        break;
+                    }
                 }
-            }
-            boolean isAccess=false;
-            if(tc!=null){
-                isAccess=applybasicFileOpts.exist(FileRootTypes.sches,tc.scheName)&&applybasicFileOpts.exist(FileRootTypes.times,tc.timeName);
-            }
 
-            if(isAccess) sct=tc;
+                boolean isAccess=false;
+                if(tc!=null){
+                    isAccess=applybasicFileOpts.exist(FileRootTypes.sches,tc.scheName)&&applybasicFileOpts.exist(FileRootTypes.times,tc.timeName);
+                }
+
+                if(isAccess) sct=tc;
+            }
             return sct;
         }
         /*-----总表方法结束线------*/
@@ -171,16 +182,25 @@ public class FileAssist {
             List<TimeModel> tms=new ArrayList<>();
 
             List<Object> tms_=fileystem.getDataList(FileRootTypes.times,default_time_index_file_name,TimeModel.class);
-            CycleUtil.cycle(tms_, (obj, objects) -> tms.add((TimeModel) obj));
+            if(tms_.size()>0&&tms_.get(0)!=null)
+                CycleUtil.cycle(tms_, (obj, objects) -> tms.add((TimeModel) obj));
 
             return tms;
         }
 
         public TimeHeadModel getThm(String time_name){
-            Object thm = null;
-            thm=fileystem.getData(FileRootTypes.times,time_name,TimeHeadModel.class);
-
-            return thm!=null?(TimeHeadModel) thm:null;
+            Object thm_=fileystem.getData(FileRootTypes.times,time_name,TimeHeadModel.class);
+            if(thm_ instanceof String) return null;
+            else {
+                try{
+                    TimeHeadModel thm=(TimeHeadModel) thm_;
+                    thm=null;
+                }catch (Exception e){
+                    thm_=null;
+                    e.printStackTrace();
+                }
+                return thm_!=null?(TimeHeadModel)thm_:null;
+            }
         }
 
         public Object getRawThm(String time_name){
@@ -202,28 +222,34 @@ public class FileAssist {
         public boolean checkSctDocIsDuplicate(String oldName,String neoName){
             List<ScheWithTimeModel> scts=getRecordedScts();
             boolean isDuplicate=false;
-            if(oldName.equals(neoName)) return true;
 
-            for (ScheWithTimeModel sct:scts) {
-                if(sct.getScheName().equals(neoName)){
-                    isDuplicate=true;
-                    break;
+            if(oldName.equals(neoName)) return true;
+            if(scts.size()>0&&scts.get(0)!=null){
+                for (ScheWithTimeModel sct:scts) {
+                    if(sct.getScheName().equals(neoName)){
+                        isDuplicate=true;
+                        break;
+                    }
                 }
             }
+
             return isDuplicate;
         }
 
         public boolean checkThmDocIsDuplicate(String oldName,String neoName){
             List<TimeModel> thms=getRecordTms();
             boolean isDuplicate=false;
-            if(oldName.equals(neoName)) return true;
+            if(thms.size()>0&&thms.get(0)!=null){
+                if(oldName.equals(neoName)) return true;
 
-            for(TimeModel thm:thms){
-                if(thm.getTimeName().equals(neoName)){
-                   isDuplicate=true;
-                   break;
+                for(TimeModel thm:thms){
+                    if(thm.getTimeName().equals(neoName)){
+                        isDuplicate=true;
+                        break;
+                    }
                 }
             }
+
             return isDuplicate;
         }
 
@@ -267,5 +293,4 @@ public class FileAssist {
         }
         /*---- WebView part END----*/
     }
-    
 }

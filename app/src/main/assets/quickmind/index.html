@@ -48,7 +48,7 @@
         </li>
         
         <li class="nav-item">
-            <button class="btn text-primary">保存</button>
+            <button class="btn text-primary"  data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="saveFn">保存</button>
         </li>
     </nav>
 
@@ -84,6 +84,7 @@
                 <p class="tip">数据正在加载.....</p>
             </div>
         </div>
+    </div>
 
     <footer>
         <!--Modal-->
@@ -101,10 +102,9 @@
             </div>
        </div>
        <!--Modal-->
-    <!-- Modal temp -->
-    <div id="modal_loading">
 
-    </div>
+    <!-- Modal temp -->
+    <div id="modal_loading"></div>
     </footer>
     
     <script src="mdProcess.js"></script>

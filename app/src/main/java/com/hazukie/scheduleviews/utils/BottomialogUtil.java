@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.CBottomSheet;
@@ -37,7 +39,7 @@ public class BottomialogUtil {
      * @param IspresetValues 是否预设有数据（即是否在原有数据卡片上修改，或者是新添卡片）
      * @param weekRID 当前是在周数筛选栏中的第几个
      */
-    public void showBottomEditedSheet(List<Object> multi_all,List<Object> multi_filter, MultiTypeAdapter multiTypeAdapter, TimeHeadModel timetable, ClassLabel cls, View attachedView, boolean IspresetValues, int weekRID){
+    public void showBottomEditedSheet(@NonNull  List<Object> multi_all,@NonNull List<Object> multi_filter, MultiTypeAdapter multiTypeAdapter,@NonNull TimeHeadModel timetable,@NonNull ClassLabel cls, View attachedView, boolean IspresetValues, int weekRID){
         CBottomSheet cBottomSheet=new CBottomSheet.ScheBuilder()
                 .addScheObj(cls)
                 .onInterceptBinding((cb, bindin) -> {

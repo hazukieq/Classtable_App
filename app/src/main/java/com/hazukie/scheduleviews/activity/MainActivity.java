@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
+import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
@@ -73,8 +75,12 @@ public class MainActivity extends BaseActivity {
     private void initViews(){
         scts=new ArrayList<>();
         oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+
+        //小心返回的数据为空
         scts=oftenOpts.getRecordedScts();
+        Log.i( "initViews: ","init_scts="+scts.size());
         //scts=FileHelper.getRecordedScts(getApplicationContext());
+
         sp=SpvalueStorage.getInstance(getApplicationContext());
         InitWithHeadViews();
         InitWithMainViews();
@@ -196,9 +202,22 @@ public class MainActivity extends BaseActivity {
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:
+                    String test_url="http://192.168.2.3:80/jbridge/quickmind/index.html";
+                    sp.setStringvalue("testurl",test_url);
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
-                    String test_url="http://192.168.2.3:80/jbridge/temp.html";
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,test_url,"","");//"http://cloud.hazukieq.top","","");
+                    Crialoghue cri=new Crialoghue.HeditBuilder()
+                            .addTitle("测试网址")
+                            .addContents(test_url)
+                            .addHint("请输入测试网址")
+                            .onConfirm((crialoghue, rootView) -> {
+                                String str=((EditText) rootView).getText().toString();
+                                if(!str.isEmpty()) sp.setStringvalue("testurl",str);
+                                else str=test_url;
+
+                                QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,str,"","");
+                                crialoghue.dismiss();
+                            }).build(this);
+                    cri.show();
                     break;
                 default:
             }
@@ -224,7 +243,6 @@ public class MainActivity extends BaseActivity {
         String record_name=sp.getStringValue("record_name",Statics.record_name_default);
 
         if(!record_name.equals(Statics.record_name_default)){
-
             ScheWithTimeModel sct_=oftenOpts.getSctByName(record_name);//FileHelper.getSctByName(getApplicationContext(),record_name);
             updateSidebarTexts(sct_.getScheName(),sct_.getTimeName());
         }else{
@@ -423,10 +441,12 @@ public class MainActivity extends BaseActivity {
                     List<Object> viewList=new ArrayList<>();
                     int pa=DisplayHelper.dp2px(this,8);
                     recy_.setPadding(pa,pa,pa,pa);
-
-                    for(ScheWithTimeModel sct:scts){
-                        viewList.add(new Unimodel(scts.indexOf(sct),sct.getScheName()));
+                    if(scts.size()>0&&scts.get(0)!=null){
+                        for(ScheWithTimeModel sct:scts){
+                            viewList.add(new Unimodel(scts.indexOf(sct),sct.getScheName()));
+                        }
                     }
+
 
                     UniBinder unib = new UniBinder();
                     unib.setClickListener((v, uni) -> {

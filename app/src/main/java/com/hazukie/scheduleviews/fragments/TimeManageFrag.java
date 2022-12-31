@@ -14,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
-import com.hazukie.cskheui.LeditView.LeditView;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.activity.FragmentContainerAct;
 import com.hazukie.scheduleviews.activity.TimeditActivity;
@@ -26,17 +24,11 @@ import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeModel;
-import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.statics.Laytatics;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.CipherInputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -134,7 +126,6 @@ public class TimeManageFrag extends Fragment {
                         .addContent("确定删除此作息表文件吗？")
                         .onConfirm((cRialog, rootView) -> {
                             TimeModel tim=new TimeModel(uni.id, uni.title+".txt");
-                            //delete_list.add(tim);
                             for(ScheWithTimeModel sct:sctz){
                                 if(sct.getTimeName().equals(uni.getTitle())){
                                     sct.restoreTimeName();
@@ -179,17 +170,21 @@ public class TimeManageFrag extends Fragment {
                                     if(!isDuplicate){
                                         boolean isRename=basicOpts.rename(FileRootTypes.times,uni.title+".txt", content+".txt");//fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
                                         Log.i( "doEdit>>","isRename="+isRename);
-
-                                        for(ScheWithTimeModel sct:sctz){
-                                            if(sct.getTimeName().equals(uni.title)){
-                                                sct.updateTimeName(content+".txt");
+                                        if(isRename){
+                                            for(ScheWithTimeModel sct:sctz){
+                                                if(sct.getTimeName().equals(uni.title)){
+                                                    sct.updateTimeName(content+".txt");
+                                                }
                                             }
+
+                                            txt.setText(content);
+                                            uni.title=content;
+                                            refreshThm();
+                                            crialoghue.dismiss();
+                                        }else{
+                                            DisplayHelper.Infost(getContext(),"修改文件名失败！");
                                         }
 
-                                        txt.setText(content);
-                                        uni.title=content;
-                                        refreshThm();
-                                        crialoghue.dismiss();
                                     }else{
                                         DisplayHelper.Infost(getActivity(),"名称已重复！");
                                     }
@@ -226,7 +221,7 @@ public class TimeManageFrag extends Fragment {
         try {
             basicOpts.delete(FileRootTypes.times,del.timeName);//fileHelper.delete(FileHelper.RootMode.times,del.timeName);
             Fileystem.getInstance(getContext()).putDataList(FileRootTypes.times,"time_index.txt",new ArrayList<>(getCurentThmList()));
-            //fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
+            oftenOpts.putRawSctList(sctz);
         }catch (Exception e){
             e.printStackTrace();
         }

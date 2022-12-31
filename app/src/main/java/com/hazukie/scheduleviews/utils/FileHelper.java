@@ -346,7 +346,7 @@ public class FileHelper {
     }
 
     //获取已记录在案课表的所有课表名字
-    public static List<Unimodel> getRecordedScheList(Context context){
+    public static List<Unimodel> getRecordedScheLislt(Context context){
         List<Unimodel> unis_=new ArrayList<>();
         try {
             FileHelper fileHelper=FileHelper.getInstance(context);

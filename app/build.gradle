@@ -4,8 +4,8 @@ plugins {
 /**
  * 版本控制
  * */
-def versionNameStr="1.0.3"
-def versionCodeInt=1003000
+def versionNameStr="1.0.3.02"
+def versionCodeInt=1003020
 def isRelease=false
 
 android {
@@ -37,7 +37,7 @@ android {
                 android.applicationVariants.all{
                     variant->
                         variant.outputs.all{
-                            outputFileName="课表助手(ver.R."+versionName+").apk"
+                            outputFileName="医助课表(ver.R."+versionName+").apk"
                         }
                 }
             }
@@ -58,7 +58,7 @@ android {
 
 dependencies {
     // guolin open library permissionX
-    //implementation 'com.guolindev.permissionx:permissionx:1.7.1'
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'

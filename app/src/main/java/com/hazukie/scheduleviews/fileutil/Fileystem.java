@@ -48,14 +48,14 @@ public class Fileystem {
         if(!note_root.exists()) note_root.mkdir();
 
         //课表索引
-        File sche_record=new File(sche_root,"sche_index.txt");
+        //File sche_record=new File(sche_root,"sche_index.txt");
         //作息表索引
         File time_record=new File(time_root,"time_index.txt");
         //总表索引
         File index_record=new File(index_root,"index.txt");
 
         try{
-            if(!sche_record.exists()) sche_record.createNewFile();
+            //if(!sche_record.exists()) sche_record.createNewFile();
             if(!time_record.exists()) time_record.createNewFile();
             if(!index_record.exists()) index_record.createNewFile();
         }catch (Exception e){
@@ -88,9 +88,7 @@ public class Fileystem {
         List<Object> newlis=new ArrayList<>();
         File currentFile=selectFile(rootPathType,file_name);
         String rawData= ioeter.read(currentFile);
-        if(rawData.length()==0) {
-            newlis.add(" ");
-        }else{
+        if(rawData.length()!=0) {
             String[] rawData_splitN=rawData.split("\n");
             boolean isStartup=rawData_splitN.length>0;
             if(isStartup){
@@ -99,7 +97,6 @@ public class Fileystem {
                 }
             }
         }
-
         return newlis;
     }
 
