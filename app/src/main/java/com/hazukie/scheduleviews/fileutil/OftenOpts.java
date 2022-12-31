@@ -116,7 +116,7 @@ public class OftenOpts extends Fileystem {
         List<Object> scts_ = getDataList(FileRootTypes.index, default_sche_index_file_name, ScheWithTimeModel.class);
 
         ScheWithTimeModel tc = null;
-        if(scts_.size()>0) {
+        if(scts_.size()>0&&scts_.get(0)!=null) {
             for (Object obj : scts_) {
                 ScheWithTimeModel ct = (ScheWithTimeModel) obj;
                 if (scheName.equals(ct.getScheName())) {

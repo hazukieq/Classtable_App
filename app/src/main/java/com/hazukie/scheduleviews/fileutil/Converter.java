@@ -29,7 +29,6 @@ public class Converter {
     }
 
     public Object convertJsn2Obj(String content, Type type){
-        Log.i( "convertJsn2Obj: ","content="+content);
         if(content.length()>0&&type!=null)
         return gson.fromJson(content,type);
         return "{}";

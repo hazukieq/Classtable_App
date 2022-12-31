@@ -148,6 +148,7 @@ public class TimeManageFrag extends Fragment {
                             .addTitle("编辑作息表")
                             .addHint("请输入新的文件名")
                             .addContents(uni.title)
+                            .addIsBottomVisible(true)
                             .addBottomContents("文件名不能和“默认作息表相同”")
                             .onConfirm((crialoghue, view) -> {
                                 EditText ed=(EditText) view;
