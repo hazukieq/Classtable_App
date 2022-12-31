@@ -71,8 +71,8 @@ const inputModal=()=>{
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="pt-4"></div>
-                    <div class="pt-1 mt-1 border-1 border-top">
+                    <h5>高度调整</h5>
+                    <div class="pt-1 mt-1">
                         <p class="text-primary">最少高度为48,不能低于48,否则不会生效!</p>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_name">高度大小</span>
@@ -97,7 +97,7 @@ const Editor=()=>
     <div class="col-12 p-1">
     <button class="btn btn-white text-primary float-start" data-bs-toggle="modal" data-bs-target="#${FullScreenEditor_id}" id="${edit_fullscreen_btn_id}" data-bs-whatever="">全屏编辑</button>
     <button class="btn text-center text-info" data-bs-toggle="modal" data-bs-target="#${input_modal_id}">高度调整</button>
-    <button class="btn btn-white text-danger float-end" onclick="textClear('${edit_area_id}')">一键清除</button>
+    <button class="btn btn-white text-danger float-end" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="askFn">一键清除</button>
     </div>
     <div class="mt-1 col-12">
         <textarea class="form-control border-0" placeholder="${edit_area_hint}" style="caret-color:#007AFF;resize:none;height:96px" id="${edit_area_id}" rows="2" onchange="inputListener(this)"></textarea>
@@ -176,6 +176,40 @@ const Preview=()=>
 
 
 
+const confirmDialogue_id='confirmDialogue'
+const confirmDialogue=()=>
+    `
+    <!-- Modal -->
+    <div class="modal fade" id="${confirmDialogue_id}" tabindex="-1" aria-labelledby="${confirmDialogue_id}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                <!--inject contents here-->
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+
+
+const confirmDialogueInit=(clickM)=>{
+    var exampleModal = $(confirmDialogue_id)
+    exampleModal.on('show.bs.modal',(e)=>{
+        var buttonType=e.relatedTarget
+        console.log(buttonType)
+        var clickName=buttonType.getAttribute('data-bs-whatever')
+        
+        if(clickM.has(clickName)){
+            var fn=clickM.get(clickName)
+            var mbody=exampleModal.elect('.modal-body')
+            if(typeof fn=='function') fn(mbody,buttonType)
+        }
+        //exampleModal.elect('.modal-body').innerHTML=content
+    })
+    exampleModal.on('hidden.bs.modal',(e)=>{
+        exampleModal.elect('.modal-body').innerHTML=''
+    })
+}
 
 // const savePng=()=>{
 //     var ent=$('editerea').value
@@ -198,7 +232,94 @@ const Exporter={
     savePng:()=>saveSvgAsPngUri($(ExporterConfig.markmapId),ExporterConfig.opts),
 }
 
+
+
+
 //document.body.innerHTML+=FullScreenEditor()
-$('modal_loading').innerHTML=FullScreenEditor()+'<br/>'+inputModal()
+$('modal_loading').innerHTML=FullScreenEditor()+'<br/>'+inputModal()+'<br/>'+confirmDialogue()
 addEven()
+
+
+const confirmDialogueClickMap=new Map()
+confirmDialogueClickMap.set( 'saveFn',(ele,btn)=>ele.innerHTML=
+`
+<div class="row mb-2">
+    <div class="col-12">
+        <h5>新文件</h5>
+    </div>
+    <div class="col-12 text-black-50">
+        是否保存当前页面数据内容？
+    </div>
+</div>
+<div class="row">
+    <label for="saveFn_input_file" class="col-sm-2 col-form-label">文件名</label>
+    <div class="col-sm-10">
+    <input type="text" class="form-control" id="saveFn_input_file" placeholder="请输入文件名">
+    </div>
+</div>
+<div class="row pt-2">
+    <div class="col justify-content-end align-items-center d-flex">
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn text-primary" data-bs-dismiss="modal">确定</button>
+    </div>
+</div>
+
+`
+)
+
+
+confirmDialogueClickMap.set('askFn',(ele,btn)=>{
+    ele.innerHTML=
+    `
+    <div class="row">
+        <div class="col">
+            是否清空当前编辑框全部内容？
+        </div>
+    </div>
+    <div class="row">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="textClear('${edit_area_id}')">确定</button>
+        </div>
+    </div>`
+})
+
+confirmDialogueClickMap.set('editFn',(ele,btn)=>{
+    var more_id=btn.getAttribute('data-bs-id')
+    var md_old_name=btn.getAttribute('data-bs-name')
+    ele.innerHTML=
+    `
+    <div class="row">
+        <label for="editFn_input_file" class="col-sm-2 col-form-label">文件名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="editFn_input_file" placeholder="请输入新的文件名" value="${md_old_name}">
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="editDoc('${more_id}')">确定</button>
+        </div>
+    </div>
+    `
+})
+
+confirmDialogueClickMap.set('delFn',(ele,btn)=>{
+    var more_id=btn.getAttribute('data-bs-id')
+    ele.innerHTML=
+    `
+    <div class="row">
+        <div class="col">
+            是否删除当前选中文件？
+        </div>
+    </div>
+    <div class="row">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="delDoc('${more_id}')">确定</button>
+        </div>
+    </div>
+    `
+})
+confirmDialogueInit(confirmDialogueClickMap)
 

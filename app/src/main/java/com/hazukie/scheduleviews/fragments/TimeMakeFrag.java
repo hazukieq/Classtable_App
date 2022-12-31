@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.binders.EditemBinder;
@@ -27,11 +26,8 @@ import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.TimemakeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.statics.Laytatics;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 

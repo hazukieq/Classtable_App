@@ -9,7 +9,7 @@ public class SpvalueStorage {
     private static SharedPreferences.Editor editor;
     private static SpvalueStorage instance;
 
-    public SpvalueStorage(Context context){
+    private SpvalueStorage(Context context){
         sp= PreferenceManager.getDefaultSharedPreferences(context);
         editor=sp.edit();
     }

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">课表助手</string>
-    <string name="schlibar_setting">课程助手设置</string>
+    <string name="app_name">医助课表</string>
+    <string name="schlibar_setting">设置</string>
 
     <string name="dialog_title">课程详情</string>
     <string name="dialog_cls_time_template">%1$s 第%2$d-%3$d节 计%4$d课时</string>
@@ -10,8 +10,8 @@
     <string name="flt_btn_add">添加</string>
     <string name="schemake_save">保存</string>
     <string name="schemake_sche">课表</string>
-    <string name="about_app_name">软件名称：课表助手</string>
-    <string name="about_app_author">开发作者：月色伊人</string>
+    <string name="about_app_name">软件名称：医助课表</string>
+    <string name="about_app_author">开发作者：霜月色</string>
     <string name="about_app_address">项目地址</string>
     <string name="about_app_update">软件更新</string>
     <string name="about_app_contactus">联系我们</string>
@@ -30,5 +30,5 @@
     <string name="main_output_screenshot">导出截图</string>
     <string name="main_ungranted_permis_tip">您未授予应用读写权限！</string>
     <string name="main_exportSche_name">课表.jpg</string>
-    <string name="release_version">版本号：Release.1.0.2</string>
+    <string name="release_version">版本号：Release.1.0.3.02</string>
 </resources>

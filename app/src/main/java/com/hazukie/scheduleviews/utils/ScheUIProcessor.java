@@ -110,6 +110,7 @@ public class ScheUIProcessor {
             if(isIndexFileExist){
                 //再次判断ID对应的数据是否存在
                 boolean isGetNotNull=mSct!=null;
+                Log.i( "findFile: ","mSct="+mSct.toString());
 
                 //判断索引文件是否为空，同时判断记录ID是否在其中！
                 if(isGetNotNull){

@@ -70,4 +70,13 @@ public class ScheWithTimeModel {
 
         oftenOpts.putRawSctList(scts);
     }
+
+    @Override
+    public String toString() {
+        return "ScheWithTimeModel{" +
+                "id=" + id +
+                ", scheName='" + scheName + '\'' +
+                ", timeName='" + timeName + '\'' +
+                '}';
+    }
 }
