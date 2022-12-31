@@ -16,13 +16,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.databinding.BottomsheetSchecardBinding;
 import com.hazukie.scheduleviews.models.ClassLabel;
-import com.hazukie.scheduleviews.utils.ColorSeletor;
+import com.hazukie.scheduleviews.statics.ColorSeletor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CBottomSheet extends BottomSheetDialog {
     public CBottomSheet(@NonNull Context context, int theme) {
@@ -99,7 +100,7 @@ public class CBottomSheet extends BottomSheetDialog {
         MultiTypeAdapter mudp=new MultiTypeAdapter();
         if(builder.binderMap.size()>0){
             for (Class<?> clazz:builder.binderMap.keySet()) {
-                mudp.register(clazz,builder.binderMap.get(clazz));
+                mudp.register(clazz, Objects.requireNonNull(builder.binderMap.get(clazz)));
                 if(builder.regis!=null) builder.regis.doInterceptByRegis(this,clazz,builder.binderMap.get(clazz));
             }
         }

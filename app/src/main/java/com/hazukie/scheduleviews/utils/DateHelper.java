@@ -13,20 +13,20 @@ public class DateHelper{
     private String gapStr="";
     public DateHelper(){
         instance=Calendar.getInstance();
+        instance.setTimeInMillis(System.currentTimeMillis());
         instance.setFirstDayOfWeek(Calendar.MONDAY);
-        instance.setMinimalDaysInFirstWeek(4);
+        instance.setMinimalDaysInFirstWeek(5);
     }
 
     public DateHelper(Builder builder){
         this();
-        startWeekth=getStartWeek(builder.start_year, builder.start_mont, builder.start_dait);
+        startWeekth=getStartWeek(builder.start_mont, builder.start_dait);
         endWeekth=getEndWeek(startWeekth, builder.totalNum);
         gapStr=getWeekGap(startWeekth,getCurrentWeek(),builder.totalNum);
     }
 
     //获取开始日期所属周目
-    private int getStartWeek(int jear,int mont,int dait){
-        instance.set(Calendar.YEAR,jear);
+    private int getStartWeek(int mont,int dait){
         instance.set(Calendar.DAY_OF_MONTH,mont-1,dait);
         //如果当前日期属于星期六、星期日，则视为此周已过去，则开学周目数需要+1以修正实际周目数
         int currentWeekOfDait=instance.get(Calendar.DAY_OF_WEEK);
@@ -131,6 +131,7 @@ public class DateHelper{
         public DateHelper create(){
             Calendar calendar=Calendar.getInstance();
             this.start_year= calendar.get(Calendar.YEAR);
+            Log.i("datehelper: ","start_year="+start_year);
             return new DateHelper(this);
         }
     }

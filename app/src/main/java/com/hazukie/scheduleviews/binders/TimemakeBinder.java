@@ -12,12 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.ItemViewBinder;
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.models.TimemakeModel;
 import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.statics.Laytatics;
 
 import java.util.List;
 

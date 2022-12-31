@@ -1,5 +1,6 @@
 package com.hazukie.scheduleviews.fileutil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.hazukie.scheduleviews.models.ClassLabel;
@@ -21,12 +22,18 @@ public class OftenOpts extends Fileystem {
     private static final String default_sche_index_file_name="index.txt";
     private static final String default_time_index_file_name="time_index.txt";
 
-    public OftenOpts(Context context){
+    @SuppressLint("StaticFieldLeak")
+    private static OftenOpts instance;
+    private OftenOpts(Context context){
         super(context);
         this.context=context;
         //if(fileystem==null) fileystem=Fileystem.getInstance(context);
     }
 
+   public static OftenOpts getInstance(Context context) {
+        if(instance==null) instance=new OftenOpts(context);
+        return instance;
+    }
     /*------总表方法------*/
     //获取课表数据
     public List<ClassLabel> getClsList(String name){
@@ -51,7 +58,6 @@ public class OftenOpts extends Fileystem {
 
     //写入索引数据
     public void putRawSctList(List<ScheWithTimeModel> scts){
-
         putDataList(FileRootTypes.index,default_sche_index_file_name,new ArrayList<>(scts));
     }
 
@@ -71,6 +77,7 @@ public class OftenOpts extends Fileystem {
         List<Object> lis=getDataList(FileRootTypes.index,default_sche_index_file_name,ScheWithTimeModel.class);
         if(lis.size()>0)
             CycleUtil.cycle(lis, (obj, objects) -> scts.add((ScheWithTimeModel) obj));
+
 
         return scts;
     }
@@ -107,25 +114,24 @@ public class OftenOpts extends Fileystem {
         ScheWithTimeModel sct = new ScheWithTimeModel(0, default_sch, default_time);
 
         List<Object> scts_ = getDataList(FileRootTypes.index, default_sche_index_file_name, ScheWithTimeModel.class);
-        BasicOpts basicOpts = BasicOpts.getInstance(context);
 
         ScheWithTimeModel tc = null;
-        if(scts_.size()>0){
-            for(Object obj:scts_){
-                ScheWithTimeModel ct=(ScheWithTimeModel) obj;
-                if(scheName.equals(ct.getScheName())){
-                    tc=ct;
+        if(scts_.size()>0&&scts_.get(0)!=null) {
+            for (Object obj : scts_) {
+                ScheWithTimeModel ct = (ScheWithTimeModel) obj;
+                if (scheName.equals(ct.getScheName())) {
+                    tc = ct;
                     break;
                 }
             }
-
-            boolean isAccess=false;
-            if(tc!=null){
-                isAccess= basicOpts.exist(FileRootTypes.sches,tc.scheName)&&basicOpts.exist(FileRootTypes.times,tc.timeName);
-            }
-
-            if(isAccess) sct=tc;
         }
+        BasicOpts basicOpts = BasicOpts.getInstance(context);
+        boolean isAccess=false;
+        if(tc!=null){
+            isAccess= basicOpts.exist(FileRootTypes.sches,tc.scheName)&&basicOpts.exist(FileRootTypes.times,tc.timeName);
+        }
+
+        if(isAccess) sct=tc;
         return sct;
     }
     /*-----总表方法结束线------*/
@@ -133,12 +139,10 @@ public class OftenOpts extends Fileystem {
 
     /*---作息表方法---*/
     public List<TimeModel> getRecordTms(){
-        List<TimeModel> tms=new ArrayList<>();
-
+        List<TimeModel> tms = new ArrayList<>();
         List<Object> tms_=getDataList(FileRootTypes.times,default_time_index_file_name,TimeModel.class);
         if(tms_.size()>0&&tms_.get(0)!=null)
             CycleUtil.cycle(tms_, (obj, objects) -> tms.add((TimeModel) obj));
-
         return tms;
     }
 
@@ -161,7 +165,7 @@ public class OftenOpts extends Fileystem {
         return getData(FileRootTypes.times,time_name,TimeHeadModel.class);
     }
 
-    /*        **
+    /* **
      * 写入一个文件
      * @param file_name 文件名
      * @param thm 数据
@@ -206,9 +210,6 @@ public class OftenOpts extends Fileystem {
 
         return isDuplicate;
     }*/
-
-
-
     /*-----课表作息表文件删除和重命名、索引表的添加和删除 END-----*/
 
 }

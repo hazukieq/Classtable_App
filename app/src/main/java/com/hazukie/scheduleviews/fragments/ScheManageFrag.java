@@ -19,12 +19,13 @@ import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.cskheui.LeditView.LeditView;
 import com.hazukie.cskheui.LetxtView.LetxtView;
 import com.hazukie.scheduleviews.R;
-import com.hazukie.scheduleviews.activity.FragmentContainerAct;
-import com.hazukie.scheduleviews.activity.ScheMakeActivity;
+import com.hazukie.scheduleviews.base.FragmentContainerAct;
+import com.hazukie.scheduleviews.activity.ScheEditActivity;
 import com.hazukie.scheduleviews.binders.HorionCardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
-import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.BasicOpts;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.models.HoricardModel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
@@ -51,8 +52,8 @@ public class ScheManageFrag extends Fragment {
 
 
     //private FileHelper fileHelper;
-    private FileAssist.applyOftenOpts oftenOpts;
-    private FileAssist.applyBasicFileOpts basicFileOpts;
+    private OftenOpts oftenOpts;
+    private BasicOpts basicOpts;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -100,15 +101,15 @@ public class ScheManageFrag extends Fragment {
         TextView addView=v.findViewById(R.id.frag_sche_manage_add);
 
         //fileHelper=new FileHelper(getActivity());
-        oftenOpts=new FileAssist.applyOftenOpts(getContext());
-        basicFileOpts=new FileAssist.applyBasicFileOpts(getContext());
+        oftenOpts=OftenOpts.getInstance(getContext());
+        basicOpts=BasicOpts.getInstance(getContext());
 
         //跳转新界面创建课表文件
-        addView.setOnClickListener(v1 -> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), SchePrevFrag.class));
+        addView.setOnClickListener(v1 -> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), ScheCreateBeforeFrag.class));
 
 
         //获取记录在案的所有文件数据
-        scts=oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
+        scts= oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
 
         HorionCardBinder horionCardBinder=new HorionCardBinder();
         //设置文件详情展开功能
@@ -126,7 +127,6 @@ public class ScheManageFrag extends Fragment {
                     .onConfirm((cDialoh, view) -> {
                         for(ScheWithTimeModel sct:scts){
                             if(sct.getScheName().equals(hrc.title)){
-                                //delete_list.add(sct);
                                 mobs.remove(hrc);
                                 mdp.notifyItemRemoved(indx_);
                                 executeDel(sct);
@@ -144,10 +144,9 @@ public class ScheManageFrag extends Fragment {
         //重命名、更改关联作息表
         horionCardBinder.setSettingListener((v14, hrc) -> showSettinialoh(hrc));
         //打开课表文件编辑及保存
-        horionCardBinder.setOnOpenDoc((sche, time) -> ScheMakeActivity.startActivityWithData(getActivity(),sche,time));
+        horionCardBinder.setOnOpenDoc((sche, time) -> ScheEditActivity.startActivityWithData(getActivity(),sche,time));
 
         mobs=new ArrayList<>();
-        //delete_list=new ArrayList<>();
         mdp=new MultiTypeAdapter();
         mdp.register(HoricardModel.class,horionCardBinder);
 
@@ -189,7 +188,6 @@ public class ScheManageFrag extends Fragment {
                         LinearLayout root= (LinearLayout) viewGroup.getChildAt(0);
                         LinearLayout fireditLay=(LinearLayout)root.getChildAt(0);
 
-                        Log.i("ScheManagerFrag-showSettinialoh>>","viewName="+((LinearLayout)root.getChildAt(0)).getChildAt(1).getAccessibilityClassName());
                         EditText editV= (EditText) fireditLay.getChildAt(1);
 
                         String mSchName=editV.getText().toString().replaceAll("\\s*","");
@@ -206,7 +204,7 @@ public class ScheManageFrag extends Fragment {
                                 }
 
                                 if(!isDuplicate){
-                                    boolean isRename=basicFileOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");//fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
+                                    boolean isRename=basicOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");//fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
                                     Log.i( "showSettinialoh>>","isRename="+isRename);
                                     if(isRename){
                                         horic.title=mSchName;
@@ -291,7 +289,7 @@ public class ScheManageFrag extends Fragment {
     //处理删除列表中的数据
     //写入修改后数据
     private void executeDel(ScheWithTimeModel del){
-        boolean isDel=basicFileOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
+        boolean isDel=basicOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
         Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
         refreshScts();
     }

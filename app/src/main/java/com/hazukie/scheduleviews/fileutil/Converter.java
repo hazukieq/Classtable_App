@@ -1,5 +1,7 @@
 package com.hazukie.scheduleviews.fileutil;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
@@ -27,6 +29,7 @@ public class Converter {
     }
 
     public Object convertJsn2Obj(String content, Type type){
+        Log.i( "convertJsn2Obj: ","content="+content);
         if(content.length()>0&&type!=null)
         return gson.fromJson(content,type);
         return "{}";

@@ -13,7 +13,6 @@ import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.CRecyclerView;
-import com.hazukie.scheduleviews.fragments.Mindmap;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;

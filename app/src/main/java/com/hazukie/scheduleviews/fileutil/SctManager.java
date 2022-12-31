@@ -2,6 +2,8 @@ package com.hazukie.scheduleviews.fileutil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeModel;
@@ -12,7 +14,7 @@ import java.util.List;
 public class SctManager {
 
     private static List<ScheWithTimeModel> sct_index=new ArrayList<>();
-    private static List<TimeModel> thm_index=new ArrayList<>();
+    private static List<TimeModel> tm_index =new ArrayList<>();
 
     private final Context context;
 
@@ -31,11 +33,15 @@ public class SctManager {
     public void init(){
 /*        sct_index=new ArrayList<>();
         thm_index=new ArrayList<>();*/
+        Looper.myQueue().addIdleHandler(() -> {
+            OftenOpts oftenOpts=OftenOpts.getInstance(context);
+            sct_index=oftenOpts.getRecordedScts();
 
-        OftenOpts oftenOpts=new OftenOpts(context);
-        sct_index=oftenOpts.getRecordedScts();
+            tm_index =oftenOpts.getRecordTms();
+            Log.i("SctMgr:","initialized, sct_index_buffer="+sct_index.size()+",thm_index_buffer="+ tm_index.size());
+            return false;
+        });
 
-        thm_index=oftenOpts.getRecordTms();
     }
 
     public List<ScheWithTimeModel> getSct_index(){
@@ -43,9 +49,17 @@ public class SctManager {
         return sct_index;
     }
 
-    public List<TimeModel> getThm_index(){
-        if(thm_index==null) thm_index=new ArrayList<>();
-        return thm_index;
+    public List<TimeModel> getTm_index(){
+        if(tm_index ==null) tm_index =new ArrayList<>();
+        return tm_index;
+    }
+
+    public boolean addScts2Index(List<ScheWithTimeModel> scts){
+        return sct_index.addAll(scts);
+    }
+
+    public boolean addTms2Index(List<TimeModel> tms){
+        return tm_index.addAll(tms);
     }
 
     public void addSct2Index(ScheWithTimeModel sct){
@@ -59,14 +73,14 @@ public class SctManager {
         return isDel;
     }
 
-    public void addThm2Index(TimeModel thm){
-        if(thm_index==null)thm_index=new ArrayList<>();
-        thm_index.add(thm);
+    public void addTm2Index(TimeModel tm){
+        if(tm_index ==null) tm_index =new ArrayList<>();
+        tm_index.add(tm);
     }
 
-    public boolean delThm2Index(TimeModel thm){
+    public boolean delTm2Index(TimeModel tm){
         boolean isDel=true;
-        if(thm_index.contains(thm)) isDel=thm_index.remove(thm);
+        if(tm_index.contains(tm)) isDel= tm_index.remove(tm);
         return isDel;
     }
 
@@ -81,10 +95,10 @@ public class SctManager {
         return isDuplicate;
     }
 
-    public boolean isDuplicate(TimeModel thm){
+    public boolean isDuplicate(TimeModel tm){
         boolean isDuplicate=false;
-        for(TimeModel tm:thm_index){
-            if(thm.getTimeName().equals(tm.getTimeName())){
+        for(TimeModel tm_: tm_index){
+            if(tm.getTimeName().equals(tm_.getTimeName())){
                 isDuplicate=true;
                 break;
             }

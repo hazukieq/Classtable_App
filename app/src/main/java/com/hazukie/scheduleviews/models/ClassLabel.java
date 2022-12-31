@@ -3,7 +3,7 @@ package com.hazukie.scheduleviews.models;
 import androidx.annotation.NonNull;
 
 import com.hazukie.scheduleviews.statics.Statics;
-import com.hazukie.scheduleviews.utils.ColorSeletor;
+import com.hazukie.scheduleviews.statics.ColorSeletor;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -18,28 +18,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
+import com.hazukie.scheduleviews.base.FragmentContainerAct;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.CBottomSheet;
 import com.hazukie.scheduleviews.custom.CPoWin;
 import com.hazukie.scheduleviews.custom.CRecyclerView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.databinding.BottomialogBinding;
-import com.hazukie.scheduleviews.fileutil.FileAssist;
-import com.hazukie.scheduleviews.fragments.SchePrevFrag;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
+import com.hazukie.scheduleviews.fragments.ScheCreateBeforeFrag;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.statics.Statics;
-import com.hazukie.scheduleviews.utils.CheckUtil;
-import com.hazukie.scheduleviews.utils.ColorSeletor;
+import com.hazukie.scheduleviews.scheutil.CheckUtil;
+import com.hazukie.scheduleviews.statics.ColorSeletor;
 import com.hazukie.scheduleviews.utils.DateHelper;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.ScheUIProcessor;
+import com.hazukie.scheduleviews.scheutil.ScheUIProcessor;
 import com.hazukie.scheduleviews.utils.ScreenShotHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.hazukie.scheduleviews.utils.StatusHelper;
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
     private ScheUIProcessor uiProcessor;
     private List<ScheWithTimeModel> scts;
     private SpvalueStorage sp;
-    private FileAssist.applyOftenOpts oftenOpts;
+    private OftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
 
     private void initViews(){
         scts=new ArrayList<>();
-        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+        oftenOpts=OftenOpts.getInstance(getApplicationContext());
 
         //小心返回的数据为空
         scts=oftenOpts.getRecordedScts();
@@ -183,7 +183,7 @@ public class MainActivity extends BaseActivity {
             int id_=uni.id;
             switch (id_){
                 case 0:
-                    FragmentContainerAct.startActivityWithLoadUrl(this, SchePrevFrag.class);
+                    FragmentContainerAct.startActivityWithLoadUrl(this, ScheCreateBeforeFrag.class);
                     break;
                 case 1:
                     startAct2Act(this,ManageAct.class);
@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity {
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:
-                    String test_url="http://192.168.2.3:80/jbridge/quickmind/index.html";
+                    String test_url=sp.getStringValue("testurl","http://192.168.2.3:80/jbridge/quickmind/index.html");
                     sp.setStringvalue("testurl",test_url);
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
                     Crialoghue cri=new Crialoghue.HeditBuilder()
@@ -211,6 +211,7 @@ public class MainActivity extends BaseActivity {
                             .addHint("请输入测试网址")
                             .onConfirm((crialoghue, rootView) -> {
                                 String str=((EditText) rootView).getText().toString();
+                                Log.i("initSideRecys: ","url="+str);
                                 if(!str.isEmpty()) sp.setStringvalue("testurl",str);
                                 else str=test_url;
 

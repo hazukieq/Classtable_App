@@ -1,13 +1,13 @@
 package com.hazukie.scheduleviews.activity;
 
 import android.annotation.SuppressLint;
-import android.webkit.JavascriptInterface;
 
+import com.hazukie.scheduleviews.base.BaseWebActivity;
 import com.hazukie.scheduleviews.custom.CnWebView;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
-public class QuickMindActivity extends LocalWebActivity{
+public class QuickMindActivity extends BaseWebActivity {
     public QuickMindActivity(){
     }
 

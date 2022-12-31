@@ -16,12 +16,13 @@ import android.widget.TextView;
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
-import com.hazukie.scheduleviews.activity.FragmentContainerAct;
-import com.hazukie.scheduleviews.activity.TimeditActivity;
+import com.hazukie.scheduleviews.base.FragmentContainerAct;
+import com.hazukie.scheduleviews.activity.TimeEditActivity;
 import com.hazukie.scheduleviews.binders.TimeItemBinder;
-import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.BasicOpts;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeModel;
 import com.hazukie.scheduleviews.models.Unimodel;
@@ -41,12 +42,10 @@ public class TimeManageFrag extends Fragment {
     private RecyclerView recy;
     private LinearLayout emptyLay;
 
-    //private FileHelper fileHelper;
-    private FileAssist.applyOftenOpts oftenOpts;
-    private FileAssist.applyBasicFileOpts basicOpts;
+    private OftenOpts oftenOpts;
+    private BasicOpts basicOpts;
     private List<ScheWithTimeModel> sctz;
     private List<TimeModel> timez;
-    //private List<TimeModel> delete_list;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,22 +91,21 @@ public class TimeManageFrag extends Fragment {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_time_manage, container, false);
         TextView addV=root.findViewById(R.id.frag_time_manage_add);
-        addV.setOnClickListener(v-> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeMakeFrag.class));
+        addV.setOnClickListener(v-> FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeCreateFrag.class));
 
         recy=root.findViewById(R.id.frag_time_manage_recy);
         emptyLay=root.findViewById(R.id.frag_time_empty);
 
-        //fileHelper=new FileHelper(getActivity());
-        oftenOpts=new FileAssist.applyOftenOpts(getContext());
-        basicOpts=new FileAssist.applyBasicFileOpts(getContext());
+
+        oftenOpts=OftenOpts.getInstance(getContext());
+        basicOpts=BasicOpts.getInstance(getContext());
+
         recyItems=new ArrayList<>();
         sctz=new ArrayList<>();
         timez=new ArrayList<>();
-        //delete_list=new ArrayList<>();
 
-
-        sctz=oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
-        timez=oftenOpts.getRecordTms(); //FileHelper.getRecordTms(getActivity());
+        sctz=oftenOpts.getRecordedScts();
+        timez=oftenOpts.getRecordTms();
         for (int i = 0; i < timez.size(); i++) {
             recyItems.add(new Unimodel(i,timez.get(i).getTimeName()));
         }
@@ -117,7 +115,7 @@ public class TimeManageFrag extends Fragment {
 
 
         TimeItemBinder timeItemBinder=new TimeItemBinder();
-        timeItemBinder.setItemClick((v,uni) -> TimeditActivity.startActivityWithData(getActivity(),uni.title+".txt"));
+        timeItemBinder.setItemClick((v,uni) -> TimeEditActivity.startActivityWithData(getActivity(),uni.title+".txt"));
         timeItemBinder.setItemCall(new TimeItemBinder.ItemCall() {
             @Override
             public void doDelete(Unimodel uni) {
@@ -150,25 +148,24 @@ public class TimeManageFrag extends Fragment {
                             .addTitle("编辑作息表")
                             .addHint("请输入新的文件名")
                             .addContents(uni.title)
+                            .addBottomContents("文件名不能和“默认作息表相同”")
                             .onConfirm((crialoghue, view) -> {
                                 EditText ed=(EditText) view;
                                 String content=ed.getText().toString().replaceAll("\\s*","");
-
+                                boolean isNoChange=content.equals(uni.title)||content.equals("默认作息表");
                                 boolean isDuplicate=false;
-                                if(content.equals(uni.title)){
+
+                                if(isNoChange){
                                     crialoghue.dismiss();
-                                }else if(content.equals("默认作息表")){
-                                    DisplayHelper.Infost(getActivity(),"名称已重复！");
-                                }else{
+                                }else if(!content.isEmpty()){
                                     for(TimeModel tim:timez){
                                         if((tim.getTimeName().equals(content))){
                                             isDuplicate=true;
                                             break;
                                         }
                                     }
-
                                     if(!isDuplicate){
-                                        boolean isRename=basicOpts.rename(FileRootTypes.times,uni.title+".txt", content+".txt");//fileHelper.rename(FileHelper.RootMode.times, uni.title+".txt", content+".txt");
+                                        boolean isRename=basicOpts.rename(FileRootTypes.times,uni.title+".txt", content+".txt");
                                         Log.i( "doEdit>>","isRename="+isRename);
                                         if(isRename){
                                             for(ScheWithTimeModel sct:sctz){
@@ -188,8 +185,9 @@ public class TimeManageFrag extends Fragment {
                                     }else{
                                         DisplayHelper.Infost(getActivity(),"名称已重复！");
                                     }
+                                }else{
+                                    DisplayHelper.Infost(getActivity(),"文件名不能为空！");
                                 }
-
                             })
                             .build(getActivity());
                     coh.show();
@@ -241,10 +239,10 @@ public class TimeManageFrag extends Fragment {
 
     private void refreshThm(){
         try{
-            //fileHelper.write(FileHelper.RootMode.index,"index.txt",new ArrayList<>(sctz));
-            //fileHelper.write(FileHelper.RootMode.times, "time_index.txt", new ArrayList<>(getCurentThmList()));
             oftenOpts.putRawSctList(sctz);
             Fileystem.getInstance(getContext()).putDataList(FileRootTypes.times,"time_index.txt",new ArrayList<>(getCurentThmList()));
+            timez.clear();
+            timez.addAll(oftenOpts.getRecordTms());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -259,8 +257,8 @@ public class TimeManageFrag extends Fragment {
         sctz.clear();
         timez.clear();
         recyItems.clear();
-        sctz.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getActivity()));
-        timez.addAll(oftenOpts.getRecordTms());//FileHelper.getRecordTms(getActivity()));
+        sctz.addAll(oftenOpts.getRecordedScts());
+        timez.addAll(oftenOpts.getRecordTms());
         for (int i = 0; i < timez.size(); i++) {
             recyItems.add(new Unimodel(i,timez.get(i).getTimeName()));
         }

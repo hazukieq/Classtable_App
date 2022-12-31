@@ -1,5 +1,6 @@
 package com.hazukie.scheduleviews.fileutil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import java.io.File;
 import java.lang.reflect.Type;
@@ -7,16 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fileystem {
-    private final String sche_root_path="sche";
-    private final String time_root_path="time";
-    private final String index_root_path="index";
-    private final String note_root_path="note";
-    private final String mind_root_path="mind";
+    private final Context context;
 
-
-
-    private Context context;
+    @SuppressLint("StaticFieldLeak")
     private static Fileystem instance;
+
     private Converter converter;
     private Ioeter ioeter;
 
@@ -32,35 +28,38 @@ public class Fileystem {
     }
 
 
-    public void initial(){
-        File sche_root=context.getDir(sche_root_path,Context.MODE_PRIVATE);
-        File time_root=context.getDir(time_root_path,Context.MODE_PRIVATE);
-        File index_root=context.getDir(index_root_path,Context.MODE_PRIVATE);
+    private void createRootFile(String name){
+        File f=context.getDir(name,Context.MODE_PRIVATE);
+        if(!f.exists()) f.mkdir();
+    }
 
-        File mind_root=context.getDir(mind_root_path,Context.MODE_PRIVATE);
-        File note_root=context.getDir(note_root_path,Context.MODE_PRIVATE);
+    private File createRoot(String name){
+        File f=context.getDir(name,Context.MODE_PRIVATE);
+        if(!f.exists()) f.mkdir();
+        return f;
+    }
 
-        if(!sche_root.exists()) sche_root.mkdir();
-        if(!time_root.exists()) time_root.mkdir();
-        if(!index_root.exists()) index_root.mkdir();
-
-        if(!mind_root.exists()) mind_root.mkdir();
-        if(!note_root.exists()) note_root.mkdir();
-
-        //课表索引
-        //File sche_record=new File(sche_root,"sche_index.txt");
-        //作息表索引
-        File time_record=new File(time_root,"time_index.txt");
-        //总表索引
-        File index_record=new File(index_root,"index.txt");
-
+    private void createFile(String root,String name){
+        File f=new File(createRoot(root),name);
         try{
-            //if(!sche_record.exists()) sche_record.createNewFile();
-            if(!time_record.exists()) time_record.createNewFile();
-            if(!index_record.exists()) index_record.createNewFile();
+            if(!f.exists()) f.createNewFile();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    public void initial(){
+        for(FileRootTypes fileRootType:FileRootTypes.values()){
+            createRootFile(fileRootType.name());
+        }
+
+        //作息表索引
+        createFile(FileRootTypes.times.name(),"time_index.txt");
+
+        //总表索引
+        createFile(FileRootTypes.index.name(), "index.txt");
+
     }
 
 
@@ -76,10 +75,11 @@ public class Fileystem {
         return file;
     }
 
-    public File  selectFile(FileRootTypes rootPathType,String path){
+    private File selectFile(FileRootTypes rootPathType,String path){
         return getDefaultRootPath(rootPathType,path);
     }
-    public String selectFile2Str(FileRootTypes rootPathType,String path){
+
+    private String selectFile2Str(FileRootTypes rootPathType,String path){
         return getDefaultRootPath(rootPathType,path).getAbsolutePath();
     }
 
@@ -93,7 +93,8 @@ public class Fileystem {
             boolean isStartup=rawData_splitN.length>0;
             if(isStartup){
                 for (String s : rawData_splitN) {
-                    newlis.add(converter.convertJsn2Obj(s,type));
+                    if(s==null||s.isEmpty()){}
+                    else newlis.add(converter.convertJsn2Obj(s,type));
                 }
             }
         }
@@ -133,6 +134,8 @@ public class Fileystem {
     }
 
 
+
+
     public boolean putDatazList(FileRootTypes rootPathType,String file_name,List<Object> objs){
         File currentFile=selectFile(rootPathType,file_name);
         StringBuilder stringBuilder=new StringBuilder();
@@ -160,6 +163,8 @@ public class Fileystem {
         if(obj!=null) content=converter.convertObj2Jsn(obj);
         return ioeter.writeObj(currentFile,content,isAppend);
     }
+
+
 
     public void putDataStr(FileRootTypes rootPathType,String file_name,String strs){
         File currentFile=selectFile(rootPathType,file_name);

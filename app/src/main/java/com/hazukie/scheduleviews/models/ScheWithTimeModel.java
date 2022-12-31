@@ -1,14 +1,5 @@
 package com.hazukie.scheduleviews.models;
 
-import android.content.Context;
-
-import com.hazukie.scheduleviews.fileutil.FileAssist;
-import com.hazukie.scheduleviews.fileutil.FileRootTypes;
-import com.hazukie.scheduleviews.fileutil.Fileystem;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class ScheWithTimeModel {
     private final static String default_index="index.txt";
     private final static String default_timetable_name="默认作息表.txt";
@@ -43,7 +34,7 @@ public class ScheWithTimeModel {
     }
 
     /**---新增方法---**/
-    public static void autoIncrementID(Context context,String scheName,String timeName){
+    /*public static void autoIncrementID(Context context,String scheName,String timeName){
         FileAssist.applyOftenOpts oftenOpts=new FileAssist.applyOftenOpts(context);
 
         List<ScheWithTimeModel> scts=oftenOpts.getRecordedScts();
@@ -69,7 +60,7 @@ public class ScheWithTimeModel {
         }
 
         oftenOpts.putRawSctList(scts);
-    }
+    }*/
 
     @Override
     public String toString() {

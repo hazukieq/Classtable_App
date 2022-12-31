@@ -1,7 +1,6 @@
 package com.hazukie.scheduleviews.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,22 +10,18 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Environment;
 import android.print.PrintAttributes;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.fragment.app.FragmentActivity;
-
-import com.hazukie.scheduleviews.fileutil.FileAssist;
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.fileutil.NetFileOpts;
 import com.hazukie.scheduleviews.models.ClassLabel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -139,7 +134,7 @@ public class ScreenShotHelper {
         for(ClassLabel cls:clsLis){
             builder.append(cls.toString()+"\n");
         }
-        File file=FileHelper.getPublicFile("课表.txt");
+        File file= NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.sches,"课表.txt");
         fileystem.putDataStr(file,builder.toString());
         return true;
     }
@@ -164,7 +159,7 @@ public class ScreenShotHelper {
         canvas.drawBitmap(v,matrix,paint);
         document.finishPage(page);
 
-        File file = FileHelper.getPublicFile(fileName+".pdf");
+        File file = NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.sches,fileName+".pdf");
 
         FileOutputStream outputStream = null;
         try {

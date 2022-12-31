@@ -1,15 +1,13 @@
 package com.hazukie.scheduleviews.activity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.hazukie.scheduleviews.base.BaseWebActivity;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
-public class QuickNoteActivity extends LocalWebActivity{
+public class QuickNoteActivity extends BaseWebActivity {
 
     @Override
     public void customStatus(TopbarLayout mTopBarLayout) {

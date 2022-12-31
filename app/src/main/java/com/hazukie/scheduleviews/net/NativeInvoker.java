@@ -3,86 +3,87 @@ package com.hazukie.scheduleviews.net;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.widget.EditText;
 
 import androidx.fragment.app.FragmentActivity;
 import com.google.gson.Gson;
-import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.jbridge.lib.JBridgeInvokeDispatcher;
 import com.hazukie.jbridge.lib.JBridgeObject;
 import com.hazukie.scheduleviews.custom.CnWebView;
-import com.hazukie.scheduleviews.models.Unimodel;
-import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 
 public class NativeInvoker {
-        private FileHelper fileHelper;
-        private Gson gson;
-        private FragmentActivity context;
-        private CnWebView mWebView;
-        private String mind_name="";
+    //private FileHelper fileHelper;
+    private Gson gson;
+    private FragmentActivity context;
+    private CnWebView mWebView;
+    private String mind_name = "";
 
-        public NativeInvoker(FragmentActivity context){
-            this.context=context;
-            fileHelper=new FileHelper(context);
-            gson=new Gson();
-        }
+    public NativeInvoker(FragmentActivity context) {
+        this.context = context;
+        gson = new Gson();
+    }
 
-        public NativeInvoker(FragmentActivity context, CnWebView mWebView){
-            this(context);
-            this.mWebView=mWebView;
-        }
+    public NativeInvoker(FragmentActivity context, CnWebView mWebView) {
+        this(context);
+        this.mWebView = mWebView;
+    }
 
 
     /**
      * JS和Native通讯桥
      * 主要是JS端调用Native的方法
+     *
      * @param str raw_json
      */
     @JavascriptInterface
-        public void ijbridge(String str){
-            if(str.length()>0&&str.startsWith("{")&&str.endsWith("}")) {
-                Log.i( "ijbridge>> ","datas="+str);
-                JBridgeObject jBridgeObject=gson.fromJson(str,JBridgeObject.class);
-                JBridgeInvokeDispatcher.getInstance().sendCmd(context,mWebView,jBridgeObject);
-            }
+    public void ijbridge(String str) {
+        if (str.length() > 0 && str.startsWith("{") && str.endsWith("}")) {
+            Log.i("ijbridge>> ", "datas=" + str);
+            JBridgeObject jBridgeObject = gson.fromJson(str, JBridgeObject.class);
+            JBridgeInvokeDispatcher.getInstance().sendCmd(context, mWebView, jBridgeObject);
         }
-
-        //Native执行JS命令
-        public void excecuteJs(JBridgeObject jBridgeObject){
-            context.runOnUiThread(() -> {
-                String args=gson.toJson(jBridgeObject);
-                Log.i( "excecuteJs","args="+args);
-                mWebView.loadUrl("javascript:HJBridgeCmdDispatcher().send('"+args+"')");
-            });
-        }
-
-        /*---即将废弃部分--*/
-        @JavascriptInterface
-        public void down(String base64) {
-            //这里收到下载解析的base64、做相关处理
-            try{
-                Bitmap bitmap = Base64Util.base64ToPicture(base64);
-                Base64Util.savePictureToAlbum(context, bitmap,mind_name+"_思维导图");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        @JavascriptInterface
-        public void down2pdf(String base64){
-            try{
-                Bitmap bit=Base64Util.base64ToPicture(base64);
-                Base64Util.PngToPdf(context,bit,mind_name+"_思维导图");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        @JavascriptInterface
-        public void getname(String name){
-        mind_name=name;
     }
-    /*---即将废弃部分---*/
+
+    //Native执行JS命令
+    public void excecuteJs(JBridgeObject jBridgeObject) {
+        context.runOnUiThread(() -> {
+            String args = gson.toJson(jBridgeObject);
+            Log.i("excecuteJs", "args=" + args);
+            mWebView.loadUrl("javascript:HJBridgeCmdDispatcher().send('" + args + "')");
+        });
+    }
+
+    /*---即将废弃部分--*/
+    @JavascriptInterface
+    public void down(String base64) {
+        //这里收到下载解析的base64、做相关处理
+        try {
+            Bitmap bitmap = Base64Util.base64ToPicture(base64);
+            Base64Util.savePictureToAlbum(context, bitmap, mind_name + "_思维导图");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @JavascriptInterface
+    public void down2pdf(String base64) {
+        try {
+            Bitmap bit = Base64Util.base64ToPicture(base64);
+            Base64Util.PngToPdf(context, bit, mind_name + "_思维导图");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @JavascriptInterface
+    public void getname(String name) {
+        mind_name = name;
+    }
+
+}
+/*
+    */
+/*---即将废弃部分---*//*
+
 
 
 
@@ -140,7 +141,9 @@ public class NativeInvoker {
     }
 
 
-        /*<!--即将废弃部分-->*/
+        */
+/*<!--即将废弃部分-->*//*
+
         @JavascriptInterface
         public String readlist(String type){
             Log.i( "web-readlist>>","type="+type);
@@ -249,9 +252,5 @@ public class NativeInvoker {
 
             crialoghue.show();
         }
-    /*<!--即将废弃部分-->*/
-
-
-}
-
-
+    */
+/*<!--即将废弃部分-->*/

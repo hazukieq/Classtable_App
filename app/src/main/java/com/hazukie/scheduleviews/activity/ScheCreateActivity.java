@@ -17,19 +17,20 @@ import com.drakeet.multitype.MultiTypeAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
+import com.hazukie.scheduleviews.base.FragmentContainerAct;
 import com.hazukie.scheduleviews.binders.BinderClickListener;
 import com.hazukie.scheduleviews.binders.SchecardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
-import com.hazukie.scheduleviews.fileutil.FileAssist;
-import com.hazukie.scheduleviews.fragments.ScheCreateFrag;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
+import com.hazukie.scheduleviews.fragments.ScheFileCreateFrag;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Unimodel;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.BottomialogUtil;
 import com.hazukie.scheduleviews.utils.CycleUtil;
-import com.hazukie.scheduleviews.utils.DataInitiation;
+import com.hazukie.scheduleviews.scheutil.ScheDataInitiation;
 import com.hazukie.scheduleviews.utils.DialogUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
@@ -47,7 +48,7 @@ public class ScheCreateActivity extends BaseActivity {
     private FloatingActionButton floatingActionBtn;
     private TimeHeadModel timeheadModel;
     private String globalTime="默认课表.txt";
-    private FileAssist.applyOftenOpts oftenOpts;
+    private OftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class ScheCreateActivity extends BaseActivity {
         getDatas();
         instance=this;
         Log.i("SchecreateAct>>","globalTimeName="+globalTime);
-        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+        oftenOpts=OftenOpts.getInstance(getApplicationContext());
         initViews();
     }
 
@@ -76,7 +77,7 @@ public class ScheCreateActivity extends BaseActivity {
             if(weekRID==0)weekRID=1;
             ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
             try {
-                if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3,DataInitiation.initialTimeDefaults());
+                if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());
                 new BottomialogUtil(ScheCreateActivity.this).
                         showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
             }catch (Exception e){
@@ -98,7 +99,7 @@ public class ScheCreateActivity extends BaseActivity {
         scheLabel.setOnClickListener(v->{
             List<ClassLabel> clssLs=new ArrayList<>();
             for(Object obj:main_list) clssLs.add((ClassLabel) obj);
-            PreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
+            SchePreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
 /*            for (int i = 0; i < main_list.size(); i++) {
                 ClassLabel cs=(ClassLabel) main_list.get(i);
                 clssLs.add(cs);
@@ -110,7 +111,7 @@ public class ScheCreateActivity extends BaseActivity {
         saveLabel.setOnClickListener(v->{
                     List<ClassLabel> cxx=new ArrayList<>();
                     CycleUtil.cycle(main_list, (obj, objects) -> cxx.add((ClassLabel) obj));
-                    FragmentContainerAct.startActivityWithLoadUrl(this, ScheCreateFrag.class,globalTime,cxx);
+                    FragmentContainerAct.startActivityWithLoadUrl(this, ScheFileCreateFrag.class,globalTime,cxx);
                 });
 
 

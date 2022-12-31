@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.drakeet.multitype.ItemViewBinder;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.models.ClassLabel;
-import com.hazukie.scheduleviews.utils.ColorSeletor;
+import com.hazukie.scheduleviews.statics.ColorSeletor;
 
 import java.util.List;
 

@@ -1,21 +1,16 @@
 package com.hazukie.scheduleviews.activity;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.text.InputType;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.hazukie.cskheui.Crialoghue.Clicks;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
 import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
-import com.hazukie.scheduleviews.statics.Laytatics;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.hazukie.scheduleviews.utils.StatusHelper;

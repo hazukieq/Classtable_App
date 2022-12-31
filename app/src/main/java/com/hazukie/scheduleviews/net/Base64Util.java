@@ -1,32 +1,26 @@
 package com.hazukie.scheduleviews.net;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
-import android.net.Uri;
 import android.print.PrintAttributes;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 
+import com.hazukie.scheduleviews.fileutil.FileRootTypes;
+import com.hazukie.scheduleviews.fileutil.NetFileOpts;
 import com.hazukie.scheduleviews.utils.DateHelper;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.ScreenShotHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
 
 public class Base64Util {
     /**
@@ -43,8 +37,7 @@ public class Base64Util {
         }
         //解码开始
         byte[] decode = Base64.decode(imgBase64, Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
-        return bitmap;
+        return BitmapFactory.decodeByteArray(decode, 0, decode.length);
     }
 
 
@@ -93,8 +86,8 @@ public class Base64Util {
         Log.i( "PngToPdf>>","na="+na);
 
         int tag=0;
-        String[] existedFile_lists=FileHelper.getPdfLists();
-        if(existedFile_lists.length>0){
+        String[] existedFile_lists= NetFileOpts.getInstance(context).getPublicFileList(fileName);
+        if(existedFile_lists!=null&&existedFile_lists.length>0){
             for (String existedFile_list : existedFile_lists) {
                 if (existedFile_list.startsWith(na)) {
                     Log.i( "PngToPdf>>","compare="+existedFile_list);
@@ -104,7 +97,7 @@ public class Base64Util {
             Log.i( "PngToPdf>>","tag="+tag);
             if(tag>0) na+="("+tag+")";
         }
-        File file = FileHelper.getPdfFile(na+".pdf");
+        File file = NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.mind,na+".pdf");//FileHelper.getPdfFile(na+".pdf");
 
         Log.i("PngToPdf>>","lists="+ Arrays.toString(existedFile_lists));
         Log.i( "PngToPdf>>","exist="+file.exists()+", path="+file.getAbsolutePath());//new File(context.getDir("pdfs",Context.MODE_PRIVATE),fileName);

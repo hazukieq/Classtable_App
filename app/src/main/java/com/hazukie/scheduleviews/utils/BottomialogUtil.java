@@ -13,6 +13,8 @@ import com.hazukie.scheduleviews.databinding.BottomsheetSchecardBinding;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Unimodel;
+import com.hazukie.scheduleviews.scheutil.CheckUtil;
+import com.hazukie.scheduleviews.statics.ColorSeletor;
 import com.hazukie.scheduleviews.statics.Statics;
 
 import java.util.ArrayList;

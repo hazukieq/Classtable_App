@@ -75,15 +75,16 @@ public class    CnWebView extends WebView {
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
         //set web cache strategy
-        boolean isDebug=true;
-        int loadMode=isDebug?WebSettings.LOAD_NO_CACHE:WebSettings.LOAD_DEFAULT;
+        boolean isCacheMode=false;
+        int loadMode=isCacheMode?WebSettings.LOAD_DEFAULT:WebSettings.LOAD_NO_CACHE;
         webSettings.setCacheMode(loadMode);
-        String appCache_path=getWebCacheDir(context);
-        File cacheDir=new File(appCache_path);
-        if(!cacheDir.exists()&&!cacheDir.isDirectory()) cacheDir.mkdirs();
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(appCache_path);
-
+        if(isCacheMode){
+            String appCache_path=getWebCacheDir(context);
+            File cacheDir=new File(appCache_path);
+            if(!cacheDir.exists()&&!cacheDir.isDirectory()) cacheDir.mkdirs();
+            webSettings.setAppCacheEnabled(true);
+            webSettings.setAppCachePath(appCache_path);
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

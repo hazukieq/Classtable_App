@@ -73,13 +73,6 @@ public class Statics {
         }
         return index_;
     }
-    /*public static int getWeekIndexByString(String str){
-        int index_=0;
-        for (int i = 0; i < weeks.length; i++) {
-            if(weeks[i].equals(str)) index_=i;
-        }
-        return index_;
-    }*/
 
     public static String getDetailTimeByIndex(int index){
         return details[index];

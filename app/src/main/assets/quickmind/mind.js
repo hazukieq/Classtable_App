@@ -323,3 +323,87 @@ confirmDialogueClickMap.set('delFn',(ele,btn)=>{
 })
 confirmDialogueInit(confirmDialogueClickMap)
 
+
+const confirmDialogueClickMap=new Map()
+confirmDialogueClickMap.set( 'saveFn',(ele,btn)=>ele.innerHTML=
+`
+<div class="row mb-2">
+    <div class="col-12">
+        <h5>新文件</h5>
+    </div>
+    <div class="col-12 text-black-50">
+        是否保存当前页面数据内容？
+    </div>
+</div>
+<div class="row">
+    <label for="saveFn_input_file" class="col-sm-2 col-form-label">文件名</label>
+    <div class="col-sm-10">
+    <input type="text" class="form-control" id="saveFn_input_file" placeholder="请输入文件名">
+    </div>
+</div>
+<div class="row pt-2">
+    <div class="col justify-content-end align-items-center d-flex">
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn text-primary" data-bs-dismiss="modal">确定</button>
+    </div>
+</div>
+
+`
+)
+
+
+confirmDialogueClickMap.set('askFn',(ele,btn)=>{
+    ele.innerHTML=
+    `
+    <div class="row">
+        <div class="col">
+            是否清空当前编辑框全部内容？
+        </div>
+    </div>
+    <div class="row">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="textClear('${edit_area_id}')">确定</button>
+        </div>
+    </div>`
+})
+
+confirmDialogueClickMap.set('editFn',(ele,btn)=>{
+    var more_id=btn.getAttribute('data-bs-id')
+    var md_old_name=btn.getAttribute('data-bs-name')
+    ele.innerHTML=
+    `
+    <div class="row">
+        <label for="editFn_input_file" class="col-sm-2 col-form-label">文件名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="editFn_input_file" placeholder="请输入新的文件名" value="${md_old_name}">
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="editDoc('${more_id}')">确定</button>
+        </div>
+    </div>
+    `
+})
+
+confirmDialogueClickMap.set('delFn',(ele,btn)=>{
+    var more_id=btn.getAttribute('data-bs-id')
+    ele.innerHTML=
+    `
+    <div class="row">
+        <div class="col">
+            是否删除当前选中文件？
+        </div>
+    </div>
+    <div class="row">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="delDoc('${more_id}')">确定</button>
+        </div>
+    </div>
+    `
+})
+confirmDialogueInit(confirmDialogueClickMap)
+
