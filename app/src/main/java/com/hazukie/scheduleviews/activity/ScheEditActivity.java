@@ -23,26 +23,25 @@ import com.hazukie.scheduleviews.binders.BinderClickListener;
 import com.hazukie.scheduleviews.binders.SchecardBinder;
 import com.hazukie.scheduleviews.binders.UniBinder;
 import com.hazukie.scheduleviews.custom.TopbarLayout;
-import com.hazukie.scheduleviews.fileutil.FileAssist;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Unimodel;
+import com.hazukie.scheduleviews.scheutil.ScheDataInitiation;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.utils.BottomialogUtil;
 import com.hazukie.scheduleviews.utils.CycleUtil;
-import com.hazukie.scheduleviews.utils.DataInitiation;
 import com.hazukie.scheduleviews.utils.DialogUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
-import com.hazukie.scheduleviews.utils.FileHelper;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ScheMakeActivity extends BaseActivity {
+public class ScheEditActivity extends BaseActivity {
     private MultiTypeAdapter mainAdp,headAdp;
     private ArrayList<Object> main_list,filtered_list,headList;
     private FloatingActionButton floatingActionBtn;
@@ -50,7 +49,7 @@ public class ScheMakeActivity extends BaseActivity {
     private TopbarLayout titleLabel;
     private TimeHeadModel timeheadModel;
     private String globalTime,globalSche;
-    private FileAssist.applyOftenOpts oftenOpts;
+    private OftenOpts oftenOpts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class ScheMakeActivity extends BaseActivity {
         setContentView(R.layout.activity_sche_make);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         getDatas();
-        oftenOpts=new FileAssist.applyOftenOpts(getApplicationContext());
+        oftenOpts=OftenOpts.getInstance(getApplicationContext());
         initViews();
     }
 
@@ -76,8 +75,8 @@ public class ScheMakeActivity extends BaseActivity {
             if(weekRID==0)weekRID=1;
             ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
             try {
-                if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, DataInitiation.initialTimeDefaults());
-                new BottomialogUtil(ScheMakeActivity.this).
+                if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());
+                new BottomialogUtil(ScheEditActivity.this).
                         showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
             }catch (Exception e){
                 e.printStackTrace();
@@ -90,7 +89,7 @@ public class ScheMakeActivity extends BaseActivity {
         titleLabel.addLftTextView("预览",v->{
             List<ClassLabel> clssLs=new ArrayList<>();
             CycleUtil.cycle(main_list, (obj, objects) -> clssLs.add((ClassLabel) obj));
-            PreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
+            SchePreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
         });
 
         titleLabel.addRightTextView("保存",v1->showDialog());
@@ -177,7 +176,7 @@ public class ScheMakeActivity extends BaseActivity {
                 //获取索引值,传递给对话框静态方法
                 int filtered_index=filtered_list.indexOf(classLabel);
                 try{
-                    DialogUtil.showaloh(ScheMakeActivity.this,mainAdp,"课程卡片",main_list,filtered_list,classLabel,filtered_index,true);
+                    DialogUtil.showaloh(ScheEditActivity.this,mainAdp,"课程卡片",main_list,filtered_list,classLabel,filtered_index,true);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -185,7 +184,7 @@ public class ScheMakeActivity extends BaseActivity {
 
             @Override
             public void onEdit(View v, ClassLabel classLabel) {
-                new BottomialogUtil(ScheMakeActivity.this)
+                new BottomialogUtil(ScheEditActivity.this)
                     .showBottomEditedSheet(main_list,filtered_list,mainAdp,timeheadModel,classLabel,v,true,-1);}
         });
 
@@ -203,7 +202,7 @@ public class ScheMakeActivity extends BaseActivity {
         Crialoghue cioh=new Crialoghue.TxtBuilder()
                 .addTitle("课表数据保存")
                 .addHtmlMode(true)
-                .addFontGravity(Gravity.LEFT)
+                .addFontGravity(Gravity.START)
                 .addContent("课表名称："+globalSche.replace(".txt","")+"<br/><br/>详细信息<br/><small>当前课表基于&nbsp;<b>"+globalTime.replace(".txt","")+"</b>&nbsp;制作<br/>注：作息表，指的是每日上课时间安排<br/>如需要调整或新建&nbsp;<b>作息表</b>&nbsp;,<br/> 请前往作息表制作界面</small")
                 .onConfirm((cialog, rootView) -> writInits(globalSche,cialog))
                 .build(this);
@@ -214,18 +213,13 @@ public class ScheMakeActivity extends BaseActivity {
     //加载课表文件数据
     public void loadInits(String scheName,String timeName){
         //查看上一次是否存储有数据，有则加载，无则加载默认数据
-        //FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
         try{
             List<ClassLabel> clssLs=oftenOpts.getClsList(scheName);
-            //List<Object> objs=fileHelper.read(FileHelper.RootMode.sches,scheName,ClassLabel.class);
-            timeheadModel=FileHelper.getThm(getApplicationContext(),timeName);//(TimeHeadModel) fileHelper.read(FileHelper.RootMode.times,timeName,TimeHeadModel.class).get(0);
+            timeheadModel=oftenOpts.getThm(timeName);
             main_list.clear();
             for(ClassLabel clss:clssLs){
                 if(clss.clNums>0) main_list.add(clss);
             }
-            /*CycleUtil.cycle(objs, (obj, objects) -> {
-                if(((ClassLabel)obj).clNums>0) main_list.add(obj);
-            });*/
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -233,26 +227,21 @@ public class ScheMakeActivity extends BaseActivity {
 
     //写入课表文件数据
     public void writInits(String sche,Crialoghue cih){
-        //FileHelper fileHelper=FileHelper.getInstance(getApplicationContext());
-/*        try{
-            //if(fileHelper.write(FileHelper.RootMode.sches,sche,main_list)){
-                Toast.makeText(ScheMakeActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+        if(main_list.size()>0&&main_list.get(0)!=null){
+            if(Fileystem.getInstance(getApplicationContext()).putDatazList(FileRootTypes.sches,sche,main_list)){
+                Toast.makeText(ScheEditActivity.this, "保存成功!", Toast.LENGTH_SHORT).show();
                 cih.dismiss();
                 finish();
             }else{
-                Toast.makeText(ScheMakeActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScheEditActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
-
-        if(Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.sches,sche,main_list)){
-            Toast.makeText(ScheMakeActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+        }else{
+            oftenOpts.putDataList(FileRootTypes.sches,sche,new ArrayList<>());
+            Toast.makeText(ScheEditActivity.this, "保存成功!", Toast.LENGTH_SHORT).show();
             cih.dismiss();
             finish();
-        }else{
-            Toast.makeText(ScheMakeActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -287,7 +276,7 @@ public class ScheMakeActivity extends BaseActivity {
 
     public static void startActivityWithData(Context context,String scheName,String timeName){
         Intent in=new Intent();
-        in.setClass(context,ScheMakeActivity.class);
+        in.setClass(context,ScheEditActivity.class);
         in.putExtra("name",scheName+","+timeName);
         context.startActivity(in);
     }
