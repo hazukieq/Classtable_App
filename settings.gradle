@@ -18,3 +18,5 @@ dependencyResolutionManagement {
 rootProject.name = "ScheduleViews"
 include ':app'
 include ':cskheui'
+include ':jbridge-compiler'
+include ':jbridge-lib'

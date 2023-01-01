@@ -77,9 +77,9 @@ dependencies {
 
     implementation project(path: ':cskheui')
 
-    implementation fileTree('libs/jbridge-lib.aar')
-    implementation files('libs/jbridge-compiler.jar')
-    annotationProcessor files('libs/jbridge-compiler.jar')
+    implementation project(path: ':jbridge-compiler')
+    implementation project(path: ':jbridge-lib')
+    annotationProcessor project(':jbridge-compiler')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

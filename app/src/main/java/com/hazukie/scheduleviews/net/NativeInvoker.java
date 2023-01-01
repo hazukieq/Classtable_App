@@ -1,8 +1,10 @@
 package com.hazukie.scheduleviews.net;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 import androidx.fragment.app.FragmentActivity;
 import com.google.gson.Gson;
@@ -12,10 +14,9 @@ import com.hazukie.scheduleviews.custom.CnWebView;
 
 public class NativeInvoker {
     //private FileHelper fileHelper;
-    private Gson gson;
-    private FragmentActivity context;
+    private final Gson gson;
+    private final FragmentActivity context;
     private CnWebView mWebView;
-    private String mind_name = "";
 
     public NativeInvoker(FragmentActivity context) {
         this.context = context;
@@ -48,11 +49,28 @@ public class NativeInvoker {
         context.runOnUiThread(() -> {
             String args = gson.toJson(jBridgeObject);
             Log.i("excecuteJs", "args=" + args);
-            mWebView.loadUrl("javascript:HJBridgeCmdDispatcher().send('" + args + "')");
+            if(mWebView!=null) mWebView.loadUrl("javascript:HJBridgeCmdDispatcher().send('" + args + "')");
         });
     }
 
-    /*---即将废弃部分--*/
+    //Native执行JS命令
+    public static void excecuteJs(FragmentActivity context,WebView webView,Gson gson, JBridgeObject jBridgeObject) {
+        String args = gson.toJson(jBridgeObject);
+        Log.i("excecuteJs", "args=" + args);
+        context.runOnUiThread(() -> {
+            try{
+                if(webView!=null) webView.loadUrl("javascript:HJBridgeCmdDispatcher().send('" + args + "')");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        });
+
+    }
+}
+
+
+    /*---即将废弃部分--*
     @JavascriptInterface
     public void down(String base64) {
         //这里收到下载解析的base64、做相关处理
@@ -80,8 +98,7 @@ public class NativeInvoker {
     }
 
 }
-/*
-    */
+
 /*---即将废弃部分---*//*
 
 

@@ -130,8 +130,9 @@ public class TimeManageFrag extends Fragment {
                                 }
                             }
                             timez.remove(tim);
+                            int removeItem_index= recyItems.indexOf(uni);
                             recyItems.remove(uni);
-                            recyAdp.notifyDataSetChanged();
+                            recyAdp.notifyItemRemoved(removeItem_index);
                             executeDel(tim);
                             DisplayHelper.Infost(getActivity(),"删除成功！");
                             cRialog.dismiss();

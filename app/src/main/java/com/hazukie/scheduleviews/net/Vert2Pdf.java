@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.webkit.WebView;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.gson.Gson;
 import com.hazukie.jbridge.compiler.JBridgeApt;
 import com.hazukie.jbridge.lib.IJBridgeCmd;
@@ -11,7 +13,7 @@ import com.hazukie.jbridge.lib.IJBridgeCmd;
 @JBridgeApt(cmd="vert2Pdf")
 public class Vert2Pdf implements IJBridgeCmd {
     @Override
-    public void exec(Context context, WebView webView, String raw_json) {
+    public void exec(FragmentActivity context, WebView webView, String raw_json) {
         Gson gson=new Gson();
         SvgObj obj=gson.fromJson(raw_json,SvgObj.class);
         try{

@@ -1,16 +1,21 @@
 package com.hazukie.scheduleviews.activity;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.hazukie.jbridge.lib.IJBridgeUtil;
 import com.hazukie.jbridge.lib.JBridgeInvokeDispatcher;
 import com.hazukie.jbridge.lib.JBridgeObject;
 
+import com.hazukie.scheduleviews.net.MsgPasser;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.permissionx.guolindev.PermissionX;

@@ -42,6 +42,10 @@ public class NetFileOpts {
         return f.list();
     }
 
+    public String[] getUnderFileLists(String rootMode){
+        File f=context.getDir(rootMode, Context.MODE_PRIVATE);
+        return f.list();
+    }
 
     public String[] getPublicFileList(String name){
         File f=getPublicRoot(name);

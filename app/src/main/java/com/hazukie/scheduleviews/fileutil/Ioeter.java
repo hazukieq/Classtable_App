@@ -36,13 +36,18 @@ public class Ioeter {
     }
 
     public String read(File file){
+       return read(file,true);
+    }
+
+    public String read(File file,boolean isWrapLine){
         StringBuilder stringBuilder=new StringBuilder();
         try{
             FileReader fileReader=new FileReader(file);
             BufferedReader reader=new BufferedReader(fileReader);
             String record;
             while ((record=reader.readLine())!=null){
-                stringBuilder.append(record+"\n");
+                String isWrap=isWrapLine?"\n":"";
+                stringBuilder.append(record).append(isWrap);
             }
             reader.close();
         }catch (Exception e){
