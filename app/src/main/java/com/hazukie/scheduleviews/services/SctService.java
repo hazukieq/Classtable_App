@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -38,7 +37,7 @@ public class SctService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate: service executed!");
+
         /*
          * 方式一：采用Handler的postDelayed(Runnable, long)方法
          */
