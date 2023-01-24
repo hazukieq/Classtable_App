@@ -61,31 +61,22 @@ public class ScheUIProcessor {
     }
 
 
-
-    /*//核查Sp是否储存有上一次数据，如果没有则跳过，否则就加载
-    private int  seekSpRecord(){
-        //固定查询ID字段
-        String scheAndtimeTB_record="record_id";
-
-        return SpvalueStorage.getInstance(context).getInt(scheAndtimeTB_record,0);
-    }*/
-
-
     private String seekSpRecord(){
         //固定查询ID字段
-        String scheAndtimeTB_record="record_name";
-
+        String scheAndtimeTB_record=Statics.scheAndtimeTB_record;
         return SpvalueStorage.getInstance(context).getStringValue(scheAndtimeTB_record,Statics.record_name_default);
     }
 
-    //根据上一步返回值判断是否需要查找相应文件
-    private void findFile(String record_name,int mWid) throws IOException {
-        Log.i("ScheProcessor>>","record_name="+record_name);
-        List<Object> classLabels=new ArrayList<>();
-        Object timetableObj=null;
 
+
+    //根据上一步返回值判断是否需要查找相应文件
+    private void findFile(String record_name,int mWid) {
+        Log.i("ScheProcessor>>","record_name="+record_name);
+
+        List<Object> classLabels=new ArrayList<>();
         List<ClassLabel> clssList=new ArrayList<>();
-        TimeHeadModel timeModel=null;
+        TimeHeadModel timetableObj=null;
+
 
         OftenOpts oftenOpts=OftenOpts.getInstance(context);
         BasicOpts basicOpts=BasicOpts.getInstance(context);
@@ -94,14 +85,12 @@ public class ScheUIProcessor {
         boolean isInitiate=!record_name.equals(Statics.record_name_default);
 
         //索引统一储存在index.txt文件
-        String indexName="index.txt";
+        String indexName=Statics.index_file_name;
 
         //判断index.txt文件是否存在
-        //boolean isIndexFileExist=fileHelper.exist(FileHelper.RootMode.index,indexName);
         boolean isIndexFileExist=basicOpts.exist(FileRootTypes.index,indexName);
 
         //索引数据
-        //ScheWithTimeModel mSct= FileHelper.getSctByName(context,record_name);
         ScheWithTimeModel mSct=oftenOpts.getSctByName(record_name);
 
         if(isInitiate){
@@ -109,47 +98,34 @@ public class ScheUIProcessor {
             if(isIndexFileExist){
                 //再次判断ID对应的数据是否存在
                 boolean isGetNotNull=mSct!=null;
-                Log.i( "findFile: ","mSct="+mSct.toString());
 
                 //判断索引文件是否为空，同时判断记录ID是否在其中！
                 if(isGetNotNull){
-                    Log.i("ScheProcessor>>","isGetNotNull="+isGetNotNull);
-
                     String sche_name=mSct.scheName;
                     String time_name=mSct.timeName;
                     Log.i("ScheProcessor>>","sche_name="+sche_name+", time_name="+time_name);
 
-                    /*//再次判断课表文件是否存在
-                    if(basicOpts.exist(FileRootTypes.sches,sche_name))
-                        classLabels=oftenOpts.getRawClsList(sche_name);
-
-                    //再次判断作息文件是否存在
-                    if(basicOpts.exist(FileRootTypes.times,time_name))
-                        timetable_obj=oftenOpts.getRawThm(time_name);
-                    */
-
                     //再次判断课表文件是否存在
                     if(basicOpts.exist(FileRootTypes.sches,sche_name))
-                        classLabels=oftenOpts.getRawClsList(sche_name);//fileHelper.read(FileHelper.RootMode.sches,sche_name,ClassLabel.class);
-
-                    //再次判断作息文件是否存在
-                    if(basicOpts.exist(FileRootTypes.times,time_name))
-                        timetableObj=oftenOpts.getThm(time_name);//fileHelper.readObj(FileHelper.RootMode.times,time_name,TimeHeadModel.class);
+                        classLabels=oftenOpts.getRawClsList(sche_name);
 
                     //判断数据大小，防止出错
                     if(classLabels.size()>0)
                         CycleUtil.cycle(classLabels, (obj1, objects) -> clssList.add((ClassLabel) obj1));
-                    if(timetableObj!=null)
-                        timeModel=(TimeHeadModel) timetableObj;
+
+                    //再次判断作息文件是否存在
+                    if(basicOpts.exist(FileRootTypes.times,time_name))
+                        timetableObj=oftenOpts.getThm(time_name);
                 }
             }
         }
+
         //加载数据
-        initDatas(clssList,timeModel,mWid);
+        initDatas(clssList,timetableObj,mWid);
     }
 
     public void directRenderUI(List<ClassLabel> clssLst,String time){
-        TimeHeadModel ime= OftenOpts.getInstance(context).getThm(time);//FileHelper.getThm(context,time);
+        TimeHeadModel ime= OftenOpts.getInstance(context).getThm(time);
         initDatas(clssLst,ime,mWidth);
     }
 
@@ -205,17 +181,11 @@ public class ScheUIProcessor {
         ScheProcessor.getInstance(context)
                 .setDefault_empty_grid_color(default_empty_grid_color)
                 .setDefault_time_grid_color(default_time_grid_color)
-                .processClassDatas(gridLayout, widthAndHeight, clzz, timez, new CardListener() {
-            @Override
-            public void onClick(TextView v, ClassLabel cls) {}
-
-            @Override
-            public void onClick(TextView v, ClassLabel cls, List<Timetable> times) {
-                if(cls.clNums>0) {
-                    if(scheInformation!=null) scheInformation.alertByBottomDialog(v,cls,times);
-                }
-            }
-        });
+                .processClassDatas(gridLayout, widthAndHeight, clzz, timez, (v, cls, times) -> {
+                    if(cls.clNums>0) {
+                        if(scheInformation!=null) scheInformation.alertByBottomDialog(v,cls,times);
+                    }
+                });
 
         //布局高度，设置根布局参数，比如留空值、宽度、长度等，并将根布局添加到上一层布局中去显示;
         int height=widthAndHeight[1];

@@ -1,5 +1,7 @@
 package com.hazukie.scheduleviews.net;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,23 +46,23 @@ public class Base64Util {
     /**
      * 将图片保存到相册并通知刷新
      *
-     * @param mContext
-     * @param bitmap
-     * @throws Exception
+     * @param mContext 上下文
+     * @param bitmap 图片
      */
-    public static void savePictureToAlbum(Context mContext,Bitmap bitmap,String imgName) throws Exception {
+    public static void savePictureToAlbum(Context mContext,Bitmap bitmap,String imgName)  {
         if (bitmap == null) {
             return;
         }
         //把文件插入到系统图库
-        //MediaStore.Images.Media.insertImage(mContext.getContentResolver(), bitmap, System.currentTimeMillis() + "", null);
         //发送广播，通知图库更新
         DateHelper dateHelper=new DateHelper();
         String na=dateHelper.getDai()+imgName;
+        Log.i(TAG, "savePictureToAlbum: na="+na);
         ScreenShotHelper.saveImgBySys(mContext,bitmap,na);
         DisplayHelper.Infost(mContext,"图片已保存到相册！");
     }
 
+    //Convert Png to Pdf
     public static void PngToPdf(Context context,Bitmap v,String fileName){
         PdfDocument document=new PdfDocument();
 
@@ -83,10 +85,9 @@ public class Base64Util {
 
         DateHelper dateHelper=new DateHelper();
         String na=dateHelper.getDai()+fileName;
-        Log.i( "PngToPdf>>","na="+na);
 
         int tag=0;
-        String[] existedFile_lists= NetFileOpts.getInstance(context).getPublicFileList(fileName);
+        String[] existedFile_lists= NetFileOpts.getInstance(context).getPublicFileList("思维导图_PDF");
         if(existedFile_lists!=null&&existedFile_lists.length>0){
             for (String existedFile_list : existedFile_lists) {
                 if (existedFile_list.startsWith(na)) {
@@ -97,10 +98,10 @@ public class Base64Util {
             Log.i( "PngToPdf>>","tag="+tag);
             if(tag>0) na+="("+tag+")";
         }
-        File file = NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.mind,na+".pdf");//FileHelper.getPdfFile(na+".pdf");
 
-        Log.i("PngToPdf>>","lists="+ Arrays.toString(existedFile_lists));
-        Log.i( "PngToPdf>>","exist="+file.exists()+", path="+file.getAbsolutePath());//new File(context.getDir("pdfs",Context.MODE_PRIVATE),fileName);
+
+        File file = NetFileOpts.getInstance(context).getPublicFile("思维导图_Pdf",na+".pdf");
+
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(file);
@@ -117,7 +118,7 @@ public class Base64Util {
                 e.printStackTrace();
             }
         }
-        DisplayHelper.Infost(context,"pdf文件已导出到文档公共目录下！");
+        DisplayHelper.Infost(context,"pdf文件已导出到Documents目录下！");
     }
 
 }

@@ -1,43 +1,8 @@
-//import variable Transform Class
-/*const {Transformer,Markmap,Toolbar} =window.markmap;
-
-const getMarkdown2Svg=(mds)=>{
-  // 1. transform Markdown
-  const transformer=new Transformer()
-
-  // convert markdown to markmap
-  const { root, features } = transformer.transform(mds);
-
-  // 2. get assets
-  const keys = Object.keys(features).filter((key) => !enabled[key]);
-  keys.forEach((key) => enabled[key] = true);
-
-  const { styles, scripts } = transformer.getAssets(keys);
-  const { markmap,mm} = window;
-
-  if (styles) markmap.loadCSS(styles);
-  if (scripts) markmap.loadJS(scripts);
-
-  // 3. create markmap
-  Markmap.create("#markmap", "", root);
-}
-
-const clearSvg=()=>{
-  var svg_root=obj||$('svg_root')
-  svg_root.innerHTML=""
-  var svg_=`<svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-sreen h-sreen leading-none markmap" style="" width="100%" height="540px"></svg>`
-  svg_root.innerHTML=svg_;
-  }
-const getMarkdownz=(obj)=>{
-var z_=obj.value
-clearSvg()
-getMarkdown2Svg(z_)
-}*/
-
 (()=>{
   var mdis$=this||window
+  
   //import variable Transform Class
-  const {Transformer,Markmap} =window.markmap;
+  const {Transformer,Markmap,deriveOptions} =window.markmap;
 
   const svgClear=(id,options)=>{
     var optionz=options||{}
@@ -46,30 +11,40 @@ getMarkdown2Svg(z_)
     var svg_root=$(id)
 
     svg_root.innerHTML=""
-    var svg_=`<svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-sreen h-sreen leading-none markmap" style="" width="${wid}" height="${he}px"></svg>`
+    var svg_=`<svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-sreen h-sreen leading-none markmap" width="${wid}" height="${he}px"></svg>`
     svg_root.innerHTML=svg_;
   }
 
+
+  mdis$.transformMd=(transformer,content)=>{
+    var enabled = {};
+
+    const result = transformer.transform(content);
+    const keys = Object.keys(result.features).filter((key) => !enabled[key]);
+    keys.forEach((key) => {
+      enabled[key] = true;
+    });
+    const { styles, scripts } = transformer.getAssets(keys);
+    const { markmap } = window;
+    if (styles) markmap.loadCSS(styles);
+    if (scripts) markmap.loadJS(scripts);
+    return result;
+  }
+  
   mdis$.MarkdownParse=(mds)=>{
     
     // 1. transform Markdown
     const transformer=new Transformer()
 
     // convert markdown to markmap
-    const { root } = transformer.transform(mds);
-
-    // 2. get assets
-    //const keys = Object.keys(features).filter((key) => !enabled[key]);
-    //keys.forEach((key) => enabled[key] = true);
-
-    //const { styles, scripts } = transformer.getAssets(keys);
-    //const { markmap} = window;
-
-    //if (styles) markmap.loadCSS(styles);
-    //if (scripts) markmap.loadJS(scripts);
+    
+    const { root, frontmatter } = transformMd(transformer, mds);
+    const markmapOptions = frontmatter?.markmap;
+    const frontmatterOptions = deriveOptions(markmapOptions);
+    
 
     // 3. create markmap
-    const map_=Markmap.create("#markmap", "", root);
+    const map_=Markmap.create("#markmap",frontmatterOptions, root);
 
     createToolbar('svg_toolbar',map_)
   }
@@ -86,9 +61,15 @@ getMarkdown2Svg(z_)
     MarkdownParse(mds)
   }
 
+
+  mdis$.clear=()=>{
+    $("markmap").value=''
+  }
+
   mdis$.MarkdownDynamic=(id,obj,options)=>{
     svgClear(id,options)
-    MarkdownParse(obj.value)
+    if(obj.value.length==0) clear()
+    else MarkdownParse(obj.value)
   }
   
 })()

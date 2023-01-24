@@ -1,12 +1,15 @@
 package com.hazukie.scheduleviews.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.print.PrintAttributes;
@@ -21,6 +24,7 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +127,31 @@ public class ScreenShotHelper {
      * @return 返回保存成功如否
      */
     public static boolean saveImgBySys(Context context,Bitmap bitmap, String bitName){
-        MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap,bitName,"");
+        File mImg=NetFileOpts.getInstance(context).getPublicFile("思维导图_图片",bitName);
+        FileOutputStream outputStream;
+        boolean isPng=bitName.endsWith("png");
+        try {
+            outputStream = new FileOutputStream(mImg);
+            if(isPng){
+                if (bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)) {
+                    outputStream.flush();
+                    outputStream.close();
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), mImg.getAbsolutePath(), bitName, null);
+                    return true;
+                }
+            }else{
+                if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)) {
+                    outputStream.flush();
+                    outputStream.close();
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), mImg.getAbsolutePath(), bitName, null);
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //MediaStore.Images.Media.insertImage(context.getContentResolver(),bitmap,bitName,"");
         return true;
     }
 
@@ -134,8 +162,16 @@ public class ScreenShotHelper {
         for(ClassLabel cls:clsLis){
             builder.append(cls.toString()+"\n");
         }
-        File file= NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.sches,"课表.txt");
+        File file= NetFileOpts.getInstance(context).getPublicFile("课表导出",fileName);
         fileystem.putDataStr(file,builder.toString());
+        return true;
+    }
+
+    public static boolean saveTXT(Context context, String fileName,String content){
+        Fileystem fileystem=Fileystem.getInstance(context);
+
+        File file= NetFileOpts.getInstance(context).getPublicFile("课表导出",fileName);
+        fileystem.putDataStr(file,content);
         return true;
     }
 
@@ -159,7 +195,7 @@ public class ScreenShotHelper {
         canvas.drawBitmap(v,matrix,paint);
         document.finishPage(page);
 
-        File file = NetFileOpts.getInstance(context).getPublicFile(FileRootTypes.sches,fileName+".pdf");
+        File file = NetFileOpts.getInstance(context).getPublicFile("课表导出",fileName+".pdf");
 
         FileOutputStream outputStream = null;
         try {

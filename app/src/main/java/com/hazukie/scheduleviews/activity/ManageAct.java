@@ -1,6 +1,10 @@
 package com.hazukie.scheduleviews.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,6 +13,7 @@ import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
 import com.hazukie.scheduleviews.fragments.ScheManageFrag;
 import com.hazukie.scheduleviews.fragments.TimeManageFrag;
+import com.hazukie.scheduleviews.services.SctService;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
 public class ManageAct extends BaseActivity {
@@ -16,12 +21,28 @@ public class ManageAct extends BaseActivity {
     private TextView timeTab;
     private TimeManageFrag timemanageFrag;
     private ScheManageFrag schemakeFrag;
+
+    private final ServiceConnection connection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            SctService.SctObserverBinder binder = (SctService.SctObserverBinder) iBinder;
+            binder.updateMsg(1);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         inits();
+        Intent in=new Intent(this,SctService.class);
+        bindService(in,connection,BIND_AUTO_CREATE);
     }
 
     private void inits(){
@@ -85,5 +106,11 @@ public class ManageAct extends BaseActivity {
     private void hideAllFrags(FragmentTransaction transactio){
         if(timemanageFrag!=null) transactio.hide(timemanageFrag);
         if(schemakeFrag!=null) transactio.hide(schemakeFrag);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
     }
 }

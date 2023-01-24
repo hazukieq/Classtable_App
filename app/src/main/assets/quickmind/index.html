@@ -6,6 +6,7 @@
     <title>基础网页</title>
     <link href="../basic/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../basic/common/universal.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
     <!-- Basic Tool Lib -->
     <script src="../basic/common/utils.js"></script>
 
@@ -33,22 +34,30 @@
         </li>
         
         <li class="nav-item flex-fill d-flex justify-content-center">
-            <h4 style="letter-spacing: 1.98px;" class="iosext m-0 align-self-center" >所思即所得</h4>
+            <h4 style="letter-spacing: 1.98px;" class="iosext m-0 align-self-center" id="toolbar_tile"></h4>
         </li>
 
         <li class="nav-item">
-            <button class="btn text-danger dropdown-toggle" id="export_btn" data-bs-toggle="dropdown" aria-expanded="false">
-                导出
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end border-0 text-center" aria-labelledby="export_btn" style="min-width:5rem;opacity: .9;">
-                <li><a class="dropdown-item pe-1 ps-1 grayext" onclick="javascript:location.reload()">刷新网页</a></li>
-                <li><a class="dropdown-item pe-1 ps-1 grayext" onclick="Exporter.savePng()">图片版</a></li>
-                <li><a class="dropdown-item pe-1 ps-1 grayext" onclick="Exporter.savePdf()">PDF版</a></li>
-            </ul>
+            <button class="btn text-danger" onclick="closePage()">关闭</button>
         </li>
-        
         <li class="nav-item">
-            <button class="btn text-primary"  data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="saveFn">保存</button>
+            <!--button class="btn text-primary"  data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="saveFn">保存</button-->
+            <button class="btn text-primary" id="set_btn" data-bs-toggle="dropdown" aria-expanded="false">
+                更多
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 text-center" aria-labelledby="set_btn" style="min-width:5rem;opacity: .9;">
+                <li><a class="dropdown-item pe-1 ps-1 grayext" onclick="autosaveFn()">保存</a></li>
+                <li>
+                    <a class="dropdown-item pe-1 ps-1 grayext" onclick="anosaveFn('hidden_anosave')">另存</a>
+                    <button id="hidden_anosave" class="visually-hidden" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="saveFn"></button>
+                </li>
+                <!--"anPutData('hello.md','hello,world')">导出</a-->
+                <li>
+                    <a class="dropdown-item pe-1 ps-1 grayext" onclick="hexportFn('hidden_export')">导出</a>
+                    <button id="hidden_export" class="visually-hidden" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="exportFn"></button>
+                </li>
+                <li><a class="dropdown-item pe-1 ps-1 grayext" >设置</a></li>
+            </ul>
         </li>
     </nav>
 
@@ -59,7 +68,7 @@
             </div>
             
             <div>
-                <span class="text-danger" style="font-size:14px">当前选中文件&nbsp;</span>
+                <span class="text-danger" style="font-size:14px;">当前文件&nbsp;</span>
             </div>
             <div class="w-100">
                 <h5 class="d-inline-block text-truncate mb-1" style="max-width: 150px;" id="offcanvasLabel">
@@ -73,8 +82,8 @@
     </div>
 </header>
     <div class="container-fluid">
+
         <div class="p-5"></div>
-        <div class="resizable"></div>
         <!--数据装填区-->
         <div id="waitloading" class="rootbg">
             <div class="text-center">
@@ -86,25 +95,22 @@
         </div>
     </div>
 
-    <footer>
+    <footer id="modal_loading" style="width: 0;height: 0;">
         <!--Modal-->
-        <div class="modal fade" tabindex="-1" id="helpModal">
+        <div class="modal fade" tabindex="-1" id="helpModal" aria-labelledby="helpModal" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header pt-5">
                         Markdown语法基础教程入门
                         <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="overflow: hidden;">
+                    <div class="modal-body p-0 m-0" style="overflow: hidden;">
                         <iframe src="./tutorial/all.html"  width="100%" frameborder="0" height="100%"></iframe>
                     </div>
                 </div>
             </div>
        </div>
        <!--Modal-->
-
-    <!-- Modal temp -->
-    <div id="modal_loading"></div>
     </footer>
     
     <script src="mdProcess.js"></script>

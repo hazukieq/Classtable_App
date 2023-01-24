@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.iJBridges.IJBridgeUtil;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.net.WebStacker;

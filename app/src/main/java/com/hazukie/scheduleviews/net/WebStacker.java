@@ -60,7 +60,7 @@ public class WebStacker {
     }
 
     public void recycleCnWebView(CnWebView cnWebView){
-        if(mCnWebViewStack!=null||!mCnWebViewStack.isEmpty()){
+        if(mCnWebViewStack!=null&&mCnWebViewStack.size()>0){
             cnWebView.releaseAll();
             MutableContextWrapper wrapper=(MutableContextWrapper)cnWebView.getContext();
             wrapper.setBaseContext(cnWebView.getContext().getApplicationContext());

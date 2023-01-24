@@ -158,8 +158,6 @@ public class BaseWebActivity extends BaseActivity {
     }
 
 
-
-
     //可以通过改方法配置网页设置
     protected void configWebView(CnWebView webView) {}
 

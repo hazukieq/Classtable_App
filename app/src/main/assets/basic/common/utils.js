@@ -3,6 +3,12 @@ String.prototype.replaceAll=function(s1,s2){
     return this.replace(new RegExp(s1,'gm'),s2)
 }
 
+
+HTMLElement.prototype.autoclick=function(){
+    const el=new MouseEvent('click')
+    this.dispatchEvent(el)
+}
+
 /** 
  * @param {String} id 
  * @returns {Object} obj
@@ -239,10 +245,16 @@ const $drop=(ele,callback)=>{
 
 HTMLElement.prototype.switch=function(args,onFunc,offFunc){
     var __check=this.getAttribute('isCheck')
-    __check||this.setAttribute('isCheck',true)
+    console.log(__check)
+    if(__check==null||__check===undefined) {
+        this.setAttribute('isCheck','true')
+        onFunc(this,__args)
+    }
     const __args=args||{}
-    __check==='true'?onFunc(this,__args):offFunc(this,__args)
-    $attr(this,{isCheck:__check==='true'?'false':'true'}) 
+    __check==='true'?offFunc(this,__args):onFunc(this,__args)
+    this.setAttribute('isCheck',__check==='true'?'false':'true') 
+
+    
     return this
 }
 

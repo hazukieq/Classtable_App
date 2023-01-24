@@ -36,7 +36,7 @@ public class BottomialogUtil {
      * @param multi_filter 筛选后列表
      * @param multiTypeAdapter 适配器
      * @param timetable 时间头文件模型
-     * @param cls 传入绑定数据模型（一般是和布局绑定邸数据模型，需要手动更新变动过过的数据）
+     * @param cls 传入绑定数据模型（一般是和布局绑定邸数据模型，需要手动更新变动过的数据）
      * @param attachedView 绑定布局
      * @param IspresetValues 是否预设有数据（即是否在原有数据卡片上修改，或者是新添卡片）
      * @param weekRID 当前是在周数筛选栏中的第几个
@@ -81,13 +81,13 @@ public class BottomialogUtil {
                         cs_.setCustomTime(binding.classCustomDate.getText().toString());
 
                         //如果是已有卡片上，则编辑；反之采用另一种
+                        //因为是预设，所以需要移除自己，避免重复判断
+                        //不是预设的话，根本不需要这样做
                         if(IspresetValues){
                             //移除旧item，避免重复判断
                             List<Object> ls=new ArrayList<>(multi_all);
                             ls.remove(cls);
-                            //List<ClassLabel> same_list=CheckUtil.findSpecificItems(ls,week,detail_time);
                             check_= CheckUtil.returnIsDuplicateCheck(ls,week,detail_time,cs_,timetable);
-
                         }else{
                             check_= CheckUtil.returnIsDuplicateCheck(multi_all,week,detail_time,cs_,timetable);
                         }
@@ -120,7 +120,6 @@ public class BottomialogUtil {
                                         //添加数据
                                         multi_all.add(cs_);
                                     }
-                                    //Log.i( "showEditPopup-preset: ","week="+week+",cls.week="+cls.week);
                                     cb.dismiss();
                                 }else{
                                     multi_all.add(cs_);

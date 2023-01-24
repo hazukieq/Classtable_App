@@ -1,12 +1,20 @@
 package com.hazukie.scheduleviews.activity;
 
+
+import static android.content.ContentValues.TAG;
+
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,6 +42,7 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
+import com.hazukie.scheduleviews.services.SctService;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.scheutil.CheckUtil;
 import com.hazukie.scheduleviews.statics.ColorSeletor;
@@ -63,9 +72,27 @@ public class MainActivity extends BaseActivity {
     private SpvalueStorage sp;
     private OftenOpts oftenOpts;
 
+
+    private SctService.SctObserverBinder binder;
+    private final ServiceConnection connection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            binder = (SctService.SctObserverBinder) iBinder;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent in=new Intent(this,SctService.class);
+        //startService(in);
+        //bindService(in,connection,BIND_AUTO_CREATE);
 
         setContentView(R.layout.activity_main);
         StatusHelper.controlStatusLightOrDark(MainActivity.this, StatusHelper.Mode.Status_Dark_Text);
@@ -202,7 +229,7 @@ public class MainActivity extends BaseActivity {
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:
-                    String test_url=sp.getStringValue("testurl","http://192.168.2.3:80/jbridge/quickmind/index.html");
+                    String test_url=sp.getStringValue("testurl","http://192.168.2.5:8080/jbridge/quickmind/index.html");
                     sp.setStringvalue("testurl",test_url);
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
                     Crialoghue cri=new Crialoghue.HeditBuilder()
@@ -489,6 +516,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(binder!=null) {
+            int s=binder.getIsUpdateMsg();
+            if(s==1){
+                Log.d(TAG, "onResume: 检测到索引文件数据发生变化，当前页面即将执行刷新任务！");
+            }
+        }
+
         try{
             //设置周数，这里需要开学日期时间！！
             int startMonth=sp.getInt("start_month",9);
@@ -505,5 +539,22 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN){
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
     }
 }

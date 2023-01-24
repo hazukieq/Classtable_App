@@ -5,6 +5,8 @@ import com.hazukie.scheduleviews.models.Unimodel;
 public class Statics {
     //二进制表示 空表
     public final static String record_name_default="1111010011110101000100001101000";
+    public final static String index_file_name="index.txt";
+    public final static String scheAndtimeTB_record="record_name";
     public final static Unimodel[] weekTimes=new Unimodel[]{
             new Unimodel(0,"星期一"),
             new Unimodel(1,"星期二"),

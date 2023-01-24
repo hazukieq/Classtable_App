@@ -3,7 +3,6 @@ package com.hazukie.scheduleviews.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,17 +53,23 @@ public class ScheCreateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sche_make);
+
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
+
         getDatas();
         instance=this;
-        Log.i("SchecreateAct>>","globalTimeName="+globalTime);
+
         oftenOpts=OftenOpts.getInstance(getApplicationContext());
+
         initViews();
     }
 
+
     private void initViews(){
+        //过滤列表
         filtered_list=new ArrayList<>();
 
+        //悬浮添加按钮
         floatingActionBtn=findViewById(R.id.schemake_addLabel);
         floatingActionBtn.setOnClickListener(v->{
             //找到已选中Item的序号，传递其给classlabel模型
@@ -77,14 +82,18 @@ public class ScheCreateActivity extends BaseActivity {
             if(weekRID==0)weekRID=1;
             ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
             try {
+                //如果作息表为空，则启动默认作息表
                 if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());
+                //打开底部对话框
                 new BottomialogUtil(ScheCreateActivity.this).
                         showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
             }catch (Exception e){
                 e.printStackTrace();
             }
+
         });
 
+        //顶部状态栏
         TopbarLayout titleLabel = findViewById(R.id.class_schedule_title);
         titleLabel.setVisibility(View.GONE);
 
@@ -97,33 +106,39 @@ public class ScheCreateActivity extends BaseActivity {
 
         //跳转预览界面
         scheLabel.setOnClickListener(v->{
+            //课表数据
             List<ClassLabel> clssLs=new ArrayList<>();
-            for(Object obj:main_list) clssLs.add((ClassLabel) obj);
+            for(Object obj:main_list)
+                clssLs.add((ClassLabel) obj);
+            //携带数据跳转
             SchePreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
-/*            for (int i = 0; i < main_list.size(); i++) {
-                ClassLabel cs=(ClassLabel) main_list.get(i);
-                clssLs.add(cs);
-            }*/
         });
 
         //跳转保存界面
         TextView saveLabel = findViewById(R.id.schemake_saveLabel);
         saveLabel.setOnClickListener(v->{
-                    List<ClassLabel> cxx=new ArrayList<>();
-                    CycleUtil.cycle(main_list, (obj, objects) -> cxx.add((ClassLabel) obj));
-                    FragmentContainerAct.startActivityWithLoadUrl(this, ScheFileCreateFrag.class,globalTime,cxx);
-                });
+            //课表数据
+            List<ClassLabel> cxxList=new ArrayList<>();
+            for(Object obj:main_list)
+                cxxList.add((ClassLabel) obj);
+
+            //携带数据跳转
+            FragmentContainerAct.startActivityWithLoadUrl(
+                    this,
+                    ScheFileCreateFrag.class,
+                    globalTime,cxxList);
+
+        });
 
 
         headAdpInits();
         mainAdpInits();
 
-        //关闭上一个活动！
+        //定时关闭上一个活动！
         TimerTask task=new TimerTask() {
             @Override
             public void run() {
                 FragmentContainerAct.instance.finish();
-                Log.i("fragAct>>","closed!");
             }
         };
         Timer timer=new Timer();
@@ -131,6 +146,7 @@ public class ScheCreateActivity extends BaseActivity {
     }
 
 
+    //头部筛选区
     private void headAdpInits(){
         //加载静态数据进去
         List<Unimodel> headWeeks=Arrays.asList(Statics.headWeeks);
@@ -189,7 +205,7 @@ public class ScheCreateActivity extends BaseActivity {
 
     }
 
-
+    //主体部分
     private void mainAdpInits(){
         RecyclerView mainRecy = findViewById(R.id.schemake_recy);
         mainAdp=new MultiTypeAdapter();
@@ -219,7 +235,7 @@ public class ScheCreateActivity extends BaseActivity {
         mainAdp.register(ClassLabel.class,schecardBinder);
 
         //加载作息表数据
-        loadInits(globalTime);
+        timeheadModel=oftenOpts.getThm(globalTime);
 
         filtered_list.addAll(main_list);
         mainRecy.setAdapter(mainAdp);
@@ -228,20 +244,21 @@ public class ScheCreateActivity extends BaseActivity {
 
 
 
-    //加载作息表文件数据
-    private void loadInits(String loadFile_time){
-        timeheadModel=oftenOpts.getThm(loadFile_time);//FileHelper.getThm(getApplicationContext(),loadFile_time);
+
+    /*--------其他配置------*/
+    //读取数据
+    private void getDatas() {
+        Intent in_=getIntent();
+        globalTime = in_.getStringExtra("timeName");
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            DisplayHelper.showBack(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    //携带数据跳转当前活动
+    public static void startActivityWithData(Context context, String timeName){
+        Intent in=new Intent();
+        in.setClass(context,ScheCreateActivity.class);
+        in.putExtra("timeName",timeName);
+        context.startActivity(in);
     }
-
 
 
     @Override
@@ -255,17 +272,15 @@ public class ScheCreateActivity extends BaseActivity {
         super.onPause();
     }
 
-    //读取网页链接
-    private void getDatas() {
-        Intent in_=getIntent();
-        globalTime = in_.getStringExtra("timeName");
+    //返回时提醒
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            DisplayHelper.showBack(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
-
-    public static void startActivityWithData(Context context, String timeName){
-        Intent in=new Intent();
-        in.setClass(context,ScheCreateActivity.class);
-        in.putExtra("timeName",timeName);
-        context.startActivity(in);
-    }
+    /*--------其他配置------*/
 
 }

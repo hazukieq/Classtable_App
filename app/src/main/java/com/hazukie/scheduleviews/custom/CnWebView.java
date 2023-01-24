@@ -82,8 +82,8 @@ public class    CnWebView extends WebView {
             String appCache_path=getWebCacheDir(context);
             File cacheDir=new File(appCache_path);
             if(!cacheDir.exists()&&!cacheDir.isDirectory()) cacheDir.mkdirs();
-            webSettings.setAppCacheEnabled(true);
-            webSettings.setAppCachePath(appCache_path);
+            //webSettings.setAppCacheEnabled(true);
+            //webSettings.setAppCachePath(appCache_path);
         }
     }
 

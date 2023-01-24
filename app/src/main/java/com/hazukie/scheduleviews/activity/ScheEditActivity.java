@@ -52,9 +52,12 @@ public class ScheEditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sche_make);
+
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         getDatas();
+
         oftenOpts=OftenOpts.getInstance(getApplicationContext());
+
         initViews();
     }
 
@@ -71,8 +74,10 @@ public class ScheEditActivity extends BaseActivity {
             }
             if(weekRID==0)weekRID=1;
             ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
+
             try {
                 if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());
+
                 new BottomialogUtil(ScheEditActivity.this).
                         showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
             }catch (Exception e){
@@ -86,6 +91,7 @@ public class ScheEditActivity extends BaseActivity {
         titleLabel.addLftTextView("预览", v->{
             List<ClassLabel> clssLs=new ArrayList<>();
             CycleUtil.cycle(main_list, (obj, objects) -> clssLs.add((ClassLabel) obj));
+
             SchePreviewActivity.startActivityWithSche(this,timeheadModel.totalClass,globalTime,clssLs);
         });
 
@@ -232,12 +238,29 @@ public class ScheEditActivity extends BaseActivity {
             }else{
                 Toast.makeText(ScheEditActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
             }
+
         }else if(main_list.size()==0){
             oftenOpts.putDataList(FileRootTypes.sches,sche,new ArrayList<>());
             Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
             cih.dismiss();
             finish();
         }
+    }
+
+
+    //读取网页链接
+    private void getDatas() {
+        Intent in_=getIntent();
+        String[] names=in_.getStringExtra("name").split(",");
+        globalTime =names[1] ;
+        globalSche=names[0];
+    }
+
+    public static void startActivityWithData(Context context,String scheName,String timeName){
+        Intent in=new Intent();
+        in.setClass(context, ScheEditActivity.class);
+        in.putExtra("name",scheName+","+timeName);
+        context.startActivity(in);
     }
 
     @Override
@@ -259,21 +282,5 @@ public class ScheEditActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    //读取网页链接
-    private void getDatas() {
-        Intent in_=getIntent();
-        String[] names=in_.getStringExtra("name").split(",");
-        globalTime =names[1] ;
-        globalSche=names[0];
-    }
-
-    public static void startActivityWithData(Context context,String scheName,String timeName){
-        Intent in=new Intent();
-        in.setClass(context, ScheEditActivity.class);
-        in.putExtra("name",scheName+","+timeName);
-        context.startActivity(in);
     }
 }

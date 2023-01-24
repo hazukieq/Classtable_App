@@ -1,0 +1,19 @@
+.badpan{
+    background-color: white;
+    border: solid 1px gray;
+    opacity: .8;
+    width: 36px;
+    height: 24px;
+    text-align: center;
+    font-size: 14px;
+}
+.badpaned{
+    width: 36px;
+    height: 24px;
+    opacity:.8;
+    background-color: #1b88ee;
+    color: white;
+    border: 1px solid white;
+    font-weight: bold;
+    text-align: center;
+}

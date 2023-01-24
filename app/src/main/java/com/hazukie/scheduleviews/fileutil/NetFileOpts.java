@@ -3,7 +3,12 @@ package com.hazukie.scheduleviews.fileutil;
 import android.content.Context;
 import android.os.Environment;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class NetFileOpts {
     private final Context context;
@@ -17,15 +22,15 @@ public class NetFileOpts {
         return instance;
     }
 
-    private File getPublicRoot(FileRootTypes rootTypes){
+/*    private File getPublicRoot(FileRootTypes rootTypes){
         File public_docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         String public_export_root_file_name="课表助手";
         File classhelper_root=new File(public_docs,public_export_root_file_name);
         if(!classhelper_root.exists()) classhelper_root.mkdir();
-        File file=new File(classhelper_root,rootTypes.name());
+        File file=new File(classhelper_root,rootTypes.name().equals("mind")?"思维导图":"便签笔记");
         if(!file.exists()) file.mkdir();
         return file;
-    }
+    }*/
     private File getPublicRoot(String file_name){
         File public_docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         String public_export_root_file_name="课表助手";
@@ -37,6 +42,35 @@ public class NetFileOpts {
     }
 
     /*---- WebView part START----*/
+    //获取网页配置
+    public String getPgConfigs(String rootMode) {
+        String contents="";
+        try{
+            FileRootTypes type=rootMode.equals("mind")?FileRootTypes.mind:FileRootTypes.note;
+            BasicOpts basicOpts=BasicOpts.getInstance(context);
+            boolean fl=basicOpts.create(type,".configs");
+
+            File root=context.getDir(type.name(), Context.MODE_PRIVATE);
+            File f=new File(root,".configs");
+
+            FileReader in=new FileReader(f);
+            BufferedReader reader=new BufferedReader(in);
+            String line;
+            StringBuilder stringBuilder=new StringBuilder();
+            while ((line=reader.readLine())!=null){
+                stringBuilder.append(line);
+            }
+
+            contents=stringBuilder.toString();
+        }catch (Exception e){
+            contents="";
+            e.printStackTrace();
+        }
+
+        return contents;
+    }
+
+
     public String[] getUnderFileLists(FileRootTypes rootMode){
         File f=context.getDir(rootMode.name(), Context.MODE_PRIVATE);
         return f.list();
@@ -53,7 +87,12 @@ public class NetFileOpts {
         return null;
     }
 
-    public File getPublicFile(FileRootTypes rootTypes,String name){
+/*    public File getPublicFile(FileRootTypes rootTypes,String name){
+        File root=getPublicRoot(rootTypes);
+        return new File(root,name);
+    }*/
+
+    public File getPublicFile(String rootTypes,String name){
         File root=getPublicRoot(rootTypes);
         return new File(root,name);
     }

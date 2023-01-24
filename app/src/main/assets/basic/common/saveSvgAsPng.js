@@ -459,9 +459,13 @@
   };
 
   // 自定义部分起始区
-  out$.returnUri=(iu)=>{
-    //window.java.down(iu)
+  out$.returnPngUri=(iu)=>{
     var jso="{\"command\":\"getPngUri\",\"params\":\""+iu+"\"}"
+    HJBridgeCmdDispatcher().send(jso)
+  }
+
+  out$.returnJpgUri=(iu)=>{
+    var jso="{\"command\":\"getJpgUri\",\"params\":\""+iu+"\"}"
     HJBridgeCmdDispatcher().send(jso)
   }
 
@@ -480,21 +484,33 @@
     return requireDomNodePromise(el).then(function (el) {
       return out$.svgAsPngUri(el, options || {});
     }).then(function (uri) {
-      return out$.returnUri(uri)//out$.download(name, uri, downloadOpts);
+      return out$.returnPngUri(uri)//out$.download(name, uri, downloadOpts);
     });
   };
 
+      /**
+   * @param {HTMLElement} el 
+   * @param {Object} options 
+   * @returns {String} uri
+   */
+      out$.saveSvgAsJpgUri = function (el,options) {
+        return requireDomNodePromise(el).then(function (el) {
+          return out$.svgAsPngUri(el, options || {});
+        }).then(function (uri) {
+          return out$.returnJpgUri(uri)//out$.download(name, uri, downloadOpts);
+        });
+      };
 
     /**
    * @param {HTMLElement} el 
    * @param {Object} options 
    * @returns {String} uri
    */
-  out$.saveSvgAsPdfUri = function (el,options,ijb) {
+  out$.saveSvgAsPdfUri = function (el,options) {
     return requireDomNodePromise(el).then(function (el) {
-      return out$.svgAsPngUri(el, options || {});
+      return out$.svgAsPngUri(el, options || {})
     }).then(function (uri) {
-      return out$.returnPdfUri(uri)//out$.download(name, uri, downloadOpts);
+      return out$.returnPdfUri(uri)
     });
   };
 

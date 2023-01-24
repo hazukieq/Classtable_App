@@ -44,7 +44,17 @@ public class CalculateData {
         Log.i("exClasses: ","class="+Classes.size());
         if(Classes.size()>0&&Classes.get(0)!=null){
             List<ClassLabel> backup = new ArrayList<>(xYsList);
-            CycleUtil.doubleCycle(new ArrayList<>(Classes), new ArrayList<>(xYsList), new CycleUtil.DoubleCyExecute() {
+            for (int i = 0; i < Classes.size(); i++) {
+                ClassLabel mLabel=Classes.get(i);
+                for (int j = 0; j < xYsList.size(); j++) {
+                    ClassLabel Label=xYsList.get(j);
+                    if(mLabel.week== Label.week&&mLabel.startCl== Label.startCl){
+                        backup.remove(Label);
+                        backup.add(j,mLabel);
+                    }
+                }
+            }
+            /*CycleUtil.doubleCycle(new ArrayList<>(Classes), new ArrayList<>(xYsList), new CycleUtil.DoubleCyExecute() {
                 @Override
                 public void firstFunc(Object firstArg, int firstIndex) {}
 
@@ -57,8 +67,9 @@ public class CalculateData {
                         backup.add(secondIndex,(ClassLabel) firstArg);
                     }
                 }
-            });
+            });*/
             return returnResult(backup);
+
         }else{
             Log.i("exClasses: ","class is empty!");
             return empty();
@@ -72,8 +83,12 @@ public class CalculateData {
             ClassLabel classLabel=(ClassLabel) obj;
             int tag = classLabel.clNums;
             int index = all.indexOf(classLabel);
-            if(tag>=2) for(int i=1;i<tag;i++) qall.remove(all.get(index+i));
+            if(tag>=2) {
+                for(int i=1;i<tag;i++)
+                    qall.remove(all.get(index+i));
+            }
         });
+
         return qall;
     }
 }
