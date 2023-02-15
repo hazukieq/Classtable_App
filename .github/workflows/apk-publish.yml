@@ -81,6 +81,6 @@ jobs:
      - name: Archive apks
        uses: actions/upload-artifact@v1
        with:
-        name: apk
+        name: build
         path: app/build/outputs
         #asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
