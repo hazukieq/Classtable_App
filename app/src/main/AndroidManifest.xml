@@ -67,6 +67,9 @@
             android:name=".activity.QuickNoteActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.ThirdWebLoadAct"
+            android:exported="false" />
+        <activity
             android:name=".activity.LauncherActivity"
             android:exported="true"
             android:theme="@style/Theme.Launcher">

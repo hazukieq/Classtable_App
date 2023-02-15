@@ -3,8 +3,8 @@ package com.hazukie.scheduleviews.custom;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebHistoryItem;
@@ -13,7 +13,6 @@ import android.webkit.WebView;
 
 import com.hazukie.scheduleviews.R;
 
-import java.io.File;
 
 public class    CnWebView extends WebView {
 
@@ -21,69 +20,84 @@ public class    CnWebView extends WebView {
 
     public CnWebView(Context context) {
         this(context, null);
-        init(context);
+        init();
     }
 
     public CnWebView(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.webViewStyle);
-        init(context);
+        init();
     }
 
     public CnWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init();
     }
 
     private String getWebCacheDir(Context context){
-        return context.getDir("webache",Context.MODE_PRIVATE).getAbsolutePath();
+        return context.getDir("app_webache",Context.MODE_PRIVATE).getAbsolutePath();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    protected void init(Context context) {
+    protected void init() {
         setBackgroundColor(Color.TRANSPARENT);
         setBackgroundResource(R.color.white);
 
         //隐藏滚动条
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
-        setOverScrollMode(View.OVER_SCROLL_NEVER);
-        setNestedScrollingEnabled(false);
+
+        setOverScrollMode(View.OVER_SCROLL_NEVER);//取消WebView中混动或拖动到顶部、底部时的阴影
+        setNestedScrollingEnabled(false);//
 
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
+        webSettings.setSupportMultipleWindows(false);
 
         webSettings.setSupportZoom(false);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDisplayZoomControls(false);
-        webSettings.setUseWideViewPort(true);
+        webSettings.setUseWideViewPort(false);
 
 
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
 
+        webSettings.setDefaultTextEncodingName("UTF-8");
+        webSettings.setTextZoom(100);
+
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setLoadWithOverviewMode(true);
-        webSettings.setBlockNetworkLoads(false);
+
+        //webSettings.setBlockNetworkLoads(false);
         webSettings.setDomStorageEnabled(true);
 
-        webSettings.setDefaultTextEncodingName("utf-8");
+
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 
-
-        webSettings.setTextZoom(100);
-        webSettings.setAllowUniversalAccessFromFileURLs(true);
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
         //set web cache strategy
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        /*
         boolean isCacheMode=false;
         int loadMode=isCacheMode?WebSettings.LOAD_DEFAULT:WebSettings.LOAD_NO_CACHE;
-        webSettings.setCacheMode(loadMode);
         if(isCacheMode){
             String appCache_path=getWebCacheDir(context);
             File cacheDir=new File(appCache_path);
             if(!cacheDir.exists()&&!cacheDir.isDirectory()) cacheDir.mkdirs();
             //webSettings.setAppCacheEnabled(true);
             //webSettings.setAppCachePath(appCache_path);
+        }*/
+
+
+
+        //启动硬件加速
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+            setLayerType(View.LAYER_TYPE_HARDWARE,null);
+        }else{
+            setLayerType(View.LAYER_TYPE_SOFTWARE,null);
         }
     }
 
@@ -96,12 +110,12 @@ public class    CnWebView extends WebView {
 
 
     public void releaseAll(){
-        removeAllViews();
         stopLoading();
-        setWebViewClient(null);
-        setWebChromeClient(null);
         loadUrl("about:blank");
         clearHistory();
+        setWebViewClient(null);
+        setWebChromeClient(null);
+        removeAllViews();
     }
 
     @Override
@@ -111,7 +125,7 @@ public class    CnWebView extends WebView {
 
         if(currentIndex>=0){
             WebHistoryItem item=back_list.getItemAtIndex(currentIndex);
-            Log.i(TAG, "canGoBack: "+item.getUrl());
+            //Log.i(TAG, "canGoBack: "+item.getUrl());
             if(item.getUrl().equals("about:blank")) return false;
         }
         return super.canGoBack();

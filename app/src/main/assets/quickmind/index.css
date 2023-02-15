@@ -17,3 +17,9 @@
     font-weight: bold;
     text-align: center;
 }
+
+label,h4,h5,span,div,button{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

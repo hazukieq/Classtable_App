@@ -22,21 +22,23 @@ public class FileIvoker implements IJBridgeCmd {
             String filename=msgPasser.args.get(1)!=null?msgPasser.args.get(1):"";
             String content=msgPasser.args.get(2)!=null?msgPasser.args.get(2):"";
 
-            switch (msgPasser.cmd){
+            if(msgPasser.cmd.equals("putData")){
+                OftenOpts.getInstance(context).putDataStr(type,filename,content);
+            }
+            /*switch (msgPasser.cmd){
                 //获取当前网页配置信息
                 case "putConfigData":
                     OftenOpts.getInstance(context).putDataStr(type,filename,content);
                     break;
-
                 //对文件进行写入操作
                 case "putData":
                     OftenOpts.getInstance(context).putDataStr(type,filename,content);
-                    DisplayHelper.Infost(context,"数据已保存");
                     break;
+
                 default:
                     break;
 
-                /*
+
                 //列出某个文件夹下所有文件
                 case "askFlist":
                     String[] lists=netFileOpts.getUnderFileLists(type);
@@ -54,8 +56,8 @@ public class FileIvoker implements IJBridgeCmd {
                     String s= Fileystem.getInstance(context).getDataStr(type,filename);
                     Log.i(TAG, "exec: read_data="+s);
                     NativeInvoker.excecuteJs(context,webView,new Gson(),new JBridgeObject("getData",s));
-                    break;*/
-            }
+                    break;
+            }*/
         }
     }
 

@@ -1,9 +1,9 @@
 package com.hazukie.scheduleviews.net;
 
+
 import android.content.Context;
 import android.content.MutableContextWrapper;
 import android.os.Looper;
-import android.os.MessageQueue;
 import android.util.Log;
 
 import com.hazukie.scheduleviews.custom.CnWebView;
@@ -11,7 +11,7 @@ import com.hazukie.scheduleviews.custom.CnWebView;
 import java.util.Stack;
 
 public class WebStacker {
-    private static final String TAG = "WebStaker preloaded CnWebView nums==>";
+    //private static final String TAG = "WebStaker preloaded CnWebView nums==>";
     private static  WebStacker INSTANCE;
     private final Context context;
     private  WebStacker(Context context){
@@ -19,7 +19,7 @@ public class WebStacker {
     }
 
     private static final Stack<CnWebView> mCnWebViewStack=new Stack<>();
-    private static final int mCnWebView_nums=2;
+    private static final int mCnWebView_nums=3;
 
     public static WebStacker getInstance(Context context){
         if(INSTANCE==null) {
@@ -30,6 +30,7 @@ public class WebStacker {
         return INSTANCE;
     }
 
+
     public void preload(){
         Looper.myQueue().addIdleHandler(() -> {
             if(mCnWebViewStack.size()<mCnWebView_nums) {
@@ -37,7 +38,7 @@ public class WebStacker {
                     mCnWebViewStack.push(createCnWebView());
                 }
             }
-            Log.i(TAG, "preload: "+mCnWebViewStack.size());
+            Log.i("WebStacker", "preload: "+mCnWebViewStack.size());
             return false;
         });
     }

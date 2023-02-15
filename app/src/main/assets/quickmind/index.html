@@ -11,28 +11,29 @@
     <script src="../basic/common/utils.js"></script>
 
     <!-- Native&Js BridgeInvoker Lib -->
-    <script src="../basic/js2native/ijbridger.js"></script>
-    <script src="ijb_register.js"></script>
+    <script src="../basic/js2native/ijbridger.min.js"></script>
+    <script src="minjs/ijb_register.js"></script>
 
 
     <!-- MarkmapLib -->
     <script src="./lib/d3/dist/d3.min.js"></script>
     <script src="./lib/markmap-lib/dist/browser/index.min.js"></script>
     <script src="./lib/markmap-view/dist/index.min.js"></script>
-    <script src="./lib/markmap-toolbar/dist/index.umd.min.js"></script>
+    <!--script src="./lib/markmap-toolbar/dist/index.umd.min.js"></script-->
+    <script src="./lib/markmap-toolbar/dist/neo_index.js"></script>
 
     <!-- Convertor of PNG2PDF lib -->
     <script src="../basic/common/saveSvgAsPng.js"></script>
 </head>
 
 <body>
-    <header>
+<header>
     <nav class="nav pt-5 bg-white border-bottom border-1 fixed-top">
         <li class="nav-item">
             <button class="btn" data-bs-toggle="offcanvas" href="#sidebar" role="button" aria-controls="sidebar">
                 <img src="../basic/img/list.svg" class="img-fluid opacity-75" width="30" height="30"></button>
         </li>
-        
+
         <li class="nav-item flex-fill d-flex justify-content-center">
             <h4 style="letter-spacing: 1.98px;" class="iosext m-0 align-self-center" id="toolbar_tile"></h4>
         </li>
@@ -46,17 +47,19 @@
                 更多
             </button>
             <ul class="dropdown-menu dropdown-menu-end border-0 text-center" aria-labelledby="set_btn" style="min-width:5rem;opacity: .9;">
-                <li><a class="dropdown-item pe-1 ps-1 grayext" onclick="autosaveFn()">保存</a></li>
+                <li><button class="dropdown-item pe-1 ps-1 grayext" onclick="autosaveFn()">保存</button></li>
                 <li>
-                    <a class="dropdown-item pe-1 ps-1 grayext" onclick="anosaveFn('hidden_anosave')">另存</a>
+                    <button class="dropdown-item pe-1 ps-1 grayext" onclick="anosaveFn('hidden_anosave')">另存</button>
                     <button id="hidden_anosave" class="visually-hidden" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="saveFn"></button>
                 </li>
                 <!--"anPutData('hello.md','hello,world')">导出</a-->
                 <li>
-                    <a class="dropdown-item pe-1 ps-1 grayext" onclick="hexportFn('hidden_export')">导出</a>
+                    <button class="dropdown-item pe-1 ps-1 grayext" onclick="hexportFn('hidden_export')">导出</button>
                     <button id="hidden_export" class="visually-hidden" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="exportFn"></button>
                 </li>
-                <li><a class="dropdown-item pe-1 ps-1 grayext" >设置</a></li>
+                <li>
+                    <a class="dropdown-item pe-1 ps-1 grayext" href="app://quickmind/tutorial/all.html">帮助</a>
+                </li>
             </ul>
         </li>
     </nav>
@@ -66,7 +69,7 @@
             <div class="d-flex justify-content-end w-100">
                 <button id="offcanvasCloseBtn" type="button" class="btn btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            
+
             <div>
                 <span class="text-danger" style="font-size:14px;">当前文件&nbsp;</span>
             </div>
@@ -74,48 +77,56 @@
                 <h5 class="d-inline-block text-truncate mb-1" style="max-width: 150px;" id="offcanvasLabel">
                 </h5>
             </div>
-           
+
         </div>
         <div class="offcanvas-body pt-0" id="offcanvasMain">
             <!--JS填充区-->
         </div>
     </div>
 </header>
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <div class="p-5"></div>
-        <!--数据装填区-->
-        <div id="waitloading" class="rootbg">
-            <div class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <p class="tip">数据正在加载.....</p>
+    <div class="p-5"></div>
+    <!--数据装填区-->
+    <div id="waitloading" class="rootbg">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
+            <p class="tip">数据正在加载.....</p>
         </div>
     </div>
+</div>
 
-    <footer id="modal_loading" style="width: 0;height: 0;">
-        <!--Modal-->
-        <div class="modal fade" tabindex="-1" id="helpModal" aria-labelledby="helpModal" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content">
-                    <div class="modal-header pt-5">
-                        Markdown语法基础教程入门
-                        <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close"></button>
+<footer id="modal_loading" style="width: 0;height: 0;">
+    <button class="visually-hidden" data-bs-toggle="modal" data-bs-target="#helpModal" id="fullautoclick">hello</button>
+    <!--Modal-->
+    <div class="modal fade" tabindex="-1" id="helpModal" aria-labelledby="helpModal" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen m-0">
+            <div class="modal-content">
+                <div class="modal-body m-0 p-0" style="overflow: hidden;">
+                    <div class="row m-0 pt-5 pe-1">
+                        <div class="col p-0">
+                            <button  type="button" class="btn btn-close float-end" data-bs-dismiss="modal" ></button>
+                        </div>
                     </div>
-                    <div class="modal-body p-0 m-0" style="overflow: hidden;">
-                        <iframe src="./tutorial/all.html"  width="100%" frameborder="0" height="100%"></iframe>
-                    </div>
+                    <!--主界面数据载入区-->
+                    <div class="row m-0" id="fmmp_root"></div>
                 </div>
             </div>
-       </div>
-       <!--Modal-->
-    </footer>
-    
-    <script src="mdProcess.js"></script>
-    <script src="mind.js"></script>
-    <script src="index.js"></script>
-    <script src="../basic/bootstrap/js/bootstrap.bundle.min.js"></script>
+        </div>
+        <button class="visually-hidden" data-bs-dismiss="modal" id="full_dismiss"></button>
+    </div>
+    <!--Modal-->
+    <br/>
+</footer>
+
+
+<script src="minjs/mdProcess.js"></script>
+<script src="minjs/mind.js"></script>
+<script src="minjs/index.js"></script>
+<script src="../basic/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="minjs/fullscreen.js"></script>
+
 </body>
 </html>

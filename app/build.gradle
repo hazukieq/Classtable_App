@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.hazukie.scheduleviews"
-        minSdk 23
+        minSdk 21
         targetSdk 33
         versionCode 1004000
         versionName "1.0.4.00"
@@ -29,9 +29,6 @@ android {
     buildTypes {
         debug{
             versionNameSuffix "-debug"
-            minifyEnabled true
-            shrinkResources true
-
         }
         release {
             minifyEnabled true
@@ -57,6 +54,9 @@ android {
 }
 
 dependencies {
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
     // guolin open library permissionX
     implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 

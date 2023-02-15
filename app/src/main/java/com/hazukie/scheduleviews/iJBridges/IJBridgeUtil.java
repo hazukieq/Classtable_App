@@ -1,6 +1,7 @@
 package com.hazukie.scheduleviews.iJBridges;
 
 import com.hazukie.scheduleviews.net.FileIvoker;
+import com.hazukie.scheduleviews.net.Infost;
 import com.hazukie.scheduleviews.net.Vert2Pdf;
 import com.hazukie.scheduleviews.net.Vert2Png;
 
@@ -22,6 +23,8 @@ public class IJBridgeUtil {
         IJBridgeCmd FileIvoker$$ijbridgeCmdApt= new FileIvoker();
         jBridgeCmdHandler.registerCmd("fileInvoker",FileIvoker$$ijbridgeCmdApt);
 
+        IJBridgeCmd Infost$$ijbridgeCmdApt= new Infost();
+        jBridgeCmdHandler.registerCmd("infost",Infost$$ijbridgeCmdApt);
     }
 
 }

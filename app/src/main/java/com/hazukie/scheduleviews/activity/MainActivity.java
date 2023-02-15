@@ -73,19 +73,6 @@ public class MainActivity extends BaseActivity {
     private OftenOpts oftenOpts;
 
 
-    private SctService.SctObserverBinder binder;
-    private final ServiceConnection connection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            binder = (SctService.SctObserverBinder) iBinder;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,8 +131,8 @@ public class MainActivity extends BaseActivity {
         //获取现在属于第几周
         String weekth=dateHelper.getGapStr();
         topbarLayout.setTitle(weekth)
-                .addLeftTextView(getString(R.string.main_menu), getColor(R.color.text_gray), 18, v -> drawerLayout.openDrawer(Gravity.LEFT))
-                .addRightTextView(getString(R.string.main_ouput), getColor(R.color.text_gray), 18, this::exportSchepopus);//exportSche());
+                .addLeftTextView(getString(R.string.main_menu), getResources().getColor(R.color.text_gray), 18, v -> drawerLayout.openDrawer(Gravity.LEFT))
+                .addRightTextView(getString(R.string.main_ouput), getResources().getColor(R.color.text_gray), 18, this::exportSchepopus);//exportSche());
 
         scheName=findViewById(R.id.change_current_sche);
         scheTime=findViewById(R.id.change_current_time);
@@ -192,8 +179,8 @@ public class MainActivity extends BaseActivity {
 
         ojs.add(new Unimodel(0,getString(R.string.main_side_schemak)));
         ojs.add(new Unimodel(1,getString(R.string.main_side_manage)));
-        ojs.add(new Unimodel(5,getString(R.string.main_side_note)));
-        ojs.add(new Unimodel(4,"思维导图"));
+        ojs.add(new Unimodel(4,getString(R.string.main_side_note)));
+        ojs.add(new Unimodel(5,"思维导图"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
         ojs.add(new Unimodel(6,"测试"));
@@ -222,14 +209,14 @@ public class MainActivity extends BaseActivity {
                     startAct2Act(this,AboutActivity.class);
                     break;
                 case 4:
-                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"file:///android_asset/quickmind/index.html","","");
+                    QuickNoteActivity.startActivityWithLoadUrl(this,QuickNoteActivity.class,"https://www.hazukieq.top/quickote/editor.html","","");
                     break;
                 case 5:
-                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"https://www.hazukieq.top/quickote/editor.html","","");
+                    QuickMindActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,"file:///android_asset/quickmind/index.html","","");
                     //FragmentContainerAct.startActivityWithLoadUrl(this,Mindmap.class);
                     break;
                 case 6:
-                    String test_url=sp.getStringValue("testurl","http://192.168.2.5:8080/jbridge/quickmind/index.html");
+                    String test_url=sp.getStringValue("testurl","file:///android_asset/quickmind/index.html");
                     sp.setStringvalue("testurl",test_url);
                     //FragmentContainerAct.startActivityWithLoadUrl(this, Mindmap.class,false);
                     Crialoghue cri=new Crialoghue.HeditBuilder()
@@ -242,7 +229,7 @@ public class MainActivity extends BaseActivity {
                                 if(!str.isEmpty()) sp.setStringvalue("testurl",str);
                                 else str=test_url;
 
-                                QuickNoteActivity.startActivityWithLoadUrl(this,QuickMindActivity.class,str,"","");
+                                ThirdWebLoadAct.startActivityWithLoadUrl(this,ThirdWebLoadAct.class,str,"","");
                                 crialoghue.dismiss();
                             }).build(this);
                     cri.show();
@@ -266,7 +253,7 @@ public class MainActivity extends BaseActivity {
     //初始化时检查record_id,并更新边栏数据
     private void initializeSideBar(){
         boolean inValue=scts.size()>0;
-        Log.i("MainActivity-initializeSideBar>>>","inValue="+inValue);
+        Log.i("MainActInitiSideBar>","inValue="+inValue);
         //record_name默认为二进制，当为二进制时则说明未加载或索引总表长度为0
         String record_name=sp.getStringValue("record_name",Statics.record_name_default);
 
@@ -295,7 +282,7 @@ public class MainActivity extends BaseActivity {
     //清空数据，切换课表
     private void changeScheProcess(String name){
         try{
-            Log.i("MainActivity-changeScheProcess>>","name="+name);
+            Log.i("MainActChanSchProcess","name="+name);
             uiProcessor.changeSche(name);
             DisplayHelper.Infost(this,getString(R.string.main_toast_success_change));
         }catch (Exception e){
@@ -379,7 +366,7 @@ public class MainActivity extends BaseActivity {
         ScrollView scrollView=new ScrollView(this);
         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(DisplayHelper.dp2px(this,280),0);
         params.weight=4;
-        scrollView.setBackgroundColor(getColor(R.color.dim_bg));
+        scrollView.setBackgroundColor(getResources().getColor(R.color.dim_bg));
 
         Bitmap topw=ScreenShotHelper.screenshot(topweeks,Bitmap.Config.ARGB_8888);
         Bitmap sch= ScreenShotHelper.screenshot(linearLayout,Bitmap.Config.ARGB_8888);
@@ -416,7 +403,7 @@ public class MainActivity extends BaseActivity {
 
     //初始化对话框
     private void showDetails(TextView v,ClassLabel cls,List<Timetable> times){
-        v.setBackgroundColor(getColor(R.color.white));
+        v.setBackgroundColor(getResources().getColor(R.color.white));
         CBottomSheet cbottomsh=new CBottomSheet.Builder()
                 .addView(R.layout.bottomialog, this, (CBottomSheet.InterceptBinding) (cBottomSheet, binding) -> {
                     //初始化对话框布局
@@ -444,9 +431,8 @@ public class MainActivity extends BaseActivity {
                 .addScheObj(cls)
                 .build(this);
         cbottomsh.show();
-        cbottomsh.setOnCancelListener(dialog -> v.setBackgroundColor(getColor(ColorSeletor.getColorByIndex(cls.color))));
+        cbottomsh.setOnCancelListener(dialog -> v.setBackgroundColor(getResources().getColor(ColorSeletor.getColorByIndex(cls.color))));
     }
-
 
     public  void popupList(View attatchedView) {
         CPoWin cpow=new CPoWin.Builder()
@@ -510,18 +496,13 @@ public class MainActivity extends BaseActivity {
         updateSidebarTexts(mSct.getScheName(),mSct.getTimeName());
 
         reloadProcess();
-        Log.i("MainActivity-onResume>>>","record_name="+record+", sctList has updated,sctListSize="+scts.size());
+        Log.i("MainActivity-onResume>>","record_name="+record+", sctList has updated,sctListSize="+scts.size());
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(binder!=null) {
-            int s=binder.getIsUpdateMsg();
-            if(s==1){
-                Log.d(TAG, "onResume: 检测到索引文件数据发生变化，当前页面即将执行刷新任务！");
-            }
-        }
 
         try{
             //设置周数，这里需要开学日期时间！！
@@ -555,6 +536,5 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(connection);
     }
 }

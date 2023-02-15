@@ -1,10 +1,7 @@
 package com.hazukie.scheduleviews.activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,19 +19,6 @@ public class ManageAct extends BaseActivity {
     private TimeManageFrag timemanageFrag;
     private ScheManageFrag schemakeFrag;
 
-    private final ServiceConnection connection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            SctService.SctObserverBinder binder = (SctService.SctObserverBinder) iBinder;
-            binder.updateMsg(1);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +26,6 @@ public class ManageAct extends BaseActivity {
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         inits();
         Intent in=new Intent(this,SctService.class);
-        bindService(in,connection,BIND_AUTO_CREATE);
     }
 
     private void inits(){
@@ -52,20 +35,20 @@ public class ManageAct extends BaseActivity {
         returnTab.setOnClickListener(v2->finish());
 
 
-        timeTab.setTextColor(getColor(R.color.text_gray));
-        shceTab.setTextColor(getColor(R.color.iosbutton_cancel));
+        timeTab.setTextColor(getResources().getColor(R.color.text_gray));
+        shceTab.setTextColor(getResources().getColor(R.color.iosbutton_cancel));
 
         showFragment1();
 
         shceTab.setOnClickListener(v -> {
-            timeTab.setTextColor(getColor(R.color.text_gray));
-            shceTab.setTextColor(getColor(R.color.qmuibtn_text));
+            timeTab.setTextColor(getResources().getColor(R.color.text_gray));
+            shceTab.setTextColor(getResources().getColor(R.color.qmuibtn_text));
             showFragment1();
         });
 
         timeTab.setOnClickListener(v1->{
-            shceTab.setTextColor(getColor(R.color.text_gray));
-            timeTab.setTextColor(getColor(R.color.iosbutton_cancel));
+            shceTab.setTextColor(getResources().getColor(R.color.text_gray));
+            timeTab.setTextColor(getResources().getColor(R.color.iosbutton_cancel));
             showFragment2();
         });
 
@@ -111,6 +94,5 @@ public class ManageAct extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(connection);
     }
 }

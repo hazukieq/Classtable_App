@@ -12,6 +12,9 @@ import com.hazukie.scheduleviews.iJBridges.IJBridgeUtil;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.permissionx.guolindev.PermissionX;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class LauncherActivity extends AppCompatActivity {
     @Override
@@ -20,13 +23,20 @@ public class LauncherActivity extends AppCompatActivity {
         applyPermissions();
         //测试独立WebView链接器
         IJBridgeUtil.init();
-        //doAfterPermissionsGranted();
     }
 
 
     private void applyPermissions(){
+
+        List<String> permiss=new ArrayList<>();
+        permiss.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permiss.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            permiss.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
+
         PermissionX.init(this)
-                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+                .permissions(permiss)
                 .onExplainRequestReason((scope, deniedList) -> scope.showRequestReasonDialog(deniedList,"当前应用需要您同意以下授权才能正常使用","同意","拒绝"))
                 .request((allGranted, grantedList, deniedList) -> {
                     if(allGranted){
@@ -38,6 +48,7 @@ public class LauncherActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void doAfterPermissionsGranted() {
         Intent in = new Intent();
         in.setClass(this,MainActivity.class);
