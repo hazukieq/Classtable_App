@@ -6,7 +6,7 @@ plugins {
 android {
     signingConfigs {
         release {
-            storeFile file('/home/hazukie/课表软件/ScheduleViews/classhelper.jks')
+            storeFile file('./classhelper.jks')
             storePassword '263909'
             keyAlias 'key0'
             keyPassword '263909'

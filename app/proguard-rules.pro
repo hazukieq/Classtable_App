@@ -126,3 +126,10 @@
 }
 
 ##---------------End: proguard configuration for Gson  ----------
+
+##----okio and okhttp ---##
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+-keep class org.bouncycastle.jsse.**{*;}
+-keep class org.conscrypt.**{*;}
+-keep class org.openjsse.javax.net.ssl.**{*;}
