@@ -35,11 +35,6 @@ jobs:
          path: appjks
      - name: Build APK
        run: bash ./gradlew assembleRelease --stacktrace
-     - name: Upload APK
-       uses: actions/upload-artifact@v1
-       with:
-         name: apk
-         path: app/build/outputs/apk/release/app-release.apk
 
  release:
    name: Release APK
@@ -63,8 +58,16 @@ jobs:
        env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        with:
-         tag_name: ${{ github.run_number }}
-         release_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}
+         tag_name: ${{ github.ref }}
+         release_name: ${{ github.ref }} ${{ steps.branch-name.outputs.current_branch }}
+     - name: Get Apk Version
+       uses: actions/github-script@v3
+       id: get-version
+       with:
+         script: |
+           const str=process.env.GITHUB_REF;
+           return str.substring(str.indexOf("v"));
+         result-encoding: string
      - name: Upload Release APK
        id: upload_release_asset
        uses: actions/upload-release-asset@v1.0.1
@@ -72,7 +75,12 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: apk/app-release.apk
-         asset_name: 医助课表-${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
+         asset_path: app/build/outputs/apk/release/app-release.apk
+         asset_name: Classtable(${{steps.branch-name.current_breanch}}_${{steps.get-version.outputs.result}}).apk
          asset_content_type: application/zip
-         #asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
+     - name: Archive apks
+       uses: actions/upload-artifact@v1
+       with:
+        name: apk
+        path: app/build/outputs
+        #asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
