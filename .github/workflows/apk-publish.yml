@@ -32,8 +32,7 @@ jobs:
          repository: hazukieq/appjks
          ref: main
          token: ${{ secrets.GH_PAT }}
-     - name: Set execution flag for gradlew
-       run: chmod +x gradlew
+         path: appjks
      - name: Build APK
        run: bash ./gradlew assembleRelease --stacktrace
      - name: Upload APK
