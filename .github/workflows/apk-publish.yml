@@ -26,6 +26,12 @@ jobs:
        with:
          distribution: temurin
          java-version: "11.0"
+     - name: Checkout Anroid Keystore
+       uses: actions/checkout@3.3.0
+       with:
+         repository: hazukieq/appjks
+         token: ${{ secrets.TOKEN }}
+         path: appjks
      - name: Set execution flag for gradlew
        run: chmod +x gradlew
      - name: Build APK
