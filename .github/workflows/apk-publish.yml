@@ -29,8 +29,9 @@ jobs:
      - name: Checkout Anroid Keystore
        uses: actions/checkout@v3.3.0
        with:
-         repository: hazukie@qq.com/appjks
+         repository: hazukieq/appjks
          path: appjks
+         token: ${{ secrets.TOKEN }}
      - name: Set execution flag for gradlew
        run: chmod +x gradlew
      - name: Build APK
