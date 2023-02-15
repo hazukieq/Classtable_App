@@ -31,7 +31,6 @@ jobs:
        with:
          repository: hazukieq/appjks
          token: ${{ secrets.GH_PAT }}
-         path: appjks
      - name: Set execution flag for gradlew
        run: chmod +x gradlew
      - name: Build APK
