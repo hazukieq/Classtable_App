@@ -68,5 +68,6 @@ jobs:
        with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
          asset_path: apk/app-release.apk
-         asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
+         asset_name: 医助课表-${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
          asset_content_type: application/zip
+         #asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
