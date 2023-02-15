@@ -27,7 +27,7 @@ jobs:
          distribution: temurin
          java-version: "11.0"
      - name: Checkout Anroid Keystore
-       uses: actions/checkout@3.3.0
+       uses: actions/checkout@v3.3.0
        with:
          repository: hazukieq/appjks
          token: ${{ secrets.TOKEN }}
