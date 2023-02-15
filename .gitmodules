@@ -1,0 +1,3 @@
+[submodule "appjks"]
+	path = appjks
+	url = https://github.com/hazukieq/appjks.git

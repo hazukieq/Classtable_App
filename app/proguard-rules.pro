@@ -130,6 +130,12 @@
 ##----okio and okhttp ---##
 # Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
 -dontwarn org.codehaus.mojo.animal_sniffer.*
--keep class org.bouncycastle.jsse.**{*;}
--keep class org.conscrypt.**{*;}
--keep class org.openjsse.javax.net.ssl.**{*;}
+-dontwarn org.bouncycastle.jsse.BCSSLParameters*
+-dontwarn org.bouncycastle.jsse.BCSSLSocket*
+-dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider*
+-dontwarn org.conscrypt.Conscrypt$Version*
+-dontwarn org.conscrypt.Conscrypt*
+-dontwarn org.conscrypt.ConscryptHostnameVerifier*
+-dontwarn org.openjsse.javax.net.ssl.SSLParameters*
+-dontwarn org.openjsse.javax.net.ssl.SSLSocket*
+-dontwarn org.openjsse.net.ssl.OpenJSSE*

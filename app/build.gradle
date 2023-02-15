@@ -2,14 +2,25 @@ plugins {
     id 'com.android.application'
 }
 
+def keyProps=new Properties()
+def keyPropsFile=rootProject.file('appjks/keystore.properties')
+if(keyPropsFile.exists()){
+    keyProps.load(new FileInputStream(keyPropsFile))
+}
+
+def versionProps=new Properties()
+def versionFile=rootProject.file('version.properties')
+if(versionFile.exists()){
+    versionProps.load(new FileInputStream(versionFile))
+}
 
 android {
     signingConfigs {
         release {
-            storeFile file('./classhelper.jks')
-            storePassword '263909'
-            keyAlias 'key0'
-            keyPassword '263909'
+            storeFile keyProps['storeFile']?file(keyProps['storeFile']):null
+            storePassword keyProps['storePassword']
+            keyAlias keyProps['keyAlias']
+            keyPassword keyProps['keyPassword']
         }
     }
     compileSdk 33
@@ -21,8 +32,8 @@ android {
         applicationId "com.hazukie.scheduleviews"
         minSdk 21
         targetSdk 33
-        versionCode 1004000
-        versionName "1.0.4.00"
+        versionCode versionProps['versionCode'].toInteger()
+        versionName versionProps['versionName']
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
