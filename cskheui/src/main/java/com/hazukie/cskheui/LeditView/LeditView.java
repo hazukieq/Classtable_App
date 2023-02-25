@@ -46,7 +46,6 @@ public class LeditView extends LinearLayout {
     private void inits(){
         LayoutInflater.from(getContext()).inflate(R.layout.__leditview_lay,this,true);
         LinearLayout root=(LinearLayout) getRootView();
-        Log.i(TAG, "inits="+root.getAccessibilityClassName());
         LinearLayout linear= (LinearLayout) getChildAt(0);
         left_tile= (TextView) linear.getChildAt(0);
         ledit= (EditText) linear.getChildAt(1);

@@ -323,7 +323,7 @@ public class Crialoghue extends Dialog {
             default_txt.setPadding(24,8,24,8);
             default_txt.setGravity(Gravity.LEFT);
             default_txt.setTextSize(16);
-            default_txt.setTextColor(context.getColor(R.color.__text_gray));
+            default_txt.setTextColor(context.getResources().getColor(R.color.__text_gray));
             return default_txt;
         }
 
@@ -413,7 +413,7 @@ public class Crialoghue extends Dialog {
             ScrollView scrollView=new ScrollView(context);
             LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
             params.weight=3;
-            scrollView.setBackgroundColor(context.getColor(R.color.__dim_bg));
+            scrollView.setBackgroundColor(context.getResources().getColor(R.color.__dim_bg));
             ImageView img=new ImageView(context);
             img.setPadding(12,12,12,12);
             scrollView.addView(img,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

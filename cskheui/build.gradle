@@ -5,11 +5,12 @@ if(isModule.toBoolean()){
 }
 
 android {
-    compileSdk 33
+    def versions=rootProject.ext.versions
+    compileSdk versions.compileSdk
 
     defaultConfig {
-        minSdk 21
-        targetSdk 33
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
