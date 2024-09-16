@@ -70,6 +70,6 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: build/release/app-release.apk
+         asset_path: ./build/release/app-release.apk
          asset_name: ${{ github.event.repository.name }} ${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
          asset_content_type: application/zip
