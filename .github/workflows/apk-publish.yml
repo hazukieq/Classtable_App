@@ -54,7 +54,7 @@ jobs:
          echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
 
      - name: Download APK from build
-       uses: actions/download-artifact@v1
+       uses: actions/download-artifact@v4.1.8
        with:
          name: apk
      - name: Create Release
