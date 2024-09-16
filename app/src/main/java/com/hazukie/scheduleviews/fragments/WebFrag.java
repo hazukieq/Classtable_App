@@ -127,7 +127,7 @@ public class WebFrag extends Fragment {
     }
 
     protected WebChromeClient getWebViewChromeClient(){
-        return new UniwebChromeClient(this);
+        return new UniwebChromeClient();
     }
 
     protected WebViewClient getWebViewClient(){
@@ -161,14 +161,12 @@ public class WebFrag extends Fragment {
 
 
     public static class UniwebChromeClient extends WebChromeClient {
-        private WebFrag mFrag;
 
-        public UniwebChromeClient(WebFrag webFrag){
-            mFrag=webFrag;
+        public UniwebChromeClient(){
         }
     }
 
-    protected class UniwebClient extends WebViewClient {
+    protected static class UniwebClient extends WebViewClient {
 
         public UniwebClient(){ }
         @Override

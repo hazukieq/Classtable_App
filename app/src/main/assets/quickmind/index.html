@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <title>基础网页</title>
+    <link rel="icon" href="data:;base64,=">
     <link href="../basic/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../basic/common/universal.css" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
@@ -24,16 +25,22 @@
 
     <!-- Convertor of PNG2PDF lib -->
     <script src="../basic/common/saveSvgAsPng.js"></script>
+
+    <!--Basic Components-->
+    <script src="minjs/SideEl.js"></script>
+    <script src="minjs/ListEl.js"></script>
+    <script src="minjs/Ancobj.js"></script>
 </head>
 
 <body>
-<header>
+    <header>
+    <!--navnav class="nav pt-5 bg-white border-bottom border-1 fixed-top"-->
     <nav class="nav pt-5 bg-white border-bottom border-1 fixed-top">
         <li class="nav-item">
             <button class="btn" data-bs-toggle="offcanvas" href="#sidebar" role="button" aria-controls="sidebar">
                 <img src="../basic/img/list.svg" class="img-fluid opacity-75" width="30" height="30"></button>
         </li>
-
+        
         <li class="nav-item flex-fill d-flex justify-content-center">
             <h4 style="letter-spacing: 1.98px;" class="iosext m-0 align-self-center" id="toolbar_tile"></h4>
         </li>
@@ -63,70 +70,50 @@
             </ul>
         </li>
     </nav>
-
-    <div class="offcanvas offcanvas-start w-75 menuside" tabindex="-1" id="sidebar" aria-labelledby="sidebar">
-        <div class="pt-5 border-bottom pb-1 d-flex flex-column align-items-start justify-content-center bg-white" style="padding: 1rem 1rem;z-index: 1045;">
-            <div class="d-flex justify-content-end w-100">
-                <button id="offcanvasCloseBtn" type="button" class="btn btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-
-            <div>
-                <span class="text-danger" style="font-size:14px;">当前文件&nbsp;</span>
-            </div>
-            <div class="w-100">
-                <h5 class="d-inline-block text-truncate mb-1" style="max-width: 150px;" id="offcanvasLabel">
-                </h5>
-            </div>
-
-        </div>
-        <div class="offcanvas-body pt-0" id="offcanvasMain">
-            <!--JS填充区-->
-        </div>
+    <!--侧边栏注入区-->
+    <div id="side">
     </div>
 </header>
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="p-5"></div>
-    <!--数据装填区-->
-    <div id="waitloading" class="rootbg">
-        <div class="text-center">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div class="p-5"></div>
+        <!--数据装填区-->
+        <div id="waitloading" class="rootbg">
+            <div class="text-center p-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="tip">数据正在加载.....</p>
             </div>
-            <p class="tip">数据正在加载.....</p>
         </div>
     </div>
-</div>
 
-<footer id="modal_loading" style="width: 0;height: 0;">
-    <button class="visually-hidden" data-bs-toggle="modal" data-bs-target="#helpModal" id="fullautoclick">hello</button>
-    <!--Modal-->
-    <div class="modal fade" tabindex="-1" id="helpModal" aria-labelledby="helpModal" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen m-0">
-            <div class="modal-content">
-                <div class="modal-body m-0 p-0" style="overflow: hidden;">
-                    <div class="row m-0 pt-5 pe-1">
-                        <div class="col p-0">
-                            <button  type="button" class="btn btn-close float-end" data-bs-dismiss="modal" ></button>
+    <!--静态对话框-->
+    <footer id="modal_loading" style="width: 0;height: 0;">
+        <button class="visually-hidden" data-bs-toggle="modal" data-bs-target="#helpModal" id="fullautoclick">hello</button>
+        <!--Modal-->
+        <div class="modal fade" tabindex="-1" id="helpModal" aria-labelledby="helpModal" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen m-0">
+                <div class="modal-content">
+                    <div class="modal-body m-0 p-0" >
+                        <!--手机的话，得下去一些,因为有针孔在那里...-->
+                        <div class="row m-0 pe-1" style="padding-top:26px">
                         </div>
+                        <!--主界面数据载入区-->
+                        <div class="row m-0" id="fmmp_root"></div>
                     </div>
-                    <!--主界面数据载入区-->
-                    <div class="row m-0" id="fmmp_root"></div>
                 </div>
             </div>
+            <button class="visually-hidden" data-bs-dismiss="modal" id="full_dismiss"></button>
         </div>
-        <button class="visually-hidden" data-bs-dismiss="modal" id="full_dismiss"></button>
-    </div>
-    <!--Modal-->
-    <br/>
-</footer>
-
-
-<script src="minjs/mdProcess.js"></script>
-<script src="minjs/mind.js"></script>
-<script src="minjs/index.js"></script>
-<script src="../basic/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="minjs/fullscreen.js"></script>
-
+        <!--Modal-->
+        <br/>
+    </footer>
+    
+    <script src="minjs/mdProcess.js"></script>
+    <script src="minjs/mind.js"></script>
+    <script src="minjs/index.js"></script>
+    <script src="../basic/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="minjs/fullscreen.js"></script>
 </body>
 </html>

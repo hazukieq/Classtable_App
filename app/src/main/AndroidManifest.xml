@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".base.BaseApplication"
@@ -21,59 +22,93 @@
         android:theme="@style/Theme.ScheduleViews"
         tools:targetApi="n">
         <activity
-            android:name=".activity.TesingActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".activity.RgetActivity"
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
 
-        <service
-            android:name=".services.SctService"
-            android:enabled="true"
-            android:exported="false" />
+        <activity
+            android:name=".activity.SyncActivity"
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
+        <activity
+            android:name=".activity.ImportActivity"
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
+        <activity
+            android:name=".activity.TesingActivity"
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
 
         <activity
             android:name=".base.FragmentContainerAct"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.ManageAct"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
+        <activity
+            android:name=".activity.Manager"
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.ScheCreateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.ScheEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.TimeEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.AboutActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.SettingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.SchePreviewActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
         <activity
             android:name=".activity.QuickMindActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
         <activity
             android:name=".activity.QuickNoteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+
         <activity
             android:name=".activity.ThirdWebLoadAct"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
         <activity
             android:name=".activity.LauncherActivity"
             android:exported="true"
-            android:theme="@style/Theme.Launcher">
-            <intent-filter>
+            android:theme="@style/Theme.Launcher"
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

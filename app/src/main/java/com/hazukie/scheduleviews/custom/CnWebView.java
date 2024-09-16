@@ -3,7 +3,6 @@ package com.hazukie.scheduleviews.custom;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebBackForwardList;
@@ -58,7 +57,8 @@ public class    CnWebView extends WebView {
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDisplayZoomControls(false);
         webSettings.setUseWideViewPort(false);
-
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
 
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
@@ -91,14 +91,8 @@ public class    CnWebView extends WebView {
             //webSettings.setAppCachePath(appCache_path);
         }*/
 
-
-
         //启动硬件加速
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
-            setLayerType(View.LAYER_TYPE_HARDWARE,null);
-        }else{
-            setLayerType(View.LAYER_TYPE_SOFTWARE,null);
-        }
+        setLayerType(View.LAYER_TYPE_HARDWARE, null);
     }
 
     @SuppressLint("SetJavaScriptEnabled")

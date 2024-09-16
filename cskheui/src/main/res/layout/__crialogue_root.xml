@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/diaglog_linearLay"
     android:background="@drawable/__round_bg">
     <TextView
         android:id="@+id/dialog_ext"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:text="default"
-        android:textColor="@color/__ios_ext"
+        android:textColor="@color/__text_gray"
         android:paddingStart="12dp"
-        android:textSize="14dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="8dp"/>
+        android:textSize="15sp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/__light_white"/>
     <LinearLayout
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:divider="@drawable/__shape_divider_verline"

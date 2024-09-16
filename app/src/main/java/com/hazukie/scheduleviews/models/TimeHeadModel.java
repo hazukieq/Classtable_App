@@ -48,6 +48,7 @@ public class TimeHeadModel {
                 break;
         }
     }
+
     public String outputBasics(){
         String basics_temp="文件名：<b>%s</b><br/><br/>%s<br/>总节数：%d";
         String details="";

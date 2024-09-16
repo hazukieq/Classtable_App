@@ -10,11 +10,10 @@ import com.hazukie.cskheui.R;
 public class LetxtView extends LinearLayout {
     private TextView leftile,rightile;
 
-
     public LetxtView(Context context) {
         super(context);
-
     }
+
     public LetxtView(Context context,Builder builder) {
         this(context);
         inits();
@@ -22,7 +21,6 @@ public class LetxtView extends LinearLayout {
         leftile.setText(builder.leftile);
         rightile.setText(builder.rightentz);
     }
-
 
     private void inits(){
         LayoutInflater.from(getContext()).inflate(R.layout.__letxtview_lay,this,true);

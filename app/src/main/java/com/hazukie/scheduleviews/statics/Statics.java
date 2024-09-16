@@ -3,8 +3,12 @@ package com.hazukie.scheduleviews.statics;
 import com.hazukie.scheduleviews.models.Unimodel;
 
 public class Statics {
+    //server
+    public final static String share_sche_url="http://dict.hazukieq.top/wordapis/share";
     //二进制表示 空表
     public final static String record_name_default="1111010011110101000100001101000";
+    public final static String default_time_file_txt="默认作息表.txt";
+    public final static String default_time_file_name="默认作息表";
     public final static String index_file_name="index.txt";
     public final static String scheAndtimeTB_record="record_name";
     public final static Unimodel[] weekTimes=new Unimodel[]{
@@ -33,6 +37,7 @@ public class Statics {
     private final static String[] sorted_weeks=new String[]{"","星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
 
     private final static String[] details=new String[]{"上午","下午","晚上"};
+    public static String public_dir="医助课表";
 
     public enum SearchMode {
         weeks,details

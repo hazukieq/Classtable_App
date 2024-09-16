@@ -1,5 +1,8 @@
 package com.hazukie.scheduleviews.models;
 
+import androidx.annotation.NonNull;
+import java.util.Objects;
+
 public class ScheWithTimeModel {
     private final static String default_index="index.txt";
     private final static String default_timetable_name="默认作息表.txt";
@@ -16,10 +19,13 @@ public class ScheWithTimeModel {
     }
 
     public String getScheName() {
+        if(timeName==null||timeName.isEmpty()) timeName=default_timetable_name;
+
         return scheName.replace(".txt","");
     }
 
     public String getTimeName() {
+        if(timeName==null||timeName.isEmpty()) timeName=default_timetable_name;
         return timeName.replace(".txt","");
     }
 
@@ -62,6 +68,7 @@ public class ScheWithTimeModel {
         oftenOpts.putRawSctList(scts);
     }*/
 
+    @NonNull
     @Override
     public String toString() {
         return "ScheWithTimeModel{" +
@@ -69,5 +76,18 @@ public class ScheWithTimeModel {
                 ", scheName='" + scheName + '\'' +
                 ", timeName='" + timeName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScheWithTimeModel)) return false;
+        ScheWithTimeModel that = (ScheWithTimeModel) o;
+        return scheName.equals(that.scheName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scheName);
     }
 }

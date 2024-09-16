@@ -1,7 +1,7 @@
 ext{
 	versions=[
-		compileSdk: 33,
-		minSdk: 21,
+		compileSdk: 34,
+		minSdk: 23,
 		targetSdk: 33
 	]
 
@@ -12,10 +12,12 @@ ext{
 	def permissionx_ver="1.7.1"
 
 	//Glide
-	def glide_ver="4.14.2"
+	def glide_ver= '4.15.0'
 
 	// Drakeet的Recyclerview适配器开源库
 	def multitype_ver="4.3.0"
+
+	//Gson
 	def gson_ver="2.10.1"
 
 	dependencies=[
@@ -25,6 +27,5 @@ ext{
 			"glide_ano":"com.github.bumptech.glide:compiler:$glide_ver",
 			"multitype":"com.drakeet.multitype:multitype:$multitype_ver",
 			"gson":"com.google.code.gson:gson:$gson_ver",
-			"cskheui":"project(path: ':cskheui')"
 	]
 }

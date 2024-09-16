@@ -30,9 +30,8 @@ public class Base64Util {
      *
      * @param imgBase64
      * @return
-     * @throws Exception
      */
-    public static Bitmap base64ToPicture(String imgBase64) throws Exception {
+    public static Bitmap base64ToPicture(String imgBase64) {
         //处理头部
         if (imgBase64.contains(",")) {
             imgBase64 = imgBase64.split(",")[1];
@@ -99,8 +98,7 @@ public class Base64Util {
             if(tag>0) na+="("+tag+")";
         }
 
-
-        File file = NetFileOpts.getInstance(context).getPublicFile("思维导图_Pdf",na+".pdf");
+        File file = NetFileOpts.getInstance(context).getPublicFile("思维导图_PDF",na+".pdf");
 
         FileOutputStream outputStream = null;
         try {
@@ -118,7 +116,7 @@ public class Base64Util {
                 e.printStackTrace();
             }
         }
-        DisplayHelper.Infost(context,"pdf文件已导出到Documents目录下！");
+        DisplayHelper.Infost(context,"pdf 文件已导出到 Documents 目录下！");
     }
 
 }

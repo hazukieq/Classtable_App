@@ -1,15 +1,13 @@
 package com.hazukie.scheduleviews.utils;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.pdf.PdfDocument;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.print.PrintAttributes;
@@ -17,13 +15,18 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
+import com.hazukie.scheduleviews.fileutil.BasicOpts;
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
 import com.hazukie.scheduleviews.fileutil.Fileystem;
 import com.hazukie.scheduleviews.fileutil.NetFileOpts;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.models.ClassLabel;
+import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -156,7 +159,7 @@ public class ScreenShotHelper {
     }
 
 
-    public static boolean saveTXT(Context context, List<ClassLabel> clsLis,String fileName){
+    public static void saveTXT(Context context, List<ClassLabel> clsLis, String fileName){
         Fileystem fileystem=Fileystem.getInstance(context);
         StringBuilder builder=new StringBuilder();
         for(ClassLabel cls:clsLis){
@@ -164,7 +167,6 @@ public class ScreenShotHelper {
         }
         File file= NetFileOpts.getInstance(context).getPublicFile("课表导出",fileName);
         fileystem.putDataStr(file,builder.toString());
-        return true;
     }
 
     public static boolean saveTXT(Context context, String fileName,String content){
@@ -173,6 +175,32 @@ public class ScreenShotHelper {
         File file= NetFileOpts.getInstance(context).getPublicFile("课表导出",fileName);
         fileystem.putDataStr(file,content);
         return true;
+    }
+
+    public static void saveRaws(Context context,String recordName){
+        //Log.i("", "saveRaws: "+recordName);
+        OftenOpts oftenOpts=OftenOpts.getInstance(context);
+        ScheWithTimeModel scheWithTimeModel=oftenOpts.getSctByName(recordName);
+        if(scheWithTimeModel==null) return;
+
+        NetFileOpts netFileOpts=NetFileOpts.getInstance(context);
+        File schef=netFileOpts.getPublicFile("课表导出",scheWithTimeModel.getScheName()+".sche");
+        File timef=netFileOpts.getPublicFile("课表导出",scheWithTimeModel.getTimeName()+".time");
+
+        String sche_data=oftenOpts.getDataStr(FileRootTypes.sches, scheWithTimeModel.scheName);
+        String time_data=oftenOpts.getDataStr(FileRootTypes.times,scheWithTimeModel.timeName);
+
+        try{
+            FileWriter sche_writer=new FileWriter(schef,false);
+            sche_writer.write(sche_data);
+            sche_writer.close();
+
+            FileWriter time_writer=new FileWriter(timef,false);
+            time_writer.write(time_data);
+            time_writer.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void ScheToPdf(Context context,Bitmap v,String fileName){

@@ -1,16 +1,14 @@
 package com.hazukie.scheduleviews.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.drakeet.multitype.MultiTypeAdapter;
 import com.hazukie.cskheui.Crialoghue.Crialoghue;
@@ -112,17 +110,23 @@ public class TimeCreateFrag extends Fragment {
                         .addTitle("编辑时间")
                         .addHint("请按 0800-0900 格式输入")
                         .onConfirm((crialoghue, view) -> {
+                            boolean canDismiss=true;
                             EditText eidt=(EditText) view;
                             String contents=eidt.getText().toString();
-                            if(contents.length()>=9){
+                            if(!contents.contains("-")){
+                                DisplayHelper.Infost(getActivity(),"输入内容的格式有误，请仔细检查！");
+                                canDismiss=false;
+                            }
+                            if(canDismiss){
+                                if(contents.length()<9){
+                                    DisplayHelper.Infost(getActivity(),"输入内容太短了，请重新输入！");
+                                    return;
+                                }
                                 int sizes=timemakeModel.unis.size();
                                 int index_=all.indexOf(timemakeModel);
                                 timemakeModel.unis.add(new Unimodel(sizes,contents));
                                 mudp.notifyItemChanged(index_,"updating");
                                 crialoghue.dismiss();
-                            }else{
-                                //eidt.setHint("输入内容太短了，请重新输入！");
-                                DisplayHelper.Infost(getActivity(),"输入内容太短了，请重新输入！");
                             }
                         })
                         .build(getActivity());
@@ -146,19 +150,20 @@ public class TimeCreateFrag extends Fragment {
                         .onConfirm((crialoghue, view) -> {
                             EditText eidt=(EditText) view;
                             String contents=eidt.getText().toString();
-                            String[] parsedContents=contents.split("\n");
-                            List<Unimodel> _unis=new ArrayList<>();
-                            for (int i = 0; i < parsedContents.length; i++) {
-                                String tr=parsedContents[i].length()>=9?parsedContents[i].substring(0,9):parsedContents[i];
-                                if(!tr.isEmpty()){
-                                    _unis.add(new Unimodel(i,tr));
+                            if(contents.contains("-")){
+                                String[] parsedContents=contents.split("\n");
+                                List<Unimodel> _unis=new ArrayList<>();
+                                for (int i = 0; i < parsedContents.length; i++) {
+                                    String tr=parsedContents[i].length()>=9?parsedContents[i].substring(0,9):parsedContents[i];
+                                    if(!tr.isEmpty()){
+                                        _unis.add(new Unimodel(i,tr));
+                                    }
                                 }
-                            }
-
-                            timemakeModel.unis.addAll(_unis);
-                            int index_=all.indexOf(timemakeModel);
-                            mudp.notifyItemChanged(index_,"updating");
-                            crialoghue.dismiss();
+                                timemakeModel.unis.addAll(_unis);
+                                int index_=all.indexOf(timemakeModel);
+                                mudp.notifyItemChanged(index_,"updating");
+                                crialoghue.dismiss();
+                            }else DisplayHelper.Infost(getActivity(),"抱歉，似乎你输入内容的格式有误，请仔细检查！");
                         })
                         .build(getActivity());
 
@@ -206,42 +211,39 @@ public class TimeCreateFrag extends Fragment {
                 tms.add(tma);
             }
         }
+
         totalNum=amCl+pmCl+mmCl;
         TimeHeadModel timeHeadM=new TimeHeadModel(docName,totalNum,amStart,amCl,amCl,pmCl,mmStart,mmCl,tms);
 
         OftenOpts oftenOpts=OftenOpts.getInstance(getContext());
-        //FileHelper fileHelper=new FileHelper(getActivity());
         try{
             boolean isDuplicate=false;
-            List<TimeModel> timeModels=oftenOpts.getRecordTms();//fileHelper.read(FileHelper.RootMode.times,"time_index.txt",TimeModel.class);
-           for(TimeModel tm:timeModels){
-               //TimeModel tm=(TimeModel) obj;
+            List<TimeModel> timeModels=oftenOpts.getRecordTms();
+            for(TimeModel tm:timeModels){
                if (tm.timeName.equals(docName)||docName.equals("默认作息表.txt")) {
                    isDuplicate = true;
                    break;
                }
            }
-            Log.i( "assembleDatas: ","docName="+(!docName.isEmpty())+", isDuplicate="+isDuplicate);
+            //Log.i( "assembleDatas: ","docName="+(!docName.isEmpty())+", isDuplicate="+isDuplicate);
            if(!docName.isEmpty()&&!isDuplicate&&tms.size()>0){
-               boolean isCreate= Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,docName,timeHeadM);//fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
-               boolean isWirte2Index=Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,"time_index.txt",new TimeModel(0,docName),true);//fileHelper.write(FileHelper.RootMode.times,"time_index.txt",new TimeModel(0,docName),true);
+               boolean isCreate= Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,docName,timeHeadM,false);
+               boolean isWrite2Index=Fileystem.getInstance(getContext()).putDataz(FileRootTypes.times,"time_index.txt",new TimeModel(0,docName),true);//fileHelper.write(FileHelper.RootMode.times,"time_index.txt",new TimeModel(0,docName),true);
 
-               if(isCreate&&isWirte2Index){
+               if(isCreate&&isWrite2Index){
                    DisplayHelper.Infost(getActivity(),"创建成功！");
-                   getActivity().finish();
+                   requireActivity().finish();
                }else{
                    DisplayHelper.Infost(getActivity(),"创建失败！");
                }
-
            }
            else if(isDuplicate) {
                DisplayHelper.Infost(getActivity(),"文件已存在，请重新输入！");
            }else if(tms.size()==0){
                DisplayHelper.Infost(getActivity(),"您似乎还没有进行添加操作！");
-           }else if(docName.isEmpty()){
+           }else {
                DisplayHelper.Infost(getActivity(),"文件名为空，请重新输入！");
            }
-
         }catch (Exception e){
             e.printStackTrace();
         }

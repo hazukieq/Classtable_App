@@ -1,7 +1,6 @@
 package com.hazukie.scheduleviews.scheutil;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.statics.Statics;
-import com.hazukie.scheduleviews.utils.CycleUtil;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
 import java.io.IOException;
@@ -50,7 +48,7 @@ public class ScheUIProcessor {
         findFile(seekSprecord_name,mWidth);
     }
 
-    public void changeSche(String record_name) throws IOException {
+    public void changeSche(String record_name) {
         linearLay.removeAllViews();
         findFile(record_name,mWidth);
     }
@@ -71,12 +69,8 @@ public class ScheUIProcessor {
 
     //根据上一步返回值判断是否需要查找相应文件
     private void findFile(String record_name,int mWid) {
-        Log.i("ScheProcessor>>","record_name="+record_name);
-
-        List<Object> classLabels=new ArrayList<>();
         List<ClassLabel> clssList=new ArrayList<>();
         TimeHeadModel timetableObj=null;
-
 
         OftenOpts oftenOpts=OftenOpts.getInstance(context);
         BasicOpts basicOpts=BasicOpts.getInstance(context);
@@ -103,15 +97,10 @@ public class ScheUIProcessor {
                 if(isGetNotNull){
                     String sche_name=mSct.scheName;
                     String time_name=mSct.timeName;
-                    Log.i("ScheProcessor>>","sche_name="+sche_name+", time_name="+time_name);
 
-                    //再次判断课表文件是否存在
+                    //再次判断课表文件是否存在,//判断数据大小，防止出错
                     if(basicOpts.exist(FileRootTypes.sches,sche_name))
-                        classLabels=oftenOpts.getRawClsList(sche_name);
-
-                    //判断数据大小，防止出错
-                    if(classLabels.size()>0)
-                        CycleUtil.cycle(classLabels, (obj1, objects) -> clssList.add((ClassLabel) obj1));
+                        clssList=oftenOpts.getClsList(sche_name);
 
                     //再次判断作息文件是否存在
                     if(basicOpts.exist(FileRootTypes.times,time_name))
@@ -131,7 +120,6 @@ public class ScheUIProcessor {
 
     //核对上一步返回的数据是否为空，如空则空加载，反之跳过;核对后，执行数据加载！
     private void initDatas(List<ClassLabel> clss_list, TimeHeadModel time_model, int mWid){
-
         List<ClassLabel> clzz_list;
         List<Timetable> timez_list;
 
@@ -194,6 +182,8 @@ public class ScheUIProcessor {
         param.setMargins(0,0,0,48);
 
         gridLayout.setLayoutParams(param);
+        //disallow multiple click happened
+        gridLayout.setMotionEventSplittingEnabled(false);
         linearLay.addView(gridLayout);
     }
 

@@ -23,7 +23,7 @@
     <string name="main_side_manage">文件管理</string>
     <string name="main_side_setting">设置</string>
     <string name="main_side_about">关于</string>
-    <string name="main_side_note">便签</string>
+    <string name="main_side_note">数学公式</string>
     <string name="main_empty_table">空表</string>
     <string name="main_default_time_table">默认作息表</string>
     <string name="main_toast_success_change">切换成功！</string>
@@ -31,4 +31,5 @@
     <string name="main_ungranted_permis_tip">您未授予应用读写权限！</string>
     <string name="main_exportSche_name">课表.jpg</string>
     <string name="release_version">版本号：Release.1.0.4</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

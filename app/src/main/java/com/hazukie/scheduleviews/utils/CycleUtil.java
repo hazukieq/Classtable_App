@@ -1,19 +1,20 @@
 package com.hazukie.scheduleviews.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class CycleUtil {
-    public static void cycle(List<Object> objectList,CyExecute cyExecute){
-        for(Object obj:objectList) cyExecute.function(obj);
+    public static <T> void cycle(List<T> objectList,CyExecute cyExecute){
+        for(T obj:objectList) cyExecute.function(obj);
     }
 
     public interface CyExecute{
         void function(Object obj,Object...objects);
     }
 
-    public static void cycle(List<Object> objectList,Object[] objects,CyExecute cyExecute){
-        for(Object obj:objectList) cyExecute.function(obj,objects);
+    public static <T> void cycle(List<T> objectList,Object[] objects,CyExecute cyExecute){
+        for(T obj:objectList) cyExecute.function(obj,objects);
     }
 
     public static void cycleByMap(Map<Object,Object> objectList, CyExecute cyExecute){
@@ -33,4 +34,11 @@ public class CycleUtil {
         void secondFunc(Object firstArg,int firstIndex,Object secondArg,int secondIndex);
     }
 
+    public static <T> List<T> distinct(List<T> oldlist){
+        List<T> newlist=new ArrayList<>();
+        for(T t:oldlist){
+            if(!newlist.contains(t)) newlist.add(t);
+        }
+        return newlist;
+    }
 }

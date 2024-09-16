@@ -1,6 +1,6 @@
 package com.hazukie.scheduleviews.activity;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
@@ -10,7 +10,6 @@ import com.hazukie.scheduleviews.R;
 import com.hazukie.scheduleviews.base.BaseActivity;
 import com.hazukie.scheduleviews.fragments.ScheManageFrag;
 import com.hazukie.scheduleviews.fragments.TimeManageFrag;
-import com.hazukie.scheduleviews.services.SctService;
 import com.hazukie.scheduleviews.utils.StatusHelper;
 
 public class ManageAct extends BaseActivity {
@@ -25,7 +24,7 @@ public class ManageAct extends BaseActivity {
         setContentView(R.layout.activity_manage);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         inits();
-        Intent in=new Intent(this,SctService.class);
+        //Intent in=new Intent(this,SctService.class);
     }
 
     private void inits(){

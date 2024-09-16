@@ -2,8 +2,8 @@ package com.hazukie.scheduleviews.fileutil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,9 +83,8 @@ public class Fileystem {
         return getDefaultRootPath(rootPathType,path).getAbsolutePath();
     }
 
-
-    public List<Object> getDataList(FileRootTypes rootPathType,String file_name, Type type){
-        List<Object> newlis=new ArrayList<>();
+    public <T> List<T> getDataList(FileRootTypes rootPathType,String file_name,Class<T> clazz){
+        List<T> newlis=new ArrayList<>();
         File currentFile=selectFile(rootPathType,file_name);
         String rawData= ioeter.read(currentFile);
         if(rawData.length()!=0) {
@@ -93,18 +92,19 @@ public class Fileystem {
             boolean isStartup=rawData_splitN.length>0;
             if(isStartup){
                 for (String s : rawData_splitN) {
-                    if(s==null||s.isEmpty()){}
-                    else newlis.add(converter.convertJsn2Obj(s,type));
+                    if(s!=null&&s.length()>0) newlis.add(converter.convertJsn2Any(s,clazz));
                 }
             }
         }
         return newlis;
     }
 
-    public Object getData(FileRootTypes rootPathType,String file_name, Type type){
+
+    public <T> T getData(FileRootTypes rootPathType,String file_name, Class<T> type){
         File currentFile=selectFile(rootPathType,file_name);
+        if(!currentFile.exists()) return null;
         String rawData= ioeter.read(currentFile);
-        return converter.convertJsn2Obj(rawData,type);
+        return converter.convertJsn2Any(rawData,type);
     }
 
     public String getDataStr(FileRootTypes rootPathType,String file_name){
@@ -117,7 +117,7 @@ public class Fileystem {
         StringBuilder stringBuilder=new StringBuilder();
         if(objs.size()>0){
             for (Object obj:objs) {
-                String str= converter.convertObj2Jsn(obj)+"\n";
+                String str= converter.convertObj2Jsn(obj,"\n");
                 stringBuilder.append(str);
             }
         }else{
@@ -126,36 +126,6 @@ public class Fileystem {
         ioeter.write(currentFile,stringBuilder.toString());
     }
 
-    public void putData(FileRootTypes rootPathType,String file_name,Object obj){
-        File currentFile=selectFile(rootPathType,file_name);
-        String content="";
-        if(obj!=null) content=converter.convertObj2Jsn(obj);
-        ioeter.write(currentFile,content);
-    }
-
-
-
-
-    public boolean putDatazList(FileRootTypes rootPathType,String file_name,List<Object> objs){
-        File currentFile=selectFile(rootPathType,file_name);
-        StringBuilder stringBuilder=new StringBuilder();
-        if(objs.size()>0){
-            for (Object obj:objs) {
-                String str= converter.convertObj2Jsn(obj)+"\n";
-                stringBuilder.append(str);
-            }
-        }else{
-            stringBuilder.append(" ");
-        }
-        return ioeter.writeObj(currentFile,stringBuilder.toString());
-    }
-
-    public boolean putDataz(FileRootTypes rootPathType,String file_name,Object obj){
-        File currentFile=selectFile(rootPathType,file_name);
-        String content="";
-        if(obj!=null) content=converter.convertObj2Jsn(obj);
-        return ioeter.writeObj(currentFile,content);
-    }
 
     public boolean putDataz(FileRootTypes rootPathType,String file_name,Object obj,boolean isAppend){
         File currentFile=selectFile(rootPathType,file_name);
@@ -164,6 +134,9 @@ public class Fileystem {
         return ioeter.writeObj(currentFile,content,isAppend);
     }
 
+    public void putData(FileRootTypes rootPathType,String file_name,Object obj){
+        putDataz(rootPathType,file_name,obj,false);
+    }
 
 
     public void putDataStr(FileRootTypes rootPathType,String file_name,String strs){

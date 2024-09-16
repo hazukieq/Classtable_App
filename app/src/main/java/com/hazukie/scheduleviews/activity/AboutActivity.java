@@ -27,7 +27,6 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         inits();
-
     }
 
     private void inits(){
@@ -53,15 +52,15 @@ public class AboutActivity extends BaseActivity {
         alls.add(new Unimodel(6,getString(R.string.about_app_cites)));
 
         uniBinder.setClickListener((v, uni) -> {
-            switch (uni.id){
-                case 2:
-                    int dpwd=DisplayHelper.dp2px(this,10);
-                    Crialoghue crialoghue=new Crialoghue.TxtBuilder()
+            switch (uni.id) {
+                case 2 -> {
+                    int dpwd = DisplayHelper.dp2px(this, 10);
+                    Crialoghue crialoghue = new Crialoghue.TxtBuilder()
                             .addTitle("项目地址")
                             .addContent("是否通过本地浏览器打开？")
-                            .addFontPadding(new int[]{dpwd,0,0,10})
+                            .addFontPadding(new int[]{dpwd, 0, 0, 10})
                             .onConfirm((crialoghue1, view) -> {
-                                Intent in=new Intent();
+                                Intent in = new Intent();
                                 in.setAction(Intent.ACTION_VIEW);
                                 in.setData(Uri.parse("https://github.com/hazukieq/Classtable_App"));
                                 startActivity(in);
@@ -69,13 +68,13 @@ public class AboutActivity extends BaseActivity {
                             })
                             .build(this);
                     crialoghue.show();
-                    break;
-                case 3:
-                    Crialoghue crialoghue2=new Crialoghue.TxtBuilder()
+                }
+                case 3 -> {
+                    Crialoghue crialoghue2 = new Crialoghue.TxtBuilder()
                             .addTitle("项目官网")
                             .addContent("是否通过本地浏览器打开？")
                             .onConfirm((crialoghue1, view) -> {
-                                Intent in=new Intent();
+                                Intent in = new Intent();
                                 in.setAction(Intent.ACTION_VIEW);
                                 in.setData(Uri.parse("https://www.hazukieq.top/html/download_page.html"));
                                 startActivity(in);
@@ -83,21 +82,21 @@ public class AboutActivity extends BaseActivity {
                             })
                             .build(this);
                     crialoghue2.show();
-                    break;
-                case 4:
-                    Crialoghue crialoghue4=new Crialoghue.TxtBuilder()
+                }
+                case 4 -> {
+                    Crialoghue crialoghue4 = new Crialoghue.TxtBuilder()
                             .addTitle("联系方式")
                             .addContent("QQ: 2593753494\nQQ邮箱：hazuki@qq.com")
                             .build(this);
                     crialoghue4.show();
-                    break;
-                case 6:
-                    Crialoghue crialoghue5=new Crialoghue.TxtBuilder()
+                }
+                case 6 -> {
+                    Crialoghue crialoghue5 = new Crialoghue.TxtBuilder()
                             .addTitle("开源库")
                             .addContent("1. MultiType\n")
                             .build(this);
                     crialoghue5.show();
-                    break;
+                }
             }
         });
         mdp.register(Unimodel.class,uniBinder);

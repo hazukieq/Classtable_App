@@ -55,9 +55,7 @@ public class ScheEditActivity extends BaseActivity {
 
         StatusHelper.controlStatusLightOrDark(this, StatusHelper.Mode.Status_Dark_Text);
         getDatas();
-
         oftenOpts=OftenOpts.getInstance(getApplicationContext());
-
         initViews();
     }
 
@@ -77,7 +75,6 @@ public class ScheEditActivity extends BaseActivity {
 
             try {
                 if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());
-
                 new BottomialogUtil(ScheEditActivity.this).
                         showBottomEditedSheet(main_list, filtered_list, mainAdp, timeheadModel, cl, floatingActionBtn, false, weekRID);
             }catch (Exception e){
@@ -135,8 +132,8 @@ public class ScheEditActivity extends BaseActivity {
                 if(unimodel.id==1) unimodel.id=0;
             }
             uni.id=1;
-            headAdp.notifyDataSetChanged();
 
+            headAdp.notifyDataSetChanged();
 
             //如果选中「全部」则清空筛选列表，并重新加入数据
             boolean isClearAll=uni.title.equals("全部");
@@ -231,14 +228,10 @@ public class ScheEditActivity extends BaseActivity {
     //写入课表文件数据
     public void writInits(String sche,Crialoghue cih){
         if(main_list.size()>0&&main_list.get(0)!=null){
-            if(oftenOpts.putDatazList(FileRootTypes.sches,sche,main_list)){
-                Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                cih.dismiss();
-                finish();
-            }else{
-                Toast.makeText(ScheEditActivity.this, "保存失败！", Toast.LENGTH_SHORT).show();
-            }
-
+            oftenOpts.putDataList(FileRootTypes.sches,sche,main_list);
+            Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
+            cih.dismiss();
+            finish();
         }else if(main_list.size()==0){
             oftenOpts.putDataList(FileRootTypes.sches,sche,new ArrayList<>());
             Toast.makeText(ScheEditActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
@@ -246,7 +239,6 @@ public class ScheEditActivity extends BaseActivity {
             finish();
         }
     }
-
 
     //读取网页链接
     private void getDatas() {
@@ -273,7 +265,6 @@ public class ScheEditActivity extends BaseActivity {
         ((Unimodel)headList.get(0)).id=1;
         super.onPause();
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

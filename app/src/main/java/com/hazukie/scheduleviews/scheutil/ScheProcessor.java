@@ -136,7 +136,7 @@ public class ScheProcessor {
         int sideMargins=sideMargin*2;
         int width=mWidth-weekNum*sideMargins;
 
-        /* Textview 的上下留空值(margin)=4且为正方形，故表格总宽度=（每个TextView的高度+列数×上下留白值）×所有表格数 */
+        /* Textview 的上下留空值(margin)=4且为正方形，故表格总宽度=（每个TextView的高度+上下留白值）×所有表格数 */
         int totalMargins=topMargin*2;
         int height=(width/weekNum+totalMargins)*totalClnnums;
 

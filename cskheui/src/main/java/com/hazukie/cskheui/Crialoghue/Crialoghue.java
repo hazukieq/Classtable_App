@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hazukie.cskheui.DisplayHelper;
 import com.hazukie.cskheui.LetxtView.LetxtView;
 import com.hazukie.cskheui.R;
 
@@ -98,7 +100,6 @@ public class Crialoghue extends Dialog {
     }
 
 
-
     private void inits(){
         setContentView(R.layout.__crialogue_root);
         getWindow().setDimAmount(0.16f);
@@ -109,7 +110,6 @@ public class Crialoghue extends Dialog {
         rootLay=findViewById(R.id.diaglog_linearLay);
         pnnn=findViewById(R.id.crialoh_root_pnnn);
         mTitleView.setTextSize(dialogFontSize);
-
     }
 
     public void addView(View view){
@@ -228,6 +228,8 @@ public class Crialoghue extends Dialog {
 
     private void initTxtbuilder(TxtBuilder txtBuilder){
         if(txtBuilder.defaultTxt!=null){
+            //LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(DisplayHelper.dp2px(getContext(),300), ViewGroup.LayoutParams.WRAP_CONTENT);
+            //txtBuilder.defaultTxt.setLayoutParams(params);
             addView(txtBuilder.defaultTxt);
 
             if(!txtBuilder.isHtmlMode){
@@ -256,8 +258,6 @@ public class Crialoghue extends Dialog {
                 if(txtBuilder.cancelListener!=null)txtBuilder.cancelListener.doCancel(this,txtBuilder.defaultTxt);
                 else dismiss();
             });
-
-
         }
     }
 
@@ -320,10 +320,14 @@ public class Crialoghue extends Dialog {
 
         static TextView defaultText(Context context){
             TextView default_txt=new TextView(context);
-            default_txt.setPadding(24,8,24,8);
-            default_txt.setGravity(Gravity.LEFT);
+            int[] dps=DisplayHelper.dp2pxs(context,8,24,8,24);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(DisplayHelper.dp2px(context,8),DisplayHelper.dp2px(context,8),0,DisplayHelper.dp2px(context,8));
+            default_txt.setLayoutParams(params);
+            default_txt.setPadding(dps[0],dps[1],dps[2],dps[3]);
+            default_txt.setGravity(Gravity.CENTER_VERTICAL);
             default_txt.setTextSize(16);
-            default_txt.setTextColor(context.getResources().getColor(R.color.__text_gray));
+            default_txt.setTextColor(context.getColor(R.color.__text_gray));
             return default_txt;
         }
 
@@ -409,13 +413,16 @@ public class Crialoghue extends Dialog {
         private Clicks.InterceptView interceptView;
         private ScrollView scrollView;
 
-        static ScrollView getImgView(Context context){
+        static ScrollView getImgView(Context context,int winHeight){
             ScrollView scrollView=new ScrollView(context);
-            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
-            params.weight=3;
-            scrollView.setBackgroundColor(context.getResources().getColor(R.color.__dim_bg));
+            int curH=winHeight>0? winHeight /2:DisplayHelper.dp2px(context,480);
+            ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,curH);
+            scrollView.setBackgroundColor(context.getColor(R.color.__dim_bg));
+            scrollView.setLayoutParams(params);
+
             ImageView img=new ImageView(context);
-            img.setPadding(12,12,12,12);
+            int[] pads=DisplayHelper.dp2pxs(context,12,12,12,12);
+            img.setPadding(pads[0],pads[1],pads[2],pads[3]);
             scrollView.addView(img,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             img.setAdjustViewBounds(true);
             return scrollView;
@@ -470,8 +477,8 @@ public class Crialoghue extends Dialog {
             this.cancelListener=cancelListener;
             return this;
         }
-        public Crialoghue build(Context context){
-            this.scrollView=getImgView(context);
+        public Crialoghue build(Context context,int winHeight){
+            this.scrollView=getImgView(context,winHeight);
             return new Crialoghue(context,this);
         }
     }

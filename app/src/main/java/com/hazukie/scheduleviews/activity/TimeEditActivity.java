@@ -123,7 +123,6 @@ public class TimeEditActivity extends BaseActivity {
                             for (int i = 0; i < parsedContents.length; i++) {
                                 String tr=parsedContents[i].length()>=9?parsedContents[i].substring(0,9):parsedContents[i];
                                 if(!tr.isEmpty()){
-                                    // tr=tr.replaceAll("(\\d{2})(\\d{2})","$1:$2");
                                     _unis.add(new Unimodel(i,tr));
                                 }
                             }
@@ -162,7 +161,7 @@ public class TimeEditActivity extends BaseActivity {
         List<Unimodel> mergeLs=new ArrayList<>();
         String docName=globalTime;
 
-        int amStart=0,amCl=0,pmCl=0,mmStart=0,mmCl=0,totalNum=0;
+        int amStart=0,amCl=0,pmCl=0,mmStart=0,mmCl=0,totalNum;
         for (int i = 1; i < dasa.size(); i++) {
             TimemakeModel tim=(TimemakeModel) dasa.get(i);
             if(tim.title.equals("上午时间段")&&tim.unis.size()>0)amCl=tim.unis.size();
@@ -188,10 +187,9 @@ public class TimeEditActivity extends BaseActivity {
         totalNum=amCl+pmCl+mmCl;
         TimeHeadModel timeHeadM=new TimeHeadModel(docName,totalNum,amStart,amCl,amCl,pmCl,mmStart,mmCl,tms);
 
-        //FileHelper fileHelper=new FileHelper(TimeditActivity.this);
         try{
             if(tms.size()>0){
-                boolean isWirte2TimeFile= Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.times,docName,timeHeadM);//fileHelper.write(FileHelper.RootMode.times,docName,timeHeadM,false);
+                boolean isWirte2TimeFile= Fileystem.getInstance(getApplicationContext()).putDataz(FileRootTypes.times,docName,timeHeadM,false);
 
                 if(isWirte2TimeFile){
                     DisplayHelper.Infost(TimeEditActivity.this,"修改成功！");
@@ -199,9 +197,8 @@ public class TimeEditActivity extends BaseActivity {
                 }else{
                     DisplayHelper.Infost(TimeEditActivity.this,"保存失败！");
                 }
-
             }
-            else if(tms.size()==0){
+            else{
                 DisplayHelper.Infost(TimeEditActivity.this,"您似乎还没有进行添加操作！");
             }
 

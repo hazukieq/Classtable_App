@@ -3,11 +3,10 @@ package com.hazukie.scheduleviews.fileutil;
 import android.content.Context;
 import android.os.Environment;
 
-import com.google.gson.Gson;
+import com.hazukie.scheduleviews.statics.Statics;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class NetFileOpts {
@@ -33,7 +32,7 @@ public class NetFileOpts {
     }*/
     private File getPublicRoot(String file_name){
         File public_docs= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        String public_export_root_file_name="课表助手";
+        String public_export_root_file_name= Statics.public_dir;
         File classhelper_root=new File(public_docs,public_export_root_file_name);
         if(!classhelper_root.exists()) classhelper_root.mkdir();
         File file=new File(classhelper_root,file_name);
@@ -44,11 +43,11 @@ public class NetFileOpts {
     /*---- WebView part START----*/
     //获取网页配置
     public String getPgConfigs(String rootMode) {
-        String contents="";
+        String contents;
         try{
             FileRootTypes type=rootMode.equals("mind")?FileRootTypes.mind:FileRootTypes.note;
             BasicOpts basicOpts=BasicOpts.getInstance(context);
-            boolean fl=basicOpts.create(type,".configs");
+            basicOpts.create(type,".configs");
 
             File root=context.getDir(type.name(), Context.MODE_PRIVATE);
             File f=new File(root,".configs");
@@ -95,6 +94,10 @@ public class NetFileOpts {
     public File getPublicFile(String rootTypes,String name){
         File root=getPublicRoot(rootTypes);
         return new File(root,name);
+    }
+
+    public File getPublicDir(String dirName){
+        return getPublicRoot(dirName);
     }
 
     /*---- WebView part END----*/

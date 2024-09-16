@@ -50,11 +50,13 @@
 
         <!--侧边栏布局-->
         <RelativeLayout
-            android:layout_width="250dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/white"
-            android:id="@+id/main_side_root">
+            android:id="@+id/main_side_root"
+            android:clickable="true"
+            android:focusable="true">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="36dp"

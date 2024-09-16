@@ -15,7 +15,6 @@ public class IJBridgeUtil {
         jBridgeCmdHandler.registerCmd("vert2Pdf",Vert2Pdf$$ijbridgeCmdApt);
 
 
-
         IJBridgeCmd Vert2Png$$ijbridgeCmdApt= new Vert2Png();
         jBridgeCmdHandler.registerCmd("vert2Png",Vert2Png$$ijbridgeCmdApt);
 

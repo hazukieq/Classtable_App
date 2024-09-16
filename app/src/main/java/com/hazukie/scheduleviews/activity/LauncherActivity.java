@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hazukie.scheduleviews.iJBridges.IJBridgeUtil;
@@ -27,13 +26,14 @@ public class LauncherActivity extends AppCompatActivity {
 
 
     private void applyPermissions(){
-
         List<String> permiss=new ArrayList<>();
-        permiss.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        permiss.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
             permiss.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
+        else{
+            permiss.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            permiss.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
 
         PermissionX.init(this)
                 .permissions(permiss)

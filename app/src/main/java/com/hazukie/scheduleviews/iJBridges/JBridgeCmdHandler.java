@@ -4,9 +4,6 @@ import android.webkit.WebView;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.hazukie.scheduleviews.net.WebStacker;
-
-import java.util.DuplicateFormatFlagsException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -28,7 +25,6 @@ public class JBridgeCmdHandler {
     private void putCmd(String cmd, IJBridgeCmd cmethod) {
         if(mCmdMap.isEmpty()) mCmdMap=new HashMap<>();
         if(!mCmdMap.containsKey(cmd)) mCmdMap.put(cmd,cmethod);
-        else throw new DuplicateFormatFlagsException("input cmd is duplicated with existed cmd");
     }
 
     public void registerCmd(String cmd, IJBridgeCmd cmethod){

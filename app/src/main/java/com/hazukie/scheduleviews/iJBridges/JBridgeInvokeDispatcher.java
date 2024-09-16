@@ -15,10 +15,9 @@ public class JBridgeInvokeDispatcher {
     }
 
     public void sendCmd(FragmentActivity context, WebView webView, JBridgeObject jBridgeObject){
-        //Log.i(TAG, "checkCmdArgs: args="+jBridgeObject.toString());
-        if(checkCmdArgs(jBridgeObject)){
+        if(checkCmdArgs(jBridgeObject))
             execCmd(context,webView,jBridgeObject);
-        }else System.out.println("Exception: JBridgeObject is null!");
+        else System.out.println("Exception: JBridgeObject is null!");
 
     }
 
@@ -28,9 +27,7 @@ public class JBridgeInvokeDispatcher {
             String cmd= args.command;
             String prms=args.params;
             return cmd != null && prms != null && cmd.length() > 0 && prms.length() > 0;
-        }else{
-            return false;
-        }
+        }else return false;
     }
 
     private void execCmd(FragmentActivity context, WebView webView, JBridgeObject jBridgeObject){

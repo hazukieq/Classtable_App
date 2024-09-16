@@ -1,7 +1,7 @@
 package com.hazukie.scheduleviews.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
@@ -39,7 +39,6 @@ import java.util.List;
  */
 public class ScheCreateBeforeFrag extends Fragment {
     private List<Object> objs;
-    private MultiTypeAdapter adp;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -89,23 +88,25 @@ public class ScheCreateBeforeFrag extends Fragment {
 
         CRecyclerView cRecyclerView=v.findViewById(R.id.frag_recy);
         objs=new ArrayList<>();
-        adp=new MultiTypeAdapter();
+        MultiTypeAdapter adp = new MultiTypeAdapter();
         UniBinder uniBinder=new UniBinder();
+
+        Context context= requireContext();
         uniBinder.setJustify(txt->{
-            int pa= DisplayHelper.dp2px(getContext(),8);
-            txt.setGravity(Gravity.LEFT);
+            int pa= DisplayHelper.dp2px(context,8);
+            txt.setGravity(Gravity.START);
             txt.setPadding(pa,0,pa,pa);
             txt.setTextSize(14);
             txt.setBackground(null);
-            txt.setTextColor(getContext().getColor(R.color.text_gray));
+            txt.setTextColor(context.getColor(R.color.text_gray));
         });
 
         uniBinder.setClickListener((v12, uni) -> {
             if(uni.id==1) FragmentContainerAct.startAct2Activity(getActivity(), ManageAct.class);
         });
         IOSItemBinder iosItemBinder=new IOSItemBinder();
-        iosItemBinder.setItemGravity(Gravity.RIGHT);
-        int paddingR=DisplayHelper.dp2px(getContext(),12);
+        iosItemBinder.setItemGravity(Gravity.END);
+        int paddingR=DisplayHelper.dp2px(context,12);
         iosItemBinder.setItemPadding(0,0,paddingR);
         iosItemBinder.setClickListener((v1, scheWithTimeModel) -> {
             if(scheWithTimeModel.id==0) popupList(v1);
@@ -118,7 +119,6 @@ public class ScheCreateBeforeFrag extends Fragment {
         cRecyclerView.setAdapter(adp);
         adp.register(Unimodel.class,uniBinder);
         adp.register(ScheWithTimeModel.class,iosItemBinder);
-        //adp.register(EditModel.class,new EditemBinder());
         adp.setItems(objs);
 
 
@@ -132,18 +132,16 @@ public class ScheCreateBeforeFrag extends Fragment {
     }
 
     public  void popupList(View attatchedView) {
-
         PopupUtil popupUtil = new PopupUtil(getContext());
         PopupWindow p = popupUtil.initDefaultPopup(120);
-        p.showAsDropDown(attatchedView,0,0,Gravity.RIGHT);
+        p.showAsDropDown(attatchedView,0,0,Gravity.END);
         popupUtil.initDefaultViews((txt, recy_, muDp, viewList) -> {
-            txt.setText(Html.fromHtml("<b><font color=\"##1b88ee\">创建新作息表</font></b>"));
+            txt.setText(Html.fromHtml("<b><font color=\"##1b88ee\">创建新作息</font></b>"));
             txt.setOnClickListener(v->
-                FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeCreateFrag.class));//"com.hazukie.scheduleviews.fragments.TimemakeFragment"));
+                FragmentContainerAct.startActivityWithLoadUrl(getActivity(), TimeCreateFrag.class));
 
-            List<TimeModel> tms= OftenOpts.getInstance(getContext()).getRecordTms();//FileHelper.getRecordTms(getActivity());
-
-            int pa= DisplayHelper.dp2px(getContext(),8);
+            List<TimeModel> tms= OftenOpts.getInstance(requireContext()).getRecordTms();
+            int pa= DisplayHelper.dp2px(requireContext(),8);
             recy_.setPadding(pa,pa,pa,pa);
 
             for (TimeModel tm:tms) {

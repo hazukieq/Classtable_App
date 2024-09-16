@@ -9,8 +9,8 @@ HTMLElement.prototype.autoclick=function(){
     this.dispatchEvent(el)
 }
 
-/** 
- * @param {String} id 
+/**
+ * @param {String} id
  * @returns {Object} obj
  */
 const $=(id)=>{
@@ -147,24 +147,25 @@ HTMLElement.prototype.click=function(args,func){
 }
 
 /**
- * 
+ *
  * @param {String} id or object
- * @param {Function} func(id) 
+ * @param {Function} func(id)
  */
 const $click=(id,func)=>{
     var __element=typeof id==='object'?id:$(id)
 
-    if(func!==null&&typeof func=='function') 
+    if(func!==null&&typeof func=='function')
             __element
-                .setAttribute('onclick',`(${func})(this)`)    
+                .setAttribute('onclick',`(${func})(this)`)
 }
 
 
 
+
 HTMLElement.prototype.neo=function(ele_name,args,attrs){
-    var ele_tag_name=(ele_name.length>0&&typeof ele_name=='string')?ele_name:'div'
+    var ele_tag_name=(ele_name!=null&&ele_name!=undefined&&ele_name.length>0&&typeof ele_name=='string')?ele_name:'div'
     var __neoele=document.createElement(ele_tag_name)
-    
+
     var __args=args||{}
     $css(__neoele,__args)
 
@@ -175,14 +176,21 @@ HTMLElement.prototype.neo=function(ele_name,args,attrs){
 }
 
 const $neo=(root_ele,ele_name,args,attrs)=>{
-    var ele_tag_name=(ele_name.length>0&&typeof ele_name=='string')?ele_name:'div'
-    var __rootele= typeof root_ele=='object'?root_ele:$(root_ele)
+    if(root_ele!=undefined&&ele_tag_name==undefined&&args==undefined&&attrs==undefined){
+        ele_name=root_ele
+        root_ele=undefined
+    }
+
+    var ele_tag_name=(ele_name!=undefined&&ele_name.length>0&&typeof ele_name=='string')?ele_name:'div'
     var __neoele=document.createElement(ele_tag_name)
 
     var __args=args||{}
-    $style(__neoele,__args)
+    $css(__neoele,__args)
 
-    __rootele.appendChild(__neoele)
+    if(root_ele!=undefined){
+        var __rootele= typeof root_ele=='object'?root_ele:$(root_ele)
+        __rootele.appendChild(__neoele)
+    }
 
     var __attrs=attrs||{}
     $attr(__neoele,__attrs)
@@ -252,14 +260,14 @@ HTMLElement.prototype.switch=function(args,onFunc,offFunc){
     }
     const __args=args||{}
     __check==='true'?offFunc(this,__args):onFunc(this,__args)
-    this.setAttribute('isCheck',__check==='true'?'false':'true') 
+    this.setAttribute('isCheck',__check==='true'?'false':'true')
 
-    
+
     return this
 }
 
 /**
- * 
+ *
  * @param {Object} ele pass an Object or id of Object
  * @param {Object} args {common_data:''}
  * @param {Function} onFunc onFunc(ele,args)
@@ -275,44 +283,44 @@ const $switch=(ele,args,onFunc,offFunc)=>{
     }
     const __args=args||{}
     __check==='true'?offFunc(__ele,__args):onFunc(__ele,__args)
-    __ele.setAttribute('isCheck',__check==='true'?'false':'true') 
+    __ele.setAttribute('isCheck',__check==='true'?'false':'true')
 }
 
 
 
 
 /**
- * 
- * @param {String} context 
+ *
+ * @param {String} context
  * @returns {String} url_parameter
  */
 const UrlParamer=(context)=>{
     const searchParams=new URLSearchParams(context)
     return {
         /**
-         * 
-         * @param {String} key 
-         * @param {String} value 
+         *
+         * @param {String} key
+         * @param {String} value
          * @returns {String} url_parameter
          */
         put:(key,value)=>searchParams.append(key,value),
-        
+
         /**
-         * 
-         * @param {String} key 
+         *
+         * @param {String} key
          * @returns {String} url_parameter
          */
         get:(key)=>searchParams.get(key),
 
         /**
-         * 
+         *
          * @returns {String} whole_url_parameter
          */
         getAll:()=>searchParams.toString(),
-        
+
         /**
-         * 
-         * @param {String} key 
+         *
+         * @param {String} key
          * @returns {String} url_parameter
          */
         del:(key)=>searchParams.delete(key)
@@ -320,8 +328,8 @@ const UrlParamer=(context)=>{
 }
 
 /**
- * 
- * @param {String} context 
+ *
+ * @param {String} context
  * @returns {Function} func
  */
 const getUrlParamer=(context)=>{
@@ -361,11 +369,14 @@ const $ajax=(url,timeout,success_callback,failed_callback)=>{
         }else{
             failed_callback();
         }
-        
+
     };
-    
+
     xhr.open('GET',url);
     xhr.setRequestHeader('Content-Type','application/json')
     xhr.send();
 }
 
+
+const isLog=true
+const Log=(texts)=>isLog?console.log(texts):void 0

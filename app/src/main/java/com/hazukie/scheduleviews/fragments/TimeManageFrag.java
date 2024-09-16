@@ -150,7 +150,7 @@ public class TimeManageFrag extends Fragment {
                             .addHint("请输入新的文件名")
                             .addContents(uni.title)
                             .addIsBottomVisible(true)
-                            .addBottomContents("文件名不能和“默认作息表相同”")
+                            .addBottomContents("文件名不能和「默认作息表」相同")
                             .onConfirm((crialoghue, view) -> {
                                 EditText ed=(EditText) view;
                                 String content=ed.getText().toString().replaceAll("\\s*","");
@@ -219,7 +219,7 @@ public class TimeManageFrag extends Fragment {
 
     private void executeDel(TimeModel del){
         try {
-            basicOpts.delete(FileRootTypes.times,del.timeName);//fileHelper.delete(FileHelper.RootMode.times,del.timeName);
+            basicOpts.delete(FileRootTypes.times,del.timeName);
             Fileystem.getInstance(getContext()).putDataList(FileRootTypes.times,"time_index.txt",new ArrayList<>(getCurentThmList()));
             oftenOpts.putRawSctList(sctz);
         }catch (Exception e){
@@ -264,7 +264,7 @@ public class TimeManageFrag extends Fragment {
         for (int i = 0; i < timez.size(); i++) {
             recyItems.add(new Unimodel(i,timez.get(i).getTimeName()));
         }
-        recyAdp.notifyDataSetChanged();
+        recyAdp.notifyItemRangeChanged(0,recyItems.size());
         controlEmpty();
         Log.i("onResume>>>","timez="+timez.size());
     }

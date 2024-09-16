@@ -12,6 +12,7 @@ public class DialogUtil {
     public static void showaloh(Context context, MultiTypeAdapter mdp, String title, List<Object> ob_,List<Object> subojs, Object hrcx, int indx_,boolean isSubList) {
         Crialoghue cioh=new Crialoghue.TxtBuilder()
                 .addTitle("" + title)
+                .addFontSize(15)
                 .addContent( "确定删除此" + title + "吗？")
                 .onConfirm((cRialog, v) -> {
                     ob_.remove(hrcx);

@@ -515,21 +515,16 @@ public class BaseWebActivity extends BaseActivity {
             RandomAccessFile tempfile=new RandomAccessFile(tempPath,"rw");
 
             Response resp=client.newCall(request).execute();
-            if(resp != null){
-                if(resp.body()!=null){
-                    is=resp.body().byteStream();
-                    //byte[] isytes=resp.body().byteStream().readAllBytes();
-                    byte[] bytes=new byte[1024*6];
-                    int len;
+            is = resp.body().byteStream();
+            byte[] bytes = new byte[1024 * 6];
+            int len;
 
-                    while ((len=is.read(bytes))!=-1){
-                        tempfile.write(bytes,0,len);
-                    }
-                }
-                resp.body().close();
-
-                if(file.exists()&&file.isFile()) file.renameTo(new File(path));
+            while ((len = is.read(bytes)) != -1) {
+                tempfile.write(bytes, 0, len);
             }
+            resp.body().close();
+
+            if(file.exists()&&file.isFile()) file.renameTo(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
             file.deleteOnExit();

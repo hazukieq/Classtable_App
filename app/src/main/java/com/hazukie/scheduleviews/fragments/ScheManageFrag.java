@@ -100,7 +100,6 @@ public class ScheManageFrag extends Fragment {
         emptyLay=v.findViewById(R.id.frag_sche_empty);
         TextView addView=v.findViewById(R.id.frag_sche_manage_add);
 
-        //fileHelper=new FileHelper(getActivity());
         oftenOpts=OftenOpts.getInstance(getContext());
         basicOpts=BasicOpts.getInstance(getContext());
 
@@ -109,7 +108,7 @@ public class ScheManageFrag extends Fragment {
 
 
         //获取记录在案的所有文件数据
-        scts= oftenOpts.getRecordedScts();//FileHelper.getRecordedScts(getActivity());
+        scts= oftenOpts.getRecordedScts();
 
         HorionCardBinder horionCardBinder=new HorionCardBinder();
         //设置文件详情展开功能
@@ -164,7 +163,6 @@ public class ScheManageFrag extends Fragment {
         ViewGroup.LayoutParams lps=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         LinearLayout firedit=new LeditView.Builder().addLeftile("课表名称").addContent(horic.title).create(getActivity());
-
         LinearLayout secedit=new LetxtView.Builder()
                 .addLeftile("关联作息")
                 .addRightile(horic.subtitle)
@@ -204,7 +202,8 @@ public class ScheManageFrag extends Fragment {
                                 }
 
                                 if(!isDuplicate){
-                                    boolean isRename=basicOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");//fileHelper.rename(FileHelper.RootMode.sches,horic.title+".txt",mSchName+".txt");
+                                    boolean isRename=basicOpts.rename(FileRootTypes.sches,horic.title+".txt",mSchName+".txt");
+
                                     Log.i( "showSettinialoh>>","isRename="+isRename);
                                     if(isRename){
                                         horic.title=mSchName;
@@ -262,7 +261,7 @@ public class ScheManageFrag extends Fragment {
             });
 
             multiAdp.register(Unimodel.class,uni);
-            List<TimeModel> tims= oftenOpts.getRecordTms();//FileHelper.getRecordTms(getActivity());
+            List<TimeModel> tims= oftenOpts.getRecordTms();
             for(int i=0;i<tims.size();i++){
                 TimeModel ti=tims.get(i);
                 viewlist.add(new Unimodel(ti.id,ti.getTimeName()));
@@ -274,22 +273,15 @@ public class ScheManageFrag extends Fragment {
 
     private String getTimedescription(String name){
         String sdes="";
-        TimeHeadModel thdm=oftenOpts.getThm(name+".txt");//(TimeHeadModel) thm;
+        TimeHeadModel thdm=oftenOpts.getThm(name+".txt");
         if(thdm!=null) sdes=thdm.outputBasics();
- /*       try {
-            //Object thm=FileHelper.getInstance(getContext()).readObj(FileHelper.RootMode.times,name+".txt",TimeHeadModel.class);
-            TimeHeadModel thdm=oftenOpts.getThm(name+".txt");//(TimeHeadModel) thm;
-            if(thdm!=null) sdes=thdm.outputBasics();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         return sdes;
     }
 
     //处理删除列表中的数据
     //写入修改后数据
     private void executeDel(ScheWithTimeModel del){
-        boolean isDel=basicOpts.delete(FileRootTypes.sches,del.scheName);//fileHelper.delete(FileHelper.RootMode.sches,del.scheName);
+        boolean isDel=basicOpts.delete(FileRootTypes.sches,del.scheName);
         Log.i( "ExcecuteDel>>>","delete_item= "+del.scheName+" status="+isDel);
         refreshScts();
     }
@@ -320,7 +312,7 @@ public class ScheManageFrag extends Fragment {
         if(mobs!=null&&scts!=null){
             mobs.clear();
             scts.clear();
-            scts.addAll(oftenOpts.getRecordedScts());//FileHelper.getRecordedScts(getActivity()));
+            scts.addAll(oftenOpts.getRecordedScts());
             if(scts.size()>0&&scts.get(0)!=null){
                 for(int i=0;i<scts.size();i++){
                     ScheWithTimeModel sct=scts.get(i);
@@ -329,7 +321,7 @@ public class ScheManageFrag extends Fragment {
                 }
             }
 
-            mdp.notifyDataSetChanged();
+            mdp.notifyItemRangeChanged(0,mobs.size());
             controlEmpty();
             Log.i("onResume>>>","sct_datas has updating!");
         }
