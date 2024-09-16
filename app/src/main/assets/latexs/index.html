@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--static head-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>Latex Formula</title>
+    <link href="basic/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="basic/common/universal.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <!-- Basic Tool Lib -->
+    <script src="basic/common/utils.js"></script>
+
+    <!-- Native&Js BridgeInvoker Lib -->
+    <script src="basic/js2native/ijbridger.min.js"></script>
+    <script src="ijb_register.js"></script>
+</head>
+<body>
+	<div class="container-fluid p-0">
+	<div class="d-flex vh-100 w-100 flex-row align-items-start" id="main-content">
+            <!--一个输入框，一个渲染区，二等分-->
+            <div class="vh-100 pe-1" style="width: 40%;">
+                    <textarea class="p-5 form-control border-0 h-100" id="input-tex" placeholder="Enter LaTex here..."></textarea>
+            </div>
+            <div class="vh-100" style="width:60%">
+		    <div class="card-header d-flex justify-content-between align-items-end pt-3">
+                        <h5>Rendered Formula</h5>
+                        <button  class="btn bg-transparent" onclick="openFullScreen()">
+                            全屏
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-bottom overflow-auto" style="height:91%" id="output-tex">
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!--invoke modal button-->
+                <button id="modal-launch-button" type="button" class="btn btn-primary visually-hidden" data-bs-toggle="modal" data-bs-target="#modal-error">
+                    Launch demo modal
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal-->
+    <div class="modal fade" id="modal-error" tabindex="-1" aria-labelledby="modal-error-label" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-error-label">Rendered Formula</h5>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="full-out-tex" class="h-100 overflow-auto">
+                        <p class="placeholder-glow">
+                            <span class="placeholder col-7"></span>
+                            <span class="placeholder col-4"></span>
+                            <span class="placeholder col-4"></span>
+                            <span class="placeholder col-6"></span>
+                            <span class="placeholder col-8"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- 引入首页自定义逻辑脚本 -->
+<!--script src="minjs/index.js"></script-->
+<!-- 引入Bootstrap的JavaScript库，包括Popper，为模态框、下拉菜单等组件提供支持 -->
+<script src="basic/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script id="mathjax-script" async src="lib/mathjax/es5/tex-svg-full.js"></script>
+<script>
+    //avoid overflow
+    MathJax={
+        tex:{
+            inlineMath:[['$','$'],['\\(','\\)']]
+        },
+        svg:{
+            fontCache:'global'
+        },
+
+    }
+
+
+    const convertTex2Svg=(incontents,output)=>{
+        output.innerHTML=''
+        MathJax.texReset()
+        let opts=MathJax.getMetricsFor(output)
+        opts.display=true
+        MathJax.tex2svgPromise(incontents,opts).then(svg=>{
+            output.appendChild(svg)
+            MathJax.startup.document.clear()
+            MathJax.startup.document.updateDocument()
+        }).catch(err=>{
+            //console.log(err)
+            output.innerHTML='<div class="alert alert-danger p-1" role="alert">'+err.message+'</div>'
+        }).then(()=>{
+            //console.log(MathJax.startup.document)
+        })
+    }
+
+    const openFullScreen=()=>{
+        $('modal-launch-button').autoclick()
+        let fulloutex=$('full-out-tex')
+        convertTex2Svg($('input-tex').value,fulloutex)
+    }
+    
+    var isType=true
+    let texs=$('input-tex')
+    let display=$('output-tex')
+
+    window.onload=function(){
+	setTimeout(()=>{
+		texs.value=java.direader('latexs.md','mind')
+        },200)
+    }
+   
+   
+    texs.oninput=function(){
+        //avoid throstle here
+        if(isType){
+            isType=false
+            anPutData('latexs.md',this.value)
+	    convertTex2Svg(this.value,display)
+            setTimeout(()=>isType=true,50)}
+    }
+</script>
+</html>

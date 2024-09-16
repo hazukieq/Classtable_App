@@ -32,9 +32,10 @@ public class ScheProcessor {
      */
     public static ScheProcessor getInstance(Context context) {
         if(instance==null){
-            synchronized (ScheProcessor.class){
+            instance=new ScheProcessor(context);
+            /*synchronized (ScheProcessor.class){
                 if(instance==null) instance=new ScheProcessor(context);
-            }
+            }*/
         }
         return instance;
     }

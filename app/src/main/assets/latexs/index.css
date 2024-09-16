@@ -1,0 +1,14 @@
+.hfill{
+	height: 100vh;
+}
+.wfill{
+	width:50vh; 
+}
+
+.MathJax{
+    font-size: 20px;
+    margin: 0 !important;
+    padding: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}

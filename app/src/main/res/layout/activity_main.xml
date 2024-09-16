@@ -11,7 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frstL"
+            android:id="@+id/firstL"
             android:orientation="vertical">
                 <View
                     android:layout_width="match_parent"

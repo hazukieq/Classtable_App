@@ -20,94 +20,120 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleViews"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        android:resizeableActivity="true"
+        android:taskAffinity="com.hazukie.scheduleviews">
         <activity
             android:name=".activity.RgetActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.SyncActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.ImportActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.TesingActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".base.FragmentContainerAct"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.ManageAct"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.Manager"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.ScheCreateActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.ScheEditActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.TimeEditActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.AboutActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.SettingActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.MainActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.SchePreviewActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
         <activity
             android:name=".activity.QuickMindActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
         <activity
             android:name=".activity.QuickNoteActivity"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
 
         <activity
             android:name=".activity.ThirdWebLoadAct"
             android:exported="false"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"/>
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"        android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews"/>
         <activity
             android:name=".activity.LauncherActivity"
             android:exported="true"
             android:theme="@style/Theme.Launcher"
-            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize">
+            android:configChanges="fontWeightAdjustment|orientation|keyboardHidden|smallestScreenSize|screenSize"
+            android:resizeableActivity="true"
+            android:taskAffinity="com.hazukie.scheduleviews">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

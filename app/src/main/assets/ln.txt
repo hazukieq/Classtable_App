@@ -1,0 +1,2 @@
+ln -sf ../../../../../jbridge/quickmind/minjs/ quickmind/minjs
+ln -sf ../../../../../jbridge/quickmind/latexs latexs

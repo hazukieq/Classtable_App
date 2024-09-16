@@ -1,9 +1,12 @@
 package com.hazukie.scheduleviews.activity;
 
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -12,10 +15,15 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,6 +75,8 @@ public class MainActivity extends BaseActivity {
     private SpvalueStorage sp;
     private OftenOpts oftenOpts;
 
+    //声明一个boolean，因为addOnGlobalLayoutListener会重复执行，控制它启动后只执行一次
+    private boolean isCompletedDraw = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,20 +146,42 @@ public class MainActivity extends BaseActivity {
     }
 
 
+
     //加载课表视图数据
     private void InitWithMainViews(){
         linearLayout=findViewById(R.id.main);
-        linearLayout.post(() -> {
+        //获取TextVie控件的高度,然后设置给ImageView
+        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (!isCompletedDraw) {
+                    isCompletedDraw = true;
+                    //为 GridLayout 设置宽高
+                    //初始化课表布局
+                    int width__ = linearLayout.getMeasuredWidth();
+                    uiProcessor = new ScheUIProcessor(MainActivity.this, linearLayout, width__, totalClnnums);
+                    uiProcessor.setScheInformation(MainActivity.this::showDetails);
+                    try {
+                        //课表数据按流程进行加载
+                        uiProcessor.renderUI();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
+
+/*       linearLayout.post(() -> {
             //初始化课表布局
-            width__=linearLayout.getWidth();
+            int width__=linearLayout.getMeasuredWidth();
             uiProcessor=new ScheUIProcessor(MainActivity.this,linearLayout,width__,totalClnnums);
             uiProcessor.setScheInformation(this::showDetails);
             try {
                 //课表数据按流程进行加载
                 uiProcessor.renderUI();
             } catch (IOException e) { e.printStackTrace(); }
-        });
-
+        });*/
     }
 
     //加载侧边栏数据
@@ -251,6 +283,8 @@ public class MainActivity extends BaseActivity {
     private void reloadProcess(){
         try {
             linearLayout.removeAllViews();
+            linearLayout.invalidate();
+            uiProcessor.setmWidth(linearLayout.getMeasuredWidth());
             uiProcessor.renderUI();
         } catch (IOException e) {
             e.printStackTrace();
@@ -462,6 +496,13 @@ public class MainActivity extends BaseActivity {
 
         reloadProcess();
         Log.i("MainActivity-onResume>>", "record_name=" + record + ", sctList has updated,sctListSize=" + scts.size());
+    }
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        reloadProcess();
     }
 
 

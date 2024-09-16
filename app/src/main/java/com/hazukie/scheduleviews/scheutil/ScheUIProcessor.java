@@ -1,7 +1,6 @@
 package com.hazukie.scheduleviews.scheutil;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +34,9 @@ public class ScheUIProcessor {
         this.linearLay=linearLay;
         this.mWidth=mWidth;
     }
-
+    public void setmWidth(int mWidth){
+        this.mWidth=mWidth;
+    }
 
     public void setDefaultColors(int time_color,int empty_color){
         if(time_color!=0x10000) this.default_time_grid_color=time_color;
@@ -178,7 +179,7 @@ public class ScheUIProcessor {
         //布局高度，设置根布局参数，比如留空值、宽度、长度等，并将根布局添加到上一层布局中去显示;
         int height=widthAndHeight[1];
 
-        LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height);
+        LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(width_,height);
         param.setMargins(0,0,0,48);
 
         gridLayout.setLayoutParams(param);
