@@ -58,7 +58,7 @@ jobs:
        uses: softprops/action-gh-release@v2.0.8
        with:
          token: ${{ secrets.GH_PAT }}
-         tags: "release-apk"
+         tag_name: "release-apk"
          files: |
              *.apk
              *.json
