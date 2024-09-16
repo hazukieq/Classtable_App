@@ -52,24 +52,15 @@ jobs:
      - name: Print branch    
        run: |
          echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
-
-     - name: Download APK from build
-       uses: actions/download-artifact@v4.1.8
-     - name: Create Release
-       id: create_release
-       uses: actions/create-release@v1
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         ls . -al
+         pwd
+     - name: GH Release
+       uses: softprops/action-gh-release@v2.0.8
        with:
-         tag_name: v${{ github.run_number }}.${{ github.run_attempt }}-release
-         release_name: ${{ github.event.repository.name }} ${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
-     - name: Upload Release APK
-       id: upload_release_asset
-       uses: actions/upload-release-asset@v1.0.1
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       with:
-         upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: ./${{ github.event.repository.name }} ${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
-         asset_name: ${{ github.event.repository.name }} ${{ steps.branch-name.outputs.current_branch }}.v${{ github.run_number }}.${{ github.run_attempt }}.apk
-         asset_content_type: application/zip
+         token: ${{ secrets.GH_PAT }}
+         files: |
+             *.apk
+             *.json
+             
+         
+            
