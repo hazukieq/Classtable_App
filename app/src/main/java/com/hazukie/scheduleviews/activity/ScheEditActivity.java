@@ -71,7 +71,7 @@ public class ScheEditActivity extends BaseActivity {
                 if(unimo.id==1) weekRID=y;
             }
             if(weekRID==0)weekRID=1;
-            ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
+            ClassLabel cl=new ClassLabel(1,0,weekRID,0,"", "","","",11,false);
 
             try {
                 if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());

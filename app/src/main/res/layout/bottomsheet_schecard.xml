@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -204,7 +205,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="自定义时间"
+                    android:text="上课时间"
                     android:textColor="@color/text_gray"
                     android:textSize="18sp" />
 
@@ -215,7 +216,7 @@
                     android:layout_weight="7"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="自定义时间(可不填)"
+                    android:hint="自定义课程上课时间(可不填)"
                     android:inputType="text"
                     android:text="@{clazz.customTime}"
                     android:maxLines="1"
@@ -224,7 +225,59 @@
                     android:textColorHint="@color/text_gray"
                     android:textSize="18sp" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="双周课程"
+                    android:textColor="@color/text_gray"
+                    android:textSize="18sp" />
 
+                <EditText
+                    android:id="@+id/class_even_subject"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="7"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="双周的课程填写(可不填)"
+                    android:inputType="text"
+                    android:text="@{clazz.evenSubject}"
+                    android:maxLines="1"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/qmuibtn_text"
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="单双周模式"
+                    android:textColor="@color/text_gray"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/class_oddeven"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="7"
+                    android:thumb="@drawable/switch_thumb"
+                    app:switchMinWidth="36dp"
+                    app:track="@drawable/switch_track"
+                    android:checked="@{clazz.oddEven}"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

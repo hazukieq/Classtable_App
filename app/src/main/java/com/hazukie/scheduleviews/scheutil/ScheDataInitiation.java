@@ -58,6 +58,10 @@ public class ScheDataInitiation {
         return new CalculateData(totalNums).exClasses(classLabels);
     }
 
+    public List<ClassLabel> initialClass(List<ClassLabel> classLabels,boolean isOddOrEven){
+        return new CalculateData(totalNums).exClasses(classLabels,isOddOrEven);
+    }
+
     //空加载方法
     public List<ClassLabel> initialEmpty(){
         return new CalculateData(totalNums).empty();

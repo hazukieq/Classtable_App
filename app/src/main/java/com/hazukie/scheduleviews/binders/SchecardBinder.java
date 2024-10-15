@@ -26,7 +26,7 @@ public class SchecardBinder extends ItemViewBinder<ClassLabel, SchecardBinder.VH
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
-        return new VH(layoutInflater.inflate(R.layout.recy_schecard,viewGroup,false));
+        return new VH(layoutInflater.inflate(R.layout.recy_schecard, viewGroup, false));
     }
 
     @Override
@@ -52,6 +52,8 @@ public class SchecardBinder extends ItemViewBinder<ClassLabel, SchecardBinder.VH
         vh.planoteV.setText(cls.plaNote);
         vh.colorV.setBackgroundColor(vh.itemView.getResources().getColor(ColorSeletor.getColorByIndex(cls.color)));
         vh.colorV.setText(cls.addColorStr());//ColorSeletor.getColorStringByIndex(cls.color));
+        vh.oddevenV.setText(cls.getOEWeek());
+        //vh.oddevenV.setVisibility(cls.getOEWeek().equals("")?View.GONE:View.VISIBLE);
     }
 
     @Override
@@ -68,13 +70,15 @@ public class SchecardBinder extends ItemViewBinder<ClassLabel, SchecardBinder.VH
                 vh.planoteV.setText(cls.plaNote);
                 vh.colorV.setBackgroundColor(vh.itemView.getResources().getColor(ColorSeletor.getColorByIndex(cls.color)));
                 vh.colorV.setText(cls.addColorStr());
+                vh.oddevenV.setText(cls.getOEWeek());
+                vh.oddevenV.setVisibility(cls.getOEWeek().equals("")?View.GONE:View.VISIBLE);
             }
         }
     }
 
-    public class VH extends RecyclerView.ViewHolder{
+    public static class VH extends RecyclerView.ViewHolder{
 
-        private TextView weektime,startCl,totalNum,colorV,planoteV,placeV,courseV,editV,deleteV;
+        private TextView weektime,startCl,totalNum,colorV,planoteV,placeV,courseV,editV,deleteV,oddevenV;
         public VH(@NonNull View itemView) {
             super(itemView);
             weektime=itemView.findViewById(R.id.class_info_card_date);
@@ -86,7 +90,7 @@ public class SchecardBinder extends ItemViewBinder<ClassLabel, SchecardBinder.VH
             courseV=itemView.findViewById(R.id.class_info_card_course);
             editV=itemView.findViewById(R.id.class_info_card_edit);
             deleteV=itemView.findViewById(R.id.class_info_card_delete);
-
+            oddevenV=itemView.findViewById(R.id.class_info_card_oddeven);
         }
     }
 }

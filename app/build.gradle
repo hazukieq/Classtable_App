@@ -10,7 +10,7 @@ if(keyPropsFile.exists()){
 }
 
 def versionProps=new Properties()
-def versionFile=rootProject.file('version.properties')
+def versionFile=rootProject.file('version.ini')
 if(versionFile.exists()){
     versionProps.load(new FileInputStream(versionFile))
 }
@@ -29,6 +29,7 @@ android {
     compileSdk versions.compileSdk
 
     buildFeatures{
+        //noinspection DataBindingWithoutKapt
         dataBinding=true
     }
     defaultConfig {

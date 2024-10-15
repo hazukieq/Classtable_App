@@ -80,7 +80,7 @@ public class ScheCreateActivity extends BaseActivity {
             }
 
             if(weekRID==0)weekRID=1;
-            ClassLabel cl=new ClassLabel(1,0,weekRID,0,"","","",11);
+            ClassLabel cl=new ClassLabel(1,0,weekRID,0,"", "","","",11,false);
             try {
                 //如果作息表为空，则启动默认作息表
                 if(timeheadModel==null) timeheadModel= new TimeHeadModel("默认作息表",12,0,5,5,4,9,3, ScheDataInitiation.initialTimeDefaults());

@@ -13,6 +13,7 @@ import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.TimeHeadModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.statics.Statics;
+import com.hazukie.scheduleviews.utils.DateHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
 import java.io.IOException;
@@ -137,8 +138,10 @@ public class ScheUIProcessor {
             if(isLoadDefaultTime) timez_list= ScheDataInitiation.initialTimeDefaults();
             else timez_list= scheDataInitiation.initialTime(time_model.detailClass);
 
+            boolean isOddOrEvenWeek=isEvenOrOddWeek();
             //加载课程数据
-            clzz_list= scheDataInitiation.initialClass(clss_list);
+            //clzz_list= scheDataInitiation.initialClass(clss_list);
+            clzz_list= scheDataInitiation.initialClass(clss_list,isOddOrEvenWeek);
 
             //渲染数据到根布局中去
             initGrids(mWid,clzz_list,timez_list,totalLen);
@@ -151,6 +154,21 @@ public class ScheUIProcessor {
         }
     }
 
+
+    private boolean isEvenOrOddWeek(){
+        SpvalueStorage sp=SpvalueStorage.getInstance(context);
+        //设置月份
+        //设置周数，这里需要开学日期时间！！
+        int startMonth=sp.getInt("start_month",9);
+        int startDay=sp.getInt("start_day",1);
+        int term_totalWeek=sp.getInt("termweeks",18);
+        DateHelper dateHelper=new DateHelper.Builder()
+                .setStartDate(startMonth,startDay)
+                .setTotalNum(term_totalWeek)
+                .create();
+        //判断是否是双周
+        return dateHelper.getGap() % 2 == 0;
+    }
 
     /**
      * @param width_ 布局宽度

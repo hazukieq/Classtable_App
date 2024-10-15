@@ -79,18 +79,35 @@
             android:gravity="center_vertical"
             android:singleLine="true"/>
     </LinearLayout>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="14sp"
-        android:text="备注：其他注意事项"
-        android:paddingStart="8dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/class_info_card_classNotes"
-        android:textColor="@color/qmuibtn_text"
-        android:gravity="center_vertical"
-        android:maxLines="3"
-        android:layout_marginBottom="4dp"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="40dp"
+            android:textSize="14sp"
+            android:text="备注：其他注意事项"
+            android:paddingStart="8dp"
+            android:paddingEnd="0dp"
+            android:id="@+id/class_info_card_classNotes"
+            android:textColor="@color/qmuibtn_text"
+            android:gravity="center_vertical"
+            android:maxLines="3"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textSize="14sp"
+            android:text="单双周"
+            android:id="@+id/class_info_card_oddeven"
+            android:textColor="@color/__iosred"
+            android:gravity="center_vertical"
+            android:singleLine="true"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

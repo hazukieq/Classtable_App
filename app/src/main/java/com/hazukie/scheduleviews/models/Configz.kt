@@ -47,7 +47,7 @@ open class Configz(val uid:String,var name:String){
 class TimeConfig(uid: String,name: String):Configz(uid,name){
     val description:String
 
-    fun getDescript():String{
+    private fun getDescript():String{
         return ""
     }
     init {

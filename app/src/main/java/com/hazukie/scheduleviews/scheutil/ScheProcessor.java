@@ -3,6 +3,7 @@ package com.hazukie.scheduleviews.scheutil;
 import android.content.Context;
 import android.text.Html;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.statics.ColorSeletor;
 import com.hazukie.scheduleviews.utils.CycleUtil;
+import com.hazukie.scheduleviews.utils.DateHelper;
+import com.hazukie.scheduleviews.utils.SpvalueStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +98,26 @@ public class ScheProcessor {
 
     //clNums>0时的处理函数
     private void moreOneProcess(TextView textView,GridLayout.LayoutParams params,ClassLabel cls){
-        textView.setText(Html.fromHtml(cls.toHtml()));
+        SpvalueStorage sp=SpvalueStorage.getInstance(context);
+        //设置月份
+        //设置周数，这里需要开学日期时间！！
+        int startMonth=sp.getInt("start_month",9);
+        int startDay=sp.getInt("start_day",1);
+        int term_totalWeek=sp.getInt("termweeks",18);
+        DateHelper dateHelper=new DateHelper.Builder()
+                .setStartDate(startMonth,startDay)
+                .setTotalNum(term_totalWeek)
+                .create();
+        //判断是否是双周
+        boolean isEven= dateHelper.getGap() % 2 == 0;
+        boolean isEvenSubject= !cls.evenSubject.isEmpty();
+        if(isEvenSubject&&isEven)
+            textView.setText(Html.fromHtml(cls.toEvenHtml()));
+        else textView.setText(Html.fromHtml(cls.toHtml()));
+        /*加入判断 如果是课程名称为空时,则会忽略!
+        else if(!cls.subjectName.isEmpty()) textView.setText(Html.fromHtml(cls.toHtml()));
+        else textView.setVisibility(View.INVISIBLE);*/
+
         textView.setPadding(3,1,3,1);
         textView.setBackgroundColor(context.getColor(ColorSeletor.getColorByIndex(cls.color)));
 

@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class DateHelper{
     private final Calendar instance;
-    private int startWeekth,endWeekth;
+    private int startWeekth,endWeekth,gapInt;
     private String gapStr="";
     public DateHelper(){
         instance=Calendar.getInstance();
@@ -22,6 +22,7 @@ public class DateHelper{
         startWeekth=getStartWeek(builder.start_year, builder.start_mont, builder.start_dait);
         endWeekth=getEndWeek(startWeekth, builder.totalNum);
         gapStr=getWeekGap(startWeekth,getCurrentWeek(),builder.totalNum);
+        gapInt=getWeekGapInt(startWeekth,getCurrentWeek());
     }
 
     //获取开始日期所属周目
@@ -50,6 +51,12 @@ public class DateHelper{
     }
 
     //开始周目和当前周目之差
+    private int getWeekGapInt(int startWeek,int currentWeek){
+        boolean isOver=startWeek>currentWeek;
+        //因为一般开学日期当周目也包含其中，故需要+1以修正周目数
+        return isOver?startWeek-currentWeek+1:currentWeek-startWeek+1;
+    }
+
     private String getWeekGap(int startWeek,int currentWeek,int total){
         boolean isOver=startWeek>currentWeek;
         boolean isLess=currentWeek-startWeek>total;
@@ -65,6 +72,11 @@ public class DateHelper{
         return "第"+instance.get(Calendar.WEEK_OF_YEAR)+"周";
     }
 
+    public int getCurrentWeekInt(){
+        instance.setTimeInMillis(System.currentTimeMillis());
+        return instance.get(Calendar.WEEK_OF_YEAR);
+    }
+
     public int getStartWeekth() {
         return startWeekth;
     }
@@ -75,6 +87,9 @@ public class DateHelper{
 
     public String getGapStr() {
         return gapStr;
+    }
+    public int getGap(){
+        return gapInt;
     }
 
     //获取当前周的所有日期
@@ -111,6 +126,13 @@ public class DateHelper{
         instance.setTimeInMillis(System.currentTimeMillis());
         return instance.get(Calendar.MONTH)+1+"月"+instance.get(Calendar.DAY_OF_MONTH)+"日";
     }
+
+    public int getCurrentDaiInWeek(){
+        instance.setTimeInMillis(System.currentTimeMillis());
+        instance.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        return instance.get(Calendar.DAY_OF_WEEK);
+    }
+
     public static class Builder{
         private int start_dait=1;
         private int start_mont=9;

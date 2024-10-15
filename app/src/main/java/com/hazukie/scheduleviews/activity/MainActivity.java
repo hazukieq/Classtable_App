@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -68,7 +69,6 @@ public class MainActivity extends BaseActivity {
     private TopbarLayout topbarLayout;
     private DrawerLayout drawerLayout;
     private TextView scheName,scheTime;
-    private int width__;
     private static final int totalClnnums=12;
     private ScheUIProcessor uiProcessor;
     private List<ScheWithTimeModel> scts;
@@ -124,9 +124,16 @@ public class MainActivity extends BaseActivity {
 
         //设置星期+相应日期
         String[] weekDaitz=dateHelper.returnWeekDayByDaitSetz();
-        for(int i=1;i<childs;i++)
-            ((TextView) topweeks.getChildAt(i))
-                                .setText(Html.fromHtml(weekDaitz[i]));
+        for(int i=1;i<childs;i++) {
+            TextView txt=(TextView) topweeks.getChildAt(i);
+            txt.setText(Html.fromHtml(weekDaitz[i]));
+        }
+        //加粗今天日期的星期标签
+        int DaiOfweek=dateHelper.getCurrentDaiInWeek()+1;
+        TextView curDay=((TextView)topweeks.getChildAt(DaiOfweek));
+        curDay.setTextColor(getColor(R.color.class_red));
+        curDay.setTypeface(Typeface.DEFAULT_BOLD);
+
         //获取现在属于第几周
         String weekth=dateHelper.getGapStr();
         topbarLayout.setTitle(weekth)

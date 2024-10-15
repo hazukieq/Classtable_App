@@ -66,17 +66,21 @@ public class BottomialogUtil {
                         int detail_time=Statics.returnArrayIndex(Statics.SearchMode.details,binding.classSpinnerDate.getText().toString());
                         //科目
                         String subject=binding.classSubject.getText().toString();
+                        //双周科目
+                        String evensubject=binding.classEvenSubject.getText().toString();
                         //位置
                         String place=binding.classClassroom.getText().toString();
                         //备注
                         String planote=binding.classNotes.getText().toString();
                         //颜色
                         int color=ColorSeletor.getColorIndexByString(binding.classColor.getText().toString());
+                        //开启单双周模式
+                        boolean oddeven=binding.classOddeven.isChecked();
                         /*---------------------以上获取当前视图中所有数据---------------------------------------*/
 
                         int check_=0;
                         int old_week=cls.week;
-                        ClassLabel cs_=new ClassLabel(clnums,startcl,week,detail_time,subject,place,planote,color);
+                        ClassLabel cs_=new ClassLabel(clnums,startcl,week,detail_time,subject,evensubject,place,planote,color,oddeven);
                         //设置自定义时间段值
                         cs_.setCustomTime(binding.classCustomDate.getText().toString());
 
@@ -93,26 +97,23 @@ public class BottomialogUtil {
                         }
 
                         //正式启动是否重叠判断方法
-                        switch (check_){
-                            case 1:
-                                DisplayHelper.Infost(context,"和列表中卡片发生冲突！");
-                                break;
-                            case 2:
-                                DisplayHelper.Infost(context, "当前卡片上课节数已超出"+binding.classSpinnerDate.getText().toString()+"总节数！");
-                                break;
-                            default:
-                                if(IspresetValues){
+                        switch (check_) {
+                            case 1 -> DisplayHelper.Infost(context, "和列表中卡片发生冲突！");
+                            case 2 ->
+                                    DisplayHelper.Infost(context, "当前卡片上课节数已超出" + binding.classSpinnerDate.getText().toString() + "总节数！");
+                            default -> {
+                                if (IspresetValues) {
                                     //判断item是否在当前区间内
-                                    if(week==old_week|weekRID==0){
+                                    if (week == old_week | weekRID == 0) {
                                         //参考系
-                                        int index_=multi_filter.indexOf(cls);
+                                        int index_ = multi_filter.indexOf(cls);
                                         //更新值
-                                        cls.updateValues(clnums,startcl,week,detail_time,subject,place,planote,color);
+                                        cls.updateValues(clnums, startcl, week, detail_time, subject, evensubject, place, planote, color,oddeven);
                                         //设置自定义时间段值
                                         cls.setCustomTime(binding.classCustomDate.getText().toString());
                                         //更新视图
-                                        multiTypeAdapter.notifyItemChanged(index_,"updating");
-                                    }else{
+                                        multiTypeAdapter.notifyItemChanged(index_, "updating");
+                                    } else {
                                         //不在当前可见视图范围内，所以需要移除相应item，并更新视图
                                         multi_all.remove(cls);
                                         multi_filter.remove(cls);
@@ -121,15 +122,16 @@ public class BottomialogUtil {
                                         multi_all.add(cs_);
                                     }
                                     cb.dismiss();
-                                }else{
+                                } else {
                                     multi_all.add(cs_);
                                     //判断item是否在当前区间内
-                                    if(week==old_week|weekRID==0){
+                                    if (week == old_week | weekRID == 0) {
                                         multi_filter.add(cs_);
                                         multiTypeAdapter.notifyDataSetChanged();
                                     }
                                     cb.dismiss();
                                 }
+                            }
                         }
                     });
 

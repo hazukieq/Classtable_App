@@ -141,7 +141,7 @@ public class CBottomSheet extends BottomSheetDialog {
 
         public Builder addScheObj(ClassLabel classLabel){
             if(classLabel!=null)this.classLabel=classLabel;
-            else this.classLabel=new ClassLabel(1,0,1,0,"","","",11);
+            else this.classLabel=new ClassLabel(1,0,1,0,"","", "","",11,false);
             return this;
         }
 
@@ -188,7 +188,7 @@ public class CBottomSheet extends BottomSheetDialog {
 
         public ScheBuilder addScheObj(ClassLabel classLabel){
             if(classLabel!=null)this.classLabel=classLabel;
-            else this.classLabel=new ClassLabel(1,0,1,0,"","","",11);
+            else this.classLabel=new ClassLabel(1,0,1,0,"", "","","",11,false);
             return this;
         }
 
