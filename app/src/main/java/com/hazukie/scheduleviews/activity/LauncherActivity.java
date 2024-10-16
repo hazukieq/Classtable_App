@@ -6,20 +6,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hazukie.scheduleviews.fileutil.FileRootTypes;
-import com.hazukie.scheduleviews.fileutil.Fileystem;
+import com.hazukie.scheduleviews.fileutil.OftenOpts;
 import com.hazukie.scheduleviews.iJBridges.IJBridgeUtil;
 import com.hazukie.scheduleviews.models.ClassLabel;
-import com.hazukie.scheduleviews.models.OldClassLabel;
 import com.hazukie.scheduleviews.utils.DisplayHelper;
 import com.hazukie.scheduleviews.utils.SpvalueStorage;
 import com.permissionx.guolindev.PermissionX;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,7 +27,6 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateSchesFmt();
         applyPermissions();
         //测试独立WebView链接器
         IJBridgeUtil.init();
@@ -59,14 +58,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     private void doAfterPermissionsGranted() {
-        Intent in = new Intent();
-        in.setClass(this,MainActivity.class);
-        startActivity(in);
-        finish();
-    }
-
-    //处理重大更新后的兼容问题
-    private void updateSchesFmt() {
+        //处理重大更新后的兼容问题
         int oldversionCode=SpvalueStorage.getInstance(this).getInt("isUpdatedOn",1);
         int versionCode = 0;
         try{versionCode=getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;}
@@ -74,15 +66,26 @@ public class LauncherActivity extends AppCompatActivity {
 
         if(oldversionCode<versionCode){
             String[] all_sches=this.getDir(FileRootTypes.sches.name(), Context.MODE_PRIVATE).list();
-            Fileystem filemgr=Fileystem.getInstance(this);
+            Log.i("", "updateSchesFmt: "+oldversionCode+","+versionCode);
+            Log.i("", "updateSchesFmt: "+ Arrays.toString(all_sches));
+            OftenOpts filemgr=OftenOpts.getInstance(this);
             if(all_sches != null&&all_sches.length>0){
                 for(String f :all_sches){
-                    OldClassLabel old=filemgr.getData(FileRootTypes.sches,f, OldClassLabel.class);
-                    filemgr.putData(FileRootTypes.sches,f,ClassLabel.updateOld2Neo(old));
+                    List<ClassLabel> old=filemgr.getClsList(f);
+                    for(ClassLabel l:old){
+                        l.evenSubject="";
+                        Log.i("", "updateSchesFmt: "+ l);
+                    }
+                    filemgr.putRawClsList(f,old);
                 }
                 SpvalueStorage.getInstance(this).setIntValue("isUpdatedOn",versionCode);
             }
         }
+
+        Intent in = new Intent();
+        in.setClass(this, MainActivity.class);
+        startActivity(in);
+        finish();
     }
 }
 

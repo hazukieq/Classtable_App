@@ -11,7 +11,8 @@ import java.util.Objects;
 public class ClassLabel implements Serializable {
     public int clNums,startCl,week,color,detailTime;
     public boolean oddEven=false;
-    public String subjectName,evenSubject="",plaNote,clRoom;
+    public String subjectName,plaNote,clRoom;
+    public String evenSubject="";
     private String customTime="";
 
     /**
@@ -49,19 +50,6 @@ public class ClassLabel implements Serializable {
         this.color=color;
         this.clRoom=clRoom;
     }*/
-    public static ClassLabel updateOld2Neo(OldClassLabel old){
-        return new ClassLabel(
-                old.getClass_nums(),
-                old.getStart_class(),
-                old.getWeek(),
-                old.getDetail_time(),
-                old.getSubject(),
-                "",
-                old.getClRoom(),
-                old.getPlanotes(),
-                old.getColor(),
-                false);
-    }
 
     public String addClNums() {
         return clNums+"节";
@@ -134,6 +122,7 @@ public class ClassLabel implements Serializable {
                 ", plaNote:\"" + plaNote + '\"' +
                 ", clRoom:\"" + clRoom + '\"' +
                 ", customTime:\"" + customTime + '\"' +
+                ", oddeven:\""+oddEven+"\""+
                 '}';
     }
 
