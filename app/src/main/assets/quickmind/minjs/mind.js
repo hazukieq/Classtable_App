@@ -1,4 +1,25 @@
 //静态资源组
+const markmap_conf=`---
+markmap:
+  #展开节点动画时间 默认500
+  duration: 500
+  #节点内容最大宽度 默认0(表示不控制)
+  maxWidth: 0
+  #初始化时展开n个级别节点(默认为0)
+  initialExpandLevel: 0
+  #控制级别颜色是否相同,默认0(表示不控制)
+  colorFreezeLevel: 0
+  #是否提供自定义颜色(默认不提供)
+  #color: ["#2980b9","#2930b2","red","green"]
+  #是否允许缩放 默认 true
+  zoom: true
+  #垂直空隙 默认5
+  spacingVertical: 5
+  #水平空隙 默认80
+  spacingHorizontal: 80
+---
+
+`
 const hint_control_id='hint_control'
 const edit_area_id='edit_area'
 const edit_area_hint='请在此输入内容...'
@@ -46,6 +67,20 @@ const Header=()=>
     `<div class="d-flex justify-content-end align-items-center">
         ${previeModeSwitch()}
     </div>`
+
+
+//文本插入配置
+const textInsert=(obj)=>{
+    const currentContent=$(obj).value
+    const newContent=markmap_conf+currentContent
+    if (!currentContent.includes(markmap_conf)) {
+        // 如果不存在，则添加内容
+        $(obj).value=newContent; // 添加新内容并换行
+    } else {
+        alert('配置内容已存在，请勿重复添加！');
+    }
+    $(edit_fullscreen_btn_id).attr('data-bs-whatever',$(obj).value)
+}
 
 
 
@@ -107,9 +142,15 @@ const Editor=()=>
     <button class="btn btn-white text-danger float-end" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="askFn">
         <img src="./icons/trash.svg" width="18" height="18"></img>
     </button>
+
+    <button class="btn btn-white text-danger float-end" data-bs-toggle="modal" data-bs-target="#confirmDialogue" data-bs-whatever="insertFn">
+        <img src="./icons/file-text.svg" width="18" height="18"></img>
+    </button>
+
     </div>
     <div class="mt-1 col-12">
-        <textarea style="word-break:break-all;" class="form-control border-0" placeholder="${edit_area_hint}" style="caret-color:#007AFF;resize:none;height:96px" id="${edit_area_id}" rows="2" oninput="inputListener(this)"></textarea>
+        <textarea style="word-break:break-all;" class="form-control border-0" placeholder="${edit_area_hint}" style="caret-color:#007AFF;resize:none;height:96px" id="${edit_area_id}" rows="2" oninput="inputListener(this)">
+	</textarea>
     </div>
 </div>`
 
@@ -141,9 +182,6 @@ const _renderMarkmap=()=>{
 const confirmEdit=()=>{
     var contentz=$(fullscreen_edit_id).value
     updateEditorContents(contentz)
-    MarkdownDynamic(svg_root_id,$(edit_area_id),{height:markmap_height})    
-    
-    //写入文件中
     anPutData(AnconfigObj.tile,contentz)
 }
 
@@ -313,6 +351,22 @@ confirmDialogueClickMap.set( 'saveFn',
 <button class="visually-hidden" id="saveFn_input_click" data-bs-dismiss="modal"></button>
 `
 )
+
+confirmDialogueClickMap.set('insertFn',(ele,_)=>{
+    ele.innerHTML=
+    `
+    <div class="row">
+        <div class="col">
+            是否在当前编辑框插入markmap配置？
+        </div>
+    </div>
+    <div class="row">
+        <div class="col justify-content-end align-items-center d-flex">
+            <button type="button" class="btn text-danger" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn text-primary" data-bs-dismiss="modal"  onclick="textInsert('${edit_area_id}')">确定</button>
+        </div>
+    </div>`
+})
 
 
 confirmDialogueClickMap.set('askFn',(ele,_)=>{

@@ -16,7 +16,7 @@ public class ProgressHandler extends Handler{
     private final static int PRORESS_PROGRESS = 0;
     private final static int PROGRESS_GONE = 1;
     public boolean mIsPageFinished = false;
-    private ProgressBar mProgressBar;
+    private final ProgressBar mProgressBar;
 
     public ProgressHandler(ProgressBar mProgressBar) {
         this.mProgressBar = mProgressBar;
@@ -25,13 +25,13 @@ public class ProgressHandler extends Handler{
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what) {
-            case PRORESS_PROGRESS:
+            case PRORESS_PROGRESS -> {
                 mIsPageFinished = false;
                 mDstProgressIndex = msg.arg1;
                 mDuration = msg.arg2;
                 mProgressBar.setVisibility(View.VISIBLE);
                 if (mAnimator != null && mAnimator.isRunning()) {
-                        mAnimator.cancel();
+                    mAnimator.cancel();
                 }
                 mAnimator = ObjectAnimator.ofInt(mProgressBar, "progress", mDstProgressIndex);
                 mAnimator.setDuration(mDuration);
@@ -44,8 +44,8 @@ public class ProgressHandler extends Handler{
                     }
                 });
                 mAnimator.start();
-                break;
-            case PROGRESS_GONE:
+            }
+            case PROGRESS_GONE -> {
                 mDstProgressIndex = 0;
                 mDuration = 0;
                 mProgressBar.setProgress(0);
@@ -57,9 +57,9 @@ public class ProgressHandler extends Handler{
                 mAnimator.setDuration(0);
                 mAnimator.removeAllListeners();
                 mIsPageFinished = true;
-                break;
-            default:
-                break;
             }
+            default -> {
+            }
+        }
         }
     }

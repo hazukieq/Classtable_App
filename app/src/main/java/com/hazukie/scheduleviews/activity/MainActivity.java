@@ -47,6 +47,7 @@ import com.hazukie.scheduleviews.models.ClassLabel;
 import com.hazukie.scheduleviews.models.ScheWithTimeModel;
 import com.hazukie.scheduleviews.models.Timetable;
 import com.hazukie.scheduleviews.models.Unimodel;
+import com.hazukie.scheduleviews.net.Infost;
 import com.hazukie.scheduleviews.statics.Statics;
 import com.hazukie.scheduleviews.scheutil.CheckUtil;
 import com.hazukie.scheduleviews.statics.ColorSeletor;
@@ -59,6 +60,7 @@ import com.hazukie.scheduleviews.utils.StatusHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,17 +124,20 @@ public class MainActivity extends BaseActivity {
         String html_="<small>刷新</small><br/><b><font color=\"gray\">%1$s月</font></b>";
         txt_refresh.setText(Html.fromHtml(String.format(html_,dateHelper.getCurrentMont())));
 
+
+        Calendar cal=Calendar.getInstance();
+        int day=cal.get(Calendar.DAY_OF_MONTH);
         //设置星期+相应日期
+        int[] weekInts= dateHelper.getCurrentWeekDaysInt();
         String[] weekDaitz=dateHelper.returnWeekDayByDaitSetz();
         for(int i=1;i<childs;i++) {
             TextView txt=(TextView) topweeks.getChildAt(i);
+            if(weekInts[i]==day){
+                txt.setTextColor(getColor(R.color.class_red));
+                txt.setTypeface(Typeface.DEFAULT_BOLD);
+            }
             txt.setText(Html.fromHtml(weekDaitz[i]));
         }
-        //加粗今天日期的星期标签
-        int DaiOfweek=dateHelper.getCurrentDaiInWeek()+1;
-        TextView curDay=((TextView)topweeks.getChildAt(DaiOfweek));
-        curDay.setTextColor(getColor(R.color.class_red));
-        curDay.setTypeface(Typeface.DEFAULT_BOLD);
 
         //获取现在属于第几周
         String weekth=dateHelper.getGapStr();
@@ -211,6 +216,7 @@ public class MainActivity extends BaseActivity {
         ojs.add(new Unimodel(1,getString(R.string.main_side_manage)));
         ojs.add(new Unimodel(4,getString(R.string.main_side_note)));
         ojs.add(new Unimodel(5,"思维导图"));
+        //ojs.add(new Unimodel(10,"ChatGPT"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
         if(BuildConfig.DEBUG)ojs.add(new Unimodel(6,"测试"));
@@ -253,6 +259,7 @@ public class MainActivity extends BaseActivity {
                             }).build(this);
                     cri.show();
                 }
+                case 10 -> ThirdWebLoadAct.startActivityWithLoadUrl(this,ThirdWebLoadAct.class,"https://gpt.hazukieq.top","","");
                 default -> {}
             }
         });

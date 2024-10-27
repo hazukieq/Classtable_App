@@ -8,7 +8,7 @@ if(window.java==undefined||window.java===null||window.java=="") window.java={
     },
     direader:(tile,type)=>{
         console.log("read contents from "+tile+"<"+type+">")
-        return "#hello,world!"
+        return "# hello,world!"
     },
     dipasser:()=>"{\"loadState\":\"exist\",\"tile\":\"默认.md\",\"list\":[\"默认.md\"]}"
 }

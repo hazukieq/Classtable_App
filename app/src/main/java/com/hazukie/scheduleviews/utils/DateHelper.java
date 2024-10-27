@@ -92,18 +92,39 @@ public class DateHelper{
         return gapInt;
     }
 
+    private int getDay(){
+        instance.setTimeInMillis(System.currentTimeMillis());
+        return instance.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int[] getCurrentWeekDaysInt(){
+        instance.setTimeInMillis(System.currentTimeMillis());
+        instance.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        int[] allweeks=new int[8];
+        allweeks[0]=-1;
+        allweeks[1]=instance.get(Calendar.DAY_OF_MONTH);
+
+        for (int i = 2;i<allweeks.length; i++) {
+            instance.add(Calendar.DAY_OF_YEAR, 1);
+            allweeks[i]=instance.get(Calendar.DAY_OF_MONTH);
+        }
+        return allweeks;
+    }
+
     //获取当前周的所有日期
     public String[] getCurrentWeekDays(){
         instance.setTimeInMillis(System.currentTimeMillis());
         instance.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
         String temp="<font color=\"gray\"><small>%1$s日</font></small>";
+        //String cur_temp="<font color=\"red\"><small>%1$s日</font></small>";
         String[] allweeks=new String[8];
         allweeks[0]="";
         allweeks[1]=String.format(temp,instance.get(Calendar.DAY_OF_MONTH));
 
         for (int i = 2;i<allweeks.length; i++) {
             instance.add(Calendar.DAY_OF_YEAR, 1);
-            allweeks[i]=String.format(temp, instance.get(Calendar.DAY_OF_MONTH));
+            int dai=instance.get(Calendar.DAY_OF_MONTH);
+            allweeks[i]=String.format(temp, dai);
         }
         return allweeks;
     }
@@ -122,12 +143,16 @@ public class DateHelper{
         instance.setTimeInMillis(System.currentTimeMillis());
         return instance.get(Calendar.MONTH)+1;
     }
+
+
     public String getDai(){
         instance.setTimeInMillis(System.currentTimeMillis());
         return instance.get(Calendar.MONTH)+1+"月"+instance.get(Calendar.DAY_OF_MONTH)+"日";
     }
 
-    public int getCurrentDaiInWeek(){
+
+    public static int getCurrentDaiInWeek(){
+        Calendar instance=Calendar.getInstance();
         instance.setTimeInMillis(System.currentTimeMillis());
         instance.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
         return instance.get(Calendar.DAY_OF_WEEK);

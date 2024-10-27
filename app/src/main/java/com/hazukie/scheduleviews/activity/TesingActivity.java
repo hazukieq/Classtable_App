@@ -13,10 +13,9 @@ import com.hazukie.scheduleviews.R;
 
 public class TesingActivity extends AppCompatActivity {
 
-    private IntentFilter intentFilter;
     private NetWorkChangeReceiver netWorkChangeReceiver;
 
-    class NetWorkChangeReceiver extends BroadcastReceiver{
+    static class NetWorkChangeReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
             Toast.makeText(context, "networkd has changed! ", Toast.LENGTH_SHORT).show();
@@ -26,10 +25,10 @@ public class TesingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tesing);
-        intentFilter=new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        netWorkChangeReceiver=new NetWorkChangeReceiver();
-        registerReceiver(netWorkChangeReceiver,intentFilter);
+        netWorkChangeReceiver= new NetWorkChangeReceiver();
+        registerReceiver(netWorkChangeReceiver, intentFilter);
     }
 
     @Override

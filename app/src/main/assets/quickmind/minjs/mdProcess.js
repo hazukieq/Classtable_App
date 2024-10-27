@@ -2,7 +2,8 @@
   var mdis$=this||window
   
   //import variable Transform Class
-  const {Transformer,Markmap,deriveOptions} =window.markmap;
+  const {markmap}=window;
+  const {Transformer,Markmap,deriveOptions} =markmap;
   
   //svg图片清空
   const svgClear=(id,options)=>{
@@ -18,17 +19,14 @@
 
   //转换md文本
   const transformMd=(transformer,content)=>{
-    var enabled = {};
+    const result=transformer.transform(content)
+    const assets = transformer.getAssets()
+    const {styles,scripts}=assets
 
-    const result = transformer.transform(content);
-    const keys = Object.keys(result.features).filter((key) => !enabled[key]);
-    keys.forEach((key) => enabled[key] = true);
-
-    const { styles, scripts } = transformer.getAssets(keys);
-    const { markmap } = window;
-    
     if (styles) markmap.loadCSS(styles);
-    if (scripts) markmap.loadJS(scripts);
+    if (scripts) markmap.loadJS(scripts,{
+	    getMarkmap: ()=>markmap
+    });
 
     return result;
   }

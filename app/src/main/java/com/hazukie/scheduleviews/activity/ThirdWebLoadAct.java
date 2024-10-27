@@ -16,7 +16,8 @@ public class ThirdWebLoadAct extends BaseWebActivity {
     public void customStatus(TopbarLayout mTopBarLayout) {
         super.customStatus(mTopBarLayout);
         setLightOrDarkStatusBar(StatusHelper.Mode.Status_Dark_Text);
-        hiddenStatusBar(false);
+        setProressMode(false);
+        hiddenStatusBar(true);
     }
 
     @Override

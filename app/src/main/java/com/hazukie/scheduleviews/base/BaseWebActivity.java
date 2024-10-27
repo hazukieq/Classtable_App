@@ -66,6 +66,8 @@ public class BaseWebActivity extends BaseActivity {
     private final static int PROGRESS_GONE = 1;
 
     private ProgressHandler mProgressHandler;
+    private ProgressBar mProgressBar;
+    private boolean mProgressMode=true;
     public boolean NEED_CLEAR = false;
 
     //默认链接
@@ -103,7 +105,7 @@ public class BaseWebActivity extends BaseActivity {
         getArguments();
         if (open_url != null && open_url.length() > 0) handleUrl(open_url);
 
-        ProgressBar mProgressBar = findViewById(R.id.web_progress);
+        mProgressBar = findViewById(R.id.web_progress);
         mProgressHandler = new ProgressHandler(mProgressBar);
         initWebView();
     }
@@ -113,6 +115,10 @@ public class BaseWebActivity extends BaseActivity {
      */
     public void setLightOrDarkStatusBar(StatusHelper.Mode TYPE){
         StatusHelper.controlStatusLightOrDark(this, TYPE);
+    }
+
+    public void setProressMode(boolean isVisible){
+        mProgressMode=isVisible;
     }
 
     //控制活动界面状态栏颜色
@@ -195,12 +201,13 @@ public class BaseWebActivity extends BaseActivity {
     }
 
     private void sendProgressMessage(int progressType, int progress, int duration) {
-        Message msg = new Message();
-        msg.what = progressType;
-        msg.arg1 = progress;
-        msg.arg2 = duration;
-        mProgressHandler.sendMessage(msg);
-
+        if(mProgressMode){
+            Message msg = new Message();
+            msg.what = progressType;
+            msg.arg1 = progress;
+            msg.arg2 = duration;
+            mProgressHandler.sendMessage(msg);
+        }
     }
 
     public static class ActcomwebChromeClient extends WebChromeClient {
