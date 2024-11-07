@@ -216,10 +216,12 @@ public class MainActivity extends BaseActivity {
         ojs.add(new Unimodel(1,getString(R.string.main_side_manage)));
         ojs.add(new Unimodel(4,getString(R.string.main_side_note)));
         ojs.add(new Unimodel(5,"思维导图"));
-        //ojs.add(new Unimodel(10,"ChatGPT"));
+        ojs.add(new Unimodel(10,"ChatGPT"));
+        ojs.add(new Unimodel(11,"个人博客"));
+        ojs.add(new Unimodel(6,"三方网址"));
         ojs.add(new Unimodel(2,getString(R.string.main_side_setting)));
         ojs.add(new Unimodel(3,getString(R.string.main_side_about)));
-        if(BuildConfig.DEBUG)ojs.add(new Unimodel(6,"测试"));
+        //if(BuildConfig.DEBUG)ojs.add(new Unimodel(6,"测试"));
 
         unibin.setJustify(txt->{
             txt.setGravity(Gravity.START);
@@ -243,12 +245,12 @@ public class MainActivity extends BaseActivity {
                 case 7 -> startAct2Act(this, ImportActivity.class);
                 case 8 -> startAct2Act(this,SyncActivity.class);
                 case 6 -> {
-                    String test_url = sp.getStringValue("testurl", "file:///android_asset/quickmind/index.html");
+                    String test_url = sp.getStringValue("testurl", "https://onedrive.live.com/personal/69f279069fcb42fa/_layouts/15/Doc.aspx?resid=69F279069FCB42FA!107&cid=69F279069FCB42FA&migratedtospo=true&app=OneNote");
                     sp.setStringvalue("testurl", test_url);
                     Crialoghue cri = new Crialoghue.HeditBuilder()
-                            .addTitle("测试网址")
+                            .addTitle("三方网址")
                             .addContents(test_url)
-                            .addHint("请输入测试网址")
+                            .addHint("请输入第三方网址")
                             .onConfirm((crialoghue, rootView) -> {
                                 String str = ((EditText) rootView).getText().toString();
                                 Log.i("initSideRecys: ", "url=" + str);
@@ -260,6 +262,7 @@ public class MainActivity extends BaseActivity {
                     cri.show();
                 }
                 case 10 -> ThirdWebLoadAct.startActivityWithLoadUrl(this,ThirdWebLoadAct.class,"https://gpt.hazukieq.top","","");
+                case 11 -> ThirdWebLoadAct.startActivityWithLoadUrl(this, ThirdWebLoadAct.class,"https://www.hazukieq.top","","");
                 default -> {}
             }
         });

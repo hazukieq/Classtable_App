@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-    <title>基础网页</title>
+    <title>思维导图</title>
     <link rel="icon" href="data:;base64,=">
-    <link href="../basic/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../basic/common/universal.css" rel="stylesheet">
-    <link href="index.css" rel="stylesheet">
+
     <!-- Basic Tool Lib -->
     <script src="../basic/common/utils.js"></script>
-
+    <script src="../basic/common/fastclick.js"></script>
+    
     <!-- Native&Js BridgeInvoker Lib -->
     <script src="../basic/js2native/ijbridger.min.js"></script>
     <script src="minjs/ijb_register.js"></script>
@@ -30,9 +29,22 @@
     <script src="minjs/SideEl.js"></script>
     <script src="minjs/ListEl.js"></script>
     <script src="minjs/Ancobj.js"></script>
+
+    <link href="../basic/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../basic/common/universal.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+
 </head>
 
 <body>
+    <script>
+         if ('addEventListener' in document) {
+             document.addEventListener('DOMContentLoaded', function () {
+                 FastClick.attach(document.body);
+             }, false);//不冒泡
+         }
+    </script>
+
     <header>
     <!--navnav class="nav pt-5 bg-white border-bottom border-1 fixed-top"-->
     <nav class="nav pt-5 bg-white border-bottom border-1 fixed-top">

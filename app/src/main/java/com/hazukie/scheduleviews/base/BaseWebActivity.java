@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
@@ -162,6 +163,9 @@ public class BaseWebActivity extends BaseActivity {
         else topBarLayout.setVisibility(View.VISIBLE);
     }
 
+    public void hiddenAnyStats(boolean isHidden){
+        if(isHidden) getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
 
     //处理网页链接编码
     private void handleUrl(String url) {
@@ -216,25 +220,6 @@ public class BaseWebActivity extends BaseActivity {
         public ActcomwebChromeClient(BaseWebActivity activity) {
             mActivity = activity;
         }
-
-       /* @Override
-        public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
-            CnWebView cnWebView=WebStacker.getInstance(mActivity.getApplicationContext()).getCnWebView(mActivity);
-            view.addView(cnWebView);
-            WebView.WebViewTransport transport=(WebView.WebViewTransport) resultMsg.obj;
-            transport.setWebView(cnWebView);
-            resultMsg.sendToTarget();
-
-            cnWebView.setWebViewClient(new WebViewClient(){
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    Intent in=new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    mActivity.startActivity(in);
-                    return true;//super.shouldOverrideUrlLoading(view, url);
-                }
-            });
-            return true;//super.onCreateWindow(view, isDialog, isUserGesture, resultMsg);
-        }*/
 
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
@@ -344,7 +329,6 @@ public class BaseWebActivity extends BaseActivity {
             if(isAssetRes(request)) resp=assetResRequest(view.getContext(),request);
             else if(isCacheRes(request)) resp=cacheResRequest(view.getContext(),request);
             else resp=super.shouldInterceptRequest(view, request);
-
             return resp;
         }
     }

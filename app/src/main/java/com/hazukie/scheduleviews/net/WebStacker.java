@@ -1,6 +1,7 @@
 package com.hazukie.scheduleviews.net;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.MutableContextWrapper;
 import android.os.Looper;
@@ -12,7 +13,8 @@ import java.util.Stack;
 
 public class WebStacker {
     //private static final String TAG = "WebStaker preloaded CnWebView nums==>";
-    private static  WebStacker INSTANCE;
+    @SuppressLint("StaticFieldLeak")
+    private static volatile WebStacker INSTANCE;
     private final Context context;
     private  WebStacker(Context context){
         this.context =context;
